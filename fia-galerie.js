@@ -17,6 +17,12 @@
       }
       return s;
     }
+    // preklady volieb triedenia (option nemoze mat .gtl spany)
+    var SORT_I18N = {
+      date:  {de:'Datum',en:'Date',sk:'Dátum',hr:'Datum',pl:'Data',es:'Fecha',it:'Data',fr:'Date',sv:'Datum'},
+      title: {de:'Titel',en:'Title',sk:'Názov',hr:'Naslov',pl:'Tytuł',es:'Título',it:'Titolo',fr:'Titre',sv:'Titel'},
+      cat:   {de:'Kategorie',en:'Category',sk:'Kategória',hr:'Kategorija',pl:'Kategoria',es:'Categoría',it:'Categoria',fr:'Catégorie',sv:'Kategori'}
+    };
     function applyLang(lang) {
       // prepni radio
       var inp = root.querySelector('#glng-' + lang);
@@ -24,6 +30,11 @@
       // .gtl spany
       root.querySelectorAll('.gtl').forEach(function (e) { e.style.display = 'none'; });
       root.querySelectorAll('.gtl.' + lang).forEach(function (e) { e.style.display = ''; });
+      // rozbalovacka triedenia
+      root.querySelectorAll('.gsortsel option').forEach(function (op) {
+        var key = op.value, map = SORT_I18N[key];
+        if (map && map[lang]) op.textContent = map[lang];
+      });
       try { localStorage.setItem(LS, lang); } catch (e) {}
     }
     root.querySelectorAll('label.gflag').forEach(function (lab) {
