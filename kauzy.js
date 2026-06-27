@@ -1,5 +1,5 @@
 /* FIA FOX — kauzy.js
-   Filter (chipy) + triedenie (sortbar) pre register kauz #303 foxprof.club
+   Filter (chipy) + triedenie (sortbar) + svietenie kategórií pre register kauz #303 foxprof.club
    Jazykovo nezávislý: číta výhradne data-* atribúty na <details class="case">.
    - chipy:   data-filter  (all | eu | de | sk | kartell | gdpr | strafrecht)
    - karty:   data-cat (jurisdikcia: eu/de/sk) + data-area (oblasť: kartell/gdpr/strafrecht)
@@ -7,8 +7,17 @@
    - sortbar: .sortbtn[data-sort]  (date | az | ourref | area)
    - smer:    #kdir  data-dir (desc = najnovšie hore, asc = najstaršie hore)
    Prázdne hodnoty (data-az="", data-ourref="") idú vždy na koniec.
+
+   SVIETENIE: keď je kauza otvorená (details[open]) a nie je skrytá filtrom,
+   rozsvietia sa zlato VŠETKY chipy, do ktorých patrí (jurisdikcia data-cat + oblasť data-area).
+   Viac otvorených kaúz = zjednotenie. Po zatvorení zhasnú.
+   Svietenie (trieda .lit + zlatý glow, inline style) je oddelené od filter-.active (navy),
+   takže obe môžu byť na chipe naraz bez kolízie.
 */
 (function () {
+  var LIT_SHADOW = '0 0 0 2px rgba(255,203,62,.90), 0 3px 12px rgba(255,203,62,.55)';
+  var LIT_BORDER = '#FFCB3E';
+
   function init() {
     var root = document.getElementById('fia-kauzy');
     if (!root) return;
@@ -24,6 +33,30 @@
 
     function attr(el, key) { return el.getAttribute('data-' + key) || ''; }
 
+    // Rozsvieti chipy podľa kategórií práve otvorených (a filtrom neskrytých) kaúz.
+    function relight() {
+      var lit = {};
+      cases.forEach(function (c) {
+        if (!c.open || c.classList.contains('hide')) return;
+        var cat = attr(c, 'cat'), area = attr(c, 'area');
+        if (cat)  lit[cat]  = true;
+        if (area) lit[area] = true;
+      });
+      chips.forEach(function (chip) {
+        var f = attr(chip, 'filter');
+        var on = f && f !== 'all' && lit[f];
+        if (on) {
+          chip.classList.add('lit');
+          chip.style.boxShadow   = LIT_SHADOW;
+          chip.style.borderColor = LIT_BORDER;
+        } else {
+          chip.classList.remove('lit');
+          chip.style.boxShadow   = '';
+          chip.style.borderColor = '';
+        }
+      });
+    }
+
     function applyFilter() {
       cases.forEach(function (c) {
         var f = state.filter;
@@ -32,6 +65,7 @@
                 || attr(c, 'area') === f;
         c.classList.toggle('hide', !show);
       });
+      relight();
     }
 
     function applySort() {
@@ -58,6 +92,11 @@
       });
     });
 
+    // Svietenie kategórií pri otvorení/zatvorení ktorejkoľvek kauzy.
+    cases.forEach(function (c) {
+      c.addEventListener('toggle', relight);
+    });
+
     sortbtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
         sortbtns.forEach(function (x) { x.classList.remove('active'); });
@@ -72,7 +111,7 @@
         state.dir = state.dir === 'desc' ? 'asc' : 'desc';
         dirBtn.setAttribute('data-dir', state.dir);
         dirBtn.classList.toggle('active', state.dir === 'asc');
-        var tn = dirBtn.firstChild;                 // textový uzol s ikonou "⬇ " / "⬆ "
+        var tn = dirBtn.firstChild;                 // textový uzol s ikonou "\u2b07 " / "\u2b06 "
         if (tn && tn.nodeType === 3) {
           tn.nodeValue = (state.dir === 'desc' ? '\u2b07 ' : '\u2b06 ');
         }
@@ -82,6 +121,7 @@
 
     applyFilter();
     applySort();
+    relight();
   }
 
   if (document.readyState === 'loading') {
