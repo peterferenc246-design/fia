@@ -233,7 +233,7 @@
       .catch(function(){ idCache[slug]=null; return null; });
   }
   function fetchComments(id){
-    return fetch(REST+'/comments?post='+id+'&per_page=100&order=asc&_fields=id,author_name,date,content')
+    return fetch(REST+'/comments?post='+id+'&per_page=100&order=asc&_fields=id,author_name,date,content,author_avatar_urls')
       .then(function(r){return r.json();}).catch(function(){return [];});
   }
   function fmtDate(s){ try{ return new Date(s).toLocaleDateString(lang()); }catch(e){ return ''; } }
@@ -243,7 +243,10 @@
     if(!comments||!comments.length){ box.innerHTML='<div class="cmt-empty">'+esc(t('empty'))+'</div>'; return; }
     box.innerHTML=comments.map(function(c){
       var body=(c.content&&c.content.rendered)||'';
-      return '<div class="cmt-i"><div class="cmt-h"><b>'+esc(c.author_name||'Anonym')+'</b> · '+esc(fmtDate(c.date))+'</div><div class="cmt-b">'+body+'</div></div>';
+      var au=c.author_avatar_urls||{};
+      var av=au['96']||au['48']||au['24']||'';
+      var avh=av?'<img class="cmt-av" src="'+esc(av)+'" alt="" width="36" height="36" loading="lazy" referrerpolicy="no-referrer">':'<span class="cmt-av"></span>';
+      return '<div class="cmt-i">'+avh+'<div class="cmt-c"><div class="cmt-h"><b>'+esc(c.author_name||'Anonym')+'</b> · '+esc(fmtDate(c.date))+'</div><div class="cmt-b">'+body+'</div></div></div>';
     }).join('');
   }
 
