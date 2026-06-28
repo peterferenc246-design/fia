@@ -203,3 +203,137 @@
 
   if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', initShare); } else { initShare(); }
 })();
+
+/* ===== FIA FOX — komentárový modul (B1, natívne WP komentáre) ===== */
+(function(){
+  var REST = location.origin + '/wp-json/wp/v2';
+  var POST_EP = location.origin + '/wp-comments-post.php';
+  var S = {
+    title:{de:'Öffentliche Kommentare',en:'Public comments',sk:'Verejné komentáre',hr:'Javni komentari',pl:'Komentarze publiczne',es:'Comentarios públicos',it:'Commenti pubblici',fr:'Commentaires publics',sv:'Offentliga kommentarer'},
+    mod:{de:'moderiert – Freigabe durch Admin',en:'moderated – admin approval',sk:'moderované – schvaľuje admin',hr:'moderirano – odobrava admin',pl:'moderowane – zatwierdza admin',es:'moderado – aprueba admin',it:'moderato – approva admin',fr:'modéré – validation admin',sv:'modererat – admin godkänner'},
+    name:{de:'Name / Pseudonym',en:'Name / pseudonym',sk:'Meno / prezývka',hr:'Ime / nadimak',pl:'Imię / pseudonim',es:'Nombre / seudónimo',it:'Nome / pseudonimo',fr:'Nom / pseudo',sv:'Namn / pseudonym'},
+    email:{de:'E-Mail (nicht öffentlich)',en:'Email (not public)',sk:'E-mail (nezverejní sa)',hr:'E-pošta (nije javno)',pl:'E-mail (niepubliczny)',es:'Correo (no público)',it:'Email (non pubblica)',fr:'E-mail (non public)',sv:'E-post (ej offentlig)'},
+    body:{de:'Ihr Kommentar …',en:'Your comment …',sk:'Váš komentár …',hr:'Vaš komentar …',pl:'Twój komentarz …',es:'Su comentario …',it:'Il tuo commento …',fr:'Votre commentaire …',sv:'Din kommentar …'},
+    send:{de:'Kommentar absenden',en:'Send comment',sk:'Odoslať komentár',hr:'Pošalji komentar',pl:'Wyślij komentarz',es:'Enviar comentario',it:'Invia commento',fr:'Envoyer',sv:'Skicka kommentar'},
+    sent:{de:'Danke. Ihr Kommentar erscheint nach Freigabe durch den Administrator.',en:'Thanks. Your comment will appear after admin approval.',sk:'Ďakujeme. Komentár sa zobrazí po schválení administrátorom.',hr:'Hvala. Komentar će se prikazati nakon odobrenja administratora.',pl:'Dziękujemy. Komentarz pojawi się po zatwierdzeniu przez administratora.',es:'Gracias. Su comentario aparecerá tras la aprobación del administrador.',it:'Grazie. Il commento apparirà dopo l’approvazione dell’amministratore.',fr:'Merci. Votre commentaire apparaîtra après validation de l’administrateur.',sv:'Tack. Din kommentar visas efter administratörens godkännande.'},
+    empty:{de:'Noch keine freigegebenen Kommentare. Seien Sie der Erste.',en:'No approved comments yet. Be the first.',sk:'Zatiaľ žiadne schválené komentáre. Buďte prvý.',hr:'Još nema odobrenih komentara. Budite prvi.',pl:'Brak zatwierdzonych komentarzy. Bądź pierwszy.',es:'Aún no hay comentarios aprobados. Sé el primero.',it:'Ancora nessun commento approvato. Sii il primo.',fr:'Pas encore de commentaires approuvés. Soyez le premier.',sv:'Inga godkända kommentarer ännu. Bli först.'},
+    tip:{de:'Kommentare sind öffentlich, werden jedoch erst nach Freigabe durch den Administrator angezeigt. Grund: Schutz vor verleumderischen Kommentaren der Gegenseite über fiktive/Fake-Konten.',en:'Comments are public but appear only after administrator approval. Reason: protection against defamatory comments by the opposing party via fake accounts.',sk:'Komentáre sú verejné, no zobrazia sa až po schválení administrátorom. Dôvod: ochrana pred hanlivými komentármi protistrany z fiktívnych/falošných účtov.',hr:'Komentari su javni, ali se prikazuju tek nakon odobrenja administratora. Razlog: zaštita od klevetničkih komentara protivne strane putem lažnih računa.',pl:'Komentarze są publiczne, ale pojawiają się dopiero po zatwierdzeniu przez administratora. Powód: ochrona przed zniesławiającymi komentarzami strony przeciwnej z fałszywych kont.',es:'Los comentarios son públicos pero aparecen solo tras la aprobación del administrador. Motivo: protección frente a comentarios difamatorios de la parte contraria mediante cuentas falsas.',it:'I commenti sono pubblici ma appaiono solo dopo l’approvazione dell’amministratore. Motivo: protezione da commenti diffamatori della controparte tramite account falsi.',fr:'Les commentaires sont publics mais n’apparaissent qu’après validation de l’administrateur. Raison : protection contre les commentaires diffamatoires de la partie adverse via de faux comptes.',sv:'Kommentarer är offentliga men visas först efter administratörens godkännande. Skäl: skydd mot ärekränkande kommentarer från motparten via falska konton.'}
+  };
+  function lang(){ var r=document.querySelector('input[id^="klng-"]:checked'); return (r&&r.id.slice(5))||'de'; }
+  function t(k){ return (S[k]&&(S[k][lang()]||S[k].de))||''; }
+  function esc(s){ return (s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function all(sel,ctx){ return [].slice.call((ctx||document).querySelectorAll(sel)); }
+
+  var idCache={};
+  function resolveId(slug){
+    if(idCache[slug]!==undefined) return Promise.resolve(idCache[slug]);
+    return fetch(REST+'/posts?slug='+encodeURIComponent(slug)+'&_fields=id')
+      .then(function(r){return r.json();})
+      .then(function(j){ var id=(j&&j[0]&&j[0].id)||null; idCache[slug]=id; return id; })
+      .catch(function(){ idCache[slug]=null; return null; });
+  }
+  function fetchComments(id){
+    return fetch(REST+'/comments?post='+id+'&per_page=100&order=asc&_fields=id,author_name,date,content')
+      .then(function(r){return r.json();}).catch(function(){return [];});
+  }
+  function fmtDate(s){ try{ return new Date(s).toLocaleDateString(lang()); }catch(e){ return ''; } }
+  function setCount(slug,n){ all('.ccount[data-doc="'+slug+'"]').forEach(function(el){ el.textContent=n; }); }
+
+  function renderList(box,comments){
+    if(!comments||!comments.length){ box.innerHTML='<div class="cmt-empty">'+esc(t('empty'))+'</div>'; return; }
+    box.innerHTML=comments.map(function(c){
+      var body=(c.content&&c.content.rendered)||'';
+      return '<div class="cmt-i"><div class="cmt-h"><b>'+esc(c.author_name||'Anonym')+'</b> · '+esc(fmtDate(c.date))+'</div><div class="cmt-b">'+body+'</div></div>';
+    }).join('');
+  }
+
+  function buildPanel(slug){
+    var p=document.createElement('div'); p.className='cmt-panel';
+    p.innerHTML=
+      '<div class="cmt-head">💬 <span class="cmt-ttl"></span> <span class="cmt-mod"></span></div>'+
+      '<div class="cmt-list">…</div>'+
+      '<div class="cmt-flash" style="display:none"></div>'+
+      '<form class="cmt-form" novalidate>'+
+        '<div class="cmt-row">'+
+          '<input class="cmt-name" type="text" autocomplete="off">'+
+          '<input class="cmt-mail" type="email" autocomplete="off">'+
+        '</div>'+
+        '<textarea class="cmt-body" rows="3"></textarea>'+
+        '<input class="cmt-hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">'+
+        '<div class="cmt-act"><button type="submit" class="cmt-send"></button></div>'+
+      '</form>';
+    function relabel(){
+      p.querySelector('.cmt-ttl').textContent=t('title');
+      p.querySelector('.cmt-mod').textContent='🔒 '+t('mod');
+      p.querySelector('.cmt-name').placeholder=t('name');
+      p.querySelector('.cmt-mail').placeholder=t('email');
+      p.querySelector('.cmt-body').placeholder=t('body');
+      p.querySelector('.cmt-send').textContent=t('send');
+    }
+    relabel(); p._relabel=relabel;
+    var listEl=p.querySelector('.cmt-list'), flash=p.querySelector('.cmt-flash');
+    resolveId(slug).then(function(id){
+      if(!id){ listEl.innerHTML='<div class="cmt-empty">—</div>'; return; }
+      p._pid=id;
+      fetchComments(id).then(function(cs){ renderList(listEl,cs); setCount(slug,cs.length); });
+    });
+    p.querySelector('.cmt-form').addEventListener('submit',function(e){
+      e.preventDefault();
+      if(p.querySelector('.cmt-hp').value){ return; }            /* honeypot */
+      var name=p.querySelector('.cmt-name').value.trim()||'Anonym';
+      var mail=p.querySelector('.cmt-mail').value.trim();
+      var body=p.querySelector('.cmt-body').value.trim();
+      if(!body||!p._pid){ return; }
+      var fd=new FormData();
+      fd.append('comment_post_ID',p._pid);
+      fd.append('author',name);
+      fd.append('email',mail||'anonym@foxprof.club');
+      fd.append('comment',body);
+      var btn=p.querySelector('.cmt-send'); btn.disabled=true;
+      fetch(POST_EP,{method:'POST',body:fd,credentials:'same-origin'})
+        .then(function(){})
+        .catch(function(){})
+        .then(function(){
+          p.querySelector('.cmt-body').value='';
+          flash.textContent='✅ '+t('sent'); flash.style.display='block';
+          setTimeout(function(){ flash.style.display='none'; },9000);
+          btn.disabled=false;
+        });
+    });
+    return p;
+  }
+
+  function wire(a){
+    var slug=a.getAttribute('data-doc'); if(!slug) return;
+    var wrap=document.querySelector('.cmt-wrap[data-doc="'+slug+'"]'); if(!wrap) return;
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      if(wrap._panel){ wrap._panel.style.display=(wrap._panel.style.display==='none'?'block':'none'); return; }
+      var p=buildPanel(slug); p.style.display='block'; wrap.appendChild(p); wrap._panel=p;
+    });
+    if(!a._tipEl){
+      var tp=document.createElement('span'); tp.className='ktip'; tp.textContent=t('tip');
+      a.parentNode.insertBefore(tp,a.nextSibling); a._tipEl=tp;
+    }
+  }
+
+  function relangAll(){
+    all('.kcmt').forEach(function(a){ if(a._tipEl) a._tipEl.textContent=t('tip'); });
+    all('.cmt-wrap').forEach(function(w){ if(w._panel&&w._panel._relabel) w._panel._relabel(); });
+  }
+
+  function init(){
+    all('.kcmt[data-doc]').forEach(wire);
+    var wraps=all('.cmt-wrap[data-doc]');
+    (function next(){
+      var w=wraps.shift(); if(!w) return;
+      var slug=w.getAttribute('data-doc');
+      resolveId(slug).then(function(id){
+        if(id){ fetchComments(id).then(function(cs){ setCount(slug,cs.length); next(); }); }
+        else next();
+      });
+    })();
+    all('input[id^="klng-"]').forEach(function(r){ r.addEventListener('change',relangAll); });
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',init); } else { init(); }
+})();
