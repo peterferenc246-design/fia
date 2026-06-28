@@ -322,7 +322,21 @@
     all('.cmt-wrap').forEach(function(w){ if(w._panel&&w._panel._relabel) w._panel._relabel(); });
   }
 
+  function injectPilot(){
+    if(document.querySelector('.kcmt[data-doc="cmt-pilot-m10815"]')) return; /* už je v markupe */
+    var item=document.querySelector('#case-m10815 .comm .col .item');
+    if(!item) return;
+    var ph=document.createElement('div');
+    ph.style.marginTop='8px';
+    ph.innerHTML='<a class="kcmt" data-doc="cmt-pilot-m10815" href="#">'+
+      '<span class="gtl de">💬 Kommentieren</span><span class="gtl en">💬 Comment</span><span class="gtl sk">💬 Komentovať</span><span class="gtl hr">💬 Komentiraj</span><span class="gtl pl">💬 Skomentuj</span><span class="gtl es">💬 Comentar</span><span class="gtl it">💬 Commenta</span><span class="gtl fr">💬 Commenter</span><span class="gtl sv">💬 Kommentera</span>'+
+      ' (<span class="ccount" data-doc="cmt-pilot-m10815">0</span>)</a>'+
+      '<div class="cmt-wrap" data-doc="cmt-pilot-m10815"></div>';
+    item.appendChild(ph);
+  }
+
   function init(){
+    injectPilot();
     all('.kcmt[data-doc]').forEach(wire);
     var wraps=all('.cmt-wrap[data-doc]');
     (function next(){
