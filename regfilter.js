@@ -7,9 +7,9 @@
      - data-ids   na .rbtn  (medzerou oddelene id kariet; napr. "case-m10815 case-dgcomp case-telekom")
      - data-spis  na .rbtn  -> MAP na jednu testovaciu kartu (fallback, ak data-ids prazdne)
    Spravanie:
-     - na starte: VSETKY karty viditelne
+     - na starte: ZIADNE karty viditelne (kym sa neklikne register-tlacidlo)
      - klik na .rbtn: zobraz LEN karty daneho tlacidla, ostatne skry
-     - klik na uz aktivne tlacidlo (alebo ked nic nie je aktivne): RESET = ukaz vsetko
+     - klik na uz aktivne tlacidlo: RESET = skry vsetko
    Externy subor cez jsDelivr — obchadza WP.com entity-enkodovanie inline <script>.
    Bez logickeho operatora v kode (drzime pravidlo: WP.com ho v inline scripte meni na entity a rozbije ho). */
 (function () {
@@ -62,10 +62,6 @@
       return ids;
     }
 
-    function showAll() {
-      allCards().forEach(function (c) { c.style.display = ""; });
-    }
-
     function showOnly(ids) {
       var set = {};
       ids.forEach(function (x) { set[x] = true; });
@@ -81,9 +77,9 @@
     rbtns.forEach(function (b) {
       b.addEventListener("click", function () {
         if (activeBtn === b) {
-          // druhy klik na aktivne = reset
+          // druhy klik na aktivne = reset (skry vsetko)
           activeBtn = null;
-          showAll();
+          showOnly([]);
           return;
         }
         activeBtn = b;
@@ -91,8 +87,8 @@
       });
     });
 
-    // start: vsetko viditelne
-    showAll();
+    // start: nic viditelne, kym sa neklikne kauza v registri
+    showOnly([]);
   }
 
   if (document.readyState === "loading") {
