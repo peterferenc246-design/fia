@@ -29,6 +29,16 @@
     var kauzy = document.getElementById("fia-kauzy");
     var tc    = document.getElementById("fia-testcases");
 
+    // PRESUN: testovacie karty pod riadok ZORADIŤ — vlož #fia-testcases do #fia-kauzy
+    // hneď ZA .cases, aby sa konania VŠETKÝCH kaúz zobrazovali na rovnakom mieste
+    // (pod sortbarom) ako reálne karty. Mimo .cases => kauzy.js triedenie sa ich nedotkne.
+    if (tc) { if (kauzy) {
+      var casesBox = kauzy.querySelector(".cases");
+      if (casesBox) { if (casesBox.parentNode) {
+        casesBox.parentNode.insertBefore(tc, casesBox.nextSibling);
+      } }
+    } }
+
     function allCards() {
       var out = [];
       if (kauzy) {
