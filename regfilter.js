@@ -41,8 +41,8 @@
 
     // --- MULTIJAZYK TESTKARIET ---
     // Titul sa klonuje priamo z register-tlacidla (.rbtn .rt .gtl) — vzdy v sulade s registrom.
-    // Meta + poznamka zo zdielanej 9-jazycnej tabulky. Prepinanie: poistne #fia-testcases CSS
-    // (body:has) plus existujuce #fia-kauzy CSS (po presune su karty v .kwrap).
+    // Meta + poznamka zo zdielanej 9-jazycnej tabulky. Prepinanie: trieda .lang-XX na
+    // #fia-testcases (rovnaky osvedceny vzor ako register.js pre #fia-reg) — bez :has.
     if (tc) {
       var L9 = ["de","en","sk","hr","pl","es","it","fr","sv"];
       var ML_META = ["Testkarte · Verdrahtungstest","Test card · wiring check","Testovacia karta · kontrola napojenia","Testna kartica · provjera povezivanja","Karta testowa · test podłączenia","Tarjeta de prueba · verificación de conexión","Scheda di test · verifica collegamento","Carte de test · vérification du câblage","Testkort · kopplingstest"];
@@ -52,13 +52,10 @@
         for (var i = 0; i < L9.length; i++) { out += '<span class="gtl ' + L9[i] + '">' + arr[i] + '</span>'; }
         return out;
       }
-      // poistne jazykove CSS pre #fia-testcases (nezavisle od presunu)
+      // jazykove CSS cez triedu .lang-XX na #fia-testcases (rovnaky vzor ako register.js)
       var st = document.createElement("style");
-      var css = "#fia-testcases .gtl{display:none}#fia-testcases .gtl.de{display:inline}";
-      ["en","sk","hr","pl","es","it","fr","sv"].forEach(function (x) {
-        css += "body:has(#klng-" + x + ":checked) #fia-testcases .gtl.de{display:none}";
-        css += "body:has(#klng-" + x + ":checked) #fia-testcases .gtl." + x + "{display:inline}";
-      });
+      var css = "#fia-testcases .gtl{display:none}";
+      L9.forEach(function (x) { css += "#fia-testcases.lang-" + x + " .gtl." + x + "{display:inline}"; });
       st.textContent = css;
       document.head.appendChild(st);
       // naplnenie kazdej testkarty podla prislusneho register-tlacidla
@@ -89,6 +86,13 @@
           if (noteEl) { noteEl.innerHTML = wrap9(ML_NOTE); }
         });
       });
+      // prepinanie jazyka testkariet: trieda .lang-XX podla zaskrtnuteho klng radia
+      function curLang9() { for (var i = 0; i < L9.length; i++) { var r = document.getElementById("klng-" + L9[i]); if (r) { if (r.checked) { return L9[i]; } } } return "de"; }
+      function setTC() { var c = curLang9(); L9.forEach(function (x) { tc.classList.toggle("lang-" + x, x === c); }); }
+      L9.forEach(function (x) { var r = document.getElementById("klng-" + x); if (r) { r.addEventListener("change", setTC); } });
+      var lbar = document.getElementById("fia-langbar");
+      if (lbar) { [].slice.call(lbar.querySelectorAll(".lbf")).forEach(function (fb) { fb.addEventListener("click", function () { setTimeout(setTC, 0); }); }); }
+      setTC();
     }
 
     function allCards() {
