@@ -39,6 +39,58 @@
       } }
     } }
 
+    // --- MULTIJAZYK TESTKARIET ---
+    // Titul sa klonuje priamo z register-tlacidla (.rbtn .rt .gtl) — vzdy v sulade s registrom.
+    // Meta + poznamka zo zdielanej 9-jazycnej tabulky. Prepinanie: poistne #fia-testcases CSS
+    // (body:has) plus existujuce #fia-kauzy CSS (po presune su karty v .kwrap).
+    if (tc) {
+      var L9 = ["de","en","sk","hr","pl","es","it","fr","sv"];
+      var ML_META = ["Testkarte · Verdrahtungstest","Test card · wiring check","Testovacia karta · kontrola napojenia","Testna kartica · provjera povezivanja","Karta testowa · test podłączenia","Tarjeta de prueba · verificación de conexión","Scheda di test · verifica collegamento","Carte de test · vérification du câblage","Testkort · kopplingstest"];
+      var ML_NOTE = ["Vorübergehende Testkarte. Die tatsächlichen Verfahren werden über das x5-Formular ergänzt.","Temporary test card. The actual proceedings will be added via the x5 form.","Dočasná testovacia karta. Skutočné konania sa doplnia cez formulár x5.","Privremena testna kartica. Stvarni postupci dodat će se putem obrasca x5.","Tymczasowa karta testowa. Rzeczywiste postępowania zostaną dodane przez formularz x5.","Tarjeta de prueba temporal. Los procedimientos reales se añadirán mediante el formulario x5.","Scheda di test temporanea. I procedimenti effettivi saranno aggiunti tramite il modulo x5.","Carte de test temporaire. Les procédures réelles seront ajoutées via le formulaire x5.","Tillfälligt testkort. De faktiska förfarandena läggs till via x5-formuläret."];
+      function wrap9(arr) {
+        var out = "";
+        for (var i = 0; i < L9.length; i++) { out += '<span class="gtl ' + L9[i] + '">' + arr[i] + '</span>'; }
+        return out;
+      }
+      // poistne jazykove CSS pre #fia-testcases (nezavisle od presunu)
+      var st = document.createElement("style");
+      var css = "#fia-testcases .gtl{display:none}#fia-testcases .gtl.de{display:inline}";
+      ["en","sk","hr","pl","es","it","fr","sv"].forEach(function (x) {
+        css += "body:has(#klng-" + x + ":checked) #fia-testcases .gtl.de{display:none}";
+        css += "body:has(#klng-" + x + ":checked) #fia-testcases .gtl." + x + "{display:inline}";
+      });
+      st.textContent = css;
+      document.head.appendChild(st);
+      // naplnenie kazdej testkarty podla prislusneho register-tlacidla
+      [].slice.call(reg.querySelectorAll(".rbtn")).forEach(function (b) {
+        var ids = [];
+        var di = (b.getAttribute("data-ids") || "").split(/\s+/);
+        di.forEach(function (x) { if (x) { ids.push(x); } });
+        if (ids.length === 0) {
+          var sp0 = b.getAttribute("data-spis") || "";
+          if (MAP[sp0]) { MAP[sp0].forEach(function (x) { ids.push(x); }); }
+        }
+        ids.forEach(function (id) {
+          var card = tc.querySelector("#" + id);
+          if (!card) { return; }
+          var rt = b.querySelector(".rt");
+          var titleEl = card.querySelector(".tc-title");
+          var metaEl  = card.querySelector(".tc-meta");
+          var noteEl  = card.querySelector(".tc-note");
+          if (titleEl) {
+            if (rt) {
+              var ts = "";
+              [].slice.call(rt.querySelectorAll(".gtl")).forEach(function (g) { ts += g.outerHTML; });
+              titleEl.innerHTML = "🧪 " + ts;
+            }
+          }
+          var sp = b.getAttribute("data-spis") || "";
+          if (metaEl) { metaEl.innerHTML = wrap9(ML_META) + " · spis " + sp; }
+          if (noteEl) { noteEl.innerHTML = wrap9(ML_NOTE); }
+        });
+      });
+    }
+
     function allCards() {
       var out = [];
       if (kauzy) {
