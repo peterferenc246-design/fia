@@ -356,3 +356,56 @@
   }
   if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',init); } else { init(); }
 })();
+
+/* ===== FIA FOX — kauzy.js · ČASŤ 4: jazykový langbar (#fia-langbar) =====
+   Samostatný sticky pruh PRED #fia-kauzy: vľavo tlačidlo Domov (9 jazykov),
+   vpravo 9 vlajok. Keďže langbar je iný blok než #fia-kauzy, CSS selektor
+   #klng-XX:checked ~ ... naň nedosiahne — preto sa rieši týmto JS:
+   - klik vlajky .lbf[data-lang] → nastaví zdieľané #klng-XX (checked) + dispatch 'change'
+     (to prepne legacy karty v #fia-kauzy aj register #fia-reg cez ich vlastné listenery),
+     rozsvieti aktívnu vlajku a prepne triedu #fia-langbar.lang-XX (zobrazí text Domov v danom jazyku).
+   - počúva 'change' na #klng-XX (zmena cez register alebo legacy vlajky) a drží langbar v sync.
+*/
+(function () {
+  var LANGS = ['de','en','sk','hr','pl','es','it','fr','sv'];
+
+  function init() {
+    var bar = document.getElementById('fia-langbar');
+    if (!bar) return;
+    var btns = [].slice.call(bar.querySelectorAll('.lbf[data-lang]'));
+
+    function curChecked() {
+      for (var i = 0; i < LANGS.length; i++) {
+        var r = document.getElementById('klng-' + LANGS[i]);
+        if (r && r.checked) return LANGS[i];
+      }
+      return 'de';
+    }
+    function setActive(L) {
+      btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === L); });
+      LANGS.forEach(function (x) { bar.classList.toggle('lang-' + x, x === L); });
+    }
+
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var L = b.getAttribute('data-lang');
+        var r = document.getElementById('klng-' + L);
+        if (r) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
+        setActive(L);
+      });
+    });
+
+    LANGS.forEach(function (x) {
+      var r = document.getElementById('klng-' + x);
+      if (r) r.addEventListener('change', function () { setActive(curChecked()); });
+    });
+
+    setActive(curChecked());
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
