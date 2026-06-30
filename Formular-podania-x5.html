@@ -176,6 +176,7 @@ const CASES = {
     id:"case-udzs-namietka", block:"testcases",
     short: "ÚDZS",
     meta: { cat:["sk"], area:[], az:"12479/2026/911 · 43831/2026 · PO 1328/2026", ourref:"PR-2026-EXS-028" },
+    begleit: "Táto kauza ukazuje, ako justícia ohýba právo proti bežnému občanovi. Slovenská zdravotná poisťovňa (VšZP) sama uznala, že moje verejné zdravotné poistenie v SR skončilo už v roku 2016 a že podľa koordinačného práva EÚ (čl. 11 nar. ES č. 883/2004) podlieham výlučne nemeckému právu. Napriek tomu mi za fiktívne „dlžné\" obdobia vystavila niekoľko výkazov nedoplatkov — a jeden z nich drží ako exekučný titul aj potom, čo istinu znížila na 0,00 €. Z desaťeurového „poplatku\" bez právneho titulu sa tak stal podklad pre exekúciu, trovy a blokáciu účtu.\n\nIde o priamy zásah do majetkových práv občana EÚ na základe pohľadávky, ktorá neexistuje. Tá istá poisťovňa pritom jeden z troch identických výkazov z vlastného podnetu zrušila — čím sama priznala, že dlh nikdy nebol. Selektívne udržiavanie práve tých titulov, ktoré generujú poplatky a trovy, nie je náhoda; je to vzorec, biznis model založený na neznalosti zákonov a zneužívaní právomoci verejných činiteľov.\n\nNamiesto nápravy dozorný úrad (ÚDZS) podnet odmietol ako neopodstatnený — obišiel nosné ustanovenie práva EÚ, použil len tú časť normy, ktorá sa hodí, a test, ktorý si sám otvoril, vôbec nevykonal. Tento sprievodný text dokumentuje, ako sa obštrukciami, jednostranným výkladom a krytím vlastných inštitúcií zakrýva jednoduchá pravda: za nulový dlh niet titulu na exekúciu.\n\nTouto námietkou žiadam predsedu úradu o opätovné posúdenie a o výkon dohľadu. Iniciatíva FIA FOX vec zverejňuje výlučne s cieľom informovať verejnosť o postupe orgánov vo veci verejného záujmu. Plné znenie podania a dôkazov je dostupné cez dokumenty tejto kauzy vyššie.",
     docs: {
       "Námietka proti oznámeniu o neopodstatnenosti podnetu (predseda ÚDZS Hroššo)":
         single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQCToS09y5pISYhWGDP_WG3xARZpOKB15UCbsqDjkH7aDrE?e=zWU4Iv",{_date:"29.06.2026",_imp:true,_fname:"19_Namietka_ÚDZS_predseda_Hroššo_SK·EN·DE·ES·FR·PL·IT_signed with QES.pdf"})
@@ -503,6 +504,7 @@ function makeSlot(idx){
     const def=CASES[konanieSel.value];
     if(def&&def.meta){ setCats(def.meta.cat,def.meta.area); azInp.value=def.meta.az||""; ourrefInp.value=def.meta.ourref||""; }
     else { setCats([],[]); azInp.value=""; ourrefInp.value=""; }
+    if(begleitInp) begleitInp.value = (def&&def.begleit) ? def.begleit : "";
   }
   function updateNewcaseVis(){
     const show=action!=="del" && kauzaSel.value!=="__newk__";
