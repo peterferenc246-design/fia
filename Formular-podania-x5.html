@@ -320,6 +320,19 @@ function makeSlot(idx){
         </div>
       </div>
     </div>
+    <div class="row" data-jurrow style="display:none;margin-top:14px">
+      <div class="fld">
+        <div class="catgrp">
+          <div class="glbl">Jurisdikcia / krajina (data-cat) — <b>„Všetky"</b> = konanie pod filtrom Všetky; <b>EU/DE/SK</b> = konkrétna krajina (výlučné voči „Všetky")</div>
+          <div class="chips-pick">
+            <span class="catchip cat-all" data-jurall>🌐 Všetky<span class="ck">✓</span></span>
+            <span class="catchip" data-jur="eu"><img src="https://flagcdn.com/eu.svg" alt="">EU<span class="ck">✓</span></span>
+            <span class="catchip" data-jur="de"><img src="https://flagcdn.com/de.svg" alt="">Deutschland<span class="ck">✓</span></span>
+            <span class="catchip" data-jur="sk"><img src="https://flagcdn.com/sk.svg" alt="">Slovensko<span class="ck">✓</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row" style="margin-top:14px">
       <div class="fld">
         <label>Názov karty konania! (karta v kauze)</label>
@@ -330,15 +343,6 @@ function makeSlot(idx){
         <div class="newcase" data-newcase style="display:none">
           <p class="nctitle">🏷 Kategórie a spis. značky kauzy <span style="font-weight:600;color:#6B7C91">(pri existujúcej kauze sú predvyplnené z #303 — klikni a zmeň; zmena sa prenesie na celú kartu vrátane starších položiek)</span></p>
           <p class="nchint">Klikni kategórie — <b>zapni/vypni</b>, môžeš zvoliť aj viac naraz (jurisdikcia aj oblasť).</p>
-          <div class="catgrp">
-            <div class="glbl">Jurisdikcia / krajina (data-cat)</div>
-            <div class="chips-pick">
-              <span class="catchip cat-all" data-jurall>🌐 Všetky<span class="ck">✓</span></span>
-              <span class="catchip" data-jur="eu"><img src="https://flagcdn.com/eu.svg" alt="">EU<span class="ck">✓</span></span>
-              <span class="catchip" data-jur="de"><img src="https://flagcdn.com/de.svg" alt="">Deutschland<span class="ck">✓</span></span>
-              <span class="catchip" data-jur="sk"><img src="https://flagcdn.com/sk.svg" alt="">Slovensko<span class="ck">✓</span></span>
-            </div>
-          </div>
           <div class="catgrp">
             <div class="glbl">Oblasť práva (data-area)</div>
             <div class="chips-pick">
@@ -477,28 +481,37 @@ function makeSlot(idx){
     if(allBtn) allBtn.classList.toggle('on', items.length>0 && items.every(x=>x.classList.contains('on')));
   }
   root.querySelectorAll('.catchip').forEach(c=>c.onclick=()=>{
-    if(c.hasAttribute('data-jurall')||c.hasAttribute('data-areall')){
-      const isJur=c.hasAttribute('data-jurall');
-      const items=[...root.querySelectorAll('.catchip['+(isJur?'data-jur':'data-areaval')+']')];
+    if(c.hasAttribute('data-jurall')){
+      // VÝLUČNÉ: "Všetky" zap/vyp; pri zapnutí zhasne EU/DE/SK
+      const turnOn=!c.classList.contains('on');
+      c.classList.toggle('on',turnOn);
+      if(turnOn) root.querySelectorAll('.catchip[data-jur]').forEach(x=>x.classList.remove('on'));
+    } else if(c.hasAttribute('data-jur')){
+      // krajina: toggle + zhasni "Všetky"
+      c.classList.toggle('on');
+      const allB=root.querySelector('.catchip[data-jurall]'); if(allB) allB.classList.remove('on');
+    } else if(c.hasAttribute('data-areall')){
+      const items=[...root.querySelectorAll('.catchip[data-areaval]')];
       const turnOn=!items.every(x=>x.classList.contains('on'));
       items.forEach(x=>x.classList.toggle('on',turnOn));
-      syncAllChip(isJur?'jur':'area');
-    } else {
-      c.classList.toggle('on');
-      if(c.hasAttribute('data-jur')) syncAllChip('jur');
-      if(c.hasAttribute('data-areaval')) syncAllChip('area');
+      syncAllChip('area');
+    } else if(c.hasAttribute('data-areaval')){
+      c.classList.toggle('on'); syncAllChip('area');
     }
     updateSummary();
   });
   function collectCats(){
-    const jur=[...root.querySelectorAll('.catchip[data-jur].on')].map(c=>c.dataset.jur);
+    const allOn=root.querySelector('.catchip[data-jurall].on');
+    const jur=allOn ? ["all"] : [...root.querySelectorAll('.catchip[data-jur].on')].map(c=>c.dataset.jur);
     const area=[...root.querySelectorAll('.catchip[data-areaval].on')].map(c=>c.dataset.areaval);
     return {jur,area};
   }
   function setCats(jur,area){
-    root.querySelectorAll('.catchip[data-jur]').forEach(c=>c.classList.toggle('on',(jur||[]).includes(c.dataset.jur)));
+    const j=jur||[], isAll=j.includes("all");
+    const allB=root.querySelector('.catchip[data-jurall]'); if(allB) allB.classList.toggle('on',isAll);
+    root.querySelectorAll('.catchip[data-jur]').forEach(c=>c.classList.toggle('on',!isAll && j.includes(c.dataset.jur)));
     root.querySelectorAll('.catchip[data-areaval]').forEach(c=>c.classList.toggle('on',(area||[]).includes(c.dataset.areaval)));
-    syncAllChip('jur'); syncAllChip('area');
+    syncAllChip('area');
   }
   function fillCatsFromCase(){
     const def=CASES[konanieSel.value];
@@ -509,6 +522,7 @@ function makeSlot(idx){
   function updateNewcaseVis(){
     const show=action!=="del" && kauzaSel.value!=="__newk__";
     if(newcaseBlk) newcaseBlk.style.display=show?"block":"none";
+    const jr=root.querySelector('[data-jurrow]'); if(jr) jr.style.display=show?"flex":"none";
   }
 
   function setMode(m){ mode=m; root.querySelectorAll('[data-mode] button').forEach(x=>x.classList.toggle('on',x.dataset.m===m));
