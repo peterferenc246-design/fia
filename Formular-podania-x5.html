@@ -231,7 +231,13 @@ function docMulti(urls, fallback){
     return `<span class="gtl ${l}">${a}</span>`;
   }).join("");
 }
-function buildItem(date,subj,urls,access,fallback,important,fname,snap){
+const CMT_LBL={de:"Kommentieren",en:"Comment",sk:"Komentovať",hr:"Komentiraj",pl:"Skomentuj",es:"Comentar",it:"Commenta",fr:"Commenter",sv:"Kommentera"};
+function cmtBlock(){
+  const id="cmt-PLACEHOLDER";
+  const lbls=LANGS.map(l=>`<span class="gtl ${l}">💬 ${CMT_LBL[l]}</span>`).join("");
+  return `<a class="kcmt" data-doc="${id}" href="#">${lbls} (<span class="ccount" data-doc="${id}">0</span>)</a><div class="cmt-wrap" data-doc="${id}"></div>`;
+}
+function buildItem(date,subj,urls,access,fallback,important,fname,snap,comments){
   const badge = access==="pwd"?ACC_PWD:ACC_PUB;
   const cls = access==="pwd"?"acc-pwd":"acc-pub";
   const badgeHtml = LANGS.map(l=>`<span class="gtl ${l}">${badge[l]}</span>`).join("");
@@ -242,7 +248,7 @@ function buildItem(date,subj,urls,access,fallback,important,fname,snap){
   const snapAttr = snap ? " data-snap='"+hsnap(snap)+"'" : "";
   return `<div class="item${impCls}"${snapAttr}><div class="top"><span class="date">${hesc(date)||"—"}</span>`+
          `<span class="acc ${cls}">${badgeHtml}</span></div>`+
-         `<div class="subj">${impMark}${hesc(subj)}</div>${fnameHtml}${link}</div>`;
+         `<div class="subj">${impMark}${hesc(subj)}</div>${fnameHtml}${link}${comments?cmtBlock():""}</div>`;
 }
 
 // ===== SLOT — nezávislý vstupný blok =====
@@ -252,7 +258,7 @@ function caseOptions(sel){
 }
 function makeSlot(idx){
   const NEWDOC="__newdoc__";
-  let mode="item", action="new", dir="sent", important=false;
+  let mode="item", action="new", dir="sent", important=false, comments=false;
 
   const root=document.createElement("div");
   root.className="slot";
@@ -347,6 +353,7 @@ function makeSlot(idx){
         </div>
       </div>
       <label class="chk imp" style="margin-top:12px"><input type="checkbox" data-imp> ❗ Označiť ako dôležité (červený výkričník + ľavý okraj)</label>
+      <label class="chk" style="margin-top:12px"><input type="checkbox" data-cmt> 💬 Povoliť komentáre k tomuto dokumentu (kcmt + cmt-wrap placeholder)</label>
       <div class="row" style="margin-top:12px">
         <div class="fld">
           <label>🛈 Názov súboru — vidíš LEN ty ako prihlásený admin, verejnosť nie (pomôcka pri kontrole, ktorý súbor je za predmetom)</label>
@@ -381,7 +388,7 @@ function makeSlot(idx){
   const delWarn=q("[data-delwarn]"), confid=q("[data-confid]");
   const contentBlock=q("[data-contentblock]"), linksBlock=q("[data-linksblock]");
   const metaRow=q("[data-metarow]"), dateInp=q("[data-date]"), noDate=q("[data-nodate]");
-  const subjInp=q("[data-subj]"), accessSel=q("[data-access]"), impChk=q("[data-imp]"), fnameInp=q("[data-fname]");
+  const subjInp=q("[data-subj]"), accessSel=q("[data-access]"), impChk=q("[data-imp]"), fnameInp=q("[data-fname]"), cmtChk=q("[data-cmt]");
   const langsBox=q("[data-langs]"), fallbackInp=q("[data-fallback]");
   const fillBtn=q("[data-fill]");
   const ssum=q("[data-ssum]"), sstate=q("[data-sstate]");
@@ -446,6 +453,7 @@ function makeSlot(idx){
   root.querySelectorAll('[data-dir] button').forEach(b=>b.onclick=()=>setDir(b.dataset.d));
 
   impChk.onchange=()=>{ important=impChk.checked; updateSummary(); };
+  cmtChk.onchange=()=>{ comments=cmtChk.checked; updateSummary(); };
   noDate.onchange=()=>{ dateInp.disabled=noDate.checked; if(noDate.checked) dateInp.value=""; };
   subjInp.oninput=updateSummary; fixSubj.oninput=updateSummary;
 
@@ -468,7 +476,7 @@ function makeSlot(idx){
     const isNewDoc=docSel.value===NEWDOC;
     if(isNewDoc||!def||!def.docs||!def.docs[docSel.value]){
       clearLangFields();
-      dateInp.value=""; noDate.checked=false; dateInp.disabled=false; accessSel.value="pub"; impChk.checked=false; important=false; fnameInp.value="";
+      dateInp.value=""; noDate.checked=false; dateInp.disabled=false; accessSel.value="pub"; impChk.checked=false; important=false; cmtChk.checked=false; comments=false; fnameInp.value="";
       if(action!=="del") setAction("new");
       fillBtn.disabled=true; fillBtn.textContent="⚡ Vyber existujúci dokument";
     }else{
@@ -481,6 +489,7 @@ function makeSlot(idx){
       else { noDate.checked=false; dateInp.disabled=false; dateInp.value=d._date||""; }
       accessSel.value=d._access||"pub";
       impChk.checked=!!d._imp; important=!!d._imp;
+      cmtChk.checked=!!d._cmt; comments=!!d._cmt;
       fnameInp.value=d._fname||"";
       if(action!=="del") setAction("fix");
       fixSubj.value=docSel.value;
@@ -574,6 +583,7 @@ function makeSlot(idx){
       }
     }
     if(important) h+="Dôležité: ÁNO (❗ červený výkričník + .item.imp)\n";
+    if(comments) h+="Komentáre: ÁNO — pridá sa kcmt + cmt-wrap; nahraď data-doc=cmt-PLACEHOLDER unikátnym ID.\n";
     if(esc(begleitInp.value)){
       const sl=slugify(currentCaseName());
       h+="— SPRIEVODNÝ TEXT (Begleittext) → modal kauzy —\n";
@@ -602,8 +612,8 @@ function makeSlot(idx){
       const subj=esc(subjInp.value);
       if(!subj) throw new Error(`Slot ${idx+1}: vyplň Predmet (subj).`);
       const dateVal=noDate.checked?"—":dateInp.value;
-      const snap=buildSnap(subj,dateVal,urls,accessSel.value,fb,important,fnameInp.value);
-      markup=buildItem(dateVal,subj,urls,accessSel.value,fb,important,fnameInp.value,snap);
+      const snap=buildSnap(subj,dateVal,urls,accessSel.value,fb,important,fnameInp.value,comments);
+      markup=buildItem(dateVal,subj,urls,accessSel.value,fb,important,fnameInp.value,snap,comments);
     }else{
       markup=docMulti(urls,fb);
     }
@@ -617,14 +627,14 @@ function makeSlot(idx){
     root.querySelectorAll('.catchip').forEach(c=>c.classList.remove('on'));
     if(azInp) azInp.value=""; if(ourrefInp) ourrefInp.value=""; if(begleitInp) begleitInp.value="";
     subjInp.value=""; fixSubj.value=""; dateInp.value=""; noDate.checked=false; dateInp.disabled=false;
-    impChk.checked=false; important=false; accessSel.value="pub"; fnameInp.value="";
+    impChk.checked=false; important=false; cmtChk.checked=false; comments=false; accessSel.value="pub"; fnameInp.value="";
     setMode("item"); setAction("new"); setDir("sent");
     refreshDocList();
   }
 
-  function buildSnap(subj,date,urls,access,fallback,important,fname){
+  function buildSnap(subj,date,urls,access,fallback,important,fname,comments){
     const c=collectCats();
-    return {v:1, kauza:currentCaseName(), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value)};
+    return {v:1, kauza:currentCaseName(), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments};
   }
   // predvyplnenie slotu z karty #303 (nezavisle od kniznice CASES)
   function applySnap(snap){
@@ -646,6 +656,7 @@ function makeSlot(idx){
     else { noDate.checked=false; dateInp.disabled=false; dateInp.value=snap.date||""; }
     accessSel.value=snap.access||"pub";
     impChk.checked=!!snap.important; important=!!snap.important;
+    cmtChk.checked=!!snap.comments; comments=!!snap.comments;
     fnameInp.value=snap.fname||"";
     clearLangFields();
     if(snap.urls){ LANGS.forEach(function(l){ setField(l, snap.urls[l]||""); }); }
