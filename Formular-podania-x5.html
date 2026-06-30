@@ -76,6 +76,15 @@
   .newcase{margin-top:12px;padding:13px 14px;border:1px dashed var(--navy);border-radius:10px;background:#f6f9fe}
   .newcase .nctitle{font-size:12.5px;font-weight:800;color:var(--navy);margin:0 0 4px;display:flex;align-items:center;gap:6px}
   .newcase .nchint{font-size:11.5px;color:#6B7C91;margin:0 0 12px}
+  .catgrp{margin-bottom:11px}
+  .catgrp .glbl{font-size:11px;font-weight:700;color:#6B7C91;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+  .chips-pick{display:flex;flex-wrap:wrap;gap:7px}
+  .catchip{cursor:pointer;user-select:none;border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:background .12s,border-color .12s,color .12s}
+  .catchip:hover{border-color:var(--navy)}
+  .catchip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .catchip img{width:1.05em;height:auto;border-radius:2px;vertical-align:-1px}
+  .catchip .ck{font-size:11px;width:11px;display:inline-block;opacity:0}
+  .catchip.on .ck{opacity:1}
   .nc-refs{display:flex;flex-wrap:wrap;gap:12px;margin-top:2px}
   .nc-refs .fld{flex:1 1 210px}
   .slothdr{display:flex;align-items:center;gap:10px;padding:13px 18px;font-weight:700;color:var(--navy);background:#f7faff;border-bottom:1px solid var(--line)}
@@ -263,7 +272,16 @@ function makeSlot(idx){
         <input data-courtnew placeholder="Orgán / súd — plný názov pod titulok (napr. Všeobecný súd Európskej únie)" style="display:none;margin-top:8px" title="Vloží sa do .court riadku karty. 9 jazykov doplní Claude.">
         <p class="nchint" data-courthint style="display:none">🏛 Orgán/súd sa zobrazí pod názvom kauzy (riadok <code>.court</code>). Stačí 1 jazyk — ostatných 8 doplní Claude.</p>
         <div class="newcase" data-newcase style="display:none">
-          <p class="nctitle">🏷 Spis. značky kauzy <span style="font-weight:600;color:#6B7C91">(pri existujúcej kauze sú predvyplnené z #303 — klikni a zmeň; zmena sa prenesie na celú kartu vrátane starších položiek)</span></p>
+          <p class="nctitle">🏷 Kategórie a spis. značky kauzy <span style="font-weight:600;color:#6B7C91">(pri existujúcej kauze sú predvyplnené z #303 — klikni a zmeň; zmena sa prenesie na celú kartu vrátane starších položiek)</span></p>
+          <p class="nchint">Klikni kategóriu — <b>zapni/vypni</b>, môžeš zvoliť aj viac naraz.</p>
+          <div class="catgrp">
+            <div class="glbl">Oblasť práva (data-area)</div>
+            <div class="chips-pick">
+              <span class="catchip" data-areaval="kartell">Kartellrecht<span class="ck">✓</span></span>
+              <span class="catchip" data-areaval="gdpr">GDPR<span class="ck">✓</span></span>
+              <span class="catchip" data-areaval="strafrecht">Trestné oznámenie<span class="ck">✓</span></span>
+            </div>
+          </div>
           <div class="nc-refs">
             <div class="fld"><label>Az. — súdna / úradná spis. zn. (data-az)</label><input data-az placeholder="napr. T‑61/26"></div>
             <div class="fld"><label>Naša spis. zn. — interná (data-ourref)</label><input data-ourref placeholder="napr. PR‑2026‑EXS‑017"></div>
@@ -382,6 +400,8 @@ function makeSlot(idx){
   function clearLangFields(){ LANGS.forEach(l=>setField(l,"")); fallbackInp.value=""; }
   function currentCaseName(){ return kauzaSel.value==="__new__" ? esc(kauzaNew.value) : kauzaSel.value; }
 
+  // toggle-chip kategórie (klik zapne/vypne, viac naraz)
+  root.querySelectorAll('.catchip').forEach(c=>c.onclick=()=>{ c.classList.toggle('on'); updateSummary(); });
   function collectCats(){
     const jur=[...root.querySelectorAll('.catchip[data-jur].on')].map(c=>c.dataset.jur);
     const area=[...root.querySelectorAll('.catchip[data-areaval].on')].map(c=>c.dataset.areaval);
@@ -532,18 +552,25 @@ function makeSlot(idx){
     h+="Smer: "+dirTxt+"\n";
     h+="Akcia: "+actTxt+"\n";
     if(kauzaSel.value==="__new__"){
+      const c=collectCats();
       h+="— NOVÁ KAUZA → postav celú kartu (BEZ Postfach bloku — Postfach je na #303 zámerne skrytý cez CSS #fia-kauzy .postfach{display:none}; novú kartu rob bez .postfach divu) —\n";
+      h+="Oblasť práva (data-area): "+(c.area.join(" ")||"(nevybrané)")+"\n";
       if(esc(courtNew.value)) h+="Orgán/súd (plný názov do .court — 9 jazykov doplní Claude): "+hesc(courtNew.value)+"\n";
       h+="Az. (data-az): "+(hesc(azInp.value)||"(prázdne)")+"\n";
       h+="Naša spis. zn. (data-ourref): "+(hesc(ourrefInp.value)||"(prázdne)")+"\n";
     } else {
-      // existujúca kauza: ak Peter zmenil spis. značky oproti uloženému stavu #303, daj POKYN na prepis karty
-      const def=CASES[kauzaSel.value], m=(def&&def.meta)?def.meta:{az:"",ourref:""};
+      // existujúca kauza: ak Peter zmenil kategórie/značky oproti uloženému stavu #303, daj POKYN na prepis karty
+      const c=collectCats();
+      const def=CASES[kauzaSel.value], m=(def&&def.meta)?def.meta:{cat:[],area:[],az:"",ourref:""};
+      const norm=a=>(a||[]).slice().sort().join(" ");
+      const areaChg=norm(c.area)!==norm(m.area);
       const azChg=esc(azInp.value)!==esc(m.az||""), refChg=esc(ourrefInp.value)!==esc(m.ourref||"");
-      if(azChg||refChg){
-        h+="— ZMENA SPIS. ZNAČIEK KAUZY → uprav atribúty karty <details class=\"case\" …> v #303 (platí pre VŠETKY položky tejto kauzy, aj staršie) —\n";
+      if(areaChg||azChg||refChg){
+        h+="— ZMENA KATEGÓRIÍ/ZNAČIEK KAUZY → uprav atribúty karty <details class=\"case\" …> v #303 (platí pre VŠETKY položky tejto kauzy, aj staršie) —\n";
+        if(areaChg) h+="Nastav data-area na: "+(c.area.join(" ")||"(nevybrané)")+"\n";
         if(azChg) h+="Nastav data-az na: "+(hesc(azInp.value)||"(prázdne)")+"\n";
         if(refChg) h+="Nastav data-ourref na: "+(hesc(ourrefInp.value)||"(prázdne)")+"\n";
+        h+="(Ak zmena data-area mení typ podania, uprav aj text v .case-meta a chip — 9 jazykov.)\n";
       }
     }
     if(important) h+="Dôležité: ÁNO (❗ červený výkričník + .item.imp)\n";
@@ -587,6 +614,7 @@ function makeSlot(idx){
   function reset(){
     kauzaSel.selectedIndex=0; kauzaNew.value=""; kauzaNew.style.display="none"; courtNew.value=""; courtNew.style.display="none"; if(courtHint) courtHint.style.display="none";
     if(newcaseBlk) newcaseBlk.style.display="none";
+    root.querySelectorAll('.catchip').forEach(c=>c.classList.remove('on'));
     if(azInp) azInp.value=""; if(ourrefInp) ourrefInp.value=""; if(begleitInp) begleitInp.value="";
     subjInp.value=""; fixSubj.value=""; dateInp.value=""; noDate.checked=false; dateInp.disabled=false;
     impChk.checked=false; important=false; accessSel.value="pub"; fnameInp.value="";
