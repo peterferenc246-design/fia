@@ -135,11 +135,19 @@
         if (activeBtn === b) {
           // druhy klik na aktivne = reset (skry vsetko)
           activeBtn = null;
+          b.classList.remove("active");
           showOnly([]);
           return;
         }
+        rbtns.forEach(function (x) { x.classList.remove("active"); });
         activeBtn = b;
-        showOnly(idsFor(b));
+        b.classList.add("active");
+        if (b.hasAttribute("data-regall")) {
+          // dlazdica "Vsetky" = zobraz konania zo VSETKYCH kauz pod sebou
+          showOnly(allCards().map(function (c) { return c.id; }));
+        } else {
+          showOnly(idsFor(b));
+        }
       });
     });
 
