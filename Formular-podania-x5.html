@@ -283,6 +283,7 @@ function makeSlot(idx){
           <div class="catgrp">
             <div class="glbl">Jurisdikcia / krajina (data-cat)</div>
             <div class="chips-pick">
+              <span class="catchip cat-all" data-jurall>🌐 Všetky<span class="ck">✓</span></span>
               <span class="catchip" data-jur="eu"><img src="https://flagcdn.com/eu.svg" alt="">EU<span class="ck">✓</span></span>
               <span class="catchip" data-jur="de"><img src="https://flagcdn.com/de.svg" alt="">Deutschland<span class="ck">✓</span></span>
               <span class="catchip" data-jur="sk"><img src="https://flagcdn.com/sk.svg" alt="">Slovensko<span class="ck">✓</span></span>
@@ -291,6 +292,7 @@ function makeSlot(idx){
           <div class="catgrp">
             <div class="glbl">Oblasť práva (data-area)</div>
             <div class="chips-pick">
+              <span class="catchip cat-all" data-areall>🌐 Všetky<span class="ck">✓</span></span>
               <span class="catchip" data-areaval="kartell">Kartellrecht<span class="ck">✓</span></span>
               <span class="catchip" data-areaval="gdpr">GDPR<span class="ck">✓</span></span>
               <span class="catchip" data-areaval="strafrecht">Trestné oznámenie<span class="ck">✓</span></span>
@@ -415,8 +417,27 @@ function makeSlot(idx){
   function clearLangFields(){ LANGS.forEach(l=>setField(l,"")); fallbackInp.value=""; }
   function currentCaseName(){ return kauzaSel.value==="__new__" ? esc(kauzaNew.value) : kauzaSel.value; }
 
-  // toggle-chip kategórie (klik zapne/vypne, viac naraz)
-  root.querySelectorAll('.catchip').forEach(c=>c.onclick=()=>{ c.classList.toggle('on'); updateSummary(); });
+  // toggle-chip kategórie (klik zapne/vypne, viac naraz) + chip "Všetky"
+  function syncAllChip(grp){
+    const attr=grp==='jur'?'data-jur':'data-areaval', allSel=grp==='jur'?'[data-jurall]':'[data-areall]';
+    const items=[...root.querySelectorAll('.catchip['+attr+']')];
+    const allBtn=root.querySelector('.catchip'+allSel);
+    if(allBtn) allBtn.classList.toggle('on', items.length>0 && items.every(x=>x.classList.contains('on')));
+  }
+  root.querySelectorAll('.catchip').forEach(c=>c.onclick=()=>{
+    if(c.hasAttribute('data-jurall')||c.hasAttribute('data-areall')){
+      const isJur=c.hasAttribute('data-jurall');
+      const items=[...root.querySelectorAll('.catchip['+(isJur?'data-jur':'data-areaval')+']')];
+      const turnOn=!items.every(x=>x.classList.contains('on'));
+      items.forEach(x=>x.classList.toggle('on',turnOn));
+      syncAllChip(isJur?'jur':'area');
+    } else {
+      c.classList.toggle('on');
+      if(c.hasAttribute('data-jur')) syncAllChip('jur');
+      if(c.hasAttribute('data-areaval')) syncAllChip('area');
+    }
+    updateSummary();
+  });
   function collectCats(){
     const jur=[...root.querySelectorAll('.catchip[data-jur].on')].map(c=>c.dataset.jur);
     const area=[...root.querySelectorAll('.catchip[data-areaval].on')].map(c=>c.dataset.areaval);
@@ -425,6 +446,7 @@ function makeSlot(idx){
   function setCats(jur,area){
     root.querySelectorAll('.catchip[data-jur]').forEach(c=>c.classList.toggle('on',(jur||[]).includes(c.dataset.jur)));
     root.querySelectorAll('.catchip[data-areaval]').forEach(c=>c.classList.toggle('on',(area||[]).includes(c.dataset.areaval)));
+    syncAllChip('jur'); syncAllChip('area');
   }
   function fillCatsFromCase(){
     const def=CASES[kauzaSel.value];
