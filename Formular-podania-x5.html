@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Formular-podania-x5</title>
+<style>
+  :root{--navy:#1F3864;--gold:#FFCB3E;--line:#d6dee9;--muted:#6B7C91;--ok:#3B6D11;--okbg:#EAF3DE;--red:#C00000}
+  *{box-sizing:border-box}
+  body{margin:0;background:#eef2f8;color:#24344c;font:15px/1.5 "Segoe UI",Calibri,Arial,sans-serif}
+  .wrap{max-width:920px;margin:0 auto;padding:22px 16px 60px}
+  h1{font-size:22px;color:var(--navy);margin:0 0 4px}
+  .sub{color:var(--muted);margin:0 0 20px;font-size:13.5px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:0 0 16px;box-shadow:0 4px 14px rgba(31,56,100,.06)}
+  .card h2{font-size:15px;color:var(--navy);margin:0 0 14px;display:flex;align-items:center;gap:8px}
+  .row{display:flex;flex-wrap:wrap;gap:14px}
+  .fld{flex:1 1 200px;display:flex;flex-direction:column;gap:5px}
+  label{font-size:12.5px;font-weight:600;color:#3a4d68}
+  input,select{font:inherit;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:#fbfcfe;color:#24344c}
+  input:focus,select:focus{outline:none;border-color:var(--navy);background:#fff}
+  select{width:100%}
+  .langgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+  @media(max-width:620px){.langgrid{grid-template-columns:1fr}}
+  .langrow{display:flex;align-items:center;gap:9px}
+  .flag{width:26px;height:18px;border-radius:3px;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+  .langrow input{flex:1;min-width:0}
+  .lcode{width:30px;font-weight:700;color:var(--navy);font-size:12px;flex:none}
+  .hint{font-size:12px;color:var(--muted);margin:8px 0 0}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  button{font:inherit;font-weight:700;border:0;border-radius:9px;padding:11px 18px;cursor:pointer}
+  .b-go{background:var(--navy);color:#fff}
+  .b-go:hover{filter:brightness(1.12)}
+  .b-go.big{padding:14px 22px;font-size:16px}
+  .b-copy{background:var(--gold);color:#3a2d00}
+  .b-copy:hover{filter:brightness(1.05)}
+  .b-ghost{background:#eef2f8;color:var(--navy);border:1px solid var(--line)}
+  .b-sm{padding:7px 12px;font-size:12.5px}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  textarea{width:100%;min-height:170px;font:12.5px/1.5 ui-monospace,"Cascadia Code",Consolas,monospace;
+    padding:12px;border:1px solid var(--line);border-radius:10px;background:#0f1b2d;color:#d7e3f4;resize:vertical;white-space:pre-wrap;word-break:break-all}
+  .out-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+  .copied{color:var(--ok);background:var(--okbg);font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;display:none}
+  .copied.show{display:inline-block}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex-wrap:wrap}
+  .seg button{background:#fbfcfe;color:#3a4d68;font-weight:600;border-radius:0;padding:8px 13px}
+  .seg button.on{background:var(--navy);color:#fff}
+  .seg button.on.del{background:var(--red)}
+  .note{background:#FFF8E1;border:1px solid #F3D98A;border-radius:10px;padding:11px 13px;font-size:12.5px;color:#6b5310;margin-top:14px}
+  code{background:#eef2f8;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12px}
+  .warn{display:none;margin-top:14px;background:#FDE8E8;border:1px solid #E7A3A3;border-radius:10px;padding:11px 13px;font-size:12.5px;color:#7a1f1f}
+  .warn.show{display:block}
+  .delwarn{display:none;margin-top:14px;background:#FDE8E8;border:1px solid #E7A3A3;border-radius:10px;padding:11px 13px;font-size:12.5px;color:#7a1f1f}
+  .delwarn.show{display:block}
+  input.bad{border-color:#C00000 !important;background:#fff3f3 !important}
+  .chk{display:flex;align-items:center;gap:7px;font-size:12.5px;color:#3a4d68;font-weight:600;margin-top:6px;cursor:pointer}
+  .chk input{width:16px;height:16px}
+  .chk.imp{color:var(--red)}
+  /* ===== SLOTY ===== */
+  /* ===== TAB-BAR (záložky 1·2·3·4·5 vedľa seba) ===== */
+  .tabbar{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+  .tab{flex:1 1 0;min-width:130px;cursor:pointer;border:1px solid var(--line);border-radius:12px;background:#fff;
+    padding:11px 12px;display:flex;align-items:center;gap:9px;box-shadow:0 2px 8px rgba(31,56,100,.05);transition:border-color .15s,box-shadow .15s}
+  .tab:hover{border-color:#a9bcd6}
+  .tab.active{border-color:var(--navy);box-shadow:0 0 0 2px rgba(31,56,100,.18)}
+  .tab .tnum{flex:none;width:26px;height:26px;border-radius:50%;background:#eef2f8;color:var(--navy);display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}
+  .tab.active .tnum{background:var(--navy);color:#fff}
+  .tab .tinfo{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .tab .tlabel{font-size:11.5px;font-weight:700;color:#3a4d68;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
+  .tab .tstate{font-size:10.5px;font-weight:700;color:var(--muted)}
+  .tab .tdot{flex:none;margin-left:auto;width:9px;height:9px;border-radius:50%;background:#cfd8e6}
+  .tab .tdot.used{background:var(--ok)}
+  .tab .tdot.del{background:var(--red)}
+  /* ===== SLOTY — zobrazený vždy jeden ===== */
+  .slot{background:#fff;border:1px solid var(--line);border-radius:14px;margin:0;box-shadow:0 4px 14px rgba(31,56,100,.06);overflow:hidden;display:none}
+  .slot.active{display:block}
+  .newcase{margin-top:12px;padding:13px 14px;border:1px dashed var(--navy);border-radius:10px;background:#f6f9fe}
+  .newcase .nctitle{font-size:12.5px;font-weight:800;color:var(--navy);margin:0 0 4px;display:flex;align-items:center;gap:6px}
+  .newcase .nchint{font-size:11.5px;color:#6B7C91;margin:0 0 12px}
+  .catgrp{margin-bottom:11px}
+  .catgrp .glbl{font-size:11px;font-weight:700;color:#6B7C91;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+  .chips-pick{display:flex;flex-wrap:wrap;gap:7px}
+  .catchip{cursor:pointer;user-select:none;border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:background .12s,border-color .12s,color .12s}
+  .catchip:hover{border-color:var(--navy)}
+  .catchip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .catchip img{width:1.05em;height:auto;border-radius:2px;vertical-align:-1px}
+  .catchip .ck{font-size:11px;width:11px;display:inline-block;opacity:0}
+  .catchip.on .ck{opacity:1}
+  .nc-refs{display:flex;flex-wrap:wrap;gap:12px;margin-top:2px}
+  .nc-refs .fld{flex:1 1 210px}
+  .slothdr{display:flex;align-items:center;gap:10px;padding:13px 18px;font-weight:700;color:var(--navy);background:#f7faff;border-bottom:1px solid var(--line)}
+  .slothdr .snum{flex:none;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+  .slothdr .ssum{flex:1;font-weight:600;color:#3a4d68;font-size:13px}
+  .slothdr .sstate{flex:none;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px;background:#eef2f8;color:var(--muted)}
+  .slothdr .sstate.used{background:var(--okbg);color:var(--ok)}
+  .slothdr .sstate.del{background:#FDE8E8;color:var(--red)}
+  .slotbody{padding:16px 18px}
+  .sub-block{border-top:1px dashed var(--line);margin-top:14px;padding-top:14px}
+  .sub-block>label.blbl{display:block;margin-bottom:10px;color:var(--navy);font-weight:700;font-size:12.5px}
+  /* ===== ŽIVÝ NÁHĽAD ===== */
+  .prev{--navy:#1F3864;--muted:#6B7C91;--line:rgba(31,56,100,.12);background:#F7F9FC;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:4px;font-family:"Segoe UI",Calibri,Arial,sans-serif}
+  .prev .pflags{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+  .prev .pklng{position:absolute;left:-9999px;opacity:0}
+  .prev label.pflag{padding:3px;border:2px solid transparent;border-radius:7px;background:#fff;cursor:pointer;line-height:0;box-shadow:0 1px 3px rgba(0,0,0,.14);display:inline-block}
+  .prev label.pflag img{display:block;width:26px;height:auto;border-radius:2px;pointer-events:none}
+  .prev .gtl{display:none}
+  .prev #pklng-de:checked~.pwrap .gtl.de,.prev #pklng-en:checked~.pwrap .gtl.en,.prev #pklng-sk:checked~.pwrap .gtl.sk,.prev #pklng-hr:checked~.pwrap .gtl.hr,.prev #pklng-pl:checked~.pwrap .gtl.pl,.prev #pklng-es:checked~.pwrap .gtl.es,.prev #pklng-it:checked~.pwrap .gtl.it,.prev #pklng-fr:checked~.pwrap .gtl.fr,.prev #pklng-sv:checked~.pwrap .gtl.sv{display:inline}
+  .prev #pklng-de:checked~.pflags label[data-l="de"],.prev #pklng-en:checked~.pflags label[data-l="en"],.prev #pklng-sk:checked~.pflags label[data-l="sk"],.prev #pklng-hr:checked~.pflags label[data-l="hr"],.prev #pklng-pl:checked~.pflags label[data-l="pl"],.prev #pklng-es:checked~.pflags label[data-l="es"],.prev #pklng-it:checked~.pflags label[data-l="it"],.prev #pklng-fr:checked~.pflags label[data-l="fr"],.prev #pklng-sv:checked~.pflags label[data-l="sv"]{border-color:var(--navy);box-shadow:0 0 0 3px rgba(31,56,100,.28)}
+  .prev .item{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .prev .item.imp{border-left:3px solid var(--red)}
+  .prev .impx{color:var(--red);font-weight:800;margin-right:5px}
+  .prev .item .top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:5px}
+  .prev .item .date{font-size:11px;color:var(--muted);font-weight:600}
+  .prev .acc{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px}
+  .prev .acc-pub{background:#EAF3DE;color:#3B6D11}.prev .acc-pwd{background:#FAEEDA;color:#854F0B}
+  .prev .item .subj{font-size:13px;color:#3a4658;margin:2px 0 6px}
+  .prev .admin-fname{display:block;font-size:11px;color:#6B7C91;font-style:italic;margin:2px 0 6px;background:#fff6da;border:1px dashed #e3c766;border-radius:6px;padding:3px 8px}
+  .begleit-ta{width:100%;box-sizing:border-box;height:72px;min-height:44px;resize:vertical;font:inherit;font-size:13px;line-height:1.5;color:#34435A;padding:8px 10px;border:1px solid #C9D6E5;border-radius:8px;background:#fff;margin-top:2px;display:block}
+  .begleit-ta:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(31,56,100,.12)}
+  .prev .item .open{font-size:11.5px;color:var(--navy);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:5px}
+  .prev .pcount{font-size:11.5px;color:var(--muted);margin-top:9px}
+  .prev-empty{font-size:12.5px;color:var(--muted);font-style:italic}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>FIA FOX — Pridať / opraviť / vymazať podania (×5)</h1>
+  <p class="sub">Vyplň až <b>5 podaní naraz</b> → <b>Generovať všetkých 5</b> → <b>Kopírovať</b> → pošli Claudovi do chatu. Claude ich vloží/zmení/vymaže v #303 cez API jedným zápisom. Prázdne sloty sa preskočia. Nič sa neukladá v tomto okne.</p>
+
+  <div id="tabbar" class="tabbar"></div>
+  <div id="slots"></div>
+
+  <div class="card">
+    <div class="btnrow" style="margin:0">
+      <button class="b-go big" id="genAll">⚙️ Generovať všetkých 5</button>
+      <button class="b-ghost" id="clearAll">Vyčistiť všetko</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="out-head">
+      <h2 style="margin:0">Výsledok pre Claude <span class="copied" id="copied">skopírované ✓</span></h2>
+      <div class="btnrow" style="margin:0">
+        <button class="b-copy" id="copy">📋 Kopírovať všetko</button>
+      </div>
+    </div>
+    <textarea id="out" placeholder="Tu sa objaví hotový výstup pre všetky vyplnené sloty…" readonly></textarea>
+    <div class="note">Pošli <b>celý</b> blok Claudovi do chatu. Každé podanie má vlastnú hlavičku (kauza · smer · akcia). Pri <b>Vymazať</b> sa negeneruje markup — len pokyn, ktorý riadok odstrániť. Claude všetko zapracuje do #303 cez <code>page-sections.replace</code> jedným zápisom; ty publikuješ cez Quick Edit.</div>
+  </div>
+
+  <div class="card">
+    <h2>Živý náhľad <span style="font-weight:400;color:var(--muted);font-size:12.5px">— „👁 Náhľad" v slote vykreslí jeho riadok sem; klikaj vlajky</span></h2>
+    <div class="prev" id="prev"><span class="prev-empty">Náhľad sa zobrazí po kliknutí na „👁 Náhľad" v niektorom slote.</span></div>
+  </div>
+</div>
+
+<script>
+// ===== Konštanty — zhodné s gen_switch.py (skill jazykovy-prepinac-sudne-spory) =====
+const LANGS = ["de","en","sk","hr","pl","es","it","fr","sv"];
+const FLAG = {de:"de",en:"gb",sk:"sk",hr:"hr",pl:"pl",es:"es",it:"it",fr:"fr",sv:"se"}; // en→gb, sv→se
+const OPEN = {
+  de:"📄 Dokument öffnen", en:"📄 Open document", sk:"📄 Otvoriť dokument",
+  hr:"📄 Otvori dokument", pl:"📄 Otwórz dokument", es:"📄 Abrir documento",
+  it:"📄 Apri documento", fr:"📄 Ouvrir le document", sv:"📄 Öppna dokument"
+};
+const ACC_PUB = {de:"🌐 Öffentlich",en:"🌐 Public",sk:"🌐 Verejné",hr:"🌐 Javno",pl:"🌐 Publiczne",es:"🌐 Público",it:"🌐 Pubblico",fr:"🌐 Public",sv:"🌐 Offentlig"};
+const ACC_PWD = {de:"🔒 Passwort",en:"🔒 Password",sk:"🔒 Heslo",hr:"🔒 Lozinka",pl:"🔒 Hasło",es:"🔒 Contraseña",it:"🔒 Password",fr:"🔒 Mot de passe",sv:"🔒 Lösenord"};
+const DE_QES = "https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQB3IGef-GG-TbkQXvX6NdbQAd8G1-zv2I6Exxw6qW9ASrI";
+const EN_PDF = "https://foxprof.club/wp-content/uploads/2026/06/01.EN_Action_Annulment_M10815_EN_v2.pdf";
+const SK_PDF = "https://foxprof.club/wp-content/uploads/2026/06/01.01_Klage_Nichtigkeit_EK_Entscheidung_M10815_DT_O2_Vodafone_Orange_SK.pdf";
+
+// ===== KNIŽNICA KÁUZ A DOKUMENTOV — reálny aktuálny stav odkazov v #303 =====
+function single(u,opt){ const o={_fallback:u}; LANGS.forEach(l=>o[l]=u); if(opt) Object.assign(o,opt); return o; }
+function recv(u,opt){ const o=single(u,opt); o._dir="recv"; return o; }
+const CASES = {
+  "Nichtigkeitsklage — Zusammenschluss (Joint Venture) M.10815": {
+    short: "M.10815",
+    meta: { cat:["eu"], area:["kartell"], az:"T‑61/26", ourref:"" },
+    docs: {
+      "Nichtigkeitsklage (Art. 263 AEUV) — M.10815 · QES": {
+        de:DE_QES, en:EN_PDF, sk:SK_PDF, hr:EN_PDF, pl:EN_PDF, es:EN_PDF, it:EN_PDF, fr:EN_PDF, sv:EN_PDF, _fallback:EN_PDF, _date:"14. 04. 2026"
+      },
+      "Antrag auf Beiordnung eines Rechtsanwalts · QES":
+        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQChXB4ZzJ8SRYM8W9cBv1dMAQZlsgSadNwJV5WW-Um2SfM",{_date:"13. 12. 2025",_fname:"03_ANTWORT AUF DIE ABLEHNUNG DES ANTRAGS AUF ZUGANG ZU e-CURIA_signed with QES.pdf"}),
+      "Antwort auf die Ablehnung des e‑Curia‑Zugangs · QES":
+        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQAh1zho_IyrQZ_dD0WW9HB_AQk7CawuKtkzri4tct2S9so",{_date:"24. 12. 2025"}),
+      "e‑Curia — Antrag auf Kontoeröffnung":
+        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQBxZRBASQGfSKDFtMTGFnCDAewoSLcTWCiX-k1mpA3ww1Y",{_date:"—"}),
+      "Eingangsbestätigung der Klage / Az.-Zuteilung (Kanzlei des Gerichts)":
+        recv("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQAOYIIgM3OYR7hFAjs_vzEoAXD6AIbrfInX1Jciaiz72V0",{_date:"—"}),
+      "⚠️ Beschluss des Gerichtspräsidenten — Ablehnung der Prozesskostenhilfe · VERTRAULICH (Kennzeichnung des Gerichts vor Veröffentlichung prüfen)":
+        recv("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQAPEEPuZd_iT5Bne-p2oslVAXWzmb0ZkWmlQedpwxHVO8Q",{_date:"—"}),
+      "Begleitschreiben der Kanzlei (T‑61/26 AJ)":
+        recv("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQABZBHvtQJ7R5GHTZAPap0-AbHh0mwshOBo-upiM_-UZNs",{_date:"—"}),
+      "Europäische Kommission — Schreiben / Stellungnahme":
+        recv("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQDpWWat2A1STY6NqI4E8L9IAZ84t4GYSuL3x74x-Pc3lDA",{_date:"—"}),
+      "Eilantrag — Zustellungsbestätigung (Lesebestätigung)":
+        recv("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQAwiQC1y7XTR5dPnZ1gORaWAQqJgkQcOlk6-fZG2lYjINM",{_date:"—"})
+    }
+  },
+  "Beschwerde wegen Kartellpraktiken — DG COMP": {
+    short: "DG COMP",
+    meta: { cat:["eu"], area:["kartell"], az:"", ourref:"" },
+    docs: {
+      "Förmliche Beschwerde (Form C) — mutmaßliche Kartellpraktiken": { _date:"10. 03. 2026", _access:"pwd" }
+    }
+  },
+  "Strafrechtliche Mitteilung gegen Deutsche Telekom AG": {
+    short: "Telekom",
+    meta: { cat:["de"], area:["strafrecht"], az:"", ourref:"" },
+    docs: {
+      "Strafrechtliche Mitteilung":
+        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQDUGe_w9cSIQaBMiSflVsC0AfDCgKAeyVZZcrKAPqFmm0Q?e=mE3dwu",{_date:"11.07.2024",_imp:true,_fname:"Strafrechtliche Mitteilung_Telekom - Schufa_sharp_EN_DE_SK_signed with QES.pdf"})
+    }
+  }
+};
+const CASE_NAMES = Object.keys(CASES);
+
+// ===== Generátory (zrkadlia Python; buildItem rozšírený o ❗ important) =====
+const esc = s => (s||"").trim();
+const hesc = s => esc(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const hurl = s => esc(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;");
+const hsnap = o => JSON.stringify(o).replace(/&/g,"&amp;").replace(/'/g,"&#39;").replace(/</g,"&lt;");
+const okUrl = u => { const v=esc(u); return v==="" || /^https:\/\//i.test(v) || v.startsWith("#"); };
+const slugify = s => (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,40) || "kauza";
+
+function docMulti(urls, fallback){
+  return LANGS.map(l=>{
+    const href = esc(urls[l]) || esc(fallback);
+    if(!href) throw new Error(`jazyk ${l.toUpperCase()} nemá URL a nie je fallback`);
+    const a=`<a class="open" href="${hurl(href)}" target="_blank" rel="noopener">${OPEN[l]}</a>`;
+    return `<span class="gtl ${l}">${a}</span>`;
+  }).join("");
+}
+function buildItem(date,subj,urls,access,fallback,important,fname,snap){
+  const badge = access==="pwd"?ACC_PWD:ACC_PUB;
+  const cls = access==="pwd"?"acc-pwd":"acc-pub";
+  const badgeHtml = LANGS.map(l=>`<span class="gtl ${l}">${badge[l]}</span>`).join("");
+  const link = docMulti(urls,fallback);
+  const impCls = important ? " imp" : "";
+  const impMark = important ? '<span class="impx" title="Dôležité">❗</span>' : "";
+  const fnameHtml = esc(fname) ? `<span class="admin-fname">🛈 ${hesc(fname)}</span>` : "";
+  const snapAttr = snap ? " data-snap='"+hsnap(snap)+"'" : "";
+  return `<div class="item${impCls}"${snapAttr}><div class="top"><span class="date">${hesc(date)||"—"}</span>`+
+         `<span class="acc ${cls}">${badgeHtml}</span></div>`+
+         `<div class="subj">${impMark}${hesc(subj)}</div>${fnameHtml}${link}</div>`;
+}
+
+// ===== SLOT — nezávislý vstupný blok =====
+function caseOptions(sel){
+  return CASE_NAMES.map(n=>`<option value="${n.replace(/"/g,'&quot;')}"${n===sel?" selected":""}>${n}</option>`).join("")
+    + `<option value="__new__">➕ Nová kauza (vlastný názov)</option>`;
+}
+function makeSlot(idx){
+  const NEWDOC="__newdoc__";
+  let mode="item", action="new", dir="sent", important=false;
+
+  const root=document.createElement("div");
+  root.className="slot";
+  if(idx===0) root.classList.add("active");
+  root.innerHTML = `
+  <div class="slothdr">
+    <span class="snum">${idx+1}</span>
+    <span class="ssum" data-ssum>Podanie ${idx+1} — prázdne</span>
+    <span class="sstate" data-sstate>prázdne</span>
+  </div>
+  <div class="slotbody">
+    <div class="row">
+      <div class="fld">
+        <label>Kauza</label>
+        <select data-kauza>${caseOptions(CASE_NAMES[0])}</select>
+        <input data-kauzanew placeholder="Napíš názov novej kauzy" style="display:none;margin-top:8px">
+        <input data-courtnew placeholder="Orgán / súd — plný názov pod titulok (napr. Všeobecný súd Európskej únie)" style="display:none;margin-top:8px" title="Vloží sa do .court riadku karty. 9 jazykov doplní Claude.">
+        <p class="nchint" data-courthint style="display:none">🏛 Orgán/súd sa zobrazí pod názvom kauzy (riadok <code>.court</code>). Stačí 1 jazyk — ostatných 8 doplní Claude.</p>
+        <div class="newcase" data-newcase style="display:none">
+          <p class="nctitle">🏷 Kategórie a spis. značky kauzy <span style="font-weight:600;color:#6B7C91">(pri existujúcej kauze sú predvyplnené z #303 — klikni a zmeň; zmena sa prenesie na celú kartu vrátane starších položiek)</span></p>
+          <p class="nchint">Klikni kategórie — <b>zapni/vypni</b>, môžeš zvoliť aj viac naraz (jurisdikcia aj oblasť).</p>
+          <div class="catgrp">
+            <div class="glbl">Jurisdikcia / krajina (data-cat)</div>
+            <div class="chips-pick">
+              <span class="catchip" data-jur="eu"><img src="https://flagcdn.com/eu.svg" alt="">EU<span class="ck">✓</span></span>
+              <span class="catchip" data-jur="de"><img src="https://flagcdn.com/de.svg" alt="">Deutschland<span class="ck">✓</span></span>
+              <span class="catchip" data-jur="sk"><img src="https://flagcdn.com/sk.svg" alt="">Slovensko<span class="ck">✓</span></span>
+            </div>
+          </div>
+          <div class="catgrp">
+            <div class="glbl">Oblasť práva (data-area)</div>
+            <div class="chips-pick">
+              <span class="catchip" data-areaval="kartell">Kartellrecht<span class="ck">✓</span></span>
+              <span class="catchip" data-areaval="gdpr">GDPR<span class="ck">✓</span></span>
+              <span class="catchip" data-areaval="strafrecht">Trestné oznámenie<span class="ck">✓</span></span>
+            </div>
+          </div>
+          <div class="nc-refs">
+            <div class="fld"><label>Az. — súdna / úradná spis. zn. (data-az)</label><input data-az placeholder="napr. T‑61/26"></div>
+            <div class="fld"><label>Naša spis. zn. — interná (data-ourref)</label><input data-ourref placeholder="napr. PR‑2026‑EXS‑017"></div>
+          </div>
+          <div class="begleit-wrap">
+            <p class="nctitle" style="margin-top:14px">📝 Sprievodný text (Begleittext) — modal kauzy <span style="font-weight:600;color:#6B7C91">(voliteľné; píš po SK → Claude rozloží do 9 jazykov a vytvorí/napojí modal kauzy)</span></p>
+            <textarea data-begleit class="begleit-ta" placeholder="Stručne: o čo v podaní ide, prečo bolo podané, stav/odpovede, tvoj komentár — transparentne pre verejnosť. Prázdny riadok = nový odsek. (Pole roztiahneš za pravý dolný roh.)"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <div class="fld">
+        <label>Dokument (vyber existujúci → polia sa predvyplnia; alebo „Nový")</label>
+        <select data-doc></select>
+      </div>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <div class="fld">
+        <label>Akcia</label>
+        <div class="seg" data-action>
+          <button type="button" data-a="new" class="on">➕ Pridať</button>
+          <button type="button" data-a="fix">✏️ Opraviť</button>
+          <button type="button" data-a="del">🗑 Vymazať</button>
+        </div>
+      </div>
+      <div class="fld">
+        <label>Smer</label>
+        <div class="seg" data-dir>
+          <button type="button" data-d="sent" class="on">↗ Odoslané</button>
+          <button type="button" data-d="recv">↙ Došlé</button>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:14px;display:none" data-fixrow>
+      <div class="fld">
+        <label data-fixlbl>Predmet riadku, ktorý meníme (presne ako je v #303)</label>
+        <input data-fixsubj placeholder="napr. Nichtigkeitsklage (Art. 263 AEUV) — M.10815 · QES">
+      </div>
+    </div>
+    <div class="delwarn" data-delwarn>🗑 <b>Vymazať položku:</b> Claude odstráni z #303 riadok s týmto presným predmetom v zvolenej kauze/smere. Negeneruje sa markup. Skontroluj, že predmet sedí na 1 riadok.</div>
+    <div class="warn" data-confid>⚠️ <b>Došlé podanie v prebiehajúcom konaní?</b> Skontroluj, či dokument nie je <b>VERTRAULICH</b> (napr. súdne rozhodnutie). Zverejnenie pred uvoľnením súdom môže byť procesné riziko — pri pochybnosti daj 🔒 Heslo alebo nezverejňuj.</div>
+
+    <div class="sub-block" data-contentblock>
+      <label class="blbl">Obsah položky</label>
+      <div class="row">
+        <div class="fld">
+          <label>Typ výstupu</label>
+          <div class="seg" data-mode>
+            <button type="button" data-m="item" class="on">Celý riadok</button>
+            <button type="button" data-m="doc">Len odkaz</button>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:14px" data-metarow>
+        <div class="fld" style="flex:0 0 150px"><label>Dátum</label><input data-date placeholder="14. 04. 2026">
+          <label class="chk"><input type="checkbox" data-nodate> bez dátumu (—)</label>
+        </div>
+        <div class="fld"><label>Predmet (subj)</label><input data-subj placeholder="Nichtigkeitsklage (Art. 263 AEUV) — M.10815 · QES"></div>
+        <div class="fld" style="flex:0 0 160px">
+          <label>Prístup</label>
+          <select data-access><option value="pub">🌐 Verejné</option><option value="pwd">🔒 Heslo</option></select>
+        </div>
+      </div>
+      <label class="chk imp" style="margin-top:12px"><input type="checkbox" data-imp> ❗ Označiť ako dôležité (červený výkričník + ľavý okraj)</label>
+      <div class="row" style="margin-top:12px">
+        <div class="fld">
+          <label>🛈 Názov súboru — vidíš LEN ty ako prihlásený admin, verejnosť nie (pomôcka pri kontrole, ktorý súbor je za predmetom)</label>
+          <input data-fname placeholder="napr. 03_ANTWORT…_signed with QES.pdf">
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-block" data-linksblock>
+      <label class="blbl">Odkazy na dokument (jeden súbor pre každý jazyk)</label>
+      <div class="langgrid" data-langs></div>
+      <div class="row" style="margin-top:12px">
+        <div class="fld">
+          <label>Fallback URL — pre každý prázdny jazyk (napr. EN PDF)</label>
+          <input data-fallback placeholder="https://foxprof.club/wp-content/uploads/.../EN.pdf">
+        </div>
+      </div>
+    </div>
+
+    <div class="btnrow" style="margin-top:16px">
+      <button type="button" class="b-ghost b-sm" data-fill disabled>⚡ Načítať uložený stav dokumentu</button>
+      <button type="button" class="b-ghost b-sm" data-preview>👁 Náhľad</button>
+      <button type="button" class="b-ghost b-sm" data-reset>↺ Vyčistiť slot</button>
+    </div>
+  </div>`;
+
+  // --- lokálne odkazy ---
+  const q=s=>root.querySelector(s);
+  const kauzaSel=q("[data-kauza]"), kauzaNew=q("[data-kauzanew]"), courtNew=q("[data-courtnew]"), courtHint=q("[data-courthint]"), docSel=q("[data-doc]");
+  const newcaseBlk=q("[data-newcase]"), azInp=q("[data-az]"), ourrefInp=q("[data-ourref]"), begleitInp=q("[data-begleit]");
+  const fixRow=q("[data-fixrow]"), fixSubj=q("[data-fixsubj]"), fixLbl=q("[data-fixlbl]");
+  const delWarn=q("[data-delwarn]"), confid=q("[data-confid]");
+  const contentBlock=q("[data-contentblock]"), linksBlock=q("[data-linksblock]");
+  const metaRow=q("[data-metarow]"), dateInp=q("[data-date]"), noDate=q("[data-nodate]");
+  const subjInp=q("[data-subj]"), accessSel=q("[data-access]"), impChk=q("[data-imp]"), fnameInp=q("[data-fname]");
+  const langsBox=q("[data-langs]"), fallbackInp=q("[data-fallback]");
+  const fillBtn=q("[data-fill]");
+  const ssum=q("[data-ssum]"), sstate=q("[data-sstate]");
+
+  // jazykové polia
+  LANGS.forEach(l=>{
+    const rowEl=document.createElement("div"); rowEl.className="langrow";
+    rowEl.innerHTML =
+      `<img class="flag" src="https://flagcdn.com/${FLAG[l]}.svg" alt="${l.toUpperCase()}">`+
+      `<span class="lcode">${l.toUpperCase()}</span>`+
+      `<input data-lang="${l}" placeholder="URL pre ${l.toUpperCase()} (prázdne → fallback)">`;
+    langsBox.appendChild(rowEl);
+  });
+
+  function setField(l,v){ const i=root.querySelector(`[data-lang="${l}"]`); if(i) i.value=v||""; }
+  function clearLangFields(){ LANGS.forEach(l=>setField(l,"")); fallbackInp.value=""; }
+  function currentCaseName(){ return kauzaSel.value==="__new__" ? esc(kauzaNew.value) : kauzaSel.value; }
+
+  // toggle-chip kategórie (klik zapne/vypne, viac naraz)
+  root.querySelectorAll('.catchip').forEach(c=>c.onclick=()=>{ c.classList.toggle('on'); updateSummary(); });
+  function collectCats(){
+    const jur=[...root.querySelectorAll('.catchip[data-jur].on')].map(c=>c.dataset.jur);
+    const area=[...root.querySelectorAll('.catchip[data-areaval].on')].map(c=>c.dataset.areaval);
+    return {jur,area};
+  }
+  function setCats(jur,area){
+    root.querySelectorAll('.catchip[data-jur]').forEach(c=>c.classList.toggle('on',(jur||[]).includes(c.dataset.jur)));
+    root.querySelectorAll('.catchip[data-areaval]').forEach(c=>c.classList.toggle('on',(area||[]).includes(c.dataset.areaval)));
+  }
+  function fillCatsFromCase(){
+    const def=CASES[kauzaSel.value];
+    if(def&&def.meta){ setCats(def.meta.cat,def.meta.area); azInp.value=def.meta.az||""; ourrefInp.value=def.meta.ourref||""; }
+    else { setCats([],[]); azInp.value=""; ourrefInp.value=""; }
+  }
+  function updateNewcaseVis(){
+    const show=action!=="del";
+    if(newcaseBlk) newcaseBlk.style.display=show?"block":"none";
+  }
+
+  function setMode(m){ mode=m; root.querySelectorAll('[data-mode] button').forEach(x=>x.classList.toggle('on',x.dataset.m===m));
+    metaRow.style.opacity=mode==="item"?"1":".45"; metaRow.style.pointerEvents=mode==="item"?"auto":"none"; }
+  root.querySelectorAll('[data-mode] button').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
+
+  function applyActionUI(){
+    root.querySelectorAll('[data-action] button').forEach(x=>{
+      const on=x.dataset.a===action; x.classList.toggle('on',on); x.classList.toggle('del',x.dataset.a==="del"&&on);
+    });
+    const isDel=action==="del", isFix=action==="fix";
+    fixRow.style.display=(isFix||isDel)?"flex":"none";
+    fixLbl.textContent=isDel?"Predmet riadku na VYMAZANIE (presne ako je v #303)":"Predmet riadku, ktorý meníme (presne ako je v #303)";
+    delWarn.classList.toggle('show',isDel);
+    contentBlock.style.display=isDel?"none":"block";
+    linksBlock.style.display=isDel?"none":"block";
+    updateNewcaseVis();
+    updateSummary();
+  }
+  function setAction(a){ action=a; applyActionUI(); }
+  root.querySelectorAll('[data-action] button').forEach(b=>b.onclick=()=>setAction(b.dataset.a));
+
+  function setDir(d){ dir=d; root.querySelectorAll('[data-dir] button').forEach(x=>x.classList.toggle('on',x.dataset.d===d));
+    confid.classList.toggle('show',dir==="recv"); }
+  root.querySelectorAll('[data-dir] button').forEach(b=>b.onclick=()=>setDir(b.dataset.d));
+
+  impChk.onchange=()=>{ important=impChk.checked; updateSummary(); };
+  noDate.onchange=()=>{ dateInp.disabled=noDate.checked; if(noDate.checked) dateInp.value=""; };
+  subjInp.oninput=updateSummary; fixSubj.oninput=updateSummary;
+
+  function refreshDocList(){
+    const isNew=kauzaSel.value==="__new__";
+    kauzaNew.style.display=isNew?"block":"none";
+    courtNew.style.display=isNew?"block":"none";
+    courtHint.style.display=isNew?"block":"none";
+    if(isNew){ setCats([],[]); azInp.value=""; ourrefInp.value=""; }
+    else { fillCatsFromCase(); }
+    updateNewcaseVis();
+    const def=(!isNew&&CASES[kauzaSel.value])?CASES[kauzaSel.value]:null;
+    docSel.innerHTML="";
+    if(def&&def.docs){ Object.keys(def.docs).forEach(name=>{ const o=document.createElement("option"); o.value=name; o.textContent=name; docSel.appendChild(o); }); }
+    const on=document.createElement("option"); on.value=NEWDOC; on.textContent="➕ Nový dokument"; docSel.appendChild(on);
+    docSel.value=NEWDOC; applyDoc();
+  }
+  function applyDoc(){
+    const def=CASES[kauzaSel.value];
+    const isNewDoc=docSel.value===NEWDOC;
+    if(isNewDoc||!def||!def.docs||!def.docs[docSel.value]){
+      clearLangFields();
+      dateInp.value=""; noDate.checked=false; dateInp.disabled=false; accessSel.value="pub"; impChk.checked=false; important=false; fnameInp.value="";
+      if(action!=="del") setAction("new");
+      fillBtn.disabled=true; fillBtn.textContent="⚡ Vyber existujúci dokument";
+    }else{
+      const d=def.docs[docSel.value];
+      LANGS.forEach(l=>setField(l,d[l]||""));
+      fallbackInp.value=d._fallback||"";
+      setDir(d._dir||"sent");
+      // predvyplň AKTUÁLNY dátum / prístup / dôležité z #303 (aby sa pri oprave neprepísali)
+      if(d._date==="—"){ noDate.checked=true; dateInp.value=""; dateInp.disabled=true; }
+      else { noDate.checked=false; dateInp.disabled=false; dateInp.value=d._date||""; }
+      accessSel.value=d._access||"pub";
+      impChk.checked=!!d._imp; important=!!d._imp;
+      fnameInp.value=d._fname||"";
+      if(action!=="del") setAction("fix");
+      fixSubj.value=docSel.value;
+      if(!esc(subjInp.value)) subjInp.value=docSel.value;
+      fillBtn.disabled=false; fillBtn.textContent="↻ Znova načítať uložený stav";
+    }
+    validateUrls(); updateSummary();
+  }
+  kauzaSel.onchange=()=>{ refreshDocList(); };
+  kauzaNew.oninput=updateSummary;
+  courtNew.oninput=updateSummary;
+  begleitInp.oninput=updateSummary;
+  docSel.onchange=applyDoc;
+  fillBtn.onclick=applyDoc;
+
+  function validateUrls(){
+    const bad=[];
+    root.querySelectorAll('[data-lang],[data-fallback]').forEach(i=>{
+      const wrong=esc(i.value)!==""&&!okUrl(i.value);
+      i.classList.toggle('bad',wrong);
+      if(wrong) bad.push(i.dataset.lang?i.dataset.lang.toUpperCase():"Fallback");
+    });
+    return bad;
+  }
+  root.querySelectorAll('[data-lang],[data-fallback]').forEach(i=>i.oninput=()=>{ validateUrls(); });
+
+  function collectUrls(){ const u={}; root.querySelectorAll('[data-lang]').forEach(i=>{ if(esc(i.value)) u[i.dataset.lang]=i.value; }); return u; }
+
+  // je slot „použitý"?
+  function isUsed(){
+    if(action==="del"||action==="fix") return true;
+    if(esc(subjInp.value)) return true;
+    if(kauzaSel.value==="__new__"&&esc(kauzaNew.value)) return true;
+    if(esc(begleitInp.value)) return true;
+    let any=false; root.querySelectorAll('[data-lang]').forEach(i=>{ if(esc(i.value)) any=true; });
+    if(any||esc(fallbackInp.value)) return true;
+    return false;
+  }
+  function updateSummary(){
+    const used=isUsed();
+    const kz=currentCaseName()|| "(kauza nevyplnená)";
+    let txt, shortLabel;
+    if(action==="del"){ txt=`🗑 Vymazať: ${esc(fixSubj.value)||"(predmet nevyplnený)"} — ${kz}`; shortLabel=esc(fixSubj.value)||"vymazať"; }
+    else { const sj=esc(subjInp.value)||esc(fixSubj.value)||"(predmet nevyplnený)"; txt=`${action==="fix"?"✏️":"➕"} ${sj} — ${kz}`; shortLabel=esc(subjInp.value)||esc(fixSubj.value)||"(prázdne)"; }
+    ssum.textContent = used ? txt : `Podanie ${idx+1} — prázdne`;
+    sstate.textContent = !used?"prázdne":(action==="del"?"vymazať":"vyplnené");
+    sstate.className = "sstate"+(!used?"":(action==="del"?" del":" used"));
+    const stateCls = !used?"":(action==="del"?"del":"used");
+    const stateTxt = !used?"prázdne":(action==="del"?"🗑 vymazať":(action==="fix"?"✏️ opraviť":"➕ pridať"));
+    if(api.onState) api.onState(used?shortLabel:`Podanie ${idx+1}`, stateTxt, stateCls);
+  }
+
+  function header(){
+    const kauza=hesc(currentCaseName())||"(NEVYPLNENÁ — vyber alebo napíš kauzu!)";
+    const dirTxt=dir==="sent"?"Odoslané (Gesendet)":"Došlé (Empfangen)";
+    let h="";
+    if(action==="del"){
+      h+=`### PODANIE ${idx+1} — POKYN PRE CLAUDE (VYMAZAŤ) ###\n`;
+      h+="Kauza: "+kauza+"\n";
+      h+="Smer: "+dirTxt+"\n";
+      h+="Akcia: VYMAZAŤ položku\n";
+      h+="Predmet riadku na vymazanie: "+(hesc(fixSubj.value)||"(NEVYPLNENÉ — doplň predmet!)")+"\n";
+      h+="### (žiadny markup — Claude odstráni tento riadok z #303) ###\n";
+      return h;
+    }
+    const actTxt=action==="fix"?"Oprava / doplnenie existujúcej položky":"Nová položka";
+    h+=`### PODANIE ${idx+1} — POKYN PRE CLAUDE ###\n`;
+    h+="Kauza: "+kauza+"\n";
+    h+="Smer: "+dirTxt+"\n";
+    h+="Akcia: "+actTxt+"\n";
+    if(kauzaSel.value==="__new__"){
+      const c=collectCats();
+      h+="— NOVÁ KAUZA → postav celú kartu (BEZ Postfach bloku — Postfach je na #303 zámerne skrytý cez CSS #fia-kauzy .postfach{display:none}; novú kartu rob bez .postfach divu) —\n";
+      h+="Jurisdikcia (data-cat): "+(c.jur.join(" ")||"(nevybrané)")+"\n";
+      h+="Oblasť práva (data-area): "+(c.area.join(" ")||"(nevybrané)")+"\n";
+      if(esc(courtNew.value)) h+="Orgán/súd (plný názov do .court — 9 jazykov doplní Claude): "+hesc(courtNew.value)+"\n";
+      h+="Az. (data-az): "+(hesc(azInp.value)||"(prázdne)")+"\n";
+      h+="Naša spis. zn. (data-ourref): "+(hesc(ourrefInp.value)||"(prázdne)")+"\n";
+    } else {
+      // existujúca kauza: ak Peter zmenil kategórie/značky oproti uloženému stavu #303, daj POKYN na prepis karty
+      const c=collectCats();
+      const def=CASES[kauzaSel.value], m=(def&&def.meta)?def.meta:{cat:[],area:[],az:"",ourref:""};
+      const norm=a=>(a||[]).slice().sort().join(" ");
+      const catChg=norm(c.jur)!==norm(m.cat), areaChg=norm(c.area)!==norm(m.area);
+      const azChg=esc(azInp.value)!==esc(m.az||""), refChg=esc(ourrefInp.value)!==esc(m.ourref||"");
+      if(catChg||areaChg||azChg||refChg){
+        h+="— ZMENA KATEGÓRIÍ/ZNAČIEK KAUZY → uprav atribúty karty <details class=\"case\" …> v #303 (platí pre VŠETKY položky tejto kauzy, aj staršie) —\n";
+        if(catChg) h+="Nastav data-cat na: "+(c.jur.join(" ")||"(nevybrané)")+"\n";
+        if(areaChg) h+="Nastav data-area na: "+(c.area.join(" ")||"(nevybrané)")+"\n";
+        if(azChg) h+="Nastav data-az na: "+(hesc(azInp.value)||"(prázdne)")+"\n";
+        if(refChg) h+="Nastav data-ourref na: "+(hesc(ourrefInp.value)||"(prázdne)")+"\n";
+        h+="(Ak zmena data-area mení typ podania, uprav aj text v .case-meta a chip — 9 jazykov.)\n";
+      }
+    }
+    if(important) h+="Dôležité: ÁNO (❗ červený výkričník + .item.imp)\n";
+    if(esc(begleitInp.value)){
+      const sl=slugify(currentCaseName());
+      h+="— SPRIEVODNÝ TEXT (Begleittext) → modal kauzy —\n";
+      h+="Vytvor/aktualizuj modal kauzy: <div class=\"kmodal\" id=\""+sl+"-modal\"> vnútri .kwrap (CSS :target, bez JS, .kmodal-box + .kmodal-close ×), 9 jazykov cez .gtl-b (DE EN SK HR PL ES IT FR SV), nadpis <h3> „O tomto podaní“ (9 jaz.). Tlačidlo „Begleittext“ tejto karty napoj na href=\"#"+sl+"-modal\".\n";
+      h+="Obsah (píšem po SK — rozlož do všetkých 9 jazykov; prázdny riadok = nový odsek <p>):\n";
+      h+=esc(begleitInp.value)+"\n";
+    }
+    if(action==="fix") h+="Vymeniť riadok s predmetom: "+(hesc(fixSubj.value)||"(NEVYPLNENÉ — doplň predmet riadku!)")+"\n";
+    h+="Typ markupu: "+(mode==="item"?"celý riadok .item":"len odkaz (span-y .gtl)")+"\n";
+    h+="### MARKUP (toto vloží Claude do #303) ###\n";
+    return h;
+  }
+
+  // collect: vráti {text, markup, mode, important} alebo null ak nepoužitý; throw pri chybe
+  function collect(){
+    if(!isUsed()) return null;
+    if(action==="del"){
+      if(!esc(fixSubj.value)) throw new Error(`Slot ${idx+1}: pri Vymazať treba vyplniť predmet riadku.`);
+      return { text: header(), markup: null, mode, important };
+    }
+    const bad=validateUrls();
+    if(bad.length) throw new Error(`Slot ${idx+1}: URL nezačínajú https:// — ${bad.join(", ")}`);
+    const urls=collectUrls(), fb=fallbackInp.value;
+    let markup;
+    if(mode==="item"){
+      const subj=esc(subjInp.value);
+      if(!subj) throw new Error(`Slot ${idx+1}: vyplň Predmet (subj).`);
+      const dateVal=noDate.checked?"—":dateInp.value;
+      const snap=buildSnap(subj,dateVal,urls,accessSel.value,fb,important,fnameInp.value);
+      markup=buildItem(dateVal,subj,urls,accessSel.value,fb,important,fnameInp.value,snap);
+    }else{
+      markup=docMulti(urls,fb);
+    }
+    if(action==="fix"&&!esc(fixSubj.value)) throw new Error(`Slot ${idx+1}: pri Oprave treba predmet riadku, ktorý meníme.`);
+    return { text: header()+markup, markup, mode, important };
+  }
+
+  function reset(){
+    kauzaSel.selectedIndex=0; kauzaNew.value=""; kauzaNew.style.display="none"; courtNew.value=""; courtNew.style.display="none"; if(courtHint) courtHint.style.display="none";
+    if(newcaseBlk) newcaseBlk.style.display="none";
+    root.querySelectorAll('.catchip').forEach(c=>c.classList.remove('on'));
+    if(azInp) azInp.value=""; if(ourrefInp) ourrefInp.value=""; if(begleitInp) begleitInp.value="";
+    subjInp.value=""; fixSubj.value=""; dateInp.value=""; noDate.checked=false; dateInp.disabled=false;
+    impChk.checked=false; important=false; accessSel.value="pub"; fnameInp.value="";
+    setMode("item"); setAction("new"); setDir("sent");
+    refreshDocList();
+  }
+
+  function buildSnap(subj,date,urls,access,fallback,important,fname){
+    const c=collectCats();
+    return {v:1, kauza:currentCaseName(), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value)};
+  }
+  // predvyplnenie slotu z karty #303 (nezavisle od kniznice CASES)
+  function applySnap(snap){
+    if(!snap){ return; }
+    const kz=snap.kauza||"";
+    if(kz){
+      let found=false;
+      [].slice.call(kauzaSel.options).forEach(function(o){ if(o.value===kz){ found=true; } });
+      if(!found){ const o=document.createElement("option"); o.value=kz; o.textContent=kz; kauzaSel.insertBefore(o, kauzaSel.firstChild); }
+      kauzaSel.value=kz;
+    }
+    refreshDocList();
+    setAction("fix");
+    setDir(snap.dir||"sent");
+    setMode(snap.mode||"item");
+    fixSubj.value=snap.subj||"";
+    subjInp.value=snap.subj||"";
+    if((snap.date||"")==="—"){ noDate.checked=true; dateInp.value=""; dateInp.disabled=true; }
+    else { noDate.checked=false; dateInp.disabled=false; dateInp.value=snap.date||""; }
+    accessSel.value=snap.access||"pub";
+    impChk.checked=!!snap.important; important=!!snap.important;
+    fnameInp.value=snap.fname||"";
+    clearLangFields();
+    if(snap.urls){ LANGS.forEach(function(l){ setField(l, snap.urls[l]||""); }); }
+    fallbackInp.value=snap.fallback||"";
+    if(snap.cats){ setCats(snap.cats.jur||[], snap.cats.area||[]); }
+    if(snap.az!==undefined){ azInp.value=snap.az||""; }
+    if(snap.ourref!==undefined){ ourrefInp.value=snap.ourref||""; }
+    validateUrls(); updateSummary();
+  }
+
+  // API objekt (onState dopĺňa builder po vytvorení tabu)
+  const api = { root, collect, reset, onState:null, applySnap,
+    previewMarkup:()=>{ const r=collect(); return r?{markup:r.markup,mode:r.mode}:null; },
+    activate:()=>{ slots.forEach(s=>s.root.classList.remove("active")); root.classList.add("active"); } };
+
+  // init slotu
+  setMode("item"); setDir("sent");
+  refreshDocList();        // naplní doc list + applyDoc (TDZ-safe: generátory hore sú globálne)
+  setAction("new"); updateSummary();
+
+  return api;
+}
+
+// ===== Postav 5 slotov + taby =====
+const slotsBox=document.getElementById("slots");
+const tabbar=document.getElementById("tabbar");
+const slots=[];
+const tabs=[];
+for(let i=0;i<5;i++){
+  const s=makeSlot(i); slots.push(s); slotsBox.appendChild(s.root);
+  s.root.querySelector('[data-preview]').onclick=()=>doPreview(s);
+  s.root.querySelector('[data-reset]').onclick=()=>s.reset();
+  // tab
+  const tab=document.createElement("div");
+  tab.className="tab"+(i===0?" active":"");
+  tab.innerHTML=`<span class="tnum">${i+1}</span><span class="tinfo"><span class="tlabel" data-tlabel>Podanie ${i+1}</span><span class="tstate" data-tstate>prázdne</span></span><span class="tdot" data-tdot></span>`;
+  tab.onclick=()=>{ s.activate(); tabs.forEach(t=>t.classList.remove("active")); tab.classList.add("active"); };
+  tabbar.appendChild(tab); tabs.push(tab);
+  // prepojenie stavu slotu → tab
+  const tl=tab.querySelector('[data-tlabel]'), ts=tab.querySelector('[data-tstate]'), td=tab.querySelector('[data-tdot]');
+  s.onState=(label,stateTxt,cls)=>{ tl.textContent=label; ts.textContent=stateTxt; td.className="tdot"+(cls?(" "+cls):""); };
+}
+
+// ===== Edit z karty #303 cez postMessage =====
+window.addEventListener("message", function(e){
+  if(!/^https:\/\/(www\.)?foxprof\.club$/.test(e.origin)){ return; }
+  const d=e.data;
+  if(!d){ return; }
+  if(d.type!=="fiafox-edit"){ return; }
+  if(!d.snap){ return; }
+  const s0=slots[0];
+  s0.applySnap(d.snap);
+  s0.activate();
+  tabs.forEach(function(t){ t.classList.remove("active"); }); tabs[0].classList.add("active");
+  const w=document.querySelector(".wrap"); if(w){ w.scrollIntoView({behavior:"smooth",block:"start"}); }
+});
+
+// ===== Náhľad =====
+function renderPreview(markup, mode){
+  const box=document.getElementById("prev");
+  const radios=LANGS.map(l=>`<input type="radio" name="pklng" id="pklng-${l}" class="pklng"${l==="de"?" checked":""}>`).join("");
+  const flags=`<div class="pflags">`+LANGS.map(l=>
+    `<label class="pflag" data-l="${l}" for="pklng-${l}" title="${l.toUpperCase()}"><img src="https://flagcdn.com/${FLAG[l]}.svg" alt="${l.toUpperCase()}"></label>`
+  ).join("")+`</div>`;
+  const inner=(mode==="item")?markup:`<div class="item"><div class="subj">(len odkaz — výmena v existujúcom riadku)</div>${markup}</div>`;
+  box.innerHTML=radios+flags+`<div class="pwrap">${inner}</div>`+
+    `<div class="pcount">Klikni vlajky — má sa zobraziť vždy <b>iba jeden</b> odkaz pre navolený jazyk.</div>`;
+}
+function doPreview(slot){
+  try{
+    const r=slot.previewMarkup();
+    if(!r||!r.markup){ alert("Tento slot je v režime Vymazať alebo je prázdny — nie je čo zobraziť."); return; }
+    renderPreview(r.markup, r.mode);
+    document.getElementById("prev").scrollIntoView({behavior:"smooth",block:"center"});
+  }catch(e){ alert("⚠️ "+e.message); }
+}
+
+// ===== Generovať všetkých 5 =====
+document.getElementById("genAll").onclick=()=>{
+  try{
+    const parts=[];
+    for(const s of slots){ const r=s.collect(); if(r) parts.push(r.text); }
+    if(!parts.length){ alert("Nevyplnil si ani jeden slot."); return; }
+    const out=parts.join("\n\n");
+    document.getElementById("out").value=out;
+    // náhľad prvého slotu, ktorý dal markup
+    for(const s of slots){ const r=s.previewMarkup&&s.previewMarkup(); if(r&&r.markup){ renderPreview(r.markup,r.mode); break; } }
+  }catch(e){ alert("⚠️ "+e.message); }
+};
+document.getElementById("clearAll").onclick=()=>{
+  slots.forEach(s=>s.reset());
+  document.getElementById("out").value="";
+  document.getElementById("prev").innerHTML='<span class="prev-empty">Náhľad sa zobrazí po kliknutí na „👁 Náhľad" v niektorom slote.</span>';
+};
+document.getElementById("copy").onclick=()=>{
+  const v=document.getElementById("out").value; if(!v){ alert("Najprv vygeneruj výstup."); return; }
+  const fn=async()=>{ try{ await navigator.clipboard.writeText(v); }
+    catch{ const t=document.getElementById("out"); t.removeAttribute("readonly"); t.select(); document.execCommand("copy"); t.setAttribute("readonly","true"); } };
+  fn(); const c=document.getElementById("copied"); c.classList.add("show"); setTimeout(()=>c.classList.remove("show"),1600);
+};
+</script>
+</body>
+</html>
