@@ -279,7 +279,15 @@ function makeSlot(idx){
         <p class="nchint" data-courthint style="display:none">🏛 Orgán/súd sa zobrazí pod názvom kauzy (riadok <code>.court</code>). Stačí 1 jazyk — ostatných 8 doplní Claude.</p>
         <div class="newcase" data-newcase style="display:none">
           <p class="nctitle">🏷 Kategórie a spis. značky kauzy <span style="font-weight:600;color:#6B7C91">(pri existujúcej kauze sú predvyplnené z #303 — klikni a zmeň; zmena sa prenesie na celú kartu vrátane starších položiek)</span></p>
-          <p class="nchint">Klikni kategórie — <b>zapni/vypni</b>, môžeš zvoliť aj viac naraz.</p>
+          <p class="nchint">Klikni kategórie — <b>zapni/vypni</b>, môžeš zvoliť aj viac naraz (jurisdikcia aj oblasť).</p>
+          <div class="catgrp">
+            <div class="glbl">Jurisdikcia / krajina (data-cat)</div>
+            <div class="chips-pick">
+              <span class="catchip" data-jur="eu"><img src="https://flagcdn.com/eu.svg" alt="">EU<span class="ck">✓</span></span>
+              <span class="catchip" data-jur="de"><img src="https://flagcdn.com/de.svg" alt="">Deutschland<span class="ck">✓</span></span>
+              <span class="catchip" data-jur="sk"><img src="https://flagcdn.com/sk.svg" alt="">Slovensko<span class="ck">✓</span></span>
+            </div>
+          </div>
           <div class="catgrp">
             <div class="glbl">Oblasť práva (data-area)</div>
             <div class="chips-pick">
@@ -563,19 +571,22 @@ function makeSlot(idx){
     if(kauzaSel.value==="__new__"){
       const c=collectCats();
       h+="— NOVÁ KAUZA → postav celú kartu (BEZ Postfach bloku — Postfach je na #303 zámerne skrytý cez CSS #fia-kauzy .postfach{display:none}; novú kartu rob bez .postfach divu) —\n";
+      h+="Jurisdikcia (data-cat): "+(c.jur.join(" ")||"(nevybrané)")+"\n";
       h+="Oblasť práva (data-area): "+(c.area.join(" ")||"(nevybrané)")+"\n";
       if(esc(courtNew.value)) h+="Orgán/súd (plný názov do .court — 9 jazykov doplní Claude): "+hesc(courtNew.value)+"\n";
       h+="Az. (data-az): "+(hesc(azInp.value)||"(prázdne)")+"\n";
       h+="Naša spis. zn. (data-ourref): "+(hesc(ourrefInp.value)||"(prázdne)")+"\n";
+      h+="— DLAŽDICA DO REGISTRA (#fia-reg .rgrid) → pridaj aj <button class=\"rbtn\" data-spis=\"[Naša spis. zn. alebo Az.]\" data-jur=\""+(c.jur.join(" ")||"")+"\" data-ids=\"[ID karty napr. case-slug, inak prázdne]\"> s vlajkami .rf podľa data-jur, názvom .rt (9 jaz. .gtl), .rs = spis. zn., a stavom .rb rb-soon „In Vorbereitung“ (9 jaz.). Stav nechaj „Pripravuje sa“; data-ids dopíš keď bude karta hotová. —\n";
     } else {
       // existujúca kauza: ak Peter zmenil kategórie/značky oproti uloženému stavu #303, daj POKYN na prepis karty
       const c=collectCats();
       const def=CASES[kauzaSel.value], m=(def&&def.meta)?def.meta:{cat:[],area:[],az:"",ourref:""};
       const norm=a=>(a||[]).slice().sort().join(" ");
-      const areaChg=norm(c.area)!==norm(m.area);
+      const catChg=norm(c.jur)!==norm(m.cat), areaChg=norm(c.area)!==norm(m.area);
       const azChg=esc(azInp.value)!==esc(m.az||""), refChg=esc(ourrefInp.value)!==esc(m.ourref||"");
-      if(areaChg||azChg||refChg){
+      if(catChg||areaChg||azChg||refChg){
         h+="— ZMENA KATEGÓRIÍ/ZNAČIEK KAUZY → uprav atribúty karty <details class=\"case\" …> v #303 (platí pre VŠETKY položky tejto kauzy, aj staršie) —\n";
+        if(catChg) h+="Nastav data-cat na: "+(c.jur.join(" ")||"(nevybrané)")+"\n";
         if(areaChg) h+="Nastav data-area na: "+(c.area.join(" ")||"(nevybrané)")+"\n";
         if(azChg) h+="Nastav data-az na: "+(hesc(azInp.value)||"(prázdne)")+"\n";
         if(refChg) h+="Nastav data-ourref na: "+(hesc(ourrefInp.value)||"(prázdne)")+"\n";
