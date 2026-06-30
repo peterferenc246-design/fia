@@ -173,6 +173,7 @@ function single(u,opt){ const o={_fallback:u}; LANGS.forEach(l=>o[l]=u); if(opt)
 function recv(u,opt){ const o=single(u,opt); o._dir="recv"; return o; }
 const CASES = {
   "Nichtigkeitsklage — Zusammenschluss (Joint Venture) M.10815": {
+    id:"case-m10815",
     short: "M.10815",
     meta: { cat:["eu"], area:["kartell"], az:"T‑61/26", ourref:"" },
     docs: {
@@ -198,6 +199,7 @@ const CASES = {
     }
   },
   "Beschwerde wegen Kartellpraktiken — DG COMP": {
+    id:"case-dgcomp",
     short: "DG COMP",
     meta: { cat:["eu"], area:["kartell"], az:"", ourref:"" },
     docs: {
@@ -205,6 +207,7 @@ const CASES = {
     }
   },
   "Strafrechtliche Mitteilung gegen Deutsche Telekom AG": {
+    id:"case-telekom",
     short: "Telekom",
     meta: { cat:["de"], area:["strafrecht"], az:"", ourref:"" },
     docs: {
@@ -214,6 +217,19 @@ const CASES = {
   }
 };
 const CASE_NAMES = Object.keys(CASES);
+const KAUZY = {
+  "k-jv":   {label:"🇩🇪🇪🇺 Telekom — kartel / Joint Venture", spis:"TFIA-2026-JV-008", jur:["de","eu"], konania:["Nichtigkeitsklage — Zusammenschluss (Joint Venture) M.10815","Beschwerde wegen Kartellpraktiken — DG COMP","Strafrechtliche Mitteilung gegen Deutsche Telekom AG"]},
+  "k-fon":  {label:"🇩🇪 Telefónica — podvod", spis:"TCFIA-2026-FON-008", jur:["de"], konania:[]},
+  "k-lra":  {label:"🇩🇪 Landratsamt — Bußgeld", spis:"LRA-2026-BG-000", jur:["de"], konania:[]},
+  "k-ins":  {label:"🇩🇪 Insolvenčný návrh (Personal)", spis:"PER-DE-2026-INS-005", jur:["de"], konania:[]},
+  "k-exs":  {label:"🇸🇰 Vymáhanie odškodného 15 000 €", spis:"PR-2026-EXS-026", jur:["sk"], konania:[]},
+  "k-vszp": {label:"🇸🇰 Odškodné 10 000 € — VšZP", spis:"PR-2026-VsZ-006", jur:["sk"], konania:[]},
+  "k-ms":   {label:"🇩🇪🇪🇺 Microsoft — GDPR porušenia", spis:"PIF-EU-2026-MBS-004", jur:["de","eu"], konania:[]},
+  "k-dak":  {label:"🇩🇪 DAK — podvod (poisťovňa)", spis:"PER-DE-2026-DAK-", jur:["de"], konania:[]}
+};
+const KAUZA_KEYS = Object.keys(KAUZY);
+// kauzaKeyForKonanie: ktora kauza obsahuje dane konanie (nazov)
+function kauzaKeyForKonanie(kn){ for(const k of KAUZA_KEYS){ if(KAUZY[k].konania.indexOf(kn)>=0) return k; } return null; }
 
 // ===== Generátory (zrkadlia Python; buildItem rozšírený o ❗ important) =====
 const esc = s => (s||"").trim();
@@ -252,9 +268,14 @@ function buildItem(date,subj,urls,access,fallback,important,fname,snap,comments)
 }
 
 // ===== SLOT — nezávislý vstupný blok =====
-function caseOptions(sel){
-  return CASE_NAMES.map(n=>`<option value="${n.replace(/"/g,'&quot;')}"${n===sel?" selected":""}>${n}</option>`).join("")
-    + `<option value="__new__">➕ Nová kauza (vlastný názov)</option>`;
+function kauzaOptions(){
+  return KAUZA_KEYS.map(k=>`<option value="${k}">${KAUZY[k].label}</option>`).join("")
+    + `<option value="__newk__">➕ Nová kauza (nová dlaždica do registra)</option>`;
+}
+function konanieOptions(kk){
+  const ks=(KAUZY[kk]&&KAUZY[kk].konania)||[];
+  return ks.map(n=>`<option value="${n.replace(/"/g,'&quot;')}">${n}</option>`).join("")
+    + `<option value="__new__">➕ Nové konanie (nová karta)</option>`;
 }
 function makeSlot(idx){
   const NEWDOC="__newdoc__";
@@ -273,8 +294,26 @@ function makeSlot(idx){
     <div class="row">
       <div class="fld">
         <label>Kauza</label>
-        <select data-kauza>${caseOptions(CASE_NAMES[0])}</select>
-        <input data-kauzanew placeholder="Napíš názov novej kauzy" style="display:none;margin-top:8px">
+        <select data-kauza>${kauzaOptions()}</select>
+        <div class="newcase" data-newk style="display:none">
+          <p class="nctitle">🆕 Nová kauza — len dlaždica do registra <span style="font-weight:600;color:#6B7C91">(konania pridáš zvlášť, pod túto kauzu)</span></p>
+          <div class="fld"><label>Názov kauzy (1 jazyk — Claude rozloží do 9)</label><input data-knewname placeholder="napr. Vymáhanie odškodného 15 000 €"></div>
+          <div class="catgrp"><div class="glbl">Jurisdikcia / krajina (data-jur dlaždice)</div>
+            <div class="chips-pick">
+              <span class="catchip" data-kjur="eu"><img src="https://flagcdn.com/eu.svg" alt="">EU<span class="ck">✓</span></span>
+              <span class="catchip" data-kjur="de"><img src="https://flagcdn.com/de.svg" alt="">Deutschland<span class="ck">✓</span></span>
+              <span class="catchip" data-kjur="sk"><img src="https://flagcdn.com/sk.svg" alt="">Slovensko<span class="ck">✓</span></span>
+            </div>
+          </div>
+          <div class="fld"><label>Spis. zn. kauzy (data-spis)</label><input data-kspis placeholder="napr. PR‑2026‑EXS‑027"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <div class="fld">
+        <label>Konanie (karta v kauze)</label>
+        <select data-konanie></select>
+        <input data-kauzanew placeholder="Napíš názov nového konania" style="display:none;margin-top:8px">
         <input data-courtnew placeholder="Orgán / súd — plný názov pod titulok (napr. Všeobecný súd Európskej únie)" style="display:none;margin-top:8px" title="Vloží sa do .court riadku karty. 9 jazykov doplní Claude.">
         <p class="nchint" data-courthint style="display:none">🏛 Orgán/súd sa zobrazí pod názvom kauzy (riadok <code>.court</code>). Stačí 1 jazyk — ostatných 8 doplní Claude.</p>
         <div class="newcase" data-newcase style="display:none">
@@ -393,6 +432,7 @@ function makeSlot(idx){
   // --- lokálne odkazy ---
   const q=s=>root.querySelector(s);
   const kauzaSel=q("[data-kauza]"), kauzaNew=q("[data-kauzanew]"), courtNew=q("[data-courtnew]"), courtHint=q("[data-courthint]"), docSel=q("[data-doc]");
+  const konanieSel=q("[data-konanie]"), newkBlk=q("[data-newk]"), kNewName=q("[data-knewname]"), kSpis=q("[data-kspis]");
   const newcaseBlk=q("[data-newcase]"), azInp=q("[data-az]"), ourrefInp=q("[data-ourref]"), begleitInp=q("[data-begleit]");
   const fixRow=q("[data-fixrow]"), fixSubj=q("[data-fixsubj]"), fixLbl=q("[data-fixlbl]");
   const delWarn=q("[data-delwarn]"), confid=q("[data-confid]");
@@ -415,7 +455,8 @@ function makeSlot(idx){
 
   function setField(l,v){ const i=root.querySelector(`[data-lang="${l}"]`); if(i) i.value=v||""; }
   function clearLangFields(){ LANGS.forEach(l=>setField(l,"")); fallbackInp.value=""; }
-  function currentCaseName(){ return kauzaSel.value==="__new__" ? esc(kauzaNew.value) : kauzaSel.value; }
+  function currentCaseName(){ return konanieSel.value==="__new__" ? esc(kauzaNew.value) : konanieSel.value; }
+  function collectKJur(){ return [...root.querySelectorAll('.catchip[data-kjur].on')].map(c=>c.dataset.kjur); }
 
   // toggle-chip kategórie (klik zapne/vypne, viac naraz) + chip "Všetky"
   function syncAllChip(grp){
@@ -449,12 +490,12 @@ function makeSlot(idx){
     syncAllChip('jur'); syncAllChip('area');
   }
   function fillCatsFromCase(){
-    const def=CASES[kauzaSel.value];
+    const def=CASES[konanieSel.value];
     if(def&&def.meta){ setCats(def.meta.cat,def.meta.area); azInp.value=def.meta.az||""; ourrefInp.value=def.meta.ourref||""; }
     else { setCats([],[]); azInp.value=""; ourrefInp.value=""; }
   }
   function updateNewcaseVis(){
-    const show=action!=="del";
+    const show=action!=="del" && kauzaSel.value!=="__newk__";
     if(newcaseBlk) newcaseBlk.style.display=show?"block":"none";
   }
 
@@ -487,22 +528,38 @@ function makeSlot(idx){
   noDate.onchange=()=>{ dateInp.disabled=noDate.checked; if(noDate.checked) dateInp.value=""; };
   subjInp.oninput=updateSummary; fixSubj.oninput=updateSummary;
 
+  function refreshKonanieList(){
+    const isNewK=kauzaSel.value==="__newk__";
+    if(newkBlk) newkBlk.style.display=isNewK?"block":"none";
+    const konRow=konanieSel.closest(".row"), docRow=docSel.closest(".row");
+    if(konRow) konRow.style.display=isNewK?"none":"";
+    if(docRow) docRow.style.display=isNewK?"none":"";
+    konanieSel.innerHTML="";
+    if(!isNewK){
+      const ks=(KAUZY[kauzaSel.value]&&KAUZY[kauzaSel.value].konania)||[];
+      ks.forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;konanieSel.appendChild(o);});
+      const on=document.createElement("option"); on.value="__new__"; on.textContent="➕ Nové konanie (nová karta)"; konanieSel.appendChild(on);
+      konanieSel.value = ks.length ? ks[0] : "__new__";
+    }
+    refreshDocList();
+    updateNewcaseVis(); updateSummary();
+  }
   function refreshDocList(){
-    const isNew=kauzaSel.value==="__new__";
+    const isNew=konanieSel.value==="__new__";
     kauzaNew.style.display=isNew?"block":"none";
     courtNew.style.display=isNew?"block":"none";
     courtHint.style.display=isNew?"block":"none";
     if(isNew){ setCats([],[]); azInp.value=""; ourrefInp.value=""; }
     else { fillCatsFromCase(); }
     updateNewcaseVis();
-    const def=(!isNew&&CASES[kauzaSel.value])?CASES[kauzaSel.value]:null;
+    const def=(!isNew&&CASES[konanieSel.value])?CASES[konanieSel.value]:null;
     docSel.innerHTML="";
     if(def&&def.docs){ Object.keys(def.docs).forEach(name=>{ const o=document.createElement("option"); o.value=name; o.textContent=name; docSel.appendChild(o); }); }
     const on=document.createElement("option"); on.value=NEWDOC; on.textContent="➕ Nový dokument"; docSel.appendChild(on);
     docSel.value=NEWDOC; applyDoc();
   }
   function applyDoc(){
-    const def=CASES[kauzaSel.value];
+    const def=CASES[konanieSel.value];
     const isNewDoc=docSel.value===NEWDOC;
     if(isNewDoc||!def||!def.docs||!def.docs[docSel.value]){
       clearLangFields();
@@ -528,8 +585,11 @@ function makeSlot(idx){
     }
     validateUrls(); updateSummary();
   }
-  kauzaSel.onchange=()=>{ refreshDocList(); };
+  kauzaSel.onchange=()=>{ refreshKonanieList(); };
+  konanieSel.onchange=()=>{ refreshDocList(); };
   kauzaNew.oninput=updateSummary;
+  if(kNewName) kNewName.oninput=updateSummary;
+  if(kSpis) kSpis.oninput=updateSummary;
   courtNew.oninput=updateSummary;
   begleitInp.oninput=updateSummary;
   docSel.onchange=applyDoc;
@@ -551,8 +611,9 @@ function makeSlot(idx){
   // je slot „použitý"?
   function isUsed(){
     if(action==="del"||action==="fix") return true;
+    if(kauzaSel.value==="__newk__") return !!esc(kNewName.value);
+    if(konanieSel.value==="__new__"&&esc(kauzaNew.value)) return true;
     if(esc(subjInp.value)) return true;
-    if(kauzaSel.value==="__new__"&&esc(kauzaNew.value)) return true;
     if(esc(begleitInp.value)) return true;
     let any=false; root.querySelectorAll('[data-lang]').forEach(i=>{ if(esc(i.value)) any=true; });
     if(any||esc(fallbackInp.value)) return true;
@@ -573,41 +634,59 @@ function makeSlot(idx){
   }
 
   function header(){
-    const kauza=hesc(currentCaseName())||"(NEVYPLNENÁ — vyber alebo napíš kauzu!)";
+    const kk=kauzaSel.value;
+    const isNewK=kk==="__newk__";
+    const kauzaLbl=isNewK?(esc(kNewName.value)||"(NEVYPLNENÁ nová kauza!)"):((KAUZY[kk]&&KAUZY[kk].label)||kk);
+    const kauzaSpis=(KAUZY[kk]&&KAUZY[kk].spis)||"";
+    const konanie=currentCaseName()||"(konanie nevyplnené)";
     const dirTxt=dir==="sent"?"Odoslané (Gesendet)":"Došlé (Empfangen)";
     let h="";
     if(action==="del"){
       h+=`### PODANIE ${idx+1} — POKYN PRE CLAUDE (VYMAZAŤ) ###\n`;
-      h+="Kauza: "+kauza+"\n";
+      h+="Kauza: "+hesc(kauzaLbl)+(kauzaSpis?(" · "+kauzaSpis):"")+"\n";
+      h+="Konanie: "+hesc(konanie)+"\n";
       h+="Smer: "+dirTxt+"\n";
       h+="Akcia: VYMAZAŤ položku\n";
       h+="Predmet riadku na vymazanie: "+(hesc(fixSubj.value)||"(NEVYPLNENÉ — doplň predmet!)")+"\n";
       h+="### (žiadny markup — Claude odstráni tento riadok z #303) ###\n";
       return h;
     }
+    if(isNewK){
+      const kj=collectKJur();
+      h+=`### PODANIE ${idx+1} — POKYN PRE CLAUDE ###\n`;
+      h+="Akcia: NOVÁ KAUZA — pridaj DLAŽICU do registra #fia-reg .rgrid (žiadna karta)\n";
+      h+="Názov kauzy (1 jazyk — rozlož do 9 .gtl): "+(hesc(kNewName.value)||"(NEVYPLNENÉ!)")+"\n";
+      h+="Jurisdikcia (data-jur): "+(kj.join(" ")||"(NEVYBRANÉ!)")+"\n";
+      h+="Spis. zn. (data-spis): "+(hesc(kSpis.value)||"(prázdne)")+"\n";
+      h+="— Postav <button class=\"rbtn\" data-spis=\"…\" data-jur=\""+(kj.join(" ")||"")+"\" data-ids=\"\">: vlajky .rf podľa data-jur, názov .rt (9 jaz. .gtl), .rs = spis. zn., stav .rb rb-soon „In Vorbereitung / Pripravuje sa“ (9 jaz.). data-ids nechaj prázdne — konania sa pridajú zvlášť. —\n";
+      h+="### (žiadny .item markup — len dlaždica registra) ###\n";
+      return h;
+    }
     const actTxt=action==="fix"?"Oprava / doplnenie existujúcej položky":"Nová položka";
     h+=`### PODANIE ${idx+1} — POKYN PRE CLAUDE ###\n`;
-    h+="Kauza: "+kauza+"\n";
+    h+="Kauza: "+hesc(kauzaLbl)+(kauzaSpis?(" · "+kauzaSpis):"")+"\n";
+    h+="Konanie: "+hesc(konanie)+"\n";
     h+="Smer: "+dirTxt+"\n";
     h+="Akcia: "+actTxt+"\n";
-    if(kauzaSel.value==="__new__"){
+    if(konanieSel.value==="__new__"){
       const c=collectCats();
-      h+="— NOVÁ KAUZA → postav celú kartu (BEZ Postfach bloku — Postfach je na #303 zámerne skrytý cez CSS #fia-kauzy .postfach{display:none}; novú kartu rob bez .postfach divu) —\n";
-      h+="Jurisdikcia (data-cat): "+(c.jur.join(" ")||"(nevybrané)")+"\n";
-      h+="Oblasť práva (data-area): "+(c.area.join(" ")||"(nevybrané)")+"\n";
-      if(esc(courtNew.value)) h+="Orgán/súd (plný názov do .court — 9 jazykov doplní Claude): "+hesc(courtNew.value)+"\n";
-      h+="Az. (data-az): "+(hesc(azInp.value)||"(prázdne)")+"\n";
-      h+="Naša spis. zn. (data-ourref): "+(hesc(ourrefInp.value)||"(prázdne)")+"\n";
-      h+="— DLAŽDICA DO REGISTRA (#fia-reg .rgrid) → pridaj aj <button class=\"rbtn\" data-spis=\"[Naša spis. zn. alebo Az.]\" data-jur=\""+(c.jur.join(" ")||"")+"\" data-ids=\"[ID karty napr. case-slug, inak prázdne]\"> s vlajkami .rf podľa data-jur, názvom .rt (9 jaz. .gtl), .rs = spis. zn., a stavom .rb rb-soon „In Vorbereitung“ (9 jaz.). Stav nechaj „Pripravuje sa“; data-ids dopíš keď bude karta hotová. —\n";
+      const sl=slugify(konanie);
+      h+="— NOVÉ KONANIE → postav KARTU <details class=\"case\" id=\"case-"+sl+"\" data-cat=\"…\" data-date=\"…\" data-az=\"…\" data-ourref=\"…\" data-area=\"…\"> (BEZ .postfach — na #303 skryté cez CSS) —\n";
+      h+="Názov konania (1 jazyk — rozlož do 9 .gtl): "+hesc(konanie)+"\n";
+      if(esc(courtNew.value)) h+="Orgán/súd (.court, 1 jazyk — rozlož do 9): "+hesc(courtNew.value)+"\n";
+      h+="data-cat (jurisdikcia): "+(c.jur.join(" ")||"(nevybrané)")+"\n";
+      h+="data-area (oblasť práva): "+(c.area.join(" ")||"(nevybrané)")+"\n";
+      h+="data-az: "+(hesc(azInp.value)||"(prázdne)")+"\n";
+      h+="data-ourref: "+(hesc(ourrefInp.value)||"(prázdne)")+"\n";
+      h+="— NAPOJ KONANIE NA KAUZU: v dlaždici registra #fia-reg s data-spis=\""+(kauzaSpis||"?")+"\" dopíš do data-ids \"case-"+sl+"\"; ak bola rb-soon, prepni na rb-on a .rb text na „N Verfahren / N konania …“ (9 jaz.) podľa počtu konaní kauzy. —\n";
     } else {
-      // existujúca kauza: ak Peter zmenil kategórie/značky oproti uloženému stavu #303, daj POKYN na prepis karty
       const c=collectCats();
-      const def=CASES[kauzaSel.value], m=(def&&def.meta)?def.meta:{cat:[],area:[],az:"",ourref:""};
+      const def=CASES[konanieSel.value], m=(def&&def.meta)?def.meta:{cat:[],area:[],az:"",ourref:""};
       const norm=a=>(a||[]).slice().sort().join(" ");
       const catChg=norm(c.jur)!==norm(m.cat), areaChg=norm(c.area)!==norm(m.area);
       const azChg=esc(azInp.value)!==esc(m.az||""), refChg=esc(ourrefInp.value)!==esc(m.ourref||"");
       if(catChg||areaChg||azChg||refChg){
-        h+="— ZMENA KATEGÓRIÍ/ZNAČIEK KAUZY → uprav atribúty karty <details class=\"case\" …> v #303 (platí pre VŠETKY položky tejto kauzy, aj staršie) —\n";
+        h+="— ZMENA KATEGÓRIÍ/ZNAČIEK KONANIA → uprav atribúty karty <details class=\"case\" …> v #303 (platí pre VŠETKY položky konania, aj staršie) —\n";
         if(catChg) h+="Nastav data-cat na: "+(c.jur.join(" ")||"(nevybrané)")+"\n";
         if(areaChg) h+="Nastav data-area na: "+(c.area.join(" ")||"(nevybrané)")+"\n";
         if(azChg) h+="Nastav data-az na: "+(hesc(azInp.value)||"(prázdne)")+"\n";
@@ -618,9 +697,9 @@ function makeSlot(idx){
     if(important) h+="Dôležité: ÁNO (❗ červený výkričník + .item.imp)\n";
     if(comments) h+="Komentáre: ÁNO — pridá sa kcmt + cmt-wrap; nahraď data-doc=cmt-PLACEHOLDER unikátnym ID.\n";
     if(esc(begleitInp.value)){
-      const sl=slugify(currentCaseName());
-      h+="— SPRIEVODNÝ TEXT (Begleittext) → modal kauzy —\n";
-      h+="Vytvor/aktualizuj modal kauzy: <div class=\"kmodal\" id=\""+sl+"-modal\"> vnútri .kwrap (CSS :target, bez JS, .kmodal-box + .kmodal-close ×), 9 jazykov cez .gtl-b (DE EN SK HR PL ES IT FR SV), nadpis <h3> „O tomto podaní“ (9 jaz.). Tlačidlo „Begleittext“ tejto karty napoj na href=\"#"+sl+"-modal\".\n";
+      const sl=slugify(konanie);
+      h+="— SPRIEVODNÝ TEXT (Begleittext) → modal konania —\n";
+      h+="Vytvor/aktualizuj modal: <div class=\"kmodal\" id=\""+sl+"-modal\"> vnútri .kwrap (CSS :target, bez JS, .kmodal-box + .kmodal-close ×), 9 jazykov cez .gtl-b (DE EN SK HR PL ES IT FR SV), nadpis <h3> „O tomto podaní“ (9 jaz.). Tlačidlo „Begleittext“ karty napoj na href=\"#"+sl+"-modal\".\n";
       h+="Obsah (píšem po SK — rozlož do všetkých 9 jazykov; prázdny riadok = nový odsek <p>):\n";
       h+=esc(begleitInp.value)+"\n";
     }
@@ -629,12 +708,15 @@ function makeSlot(idx){
     h+="### MARKUP (toto vloží Claude do #303) ###\n";
     return h;
   }
-
   // collect: vráti {text, markup, mode, important} alebo null ak nepoužitý; throw pri chybe
   function collect(){
     if(!isUsed()) return null;
     if(action==="del"){
       if(!esc(fixSubj.value)) throw new Error(`Slot ${idx+1}: pri Vymazať treba vyplniť predmet riadku.`);
+      return { text: header(), markup: null, mode, important };
+    }
+    if(kauzaSel.value==="__newk__"){
+      if(!esc(kNewName.value)) throw new Error(`Slot ${idx+1}: vyplň názov novej kauzy.`);
       return { text: header(), markup: null, mode, important };
     }
     const bad=validateUrls();
@@ -643,6 +725,7 @@ function makeSlot(idx){
     let markup;
     if(mode==="item"){
       const subj=esc(subjInp.value);
+      if(!subj && konanieSel.value==="__new__"){ return { text: header(), markup: null, mode, important }; }
       if(!subj) throw new Error(`Slot ${idx+1}: vyplň Predmet (subj).`);
       const dateVal=noDate.checked?"—":dateInp.value;
       const snap=buildSnap(subj,dateVal,urls,accessSel.value,fb,important,fnameInp.value,comments);
@@ -656,28 +739,32 @@ function makeSlot(idx){
 
   function reset(){
     kauzaSel.selectedIndex=0; kauzaNew.value=""; kauzaNew.style.display="none"; courtNew.value=""; courtNew.style.display="none"; if(courtHint) courtHint.style.display="none";
+    if(newkBlk) newkBlk.style.display="none"; if(kNewName) kNewName.value=""; if(kSpis) kSpis.value="";
     if(newcaseBlk) newcaseBlk.style.display="none";
     root.querySelectorAll('.catchip').forEach(c=>c.classList.remove('on'));
     if(azInp) azInp.value=""; if(ourrefInp) ourrefInp.value=""; if(begleitInp) begleitInp.value="";
     subjInp.value=""; fixSubj.value=""; dateInp.value=""; noDate.checked=false; dateInp.disabled=false;
     impChk.checked=false; important=false; cmtChk.checked=false; comments=false; accessSel.value="pub"; fnameInp.value="";
     setMode("item"); setAction("new"); setDir("sent");
-    refreshDocList();
+    refreshKonanieList();
   }
 
   function buildSnap(subj,date,urls,access,fallback,important,fname,comments){
     const c=collectCats();
-    return {v:1, kauza:currentCaseName(), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments};
+    return {v:1, kauzaKey:kauzaSel.value, kauza:currentCaseName(), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments};
   }
   // predvyplnenie slotu z karty #303 (nezavisle od kniznice CASES)
   function applySnap(snap){
     if(!snap){ return; }
-    const kz=snap.kauza||"";
-    if(kz){
+    const kn=snap.kauza||"";
+    let kkey=snap.kauzaKey||kauzaKeyForKonanie(kn);
+    if(kkey&&KAUZY[kkey]){ kauzaSel.value=kkey; } else { kauzaSel.value=KAUZA_KEYS[0]; }
+    refreshKonanieList();
+    if(kn){
       let found=false;
-      [].slice.call(kauzaSel.options).forEach(function(o){ if(o.value===kz){ found=true; } });
-      if(!found){ const o=document.createElement("option"); o.value=kz; o.textContent=kz; kauzaSel.insertBefore(o, kauzaSel.firstChild); }
-      kauzaSel.value=kz;
+      [].slice.call(konanieSel.options).forEach(function(o){ if(o.value===kn){ found=true; } });
+      if(!found){ const o=document.createElement("option"); o.value=kn; o.textContent=kn; konanieSel.insertBefore(o, konanieSel.firstChild); }
+      konanieSel.value=kn;
     }
     refreshDocList();
     setAction("fix");
@@ -707,7 +794,7 @@ function makeSlot(idx){
 
   // init slotu
   setMode("item"); setDir("sent");
-  refreshDocList();        // naplní doc list + applyDoc (TDZ-safe: generátory hore sú globálne)
+  refreshKonanieList();        // naplní doc list + applyDoc (TDZ-safe: generátory hore sú globálne)
   setAction("new"); updateSummary();
 
   return api;
