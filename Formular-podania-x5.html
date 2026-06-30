@@ -15,6 +15,15 @@
   .card h2{font-size:15px;color:var(--navy);margin:0 0 14px;display:flex;align-items:center;gap:8px}
   .row{display:flex;flex-wrap:wrap;gap:14px}
   .fld{flex:1 1 200px;display:flex;flex-direction:column;gap:5px}
+  .cardedit{margin-top:12px;display:grid;grid-template-columns:minmax(150px,1fr) 2fr;gap:14px;align-items:start}
+  @media(max-width:640px){.cardedit{grid-template-columns:1fr}}
+  .cardprev{border:1px solid #d6dee9;border-radius:12px;padding:11px 13px;background:#fff;font:13px/1.4 "Segoe UI",Calibri,Arial,sans-serif;color:#34435A;box-shadow:0 2px 8px rgba(31,56,100,.06)}
+  .cardprev .cp-t{display:flex;align-items:center;gap:7px;font-weight:700;color:#1F3864}
+  .cardprev .cp-t img{width:18px;height:13px;border-radius:2px;object-fit:cover;flex:0 0 auto}
+  .cardprev .cp-s{font:600 10.5px/1.4 Consolas,"Courier New",monospace;color:#6B7C91;margin-top:3px}
+  .cardprev .cp-x{font:italic 500 10.5px/1.4 "Segoe UI";color:#6B7C91;margin-top:2px;min-height:1px}
+  .cardprev .cp-x:empty{display:none}
+  .cardprev .cp-b{display:inline-block;margin-top:7px;font-size:11px;color:#1F6F3A;background:#E8F6EE;border-radius:999px;padding:2px 9px}
   label{font-size:12.5px;font-weight:600;color:#3a4d68}
   input,select{font:inherit;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:#fbfcfe;color:#24344c}
   input:focus,select:focus{outline:none;border-color:var(--navy);background:#fff}
@@ -331,7 +340,18 @@ function makeSlot(idx){
             <span class="catchip" data-jur="sk"><img src="https://flagcdn.com/sk.svg" alt="">Slovensko<span class="ck">✓</span></span>
           </div>
         </div>
-        <div class="fld" style="margin-top:10px"><label>Spis. zn. kauzy (data-spis) — patrí dlaždici registra #fia-reg <span style="font-weight:600;color:#6B7C91">(predvyplní sa pri výbere/oprave kauzy)</span></label><input data-kauzaspis placeholder="napr. TFIA‑2026‑JV‑008"></div>
+        <div class="cardedit">
+          <div>
+            <div class="glbl" style="margin-bottom:6px">Náhľad dlaždice kauzy (tá istá karta)</div>
+            <div data-cardprev class="cardprev"></div>
+          </div>
+          <div>
+            <div class="glbl" style="margin-bottom:6px">Tri riadky karty — 4. (počet konaní) je systémový</div>
+            <div class="fld"><label>Riadok 1 — názov kauzy (1 jazyk; ostatných 8 doplní Claude)</label><input data-row1 placeholder="napr. Vymáhanie odškodného 15 000 €"></div>
+            <div class="fld" style="margin-top:8px"><label>Riadok 2 — spis. zn. (data-spis)</label><input data-kauzaspis placeholder="napr. PR-2026-EXS-026"></div>
+            <div class="fld" style="margin-top:8px"><label>Riadok 3 — rezervný (zatiaľ voľný)</label><input data-row3 placeholder="(rezervný riadok dlaždice)"></div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row" style="margin-top:14px">
@@ -448,7 +468,7 @@ function makeSlot(idx){
   // --- lokálne odkazy ---
   const q=s=>root.querySelector(s);
   const kauzaSel=q("[data-kauza]"), kauzaNew=q("[data-kauzanew]"), courtNew=q("[data-courtnew]"), courtHint=q("[data-courthint]"), docSel=q("[data-doc]");
-  const konanieSel=q("[data-konanie]"), newkBlk=q("[data-newk]"), kNewName=q("[data-knewname]"), kSpis=q("[data-kspis]"), kauzaspisInp=q("[data-kauzaspis]");
+  const konanieSel=q("[data-konanie]"), newkBlk=q("[data-newk]"), kNewName=q("[data-knewname]"), kSpis=q("[data-kspis]"), kauzaspisInp=q("[data-kauzaspis]"); const row1Inp=q("[data-row1]"), row3Inp=q("[data-row3]"), cardPrev=q("[data-cardprev]");
   const newcaseBlk=q("[data-newcase]"), azInp=q("[data-az]"), ourrefInp=q("[data-ourref]"), begleitInp=q("[data-begleit]");
   const fixRow=q("[data-fixrow]"), fixSubj=q("[data-fixsubj]"), fixLbl=q("[data-fixlbl]");
   const delWarn=q("[data-delwarn]"), confid=q("[data-confid]");
@@ -555,6 +575,22 @@ function makeSlot(idx){
   noDate.onchange=()=>{ dateInp.disabled=noDate.checked; if(noDate.checked) dateInp.value=""; };
   subjInp.oninput=updateSummary; fixSubj.oninput=updateSummary;
 
+  function flagFor(kk){ const j=(KAUZY[kk]&&KAUZY[kk].jur)||[]; const c=j.find(x=>x&&x!=="all")||"eu"; return "https://flagcdn.com/"+c+".svg"; }
+  function konCount(kk){ return ((KAUZY[kk]&&KAUZY[kk].konania)||[]).length; }
+  function stripFlag(t){ return (t||"").replace(/^[\u{1F1E6}-\u{1F1FF}]{2}\s*/u,"").trim(); }
+  function renderCardPrev(){
+    if(!cardPrev) return;
+    const kk=kauzaSel.value, isNewK=kk==="__newk__";
+    const name=hesc(row1Inp&&row1Inp.value)||"(názov kauzy)";
+    const spis=hesc(kauzaspisInp&&kauzaspisInp.value)||"—";
+    const rez=hesc(row3Inp&&row3Inp.value);
+    const n=isNewK?1:konCount(kk);
+    const flag=isNewK?"https://flagcdn.com/eu.svg":flagFor(kk);
+    cardPrev.innerHTML='<div class="cp-t"><img src="'+flag+'" alt="">'+name+'</div>'+
+      '<div class="cp-s">'+spis+'</div>'+
+      '<div class="cp-x">'+rez+'</div>'+
+      '<div class="cp-b">● '+n+' Verfahren · '+n+' konanie</div>';
+  }
   function refreshKonanieList(){
     const isNewK=kauzaSel.value==="__newk__";
     if(newkBlk) newkBlk.style.display=isNewK?"block":"none";
@@ -569,6 +605,9 @@ function makeSlot(idx){
       konanieSel.value = ks.length ? ks[0] : "__new__";
     }
     if(kauzaspisInp) kauzaspisInp.value = (!isNewK && KAUZY[kauzaSel.value] && KAUZY[kauzaSel.value].spis) ? KAUZY[kauzaSel.value].spis : "";
+    if(row1Inp) row1Inp.value = (!isNewK && KAUZY[kauzaSel.value]) ? stripFlag(KAUZY[kauzaSel.value].label) : "";
+    if(row3Inp) row3Inp.value = (!isNewK && KAUZY[kauzaSel.value] && KAUZY[kauzaSel.value].reserve) ? KAUZY[kauzaSel.value].reserve : "";
+    renderCardPrev();
     refreshDocList();
     updateNewcaseVis(); updateSummary();
   }
@@ -618,6 +657,9 @@ function makeSlot(idx){
   kauzaNew.oninput=updateSummary;
   if(kNewName) kNewName.oninput=updateSummary;
   if(kSpis) kSpis.oninput=updateSummary;
+  if(row1Inp) row1Inp.oninput=()=>{ renderCardPrev(); updateSummary(); };
+  if(kauzaspisInp) kauzaspisInp.oninput=()=>{ renderCardPrev(); updateSummary(); };
+  if(row3Inp) row3Inp.oninput=()=>{ renderCardPrev(); updateSummary(); };
   courtNew.oninput=updateSummary;
   begleitInp.oninput=updateSummary;
   docSel.onchange=applyDoc;
@@ -666,6 +708,8 @@ function makeSlot(idx){
     const isNewK=kk==="__newk__";
     const kauzaLbl=isNewK?(esc(kNewName.value)||"(NEVYPLNENÁ nová kauza!)"):((KAUZY[kk]&&KAUZY[kk].label)||kk);
     const kauzaSpis=(kauzaspisInp&&kauzaspisInp.value.trim())||((KAUZY[kk]&&KAUZY[kk].spis)||"");
+    const cardName=(row1Inp&&esc(row1Inp.value))||kauzaLbl;
+    const cardRez=(row3Inp&&esc(row3Inp.value))||"";
     const konanie=currentCaseName()||"(konanie nevyplnené)";
     const dirTxt=dir==="sent"?"Odoslané (Gesendet)":"Došlé (Empfangen)";
     let h="";
@@ -686,7 +730,7 @@ function makeSlot(idx){
       h+="Názov kauzy (1 jazyk — rozlož do 9 .gtl): "+(hesc(kNewName.value)||"(NEVYPLNENÉ!)")+"\n";
       h+="Jurisdikcia (data-jur): "+(kj.join(" ")||"(NEVYBRANÉ!)")+"\n";
       h+="Spis. zn. (data-spis): "+(hesc(kSpis.value)||"(prázdne)")+"\n";
-      h+="— Postav <button class=\"rbtn\" data-spis=\"…\" data-jur=\""+(kj.join(" ")||"")+"\" data-ids=\"\">: vlajky .rf podľa data-jur, názov .rt (9 jaz. .gtl), .rs = spis. zn., stav .rb rb-soon „In Vorbereitung / Pripravuje sa“ (9 jaz.). data-ids nechaj prázdne — konania sa pridajú zvlášť. —\n";
+      h+="— Postav <button class=\"rbtn\" data-spis=\"…\" data-jur=\""+(kj.join(" ")||"")+"\" data-ids=\"\">: vlajky .rf podľa data-jur, názov .rt (9 jaz. .gtl), .rs = spis. zn., .rx = rezervný riadok"+(cardRez?(" \u201e"+hesc(cardRez)+"\u201c"):" (prázdny rezervný .rx span)")+", stav .rb rb-soon „In Vorbereitung / Pripravuje sa“ (9 jaz.). data-ids nechaj prázdne — konania sa pridajú zvlášť. —\n";
       h+="### (žiadny .item markup — len dlaždica registra) ###\n";
       return h;
     }
@@ -703,6 +747,7 @@ function makeSlot(idx){
     h+="│ ID KARTY: "+_cardId+"\n";
     h+="│ CIEĽOVÝ BLOK: "+BLOCK_LABEL[_block]+"\n";
     h+="│ Dlaždica registra: #fia-reg .rbtn[data-spis=\""+(kauzaSpis||"?")+"\"] — jej data-ids MUSÍ obsahovať PRÁVE \""+_cardId+"\" (id karty == data-ids, inak sa karta nezobrazí)\n";
+    h+="\u2502 RIADKY DLAŽDICE: .rt(názov)=\u201e"+hesc(cardName)+"\u201c \u00b7 .rs(spis)=\u201e"+hesc(kauzaSpis)+"\u201c \u00b7 .rx(rezervný)="+(cardRez?("\u201e"+hesc(cardRez)+"\u201c"):"(prázdny)")+"\n";
     h+="│ MODAL (ak je Begleittext): id=\""+_cardId+"-modal\", tlačidlo Begleittext napoj na href=\"#"+_cardId+"-modal\"\n";
     h+="└──────────────────────────────────────\n";
     if(konanieSel.value==="__new__"){
