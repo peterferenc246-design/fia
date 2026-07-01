@@ -24,21 +24,6 @@
     var date = txt(item.querySelector(".date")) || "—";
     var access = item.querySelector(".acc-pwd") ? "pwd" : "pub";
     var important = item.classList.contains("imp");
-    var comments = !!item.querySelector("a.kcmt, .kcmt");
-    var court = "";
-    if (caseEl){ var cel = caseEl.querySelector(".court .gtl.sk") || caseEl.querySelector(".court .gtl.de"); if (cel){ court = cel.textContent.trim(); } }
-    var begleit = "";
-    if (caseEl){
-      var mlink = caseEl.querySelector('a[href^="#"][href*="modal"]');
-      if (mlink){
-        var mid = mlink.getAttribute("href").slice(1);
-        var mel = document.getElementById(mid);
-        if (mel){
-          var body = mel.querySelector(".gtl-b.sk") || mel.querySelector(".gtl-b.de");
-          if (body){ var cl = body.cloneNode(true); var h = cl.querySelector("h3"); if (h){ h.parentNode.removeChild(h); } begleit = cl.textContent.trim(); }
-        }
-      }
-    }
     var fname = "";
     var fnameEl = item.querySelector(".admin-fname");
     if (fnameEl){ fname = fnameEl.textContent.replace(/^\s*🛈\s*/, "").trim(); }
@@ -60,14 +45,33 @@
       az = caseEl.getAttribute("data-az")||"";
       ourref = caseEl.getAttribute("data-ourref")||"";
     }
-    return { v:1, kauza:kauza, caseId:(caseEl?caseEl.id:""), subj:subj, dir:dir, mode:"item", date:date,
-      access:access, important:important, comments:comments, fname:fname, fallback:fallback,
-      urls:urls, cats:cats, az:az, ourref:ourref, court:court, begleit:begleit };
+    var comments = !!(item.querySelector(".kcmt") || item.querySelector(".cmt-wrap"));
+    return { v:1, kauza:kauza, subj:subj, dir:dir, mode:"item", date:date,
+      access:access, important:important, fname:fname, fallback:fallback,
+      urls:urls, cats:cats, az:az, ourref:ourref, comments:comments };
   }
   function snapFor(item){
+    // Reálny stav položky z DOM (nikdy neklame — číta priamo z karty na #303).
+    var dom = buildSnapFromDom(item);
     var raw = item.getAttribute("data-snap");
-    if (raw){ try { return JSON.parse(raw); } catch(e){} }
-    return buildSnapFromDom(item);
+    if (raw){
+      try {
+        var snap = JSON.parse(raw);
+        // data-snap je bohatý základ (kauzaKey, urls, az…), ALE stavové polia,
+        // ktoré sa na karte menia po vzniku snapu, prepíšeme aktuálnou pravdou z DOM.
+        snap.comments  = dom.comments;   // ← prítomnosť .kcmt/.cmt-wrap na karte
+        snap.important = dom.important;  // ← trieda .imp
+        snap.access    = dom.access;     // ← acc-pwd vs acc-pub
+        // ak by v snape chýbali, doplň z DOM
+        if (snap.subj == null)  snap.subj  = dom.subj;
+        if (snap.date == null)  snap.date  = dom.date;
+        if (snap.dir  == null)  snap.dir   = dom.dir;
+        if (!snap.urls || !Object.keys(snap.urls).length) snap.urls = dom.urls;
+        if (snap.fname == null) snap.fname = dom.fname;
+        return snap;
+      } catch(e){}
+    }
+    return dom;
   }
   function init(){
     if (!document.body.classList.contains("logged-in")){ return; }
@@ -88,7 +92,7 @@
         b.onclick = function(ev){
           ev.preventDefault(); ev.stopPropagation();
           var snap = snapFor(it);
-          frame.contentWindow.postMessage({ type:"fiafox-edit", snap:snap }, "https://rawcdn.githack.com");
+          frame.contentWindow.postMessage({ type:"fiafox-edit", snap:snap }, "https://cdn.jsdelivr.net");
           var wrap = document.getElementById("fia-formx5-wrap");
           if (wrap){ wrap.scrollIntoView({ behavior:"smooth", block:"start" }); }
         };
@@ -97,17 +101,6 @@
     }
     addBtns();
     document.addEventListener("click", function(){ setTimeout(addBtns, 60); }, true);
-    window.addEventListener("message", function(e){
-      if (e.origin !== "https://rawcdn.githack.com"){ return; }
-      var d = e.data || {};
-      if (!d || d.type !== "fiafox-active-case"){ return; }
-      var reg = document.getElementById("fia-reg");
-      if (!reg){ return; }
-      var tiles = [].slice.call(reg.querySelectorAll(".rbtn"));
-      var match = null;
-      tiles.forEach(function(t){ if (d.spis && (t.getAttribute("data-spis")||"") === d.spis){ match = t; } });
-      if (match){ tiles.forEach(function(t){ t.classList.toggle("active", t === match); }); }
-    });
   }
   if (document.readyState === "loading"){ document.addEventListener("DOMContentLoaded", init); }
   else { init(); }
