@@ -297,6 +297,8 @@ function konanieOptions(kk){
   return ks.map(n=>`<option value="${n.replace(/"/g,'&quot;')}">${n}</option>`).join("")
     + `<option value="__new__">➕ Nové konanie (nová karta)</option>`;
 }
+function saveLastEdit(k,n){ try{ localStorage.setItem("fiafox_last_edit", JSON.stringify({k:k,n:n})); }catch(e){} }
+function loadLastEdit(){ try{ return JSON.parse(localStorage.getItem("fiafox_last_edit")||"null"); }catch(e){ return null; } }
 function makeSlot(idx){
   const NEWDOC="__newdoc__";
   let mode="item", action="new", dir="sent", important=false, comments=false;
@@ -652,8 +654,8 @@ function makeSlot(idx){
     }
     validateUrls(); updateSummary();
   }
-  kauzaSel.onchange=()=>{ refreshKonanieList(); };
-  konanieSel.onchange=()=>{ refreshDocList(); };
+  kauzaSel.onchange=()=>{ refreshKonanieList(); saveLastEdit(kauzaSel.value,konanieSel.value); };
+  konanieSel.onchange=()=>{ refreshDocList(); saveLastEdit(kauzaSel.value,konanieSel.value); };
   kauzaNew.oninput=updateSummary;
   if(kNewName) kNewName.oninput=updateSummary;
   if(kSpis) kSpis.oninput=updateSummary;
@@ -866,6 +868,7 @@ function makeSlot(idx){
     if(snap.az!==undefined){ azInp.value=snap.az||""; }
     if(snap.ourref!==undefined){ ourrefInp.value=snap.ourref||""; }
     validateUrls(); updateSummary();
+    saveLastEdit(kauzaSel.value,konanieSel.value);
   }
 
   // API objekt (onState dopĺňa builder po vytvorení tabu)
@@ -873,9 +876,17 @@ function makeSlot(idx){
     previewMarkup:()=>{ const r=collect(); return r?{markup:r.markup,mode:r.mode}:null; },
     activate:()=>{ slots.forEach(s=>s.root.classList.remove("active")); root.classList.add("active"); } };
 
+  function applyLastEdit(){
+    const le=loadLastEdit();
+    if(le && le.k && KAUZY[le.k]){
+      kauzaSel.value=le.k;
+      refreshKonanieList();
+      if(le.n){ const opt=[].slice.call(konanieSel.options).find(o=>o.value===le.n); if(opt){ konanieSel.value=le.n; refreshDocList(); } }
+    } else { refreshKonanieList(); }
+  }
   // init slotu
   setMode("item"); setDir("sent");
-  refreshKonanieList();        // naplní doc list + applyDoc (TDZ-safe: generátory hore sú globálne)
+  if(idx===0){ applyLastEdit(); } else { refreshKonanieList(); }   // prvý tab: predvyber posledné upravované konanie
   setAction("new"); updateSummary();
 
   return api;
