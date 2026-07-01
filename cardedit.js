@@ -73,7 +73,7 @@
         b.onclick = function(ev){
           ev.preventDefault(); ev.stopPropagation();
           var snap = snapFor(it);
-          frame.contentWindow.postMessage({ type:"fiafox-edit", snap:snap }, "https://cdn.jsdelivr.net");
+          frame.contentWindow.postMessage({ type:"fiafox-edit", snap:snap }, "https://rawcdn.githack.com");
           var wrap = document.getElementById("fia-formx5-wrap");
           if (wrap){ wrap.scrollIntoView({ behavior:"smooth", block:"start" }); }
         };
