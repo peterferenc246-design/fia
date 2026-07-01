@@ -714,8 +714,8 @@ function makeSlot(idx){
   function fixDiff(){
     if(!snapBase) return {cur:{},ch:{}};
     var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};
-    var cur={date:(noDate.checked?"\u2014":esc(dateInp.value)),access:accessSel.value,important:(impChk.checked?"1":"0"),comments:(cmtChk.checked?"1":"0"),subj:(esc(subjInp.value)||esc(fixSubj.value)),fname:esc(fnameInp.value),fallback:esc(fallbackInp.value),begleit:esc(begleitInp.value),urls:nu(collectUrls())};
-    var base={date:snapBase.date,access:snapBase.access,important:(snapBase.important?"1":"0"),comments:(snapBase.comments?"1":"0"),subj:snapBase.subj,fname:snapBase.fname,fallback:snapBase.fallback,begleit:snapBase.begleit,urls:snapBase.urls};
+    var cur={date:(noDate.checked?"\u2014":esc(dateInp.value)),access:accessSel.value,important:(impChk.checked?"1":"0"),comments:(cmtChk.checked?"1":"0"),subj:(esc(subjInp.value)||esc(fixSubj.value)),fname:esc(fnameInp.value),fallback:esc(fallbackInp.value),begleit:esc(begleitInp.value),urls:nu(collectUrls()),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):"")};
+    var base={date:snapBase.date,access:snapBase.access,important:(snapBase.important?"1":"0"),comments:(snapBase.comments?"1":"0"),subj:snapBase.subj,fname:snapBase.fname,fallback:snapBase.fallback,begleit:snapBase.begleit,urls:snapBase.urls,row1:snapBase.row1,rspis:snapBase.rspis,row3:snapBase.row3};
     var ch={};Object.keys(cur).forEach(function(k){ if(String(cur[k])!==String(base[k])) ch[k]=cur[k]; });
     return {cur:cur, ch:ch};
   }
@@ -768,7 +768,7 @@ function makeSlot(idx){
     h+="└──────────────────────────────────────\n";
     var _fd=(action==="fix"&&snapBase)?fixDiff():null;
     if(_fd){
-      var NM={date:"D\u00e1tum",access:"Pr\u00edstup",important:"D\u00f4le\u017eit\u00e9",comments:"Koment\u00e1re",subj:"Predmet",fname:"N\u00e1zov s\u00faboru",fallback:"Fallback odkaz",begleit:"Sprievodn\u00fd text (Begleittext)",urls:"Odkazy na dokument"};
+      var NM={date:"D\u00e1tum",access:"Pr\u00edstup",important:"D\u00f4le\u017eit\u00e9",comments:"Koment\u00e1re",subj:"Predmet",fname:"N\u00e1zov s\u00faboru",fallback:"Fallback odkaz",begleit:"Sprievodn\u00fd text (Begleittext)",urls:"Odkazy na dokument",row1:"Riadok 1 \u2014 n\u00e1zov kauzy (dla\u017edica)",rspis:"Riadok 2 \u2014 spis. zn. (dla\u017edica)",row3:"Riadok 3 \u2014 rezervn\u00fd (dla\u017edica)"};
       var ks=Object.keys(_fd.ch);
       if(!ks.length){ h+="ZMENEN\u00c9 POLIA: \u017eiadne \u2014 v tejto polo\u017eke sa ni\u010d nezmenilo, netreba aktualizova\u0165.\n"; }
       else { h+="ZMENEN\u00c9 POLIA (aktualizuj IBA tieto, ostatn\u00e9 nechaj bez zmeny):\n"; ks.forEach(function(k){ h+="  \u2022 "+(NM[k]||k)+"\n"; }); }
@@ -894,7 +894,7 @@ function makeSlot(idx){
     if(courtNew && snap.court){ courtNew.value=snap.court; }
     if(begleitInp && snap.begleit){ begleitInp.value=snap.begleit; }
     validateUrls(); updateSummary();
-    (function(){var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};snapBase={date:(snap.date||""),access:(snap.access||"pub"),important:!!snap.important,comments:!!snap.comments,subj:(snap.subj||""),fname:(snap.fname||""),fallback:(snap.fallback||""),begleit:(snap.begleit||""),urls:nu(snap.urls||{})};})();
+    (function(){var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};snapBase={date:(snap.date||""),access:(snap.access||"pub"),important:!!snap.important,comments:!!snap.comments,subj:(snap.subj||""),fname:(snap.fname||""),fallback:(snap.fallback||""),begleit:(snap.begleit||""),urls:nu(snap.urls||{}),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):"")};})();
     saveLastEdit(kauzaSel.value,konanieSel.value);
   }
 
