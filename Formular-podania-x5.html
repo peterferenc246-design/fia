@@ -303,6 +303,7 @@ function loadLastEdit(){ try{ return JSON.parse(localStorage.getItem("fiafox_las
 function makeSlot(idx){
   const NEWDOC="__newdoc__";
   let mode="item", action="new", dir="sent", important=false, comments=false;
+  let snapBase=null;
 
   const root=document.createElement("div");
   root.className="slot";
@@ -710,6 +711,14 @@ function makeSlot(idx){
     if(api.onState) api.onState(used?shortLabel:`Podanie ${idx+1}`, stateTxt, stateCls);
   }
 
+  function fixDiff(){
+    if(!snapBase) return {cur:{},ch:{}};
+    var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};
+    var cur={date:(noDate.checked?"\u2014":esc(dateInp.value)),access:accessSel.value,important:(impChk.checked?"1":"0"),comments:(cmtChk.checked?"1":"0"),subj:(esc(subjInp.value)||esc(fixSubj.value)),fname:esc(fnameInp.value),fallback:esc(fallbackInp.value),begleit:esc(begleitInp.value),urls:nu(collectUrls())};
+    var base={date:snapBase.date,access:snapBase.access,important:(snapBase.important?"1":"0"),comments:(snapBase.comments?"1":"0"),subj:snapBase.subj,fname:snapBase.fname,fallback:snapBase.fallback,begleit:snapBase.begleit,urls:snapBase.urls};
+    var ch={};Object.keys(cur).forEach(function(k){ if(String(cur[k])!==String(base[k])) ch[k]=cur[k]; });
+    return {cur:cur, ch:ch};
+  }
   function header(){
     const kk=kauzaSel.value;
     const isNewK=kk==="__newk__";
@@ -757,6 +766,13 @@ function makeSlot(idx){
     h+="\u2502 RIADKY DLAŽDICE: .rt(názov)=\u201e"+hesc(cardName)+"\u201c \u00b7 .rs(spis)=\u201e"+hesc(kauzaSpis)+"\u201c \u00b7 .rx(rezervný)="+(cardRez?("\u201e"+hesc(cardRez)+"\u201c"):"(prázdny)")+"\n";
     h+="│ MODAL (ak je Begleittext): id=\""+_cardId+"-modal\", tlačidlo Begleittext napoj na href=\"#"+_cardId+"-modal\"\n";
     h+="└──────────────────────────────────────\n";
+    var _fd=(action==="fix"&&snapBase)?fixDiff():null;
+    if(_fd){
+      var NM={date:"D\u00e1tum",access:"Pr\u00edstup",important:"D\u00f4le\u017eit\u00e9",comments:"Koment\u00e1re",subj:"Predmet",fname:"N\u00e1zov s\u00faboru",fallback:"Fallback odkaz",begleit:"Sprievodn\u00fd text (Begleittext)",urls:"Odkazy na dokument"};
+      var ks=Object.keys(_fd.ch);
+      if(!ks.length){ h+="ZMENEN\u00c9 POLIA: \u017eiadne \u2014 v tejto polo\u017eke sa ni\u010d nezmenilo, netreba aktualizova\u0165.\n"; }
+      else { h+="ZMENEN\u00c9 POLIA (aktualizuj IBA tieto, ostatn\u00e9 nechaj bez zmeny):\n"; ks.forEach(function(k){ h+="  \u2022 "+(NM[k]||k)+"\n"; }); }
+    }
     if(konanieSel.value==="__new__"){
       const c=collectCats();
       const sl=slugify(konanie);
@@ -783,9 +799,9 @@ function makeSlot(idx){
         h+="(Ak zmena data-area mení typ podania, uprav aj text v .case-meta a chip — 9 jazykov.)\n";
       }
     }
-    if(important) h+="Dôležité: ÁNO (❗ červený výkričník + .item.imp)\n";
-    if(comments) h+="Komentáre: ÁNO — pridá sa kcmt + cmt-wrap; nahraď data-doc=cmt-PLACEHOLDER unikátnym ID.\n";
-    if(esc(begleitInp.value)){
+    if(important && (!_fd || ("important" in _fd.ch))) h+="Dôležité: ÁNO (❗ červený výkričník + .item.imp)\n";
+    if(comments && (!_fd || ("comments" in _fd.ch))) h+="Komentáre: ÁNO — pridá sa kcmt + cmt-wrap; nahraď data-doc=cmt-PLACEHOLDER unikátnym ID.\n";
+    if(esc(begleitInp.value) && (!_fd || ("begleit" in _fd.ch))){
       h+="— SPRIEVODNÝ TEXT (Begleittext) → modal konania —\n";
       h+="Vytvor/aktualizuj modal: <div class=\"kmodal\" id=\""+_cardId+"-modal\"> vnútri .kwrap (CSS :target, bez JS, .kmodal-box + .kmodal-close ×), 9 jazykov cez .gtl-b (DE EN SK HR PL ES IT FR SV), nadpis <h3> „O tomto podaní“ (9 jaz.). Tlačidlo „Begleittext“ karty napoj na href=\"#"+_cardId+"-modal\".\n";
       h+="Obsah (píšem po SK — rozlož do všetkých 9 jazykov; prázdny riadok = nový odsek <p>):\n";
@@ -834,6 +850,7 @@ function makeSlot(idx){
     if(azInp) azInp.value=""; if(ourrefInp) ourrefInp.value=""; if(begleitInp) begleitInp.value="";
     subjInp.value=""; fixSubj.value=""; dateInp.value=""; noDate.checked=false; dateInp.disabled=false;
     impChk.checked=false; important=false; cmtChk.checked=false; comments=false; accessSel.value="pub"; fnameInp.value="";
+    snapBase=null;
     setMode("item"); setAction("new"); setDir("sent");
     refreshKonanieList();
   }
@@ -877,6 +894,7 @@ function makeSlot(idx){
     if(courtNew && snap.court){ courtNew.value=snap.court; }
     if(begleitInp && snap.begleit){ begleitInp.value=snap.begleit; }
     validateUrls(); updateSummary();
+    (function(){var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};snapBase={date:(snap.date||""),access:(snap.access||"pub"),important:!!snap.important,comments:!!snap.comments,subj:(snap.subj||""),fname:(snap.fname||""),fallback:(snap.fallback||""),begleit:(snap.begleit||""),urls:nu(snap.urls||{})};})();
     saveLastEdit(kauzaSel.value,konanieSel.value);
   }
 
