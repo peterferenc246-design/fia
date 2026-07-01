@@ -273,7 +273,7 @@ function cmtBlock(){
   const lbls=LANGS.map(l=>`<span class="gtl ${l}">💬 ${CMT_LBL[l]}</span>`).join("");
   return `<a class="kcmt" data-doc="${id}" href="#">${lbls} (<span class="ccount" data-doc="${id}">0</span>)</a><div class="cmt-wrap" data-doc="${id}"></div>`;
 }
-function buildItem(date,subj,urls,access,fallback,important,fname,snap,comments){
+function buildItem(date,subj,urls,access,fallback,important,fname,snap,comments,pwhint){
   const badge = access==="pwd"?ACC_PWD:ACC_PUB;
   const cls = access==="pwd"?"acc-pwd":"acc-pub";
   const badgeHtml = LANGS.map(l=>`<span class="gtl ${l}">${badge[l]}</span>`).join("");
@@ -281,10 +281,11 @@ function buildItem(date,subj,urls,access,fallback,important,fname,snap,comments)
   const impCls = important ? " imp" : "";
   const impMark = important ? '<span class="impx" title="Dôležité">❗</span>' : "";
   const fnameHtml = esc(fname) ? `<span class="admin-fname">🛈 ${hesc(fname)}</span>` : "";
+  const pwHtml = (access==="pwd" && esc(pwhint)) ? '<div class="pwnote" style="margin:3px 0 0;font-size:12.5px;font-weight:600;color:#854F0B">🔒 '+hesc(pwhint)+'</div>' : "";
   const snapAttr = snap ? " data-snap='"+hsnap(snap)+"'" : "";
   return `<div class="item${impCls}"${snapAttr}><div class="top"><span class="date">${hesc(date)||"—"}</span>`+
          `<span class="acc ${cls}">${badgeHtml}</span></div>`+
-         `<div class="subj">${impMark}${hesc(subj)}</div>${fnameHtml}${link}${comments?cmtBlock():""}</div>`;
+         `<div class="subj">${impMark}${hesc(subj)}</div>${fnameHtml}${pwHtml}${link}${comments?cmtBlock():""}</div>`;
 }
 
 // ===== SLOT — nezávislý vstupný blok =====
@@ -372,6 +373,9 @@ function makeSlot(idx){
           <label>Prístup</label>
           <select data-access><option value="pub">🌐 Verejné</option><option value="pwd">🔒 Heslo</option></select>
         </div>
+      </div>
+      <div class="row" data-pwhintrow style="margin-top:10px;display:none">
+        <div class="fld"><label>🔒 Pokyn k heslu — zobrazí sa návštevníkovi (heslo drží SharePoint; sem píš LEN ako ho získať)</label><input data-pwhint placeholder="napr. Heslo na vyžiadanie na info@foxprof.club"></div>
       </div>
       <div class="fld" style="margin-top:12px;flex:0 0 auto"><label>Orgán / súd (data-court — riadok pod názvom karty)</label><input data-courtnew placeholder="napr. Úrad pre dohľad nad zdravotnou starostlivosťou / Všeobecný súd EÚ" title="Vloží sa do .court riadku karty. 9 jazykov doplní Claude."></div>
         <p class="nchint" data-courthint>🏛 Orgán/súd sa zobrazí pod názvom kauzy (riadok <code>.court</code>). Stačí 1 jazyk — ostatných 8 doplní Claude.</p>
@@ -479,7 +483,7 @@ function makeSlot(idx){
   const delWarn=q("[data-delwarn]"), confid=q("[data-confid]");
   const contentBlock=q("[data-contentblock]"), linksBlock=q("[data-linksblock]");
   const metaRow=q("[data-metarow]"), dateInp=q("[data-date]"), noDate=q("[data-nodate]");
-  const subjInp=q("[data-subj]"), accessSel=q("[data-access]"), impChk=q("[data-imp]"), fnameInp=q("[data-fname]"), cmtChk=q("[data-cmt]");
+  const subjInp=q("[data-subj]"), accessSel=q("[data-access]"), impChk=q("[data-imp]"), fnameInp=q("[data-fname]"), cmtChk=q("[data-cmt]"); const pwhintInp=q("[data-pwhint]"), pwhintRow=q("[data-pwhintrow]");
   const langsBox=q("[data-langs]"), fallbackInp=q("[data-fallback]");
   const fillBtn=q("[data-fill]");
   const ssum=q("[data-ssum]"), sstate=q("[data-sstate]");
@@ -669,6 +673,9 @@ function makeSlot(idx){
   if(kauzaspisInp) kauzaspisInp.oninput=()=>{ renderCardPrev(); updateSummary(); };
   if(row3Inp) row3Inp.oninput=()=>{ renderCardPrev(); updateSummary(); };
   courtNew.oninput=updateSummary;
+  function updatePwVis(){ if(pwhintRow) pwhintRow.style.display=(accessSel.value==="pwd")?"":"none"; }
+  accessSel.onchange=()=>{ updatePwVis(); updateSummary(); };
+  if(pwhintInp) pwhintInp.oninput=updateSummary;
   begleitInp.oninput=updateSummary;
   docSel.onchange=applyDoc;
   fillBtn.onclick=applyDoc;
@@ -697,7 +704,7 @@ function makeSlot(idx){
     if(any||esc(fallbackInp.value)) return true;
     return false;
   }
-  function updateSummary(){
+  function updateSummary(){ updatePwVis();
     const used=isUsed();
     const kz=currentCaseName()|| "(kauza nevyplnená)";
     let txt, shortLabel;
@@ -714,8 +721,8 @@ function makeSlot(idx){
   function fixDiff(){
     if(!snapBase) return {cur:{},ch:{}};
     var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};
-    var __cd=collectCats();var cur={date:(noDate.checked?"\u2014":esc(dateInp.value)),access:accessSel.value,important:(impChk.checked?"1":"0"),comments:(cmtChk.checked?"1":"0"),subj:(esc(subjInp.value)||esc(fixSubj.value)),fname:esc(fnameInp.value),fallback:esc(fallbackInp.value),begleit:esc(begleitInp.value),urls:nu(collectUrls()),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cd.jur.slice().sort().join(" "),area:__cd.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value)};
-    var base={date:snapBase.date,access:snapBase.access,important:(snapBase.important?"1":"0"),comments:(snapBase.comments?"1":"0"),subj:snapBase.subj,fname:snapBase.fname,fallback:snapBase.fallback,begleit:snapBase.begleit,urls:snapBase.urls,row1:snapBase.row1,rspis:snapBase.rspis,row3:snapBase.row3,court:snapBase.court,cat:snapBase.cat,area:snapBase.area,az:snapBase.az,ourref:snapBase.ourref};
+    var __cd=collectCats();var cur={date:(noDate.checked?"\u2014":esc(dateInp.value)),access:accessSel.value,important:(impChk.checked?"1":"0"),comments:(cmtChk.checked?"1":"0"),subj:(esc(subjInp.value)||esc(fixSubj.value)),fname:esc(fnameInp.value),fallback:esc(fallbackInp.value),begleit:esc(begleitInp.value),urls:nu(collectUrls()),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cd.jur.slice().sort().join(" "),area:__cd.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:(pwhintInp?esc(pwhintInp.value):"")};
+    var base={date:snapBase.date,access:snapBase.access,important:(snapBase.important?"1":"0"),comments:(snapBase.comments?"1":"0"),subj:snapBase.subj,fname:snapBase.fname,fallback:snapBase.fallback,begleit:snapBase.begleit,urls:snapBase.urls,row1:snapBase.row1,rspis:snapBase.rspis,row3:snapBase.row3,court:snapBase.court,cat:snapBase.cat,area:snapBase.area,az:snapBase.az,ourref:snapBase.ourref,pwhint:snapBase.pwhint};
     var ch={};Object.keys(cur).forEach(function(k){ if(String(cur[k])!==String(base[k])) ch[k]=cur[k]; });
     return {cur:cur, ch:ch};
   }
@@ -768,7 +775,7 @@ function makeSlot(idx){
     h+="└──────────────────────────────────────\n";
     var _fd=(action==="fix"&&snapBase)?fixDiff():null;
     if(_fd){
-      var NM={date:"D\u00e1tum",access:"Pr\u00edstup",important:"D\u00f4le\u017eit\u00e9",comments:"Koment\u00e1re",subj:"Predmet",fname:"N\u00e1zov s\u00faboru",fallback:"Fallback odkaz",begleit:"Sprievodn\u00fd text (Begleittext)",urls:"Odkazy na dokument",row1:"Riadok 1 \u2014 n\u00e1zov kauzy (dla\u017edica)",rspis:"Riadok 2 \u2014 spis. zn. (dla\u017edica)",row3:"Riadok 3 \u2014 rezervn\u00fd (dla\u017edica)",court:"Org\u00e1n/s\u00fad (.court)",cat:"Jurisdikcia (data-cat)",area:"Oblas\u0165 pr\u00e1va (data-area)",az:"Spis. zn. s\u00fadu (data-az)",ourref:"Na\u0161a spis. zn. (data-ourref)"};
+      var NM={date:"D\u00e1tum",access:"Pr\u00edstup",important:"D\u00f4le\u017eit\u00e9",comments:"Koment\u00e1re",subj:"Predmet",fname:"N\u00e1zov s\u00faboru",fallback:"Fallback odkaz",begleit:"Sprievodn\u00fd text (Begleittext)",urls:"Odkazy na dokument",row1:"Riadok 1 \u2014 n\u00e1zov kauzy (dla\u017edica)",rspis:"Riadok 2 \u2014 spis. zn. (dla\u017edica)",row3:"Riadok 3 \u2014 rezervn\u00fd (dla\u017edica)",court:"Org\u00e1n/s\u00fad (.court)",cat:"Jurisdikcia (data-cat)",area:"Oblas\u0165 pr\u00e1va (data-area)",az:"Spis. zn. s\u00fadu (data-az)",ourref:"Na\u0161a spis. zn. (data-ourref)",pwhint:"Pokyn k heslu"};
       var ks=Object.keys(_fd.ch);
       if(!ks.length){ h+="ZMENEN\u00c9 POLIA: \u017eiadne \u2014 v tejto polo\u017eke sa ni\u010d nezmenilo, netreba aktualizova\u0165.\n"; }
       else { h+="ZMENEN\u00c9 POLIA (aktualizuj IBA tieto, ostatn\u00e9 nechaj bez zmeny):\n"; ks.forEach(function(k){ h+="  \u2022 "+(NM[k]||k)+"\n"; }); }
@@ -812,6 +819,7 @@ function makeSlot(idx){
         }
       }
     }
+    if(accessSel.value==="pwd") h+="Prístup: 🔒 HESLO — dokument musí byť chránený heslom na SharePointe (register naň len odkazuje). Pokyn k heslu (zobrazí sa návštevníkovi): "+(hesc(pwhintInp.value)||"(nevyplnené)")+"\n";
     if(important && (!_fd || ("important" in _fd.ch))) h+="Dôležité: ÁNO (❗ červený výkričník + .item.imp)\n";
     if(comments && (!_fd || ("comments" in _fd.ch))) h+="Komentáre: ÁNO — pridá sa kcmt + cmt-wrap; nahraď data-doc=cmt-PLACEHOLDER unikátnym ID.\n";
     if(esc(begleitInp.value) && (!_fd || ("begleit" in _fd.ch))){
@@ -846,8 +854,8 @@ function makeSlot(idx){
       if(!subj && konanieSel.value==="__new__"){ return { text: header(), markup: null, mode, important }; }
       if(!subj) throw new Error(`Slot ${idx+1}: vyplň Predmet (subj).`);
       const dateVal=noDate.checked?"—":dateInp.value;
-      const snap=buildSnap(subj,dateVal,urls,accessSel.value,fb,important,fnameInp.value,comments);
-      markup=buildItem(dateVal,subj,urls,accessSel.value,fb,important,fnameInp.value,snap,comments);
+      const snap=buildSnap(subj,dateVal,urls,accessSel.value,fb,important,fnameInp.value,comments,pwhintInp?pwhintInp.value:"");
+      markup=buildItem(dateVal,subj,urls,accessSel.value,fb,important,fnameInp.value,snap,comments,pwhintInp?pwhintInp.value:"");
     }else{
       markup=docMulti(urls,fb);
     }
@@ -862,15 +870,15 @@ function makeSlot(idx){
     root.querySelectorAll('.catchip').forEach(c=>c.classList.remove('on'));
     if(azInp) azInp.value=""; if(ourrefInp) ourrefInp.value=""; if(begleitInp) begleitInp.value="";
     subjInp.value=""; fixSubj.value=""; dateInp.value=""; noDate.checked=false; dateInp.disabled=false;
-    impChk.checked=false; important=false; cmtChk.checked=false; comments=false; accessSel.value="pub"; fnameInp.value="";
+    impChk.checked=false; important=false; cmtChk.checked=false; comments=false; accessSel.value="pub"; fnameInp.value=""; if(pwhintInp) pwhintInp.value=""; updatePwVis();
     snapBase=null;
     setMode("item"); setAction("new"); setDir("sent");
     refreshKonanieList();
   }
 
-  function buildSnap(subj,date,urls,access,fallback,important,fname,comments){
+  function buildSnap(subj,date,urls,access,fallback,important,fname,comments,pwhint){
     const c=collectCats();
-    return {v:1, kauzaKey:kauzaSel.value, kauza:currentCaseName(), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments};
+    return {v:1, kauzaKey:kauzaSel.value, kauza:currentCaseName(), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments, pwhint:esc(pwhint)};
   }
   // predvyplnenie slotu z karty #303 (nezavisle od kniznice CASES)
   function applySnap(snap){
@@ -895,6 +903,7 @@ function makeSlot(idx){
     if((snap.date||"")==="—"){ noDate.checked=true; dateInp.value=""; dateInp.disabled=true; }
     else { noDate.checked=false; dateInp.disabled=false; dateInp.value=snap.date||""; }
     accessSel.value=snap.access||"pub";
+    if(pwhintInp) pwhintInp.value=snap.pwhint||""; updatePwVis();
     impChk.checked=!!snap.important; important=!!snap.important;
     cmtChk.checked=!!snap.comments; comments=!!snap.comments;
     fnameInp.value=snap.fname||"";
@@ -907,7 +916,7 @@ function makeSlot(idx){
     if(courtNew && snap.court){ courtNew.value=snap.court; }
     if(begleitInp && snap.begleit){ begleitInp.value=snap.begleit; }
     validateUrls(); updateSummary();
-    (function(){var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};var __cc=collectCats();snapBase={date:(snap.date||""),access:(snap.access||"pub"),important:!!snap.important,comments:!!snap.comments,subj:(snap.subj||""),fname:(snap.fname||""),fallback:(snap.fallback||""),begleit:(snap.begleit||""),urls:nu(snap.urls||{}),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cc.jur.slice().sort().join(" "),area:__cc.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value)};})();
+    (function(){var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};var __cc=collectCats();snapBase={date:(snap.date||""),access:(snap.access||"pub"),important:!!snap.important,comments:!!snap.comments,subj:(snap.subj||""),fname:(snap.fname||""),fallback:(snap.fallback||""),begleit:(snap.begleit||""),urls:nu(snap.urls||{}),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cc.jur.slice().sort().join(" "),area:__cc.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:(pwhintInp?esc(pwhintInp.value):"")};})();
     saveLastEdit(kauzaSel.value,konanieSel.value);
   }
 
