@@ -45,7 +45,7 @@
       az = caseEl.getAttribute("data-az")||"";
       ourref = caseEl.getAttribute("data-ourref")||"";
     }
-    return { v:1, kauza:kauza, subj:subj, dir:dir, mode:"item", date:date,
+    return { v:1, kauza:kauza, caseId:(caseEl?caseEl.id:""), subj:subj, dir:dir, mode:"item", date:date,
       access:access, important:important, fname:fname, fallback:fallback,
       urls:urls, cats:cats, az:az, ourref:ourref };
   }
