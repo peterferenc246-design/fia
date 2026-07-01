@@ -17,13 +17,13 @@
   .fld{flex:1 1 200px;display:flex;flex-direction:column;gap:5px}
   .cardedit{margin-top:12px;display:grid;grid-template-columns:minmax(150px,1fr) 2fr;gap:14px;align-items:start}
   @media(max-width:640px){.cardedit{grid-template-columns:1fr}}
-  .cardprev{display:flex;flex-direction:column;align-items:flex-start;gap:3px;border:1px solid rgba(31,56,100,.12);border-left:4px solid #FFCB3E;border-radius:10px;padding:9px 12px;background:linear-gradient(135deg,#fff,#FFF8E6);box-shadow:0 0 0 2px rgba(255,203,62,.5);font:13px/1.4 "Segoe UI",Calibri,Arial,sans-serif;color:#34435A}
-  .cardprev .cp-t{display:flex;align-items:center;gap:0;font-size:13.5px;font-weight:700;color:#1F3864}
-  .cardprev .cp-t img{width:17px;height:auto;border-radius:2px;margin-right:5px;vertical-align:-2px;flex:0 0 auto}
-  .cardprev .cp-s{font:600 10.5px/1.4 Consolas,"Courier New",monospace;color:#6B7C91;margin-top:1px}
+  .cardprev{border:1px solid #d6dee9;border-radius:12px;padding:11px 13px;background:#fff;font:13px/1.4 "Segoe UI",Calibri,Arial,sans-serif;color:#34435A;box-shadow:0 2px 8px rgba(31,56,100,.06)}
+  .cardprev .cp-t{display:flex;align-items:center;gap:7px;font-weight:700;color:#1F3864}
+  .cardprev .cp-t img{width:18px;height:13px;border-radius:2px;object-fit:cover;flex:0 0 auto}
+  .cardprev .cp-s{font:600 10.5px/1.4 Consolas,"Courier New",monospace;color:#6B7C91;margin-top:3px}
   .cardprev .cp-x{font:italic 500 10.5px/1.4 "Segoe UI";color:#6B7C91;margin-top:2px;min-height:1px}
   .cardprev .cp-x:empty{display:none}
-  .cardprev .cp-b{display:inline-block;margin-top:2px;font-size:9.5px;font-weight:700;color:#0C447C;background:#E6F1FB;border-radius:999px;padding:2px 7px}
+  .cardprev .cp-b{display:inline-block;margin-top:7px;font-size:11px;color:#1F6F3A;background:#E8F6EE;border-radius:999px;padding:2px 9px}
   label{font-size:12.5px;font-weight:600;color:#3a4d68}
   input,select{font:inherit;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:#fbfcfe;color:#24344c}
   input:focus,select:focus{outline:none;border-color:var(--navy);background:#fff}
@@ -188,7 +188,7 @@ const CASES = {
     begleit: "Táto kauza ukazuje, ako justícia ohýba právo proti bežnému občanovi. Slovenská zdravotná poisťovňa (VšZP) sama uznala, že moje verejné zdravotné poistenie v SR skončilo už v roku 2016 a že podľa koordinačného práva EÚ (čl. 11 nar. ES č. 883/2004) podlieham výlučne nemeckému právu. Napriek tomu mi za fiktívne „dlžné\" obdobia vystavila niekoľko výkazov nedoplatkov — a jeden z nich drží ako exekučný titul aj potom, čo istinu znížila na 0,00 €. Z desaťeurového „poplatku\" bez právneho titulu sa tak stal podklad pre exekúciu, trovy a blokáciu účtu.\n\nIde o priamy zásah do majetkových práv občana EÚ na základe pohľadávky, ktorá neexistuje. Tá istá poisťovňa pritom jeden z troch identických výkazov z vlastného podnetu zrušila — čím sama priznala, že dlh nikdy nebol. Selektívne udržiavanie práve tých titulov, ktoré generujú poplatky a trovy, nie je náhoda; je to vzorec, biznis model založený na neznalosti zákonov a zneužívaní právomoci verejných činiteľov.\n\nNamiesto nápravy dozorný úrad (ÚDZS) podnet odmietol ako neopodstatnený — obišiel nosné ustanovenie práva EÚ, použil len tú časť normy, ktorá sa hodí, a test, ktorý si sám otvoril, vôbec nevykonal. Tento sprievodný text dokumentuje, ako sa obštrukciami, jednostranným výkladom a krytím vlastných inštitúcií zakrýva jednoduchá pravda: za nulový dlh niet titulu na exekúciu.\n\nTouto námietkou žiadam predsedu úradu o opätovné posúdenie a o výkon dohľadu. Iniciatíva FIA FOX vec zverejňuje výlučne s cieľom informovať verejnosť o postupe orgánov vo veci verejného záujmu. Plné znenie podania a dôkazov je dostupné cez dokumenty tejto kauzy vyššie.",
     docs: {
       "Námietka proti oznámeniu o neopodstatnenosti podnetu (predseda ÚDZS Hroššo)":
-        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQCToS09y5pISYhWGDP_WG3xARZpOKB15UCbsqDjkH7aDrE?e=zWU4Iv",{_date:"29.06.2026",_imp:true,_cmt:true,_fname:"19_Namietka_ÚDZS_predseda_Hroššo_SK·EN·DE·ES·FR·PL·IT_signed with QES.pdf"})
+        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQCToS09y5pISYhWGDP_WG3xARZpOKB15UCbsqDjkH7aDrE?e=zWU4Iv",{_date:"29.06.2026",_imp:true,_fname:"19_Namietka_ÚDZS_predseda_Hroššo_SK·EN·DE·ES·FR·PL·IT_signed with QES.pdf"})
     }
   },
   "Nichtigkeitsklage — Zusammenschluss (Joint Venture) M.10815": {
@@ -289,8 +289,7 @@ function buildItem(date,subj,urls,access,fallback,important,fname,snap,comments)
 
 // ===== SLOT — nezávislý vstupný blok =====
 function kauzaOptions(){
-  return `<option value="">— vyber kauzu (prázdny slot) —</option>`
-    + KAUZA_KEYS.map(k=>`<option value="${k}">${KAUZY[k].label}</option>`).join("")
+  return KAUZA_KEYS.map(k=>`<option value="${k}">${KAUZY[k].label}</option>`).join("")
     + `<option value="__newk__">➕ Nová kauza (nová dlaždica do registra)</option>`;
 }
 function konanieOptions(kk){
@@ -303,6 +302,7 @@ function loadLastEdit(){ try{ return JSON.parse(localStorage.getItem("fiafox_las
 function makeSlot(idx){
   const NEWDOC="__newdoc__";
   let mode="item", action="new", dir="sent", important=false, comments=false;
+  let baseSnap=null;  // baseline načítaný pri ✏️ Upraviť — DIFF: generuj len zmenené polia
 
   const root=document.createElement("div");
   root.className="slot";
@@ -362,6 +362,8 @@ function makeSlot(idx){
         <label>Názov karty konania! (karta v kauze)</label>
         <select data-konanie></select>
         <input data-kauzanew placeholder="Napíš názov nového konania" style="display:none;margin-top:8px">
+        <div class="fld" style="margin-top:12px;flex:0 0 auto"><label>Orgán / súd (data-court — riadok pod názvom karty)</label><input data-courtnew placeholder="napr. Úrad pre dohľad nad zdravotnou starostlivosťou / Všeobecný súd EÚ" title="Vloží sa do .court riadku karty. 9 jazykov doplní Claude."></div>
+        <p class="nchint" data-courthint>🏛 Orgán/súd sa zobrazí pod názvom kauzy (riadok <code>.court</code>). Stačí 1 jazyk — ostatných 8 doplní Claude.</p>
       <div class="row" style="margin-top:14px" data-metarow>
         <div class="fld" style="flex:0 0 150px"><label>Dátum</label><input data-date placeholder="14. 04. 2026">
           <label class="chk"><input type="checkbox" data-nodate> bez dátumu (—)</label>
@@ -372,17 +374,7 @@ function makeSlot(idx){
           <select data-access><option value="pub">🌐 Verejné</option><option value="pwd">🔒 Heslo</option></select>
         </div>
       </div>
-      <div class="fld" style="margin-top:12px;flex:0 0 auto"><label>Orgán / súd (data-court — riadok pod názvom karty)</label><input data-courtnew placeholder="napr. Úrad pre dohľad nad zdravotnou starostlivosťou / Všeobecný súd EÚ" title="Vloží sa do .court riadku karty. 9 jazykov doplní Claude."></div>
-        <p class="nchint" data-courthint>🏛 Orgán/súd sa zobrazí pod názvom kauzy (riadok <code>.court</code>). Stačí 1 jazyk — ostatných 8 doplní Claude.</p>
-        <div class="nc-refs">
-            <div class="fld"><label>Az. — súdna / úradná spis. zn. (data-az)</label><input data-az placeholder="napr. T‑61/26"></div>
-            <div class="fld"><label>Naša spis. zn. — interná (data-ourref)</label><input data-ourref placeholder="napr. PR‑2026‑EXS‑017"></div>
-          </div>
-          <div class="begleit-wrap">
-            <p class="nctitle" style="margin-top:14px">📝 Sprievodný text (Begleittext) — modal kauzy <span style="font-weight:600;color:#6B7C91">(voliteľné; píš po SK → Claude rozloží do 9 jazykov a vytvorí/napojí modal kauzy)</span></p>
-            <textarea data-begleit class="begleit-ta" placeholder="Stručne: o čo v podaní ide, prečo bolo podané, stav/odpovede, tvoj komentár — transparentne pre verejnosť. Prázdny riadok = nový odsek. (Pole roztiahneš za pravý dolný roh.)"></textarea>
-          </div>
-          <label class="chk imp" style="margin-top:12px"><input type="checkbox" data-imp> ❗ Označiť ako dôležité (červený výkričník + ľavý okraj)</label>
+      <label class="chk imp" style="margin-top:12px"><input type="checkbox" data-imp> ❗ Označiť ako dôležité (červený výkričník + ľavý okraj)</label>
       <label class="chk" style="margin-top:12px"><input type="checkbox" data-cmt> 💬 Povoliť komentáre k tomuto dokumentu (kcmt + cmt-wrap placeholder)</label>
       <div class="row" style="margin-top:12px">
         <div class="fld">
@@ -391,7 +383,7 @@ function makeSlot(idx){
         </div>
       </div>
         <div class="newcase" data-newcase style="display:none">
-          <p class="nctitle">🏷 Kategórie a spis. značky kauzy <span style="font-weight:600;color:#6B7C91">(pri existujúcej kauze sú predvyplnené z #303 — klikni a zmeň; zmena sa prenesie na celú kartu vrátane starších položiek)</span></p>
+          <p class="nctitle">🏷 Kategórie a spis. značky konania <span style="font-weight:600;color:#6B7C91">(pri existujúcom konaní sú predvyplnené z #303 — klikni a zmeň; zmena sa prenesie na celú kartu vrátane starších položiek)</span></p>
           <p class="nchint">Klikni kategórie — <b>zapni/vypni</b>, môžeš zvoliť aj viac naraz (jurisdikcia aj oblasť).</p>
           <div class="catgrp">
             <div class="glbl">Oblasť práva (data-area)</div>
@@ -401,6 +393,14 @@ function makeSlot(idx){
               <span class="catchip" data-areaval="gdpr">GDPR<span class="ck">✓</span></span>
               <span class="catchip" data-areaval="strafrecht">Trestné oznámenie<span class="ck">✓</span></span>
             </div>
+          </div>
+          <div class="nc-refs">
+            <div class="fld"><label>Az. — súdna / úradná spis. zn. (data-az)</label><input data-az placeholder="napr. T‑61/26"></div>
+            <div class="fld"><label>Naša spis. zn. — interná (data-ourref)</label><input data-ourref placeholder="napr. PR‑2026‑EXS‑017"></div>
+          </div>
+          <div class="begleit-wrap">
+            <p class="nctitle" style="margin-top:14px">📝 Sprievodný text (Begleittext) — modal kauzy <span style="font-weight:600;color:#6B7C91">(voliteľné; píš po SK → Claude rozloží do 9 jazykov a vytvorí/napojí modal kauzy)</span></p>
+            <textarea data-begleit class="begleit-ta" placeholder="Stručne: o čo v podaní ide, prečo bolo podané, stav/odpovede, tvoj komentár — transparentne pre verejnosť. Prázdny riadok = nový odsek. (Pole roztiahneš za pravý dolný roh.)"></textarea>
           </div>
         </div>
       </div>
@@ -594,9 +594,6 @@ function makeSlot(idx){
       '<div class="cp-x">'+rez+'</div>'+
       '<div class="cp-b">● '+n+' Verfahren · '+n+' konanie</div>';
   }
-  function hlReg(){
-    try{ var kk=kauzaSel.value; var sp=(KAUZY[kk]&&KAUZY[kk].spis)||""; if(sp){ window.parent.postMessage({type:"fiafox-active-case",spis:sp},"*"); } }catch(e){}
-  }
   function refreshKonanieList(){
     const isNewK=kauzaSel.value==="__newk__";
     if(newkBlk) newkBlk.style.display=isNewK?"block":"none";
@@ -615,7 +612,7 @@ function makeSlot(idx){
     if(row3Inp) row3Inp.value = (!isNewK && KAUZY[kauzaSel.value] && KAUZY[kauzaSel.value].reserve) ? KAUZY[kauzaSel.value].reserve : "";
     renderCardPrev();
     refreshDocList();
-    updateNewcaseVis(); updateSummary(); hlReg();
+    updateNewcaseVis(); updateSummary();
   }
   function refreshDocList(){
     const isNew=konanieSel.value==="__new__";
@@ -709,6 +706,27 @@ function makeSlot(idx){
     if(api.onState) api.onState(used?shortLabel:`Podanie ${idx+1}`, stateTxt, stateCls);
   }
 
+  // DIFF helper — pri Oprave (baseSnap != null) vráti true LEN ak sa pole zmenilo oproti načítanému stavu.
+  // Pri Novej položke (baseSnap == null) vráti vždy true (generuje sa všetko).
+  function isFixDiff(){ return action==="fix" && baseSnap; }
+  function chSubj(){ return !isFixDiff() || esc(subjInp.value)!==(baseSnap.subj||""); }
+  function chDate(){ const d=noDate.checked?"—":esc(dateInp.value); return !isFixDiff() || d!==(baseSnap.date||""); }
+  function chAccess(){ return !isFixDiff() || accessSel.value!==(baseSnap.access||"pub"); }
+  function chImportant(){ return !isFixDiff() || (!!important)!==(!!baseSnap.important); }
+  function chComments(){ return !isFixDiff() || (!!comments)!==(!!baseSnap.comments); }
+  function chFname(){ return !isFixDiff() || esc(fnameInp.value)!==(baseSnap.fname||""); }
+  function chFallback(){ return !isFixDiff() || esc(fallbackInp.value)!==(baseSnap.fallback||""); }
+  function chBegleit(){ return !isFixDiff() || esc(begleitInp.value)!==(baseSnap.begleit||""); }
+  function chUrls(){
+    if(!isFixDiff()) return true;
+    const cur=collectUrls(), base=baseSnap.urls||{};
+    const keys=new Set([...Object.keys(cur),...Object.keys(base)]);
+    for(const k of keys){ if((cur[k]||"")!==(base[k]||"")) return true; }
+    return false;
+  }
+  function anyDocChange(){
+    return chSubj()||chDate()||chAccess()||chImportant()||chComments()||chFname()||chFallback()||chUrls();
+  }
   function header(){
     const kk=kauzaSel.value;
     const isNewK=kk==="__newk__";
@@ -782,16 +800,40 @@ function makeSlot(idx){
         h+="(Ak zmena data-area mení typ podania, uprav aj text v .case-meta a chip — 9 jazykov.)\n";
       }
     }
-    if(important) h+="Dôležité: ÁNO (❗ červený výkričník + .item.imp)\n";
-    if(comments) h+="Komentáre: ÁNO — pridá sa kcmt + cmt-wrap; nahraď data-doc=cmt-PLACEHOLDER unikátnym ID.\n";
-    if(esc(begleitInp.value)){
-      h+="— SPRIEVODNÝ TEXT (Begleittext) → modal konania —\n";
-      h+="Vytvor/aktualizuj modal: <div class=\"kmodal\" id=\""+_cardId+"-modal\"> vnútri .kwrap (CSS :target, bez JS, .kmodal-box + .kmodal-close ×), 9 jazykov cez .gtl-b (DE EN SK HR PL ES IT FR SV), nadpis <h3> „O tomto podaní“ (9 jaz.). Tlačidlo „Begleittext“ karty napoj na href=\"#"+_cardId+"-modal\".\n";
-      h+="Obsah (píšem po SK — rozlož do všetkých 9 jazykov; prázdny riadok = nový odsek <p>):\n";
-      h+=esc(begleitInp.value)+"\n";
+    // ── DIFF pri Oprave: vypíš LEN polia, ktoré Peter zmenil oproti načítanému stavu ──
+    if(isFixDiff()){
+      h+="Vymeniť riadok s predmetom: "+(hesc(fixSubj.value)||"(NEVYPLNENÉ — doplň predmet riadku!)")+"\n";
+      if(!anyDocChange() && !esc(begleitInp.value)){
+        h+="— ŽIADNA ZMENA POLÍ dokumentu (okrem prípadnej zmeny kategórií vyššie). Ak si nič nezmenil, netreba prepisovať riadok. —\n";
+      } else {
+        h+="— ZMENENÉ POLIA (uprav LEN tieto v existujúcom .item riadku; ostatné nechaj tak, ako sú v #303) —\n";
+        if(chSubj())      h+="• Predmet (subj): "+hesc(subjInp.value)+"\n";
+        if(chDate())      h+="• Dátum: "+(noDate.checked?"— (bez dátumu)":hesc(dateInp.value))+"\n";
+        if(chAccess())    h+="• Prístup: "+(accessSel.value==="pub"?"Verejné (acc-pub)":"Chránené heslom (acc-pwd)")+"\n";
+        if(chImportant()) h+="• Dôležité: "+(important?"ÁNO (❗ + .item.imp)":"NIE (odstráň ❗ a triedu imp)")+"\n";
+        if(chComments())  h+="• Komentáre: "+(comments?"ÁNO — pridaj kcmt + cmt-wrap; nahraď data-doc=cmt-PLACEHOLDER unikátnym ID":"NIE — odstráň kcmt + cmt-wrap")+"\n";
+        if(chFname())     h+="• Názov súboru (🛈 admin): "+(hesc(fnameInp.value)||"(prázdne)")+"\n";
+        if(chFallback())  h+="• Fallback URL: "+(hesc(fallbackInp.value)||"(prázdne)")+"\n";
+        if(chUrls())      h+="• Odkazy na dokument (URL) — zmenené; použi nové URL z markupu nižšie pre všetkých 9 jazykov.\n";
+      }
+      if(chBegleit() && esc(begleitInp.value)){
+        h+="— SPRIEVODNÝ TEXT (Begleittext) ZMENENÝ → modal konania —\n";
+        h+="Vytvor/aktualizuj modal: <div class=\"kmodal\" id=\""+_cardId+"-modal\"> vnútri .kwrap (CSS :target, bez JS, .kmodal-box + .kmodal-close ×), 9 jazykov cez .gtl-b (DE EN SK HR PL ES IT FR SV), nadpis <h3> „O tomto podaní“ (9 jaz.). Tlačidlo „Begleittext“ karty napoj na href=\"#"+_cardId+"-modal\".\n";
+        h+="Obsah (píšem po SK — rozlož do všetkých 9 jazykov; prázdny riadok = nový odsek <p>):\n";
+        h+=esc(begleitInp.value)+"\n";
+      }
+    } else {
+      // Nová položka — pôvodné správanie (všetko)
+      if(important) h+="Dôležité: ÁNO (❗ červený výkričník + .item.imp)\n";
+      if(comments) h+="Komentáre: ÁNO — pridá sa kcmt + cmt-wrap; nahraď data-doc=cmt-PLACEHOLDER unikátnym ID.\n";
+      if(esc(begleitInp.value)){
+        h+="— SPRIEVODNÝ TEXT (Begleittext) → modal konania —\n";
+        h+="Vytvor/aktualizuj modal: <div class=\"kmodal\" id=\""+_cardId+"-modal\"> vnútri .kwrap (CSS :target, bez JS, .kmodal-box + .kmodal-close ×), 9 jazykov cez .gtl-b (DE EN SK HR PL ES IT FR SV), nadpis <h3> „O tomto podaní“ (9 jaz.). Tlačidlo „Begleittext“ karty napoj na href=\"#"+_cardId+"-modal\".\n";
+        h+="Obsah (píšem po SK — rozlož do všetkých 9 jazykov; prázdny riadok = nový odsek <p>):\n";
+        h+=esc(begleitInp.value)+"\n";
+      }
     }
-    if(action==="fix") h+="Vymeniť riadok s predmetom: "+(hesc(fixSubj.value)||"(NEVYPLNENÉ — doplň predmet riadku!)")+"\n";
-    h+="Typ markupu: "+(mode==="item"?"celý riadok .item":"len odkaz (span-y .gtl)")+"\n";
+    h+="Typ markupu: "+(isFixDiff()?"OPRAVA — LEN zmenené polia vyššie (nie celý nový riadok)":(mode==="item"?"celý riadok .item":"len odkaz (span-y .gtl)"))+"\n";
     h+="### MARKUP (toto vloží Claude do #303) ###\n";
     return h;
   }
@@ -806,7 +848,6 @@ function makeSlot(idx){
       if(!esc(kNewName.value)) throw new Error(`Slot ${idx+1}: vyplň názov novej kauzy.`);
       return { text: header(), markup: null, mode, important };
     }
-    if(kauzaSel.value===""){ throw new Error(`Slot ${idx+1}: vyber kauzu (prázdny slot nechaj úplne nevyplnený).`); }
     const bad=validateUrls();
     if(bad.length) throw new Error(`Slot ${idx+1}: URL nezačínajú https:// — ${bad.join(", ")}`);
     const urls=collectUrls(), fb=fallbackInp.value;
@@ -834,6 +875,7 @@ function makeSlot(idx){
     subjInp.value=""; fixSubj.value=""; dateInp.value=""; noDate.checked=false; dateInp.disabled=false;
     impChk.checked=false; important=false; cmtChk.checked=false; comments=false; accessSel.value="pub"; fnameInp.value="";
     setMode("item"); setAction("new"); setDir("sent");
+    baseSnap=null;
     refreshKonanieList();
   }
 
@@ -873,10 +915,16 @@ function makeSlot(idx){
     if(snap.cats){ setCats(snap.cats.jur||[], snap.cats.area||[]); }
     if(snap.az!==undefined){ azInp.value=snap.az||""; }
     if(snap.ourref!==undefined){ ourrefInp.value=snap.ourref||""; }
-    if(courtNew && snap.court){ courtNew.value=snap.court; }
-    if(begleitInp && snap.begleit){ begleitInp.value=snap.begleit; }
     validateUrls(); updateSummary();
     saveLastEdit(kauzaSel.value,konanieSel.value);
+    // baseline pre DIFF pri Oprave — zapamätaj načítaný stav; generuje sa len to, čo Peter zmení
+    baseSnap = {
+      subj: snap.subj||"", dir: snap.dir||"sent", date: snap.date||"",
+      access: snap.access||"pub", important: !!snap.important, comments: !!snap.comments,
+      fname: snap.fname||"", fallback: snap.fallback||"",
+      urls: Object.assign({}, snap.urls||{}),
+      begleit: ""
+    };
   }
 
   // API objekt (onState dopĺňa builder po vytvorení tabu)
