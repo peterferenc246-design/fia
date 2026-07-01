@@ -97,6 +97,17 @@
     }
     addBtns();
     document.addEventListener("click", function(){ setTimeout(addBtns, 60); }, true);
+    window.addEventListener("message", function(e){
+      if (e.origin !== "https://rawcdn.githack.com"){ return; }
+      var d = e.data || {};
+      if (!d || d.type !== "fiafox-active-case"){ return; }
+      var reg = document.getElementById("fia-reg");
+      if (!reg){ return; }
+      var tiles = [].slice.call(reg.querySelectorAll(".rbtn"));
+      var match = null;
+      tiles.forEach(function(t){ if (d.spis && (t.getAttribute("data-spis")||"") === d.spis){ match = t; } });
+      if (match){ tiles.forEach(function(t){ t.classList.toggle("active", t === match); }); }
+    });
   }
   if (document.readyState === "loading"){ document.addEventListener("DOMContentLoaded", init); }
   else { init(); }
