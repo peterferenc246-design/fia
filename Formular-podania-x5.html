@@ -839,7 +839,8 @@ function makeSlot(idx){
   // predvyplnenie slotu z karty #303 (nezavisle od kniznice CASES)
   function applySnap(snap){
     if(!snap){ return; }
-    const kn=snap.kauza||"";
+    let kn=snap.kauza||"";
+    if(snap.caseId){ for(const nm in CASES){ if(CASES[nm]&&CASES[nm].id===snap.caseId){ kn=nm; break; } } }
     let kkey=snap.kauzaKey||kauzaKeyForKonanie(kn);
     if(kkey&&KAUZY[kkey]){ kauzaSel.value=kkey; } else { kauzaSel.value=KAUZA_KEYS[0]; }
     refreshKonanieList();
