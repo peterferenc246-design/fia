@@ -25,6 +25,20 @@
     if (!wrap) return;
 
     var cases    = [].slice.call(wrap.querySelectorAll('details.case'));
+    // --- INJEKCIA: area-chip „Zasahovanie do majetkových práv občana" (data-filter=majetok) ---
+    // Klon strafrecht chipu (zachová štruktúru + .gtl jazyky), vloženie hneď zaň. Bez zásahu do bloku 3.
+    (function(){
+      var strf = root.querySelector('.chip[data-filter=strafrecht]');
+      if (strf && !root.querySelector('.chip[data-filter=majetok]')) {
+        var c = strf.cloneNode(true);
+        c.setAttribute('data-filter','majetok');
+        c.classList.remove('active','lit');
+        c.style.boxShadow=''; c.style.borderColor='';
+        var L={de:"Eingriff in Eigentumsrechte",en:"Interference with property rights",sk:"Zasahovanie do majetkových práv občana",hr:"Zadiranje u imovinska prava",pl:"Naruszenie praw majątkowych",es:"Injerencia en derechos patrimoniales",it:"Ingerenza nei diritti patrimoniali",fr:"Atteinte aux droits patrimoniaux",sv:"Intrång i egendomsrätt"};
+        Object.keys(L).forEach(function(l){ var sp=c.querySelector('.gtl.'+l); if(sp) sp.textContent=L[l]; });
+        strf.parentNode.insertBefore(c, strf.nextSibling);
+      }
+    })();
     var chips    = [].slice.call(root.querySelectorAll('.chip[data-filter]'));
     var sortbtns = [].slice.call(root.querySelectorAll('.sortbtn[data-sort]'));
     var dirBtn   = root.querySelector('#kdir');
