@@ -372,12 +372,6 @@ function makeSlot(idx){
           <select data-access><option value="pub">🌐 Verejné</option><option value="pwd">🔒 Heslo</option></select>
         </div>
       </div>
-      <div class="row" style="margin-top:14px;display:none" data-fixrow>
-        <div class="fld">
-          <label data-fixlbl>Predmet riadku, ktorý meníme (presne ako je v #303)</label>
-          <input data-fixsubj placeholder="napr. Nichtigkeitsklage (Art. 263 AEUV) — M.10815 · QES">
-        </div>
-      </div>
       <div class="fld" style="margin-top:12px;flex:0 0 auto"><label>Orgán / súd (data-court — riadok pod názvom karty)</label><input data-courtnew placeholder="napr. Úrad pre dohľad nad zdravotnou starostlivosťou / Všeobecný súd EÚ" title="Vloží sa do .court riadku karty. 9 jazykov doplní Claude."></div>
         <p class="nchint" data-courthint>🏛 Orgán/súd sa zobrazí pod názvom kauzy (riadok <code>.court</code>). Stačí 1 jazyk — ostatných 8 doplní Claude.</p>
         <div class="nc-refs">
@@ -432,6 +426,12 @@ function makeSlot(idx){
           <button type="button" data-d="sent" class="on">↗ Odoslané</button>
           <button type="button" data-d="recv">↙ Došlé</button>
         </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:14px;display:none" data-fixrow>
+      <div class="fld">
+        <label data-fixlbl>Predmet riadku, ktorý meníme (presne ako je v #303)</label>
+        <input data-fixsubj placeholder="napr. Nichtigkeitsklage (Art. 263 AEUV) — M.10815 · QES">
       </div>
     </div>
     <div class="delwarn" data-delwarn>🗑 <b>Vymazať položku:</b> Claude odstráni z #303 riadok s týmto presným predmetom v zvolenej kauze/smere. Negeneruje sa markup. Skontroluj, že predmet sedí na 1 riadok.</div>
@@ -558,7 +558,7 @@ function makeSlot(idx){
       const on=x.dataset.a===action; x.classList.toggle('on',on); x.classList.toggle('del',x.dataset.a==="del"&&on);
     });
     const isDel=action==="del", isFix=action==="fix";
-    fixRow.style.display=(isFix||isDel)?"flex":"none";
+    fixRow.style.display=isDel?"flex":"none";  // (B) len pri Vymazať; pri Opraviť riadok určuje Kauza+Konanie+Dokument
     fixLbl.textContent=isDel?"Predmet riadku na VYMAZANIE (presne ako je v #303)":"Predmet riadku, ktorý meníme (presne ako je v #303)";
     delWarn.classList.toggle('show',isDel);
     contentBlock.style.display=isDel?"none":"block";
@@ -879,8 +879,20 @@ function makeSlot(idx){
     saveLastEdit(kauzaSel.value,konanieSel.value);
   }
 
+  // duplicita: rovnaký Predmet v tej istej kauze (necitlivé na medzery/veľkosť)
+  function dupInfo(){
+    if(!isUsed()) return null;
+    if(kauzaSel.value==="__newk__"||kauzaSel.value==="") return null;
+    const kk=kauzaSel.value;
+    const kauzaLabel=(KAUZY[kk]&&KAUZY[kk].label)||kk;
+    const subjRaw=esc(action==="del"?fixSubj.value:subjInp.value);
+    if(!subjRaw) return null;
+    const subjNorm=subjRaw.toLowerCase().replace(/\s+/g," ").trim();
+    return { idx, kk, kauzaLabel, subjRaw, subjNorm };
+  }
+
   // API objekt (onState dopĺňa builder po vytvorení tabu)
-  const api = { root, collect, reset, onState:null, applySnap,
+  const api = { root, collect, reset, dupInfo, onState:null, applySnap,
     previewMarkup:()=>{ const r=collect(); return r?{markup:r.markup,mode:r.mode}:null; },
     activate:()=>{ slots.forEach(s=>s.root.classList.remove("active")); root.classList.add("active"); } };
 
@@ -960,7 +972,27 @@ document.getElementById("genAll").onclick=()=>{
     const parts=[];
     for(const s of slots){ const r=s.collect(); if(r) parts.push(r.text); }
     if(!parts.length){ alert("Nevyplnil si ani jeden slot."); return; }
-    const out=parts.join("\n\n");
+    // ── detekcia duplicity: rovnaký Predmet v tej istej kauze ──
+    const groups={};
+    slots.forEach(s=>{ const d=s.dupInfo&&s.dupInfo(); if(d){ const key=d.kk+"||"+d.subjNorm; (groups[key]=groups[key]||[]).push(d); } });
+    let dupWarn="";
+    Object.keys(groups).forEach(key=>{
+      const g=groups[key];
+      if(g.length>1){
+        const slotNums=g.map(o=>"Slot "+(o.idx+1)).join(" + ");
+        dupWarn+="\u2503 "+slotNums+": rovnaký Predmet v tej istej kauze.\n";
+        dupWarn+="\u2503    Kauza:   "+g[0].kauzaLabel+"\n";
+        dupWarn+="\u2503    Predmet: \u201e"+g[0].subjRaw+"\u201c\n";
+        dupWarn+="\u2503 \u2192 Premenuj Predmet v jednom zo slotov (inak vzniknú 2 rovnaké riadky).\n";
+      }
+    });
+    let out=parts.join("\n\n");
+    if(dupWarn){
+      const box="\u250f\u2501\u2501\u2501\u2501\u2501 \u26a0\ufe0f DUPLICITA \u2014 TREBA ZMENIŤ NÁZOV PREDMETU \u2501\u2501\u2501\u2501\u2501\u2513\n"
+        + dupWarn
+        + "\u2517\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u251b\n\n";
+      out=box+out;
+    }
     document.getElementById("out").value=out;
     // náhľad prvého slotu, ktorý dal markup
     for(const s of slots){ const r=s.previewMarkup&&s.previewMarkup(); if(r&&r.markup){ renderPreview(r.markup,r.mode); break; } }
