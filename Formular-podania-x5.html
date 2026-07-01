@@ -593,6 +593,9 @@ function makeSlot(idx){
       '<div class="cp-x">'+rez+'</div>'+
       '<div class="cp-b">● '+n+' Verfahren · '+n+' konanie</div>';
   }
+  function hlReg(){
+    try{ var kk=kauzaSel.value; var sp=(KAUZY[kk]&&KAUZY[kk].spis)||""; if(sp){ window.parent.postMessage({type:"fiafox-active-case",spis:sp},"*"); } }catch(e){}
+  }
   function refreshKonanieList(){
     const isNewK=kauzaSel.value==="__newk__";
     if(newkBlk) newkBlk.style.display=isNewK?"block":"none";
@@ -611,7 +614,7 @@ function makeSlot(idx){
     if(row3Inp) row3Inp.value = (!isNewK && KAUZY[kauzaSel.value] && KAUZY[kauzaSel.value].reserve) ? KAUZY[kauzaSel.value].reserve : "";
     renderCardPrev();
     refreshDocList();
-    updateNewcaseVis(); updateSummary();
+    updateNewcaseVis(); updateSummary(); hlReg();
   }
   function refreshDocList(){
     const isNew=konanieSel.value==="__new__";
