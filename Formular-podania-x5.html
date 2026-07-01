@@ -361,8 +361,6 @@ function makeSlot(idx){
         <label>Názov karty konania! (karta v kauze)</label>
         <select data-konanie></select>
         <input data-kauzanew placeholder="Napíš názov nového konania" style="display:none;margin-top:8px">
-        <div class="fld" style="margin-top:12px;flex:0 0 auto"><label>Orgán / súd (data-court — riadok pod názvom karty)</label><input data-courtnew placeholder="napr. Úrad pre dohľad nad zdravotnou starostlivosťou / Všeobecný súd EÚ" title="Vloží sa do .court riadku karty. 9 jazykov doplní Claude."></div>
-        <p class="nchint" data-courthint>🏛 Orgán/súd sa zobrazí pod názvom kauzy (riadok <code>.court</code>). Stačí 1 jazyk — ostatných 8 doplní Claude.</p>
       <div class="row" style="margin-top:14px" data-metarow>
         <div class="fld" style="flex:0 0 150px"><label>Dátum</label><input data-date placeholder="14. 04. 2026">
           <label class="chk"><input type="checkbox" data-nodate> bez dátumu (—)</label>
@@ -381,8 +379,10 @@ function makeSlot(idx){
           <input data-fname placeholder="napr. 03_ANTWORT…_signed with QES.pdf">
         </div>
       </div>
+        <div class="fld" style="margin-top:12px;flex:0 0 auto"><label>Orgán / súd (data-court — riadok pod názvom karty)</label><input data-courtnew placeholder="napr. Úrad pre dohľad nad zdravotnou starostlivosťou / Všeobecný súd EÚ" title="Vloží sa do .court riadku karty. 9 jazykov doplní Claude."></div>
+        <p class="nchint" data-courthint>🏛 Orgán/súd sa zobrazí pod názvom kauzy (riadok <code>.court</code>). Stačí 1 jazyk — ostatných 8 doplní Claude.</p>
         <div class="newcase" data-newcase style="display:none">
-          <p class="nctitle">🏷 Kategórie a spis. značky konania <span style="font-weight:600;color:#6B7C91">(pri existujúcom konaní sú predvyplnené z #303 — klikni a zmeň; zmena sa prenesie na celú kartu vrátane starších položiek)</span></p>
+          <p class="nctitle">🏷 Kategórie a spis. značky kauzy <span style="font-weight:600;color:#6B7C91">(pri existujúcej kauze sú predvyplnené z #303 — klikni a zmeň; zmena sa prenesie na celú kartu vrátane starších položiek)</span></p>
           <p class="nchint">Klikni kategórie — <b>zapni/vypni</b>, môžeš zvoliť aj viac naraz (jurisdikcia aj oblasť).</p>
           <div class="catgrp">
             <div class="glbl">Oblasť práva (data-area)</div>
