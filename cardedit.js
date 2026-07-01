@@ -24,6 +24,7 @@
     var date = txt(item.querySelector(".date")) || "—";
     var access = item.querySelector(".acc-pwd") ? "pwd" : "pub";
     var important = item.classList.contains("imp");
+    var comments = !!item.querySelector("a.kcmt, .kcmt");
     var fname = "";
     var fnameEl = item.querySelector(".admin-fname");
     if (fnameEl){ fname = fnameEl.textContent.replace(/^\s*🛈\s*/, "").trim(); }
@@ -46,7 +47,7 @@
       ourref = caseEl.getAttribute("data-ourref")||"";
     }
     return { v:1, kauza:kauza, caseId:(caseEl?caseEl.id:""), subj:subj, dir:dir, mode:"item", date:date,
-      access:access, important:important, fname:fname, fallback:fallback,
+      access:access, important:important, comments:comments, fname:fname, fallback:fallback,
       urls:urls, cats:cats, az:az, ourref:ourref };
   }
   function snapFor(item){
