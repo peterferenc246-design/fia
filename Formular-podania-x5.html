@@ -868,6 +868,8 @@ function makeSlot(idx){
     if(snap.cats){ setCats(snap.cats.jur||[], snap.cats.area||[]); }
     if(snap.az!==undefined){ azInp.value=snap.az||""; }
     if(snap.ourref!==undefined){ ourrefInp.value=snap.ourref||""; }
+    if(courtNew && snap.court){ courtNew.value=snap.court; }
+    if(begleitInp && snap.begleit){ begleitInp.value=snap.begleit; }
     validateUrls(); updateSummary();
     saveLastEdit(kauzaSel.value,konanieSel.value);
   }
