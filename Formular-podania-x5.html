@@ -289,7 +289,8 @@ function buildItem(date,subj,urls,access,fallback,important,fname,snap,comments)
 
 // ===== SLOT — nezávislý vstupný blok =====
 function kauzaOptions(){
-  return KAUZA_KEYS.map(k=>`<option value="${k}">${KAUZY[k].label}</option>`).join("")
+  return `<option value="">— vyber kauzu (prázdny slot) —</option>`
+    + KAUZA_KEYS.map(k=>`<option value="${k}">${KAUZY[k].label}</option>`).join("")
     + `<option value="__newk__">➕ Nová kauza (nová dlaždica do registra)</option>`;
 }
 function konanieOptions(kk){
@@ -805,6 +806,7 @@ function makeSlot(idx){
       if(!esc(kNewName.value)) throw new Error(`Slot ${idx+1}: vyplň názov novej kauzy.`);
       return { text: header(), markup: null, mode, important };
     }
+    if(kauzaSel.value===""){ throw new Error(`Slot ${idx+1}: vyber kauzu (prázdny slot nechaj úplne nevyplnený).`); }
     const bad=validateUrls();
     if(bad.length) throw new Error(`Slot ${idx+1}: URL nezačínajú https:// — ${bad.join(", ")}`);
     const urls=collectUrls(), fb=fallbackInp.value;
