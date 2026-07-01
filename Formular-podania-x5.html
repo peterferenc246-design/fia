@@ -714,8 +714,8 @@ function makeSlot(idx){
   function fixDiff(){
     if(!snapBase) return {cur:{},ch:{}};
     var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};
-    var cur={date:(noDate.checked?"\u2014":esc(dateInp.value)),access:accessSel.value,important:(impChk.checked?"1":"0"),comments:(cmtChk.checked?"1":"0"),subj:(esc(subjInp.value)||esc(fixSubj.value)),fname:esc(fnameInp.value),fallback:esc(fallbackInp.value),begleit:esc(begleitInp.value),urls:nu(collectUrls()),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):"")};
-    var base={date:snapBase.date,access:snapBase.access,important:(snapBase.important?"1":"0"),comments:(snapBase.comments?"1":"0"),subj:snapBase.subj,fname:snapBase.fname,fallback:snapBase.fallback,begleit:snapBase.begleit,urls:snapBase.urls,row1:snapBase.row1,rspis:snapBase.rspis,row3:snapBase.row3};
+    var __cd=collectCats();var cur={date:(noDate.checked?"\u2014":esc(dateInp.value)),access:accessSel.value,important:(impChk.checked?"1":"0"),comments:(cmtChk.checked?"1":"0"),subj:(esc(subjInp.value)||esc(fixSubj.value)),fname:esc(fnameInp.value),fallback:esc(fallbackInp.value),begleit:esc(begleitInp.value),urls:nu(collectUrls()),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cd.jur.slice().sort().join(" "),area:__cd.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value)};
+    var base={date:snapBase.date,access:snapBase.access,important:(snapBase.important?"1":"0"),comments:(snapBase.comments?"1":"0"),subj:snapBase.subj,fname:snapBase.fname,fallback:snapBase.fallback,begleit:snapBase.begleit,urls:snapBase.urls,row1:snapBase.row1,rspis:snapBase.rspis,row3:snapBase.row3,court:snapBase.court,cat:snapBase.cat,area:snapBase.area,az:snapBase.az,ourref:snapBase.ourref};
     var ch={};Object.keys(cur).forEach(function(k){ if(String(cur[k])!==String(base[k])) ch[k]=cur[k]; });
     return {cur:cur, ch:ch};
   }
@@ -768,7 +768,7 @@ function makeSlot(idx){
     h+="└──────────────────────────────────────\n";
     var _fd=(action==="fix"&&snapBase)?fixDiff():null;
     if(_fd){
-      var NM={date:"D\u00e1tum",access:"Pr\u00edstup",important:"D\u00f4le\u017eit\u00e9",comments:"Koment\u00e1re",subj:"Predmet",fname:"N\u00e1zov s\u00faboru",fallback:"Fallback odkaz",begleit:"Sprievodn\u00fd text (Begleittext)",urls:"Odkazy na dokument",row1:"Riadok 1 \u2014 n\u00e1zov kauzy (dla\u017edica)",rspis:"Riadok 2 \u2014 spis. zn. (dla\u017edica)",row3:"Riadok 3 \u2014 rezervn\u00fd (dla\u017edica)"};
+      var NM={date:"D\u00e1tum",access:"Pr\u00edstup",important:"D\u00f4le\u017eit\u00e9",comments:"Koment\u00e1re",subj:"Predmet",fname:"N\u00e1zov s\u00faboru",fallback:"Fallback odkaz",begleit:"Sprievodn\u00fd text (Begleittext)",urls:"Odkazy na dokument",row1:"Riadok 1 \u2014 n\u00e1zov kauzy (dla\u017edica)",rspis:"Riadok 2 \u2014 spis. zn. (dla\u017edica)",row3:"Riadok 3 \u2014 rezervn\u00fd (dla\u017edica)",court:"Org\u00e1n/s\u00fad (.court)",cat:"Jurisdikcia (data-cat)",area:"Oblas\u0165 pr\u00e1va (data-area)",az:"Spis. zn. s\u00fadu (data-az)",ourref:"Na\u0161a spis. zn. (data-ourref)"};
       var ks=Object.keys(_fd.ch);
       if(!ks.length){ h+="ZMENEN\u00c9 POLIA: \u017eiadne \u2014 v tejto polo\u017eke sa ni\u010d nezmenilo, netreba aktualizova\u0165.\n"; }
       else { h+="ZMENEN\u00c9 POLIA (aktualizuj IBA tieto, ostatn\u00e9 nechaj bez zmeny):\n"; ks.forEach(function(k){ h+="  \u2022 "+(NM[k]||k)+"\n"; }); }
@@ -785,18 +785,31 @@ function makeSlot(idx){
       h+="data-ourref: "+(hesc(ourrefInp.value)||"(prázdne)")+"\n";
       h+="— NAPOJ KONANIE NA KAUZU: v dlaždici registra #fia-reg s data-spis=\""+(kauzaSpis||"?")+"\" dopíš do data-ids \""+_cardId+"\" (== ID KARTY vyššie); ak bola rb-soon, prepni na rb-on a .rb text na „N Verfahren / N konania …“ (9 jaz.) podľa počtu konaní kauzy. —\n";
     } else {
-      const c=collectCats();
-      const def=CASES[konanieSel.value], m=(def&&def.meta)?def.meta:{cat:[],area:[],az:"",ourref:""};
-      const norm=a=>(a||[]).slice().sort().join(" ");
-      const catChg=norm(c.jur)!==norm(m.cat), areaChg=norm(c.area)!==norm(m.area);
-      const azChg=esc(azInp.value)!==esc(m.az||""), refChg=esc(ourrefInp.value)!==esc(m.ourref||"");
-      if(catChg||areaChg||azChg||refChg){
-        h+="— ZMENA KATEGÓRIÍ/ZNAČIEK KONANIA → uprav atribúty karty <details class=\"case\" …> v #303 (platí pre VŠETKY položky konania, aj staršie) —\n";
-        if(catChg) h+="Nastav data-cat na: "+(c.jur.join(" ")||"(nevybrané)")+"\n";
-        if(areaChg) h+="Nastav data-area na: "+(c.area.join(" ")||"(nevybrané)")+"\n";
-        if(azChg) h+="Nastav data-az na: "+(hesc(azInp.value)||"(prázdne)")+"\n";
-        if(refChg) h+="Nastav data-ourref na: "+(hesc(ourrefInp.value)||"(prázdne)")+"\n";
-        h+="(Ak zmena data-area mení typ podania, uprav aj text v .case-meta a chip — 9 jazykov.)\n";
+      if(_fd){
+        const ch=_fd.ch, c=collectCats();
+        if(("cat" in ch)||("area" in ch)||("az" in ch)||("ourref" in ch)||("court" in ch)){
+          h+="— ZMENA ATRIBÚTOV KARTY KONANIA → uprav <details class=\"case\" …> v #303 (platí pre VŠETKY položky konania, aj staršie) —\n";
+          if("court" in ch) h+="Orgán/súd (.court, 1 jazyk — rozlož do 9): "+(hesc(courtNew.value)||"(prázdne)")+"\n";
+          if("cat" in ch) h+="Nastav data-cat na: "+(c.jur.join(" ")||"(nevybrané)")+"\n";
+          if("area" in ch) h+="Nastav data-area na: "+(c.area.join(" ")||"(nevybrané)")+"\n";
+          if("az" in ch) h+="Nastav data-az na: "+(hesc(azInp.value)||"(prázdne)")+"\n";
+          if("ourref" in ch) h+="Nastav data-ourref na: "+(hesc(ourrefInp.value)||"(prázdne)")+"\n";
+          h+="(Ak zmena data-area mení typ podania, uprav aj text v .case-meta a chip — 9 jazykov.)\n";
+        }
+      } else {
+        const c=collectCats();
+        const def=CASES[konanieSel.value], m=(def&&def.meta)?def.meta:{cat:[],area:[],az:"",ourref:""};
+        const norm=a=>(a||[]).slice().sort().join(" ");
+        const catChg=norm(c.jur)!==norm(m.cat), areaChg=norm(c.area)!==norm(m.area);
+        const azChg=esc(azInp.value)!==esc(m.az||""), refChg=esc(ourrefInp.value)!==esc(m.ourref||"");
+        if(catChg||areaChg||azChg||refChg){
+          h+="— ZMENA KATEGÓRIÍ/ZNAČIEK KONANIA (nová položka) → uprav atribúty karty <details class=\"case\" …> v #303 —\n";
+          if(catChg) h+="Nastav data-cat na: "+(c.jur.join(" ")||"(nevybrané)")+"\n";
+          if(areaChg) h+="Nastav data-area na: "+(c.area.join(" ")||"(nevybrané)")+"\n";
+          if(azChg) h+="Nastav data-az na: "+(hesc(azInp.value)||"(prázdne)")+"\n";
+          if(refChg) h+="Nastav data-ourref na: "+(hesc(ourrefInp.value)||"(prázdne)")+"\n";
+          h+="(Ak zmena data-area mení typ podania, uprav aj text v .case-meta a chip — 9 jazykov.)\n";
+        }
       }
     }
     if(important && (!_fd || ("important" in _fd.ch))) h+="Dôležité: ÁNO (❗ červený výkričník + .item.imp)\n";
@@ -894,7 +907,7 @@ function makeSlot(idx){
     if(courtNew && snap.court){ courtNew.value=snap.court; }
     if(begleitInp && snap.begleit){ begleitInp.value=snap.begleit; }
     validateUrls(); updateSummary();
-    (function(){var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};snapBase={date:(snap.date||""),access:(snap.access||"pub"),important:!!snap.important,comments:!!snap.comments,subj:(snap.subj||""),fname:(snap.fname||""),fallback:(snap.fallback||""),begleit:(snap.begleit||""),urls:nu(snap.urls||{}),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):"")};})();
+    (function(){var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};var __cc=collectCats();snapBase={date:(snap.date||""),access:(snap.access||"pub"),important:!!snap.important,comments:!!snap.comments,subj:(snap.subj||""),fname:(snap.fname||""),fallback:(snap.fallback||""),begleit:(snap.begleit||""),urls:nu(snap.urls||{}),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cc.jur.slice().sort().join(" "),area:__cc.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value)};})();
     saveLastEdit(kauzaSel.value,konanieSel.value);
   }
 
