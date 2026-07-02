@@ -42,6 +42,8 @@
   .b-go.big{padding:14px 22px;font-size:16px}
   .b-copy{background:var(--gold);color:#3a2d00}
   .b-copy:hover{filter:brightness(1.05)}
+  .b-copy.lit{box-shadow:0 0 0 3px rgba(255,203,62,.55),0 0 16px rgba(255,203,62,.9);animation:fxcopypulse 1.1s ease-in-out infinite}
+  @keyframes fxcopypulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.22)}}
   .b-ghost{background:#eef2f8;color:var(--navy);border:1px solid var(--line)}
   .b-sm{padding:7px 12px;font-size:12.5px}
   button:disabled{opacity:.45;cursor:not-allowed}
@@ -1001,18 +1003,19 @@ function renderPreview(markup, mode){
 function doPreview(slot){
   try{
     const r=slot.previewMarkup();
-    if(!r||!r.markup){ alert("Tento slot je v režime Vymazať alebo je prázdny — nie je čo zobraziť."); return; }
+    if(!r||!r.markup){ document.getElementById("prev").innerHTML='<span class="prev-empty">Tento slot je v režime Vymazať alebo je prázdny — nie je čo zobraziť.</span>'; return; }
     renderPreview(r.markup, r.mode);
     document.getElementById("prev").scrollIntoView({behavior:"smooth",block:"center"});
-  }catch(e){ alert("⚠️ "+e.message); }
+  }catch(e){ document.getElementById("prev").innerHTML='<span class="prev-empty">⚠️ '+(e.message||"chyba")+'</span>'; }
 }
 
 // ===== Generovať všetkých 5 =====
 document.getElementById("genAll").onclick=()=>{
+  document.getElementById("copy").classList.remove("lit");
   try{
     const parts=[];
     for(const s of slots){ const r=s.collect(); if(r) parts.push(r.text); }
-    if(!parts.length){ alert("Nevyplnil si ani jeden slot."); return; }
+    if(!parts.length){ document.getElementById("out").value="⚠️ Nevyplnil si ani jeden slot (alebo je zvolený slot prázdny)."; return; }
     // ── detekcia duplicity: rovnaký Predmet v tej istej kauze ──
     const groups={};
     slots.forEach(s=>{ const d=s.dupInfo&&s.dupInfo(); if(d){ const key=d.kk+"||"+d.subjNorm; (groups[key]=groups[key]||[]).push(d); } });
@@ -1037,7 +1040,8 @@ document.getElementById("genAll").onclick=()=>{
     document.getElementById("out").value=out;
     // náhľad prvého slotu, ktorý dal markup
     for(const s of slots){ const r=s.previewMarkup&&s.previewMarkup(); if(r&&r.markup){ renderPreview(r.markup,r.mode); break; } }
-  }catch(e){ alert("⚠️ "+e.message); }
+    document.getElementById("copy").classList.add("lit");
+  }catch(e){ document.getElementById("out").value="⚠️ CHYBA: "+(e.message||"neznáma")+"\n\n(Oprav uvedené pole a klikni Generovať znova.)"; }
 };
 document.getElementById("clearAll").onclick=()=>{
   slots.forEach(s=>s.reset());
@@ -1045,10 +1049,10 @@ document.getElementById("clearAll").onclick=()=>{
   document.getElementById("prev").innerHTML='<span class="prev-empty">Náhľad sa zobrazí po kliknutí na „👁 Náhľad" v niektorom slote.</span>';
 };
 document.getElementById("copy").onclick=()=>{
-  const v=document.getElementById("out").value; if(!v){ alert("Najprv vygeneruj výstup."); return; }
+  const v=document.getElementById("out").value; if(!v){ document.getElementById("out").value="⚠️ Najprv klikni „Generovať“."; return; }
   const fn=async()=>{ try{ await navigator.clipboard.writeText(v); }
     catch{ const t=document.getElementById("out"); t.removeAttribute("readonly"); t.select(); document.execCommand("copy"); t.setAttribute("readonly","true"); } };
-  fn(); const c=document.getElementById("copied"); c.classList.add("show"); setTimeout(()=>c.classList.remove("show"),1600);
+  fn(); document.getElementById("copy").classList.remove("lit"); const c=document.getElementById("copied"); c.classList.add("show"); setTimeout(()=>c.classList.remove("show"),1600);
 };
 </script>
 </body>
