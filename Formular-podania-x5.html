@@ -184,7 +184,7 @@ function single(u,opt){ const o={_fallback:u}; LANGS.forEach(l=>o[l]=u); if(opt)
 function recv(u,opt){ const o=single(u,opt); o._dir="recv"; return o; }
 const CASES = {
   "Námietka — exekúcia za nulový dlh (ÚDZS)": {
-    id:"case-udzs-namietka", block:"testcases", court:"Úrad pre dohľad nad zdravotnou starostlivosťou",
+    id:"case-udzs-namietka", block:"testcases", court:"Úrad pre dohľad nad zdravotnou starostlivosťou (ÚDZS)",
     short: "ÚDZS",
     meta: { cat:["sk"], area:[], az:"12479/2026/911 · 43831/2026 · PO 1328/2026", ourref:"PR-2026-EXS-028" },
     begleit: "Táto kauza ukazuje, ako justícia ohýba právo proti bežnému občanovi. Slovenská zdravotná poisťovňa (VšZP) sama uznala, že moje verejné zdravotné poistenie v SR skončilo už v roku 2016 a že podľa koordinačného práva EÚ (čl. 11 nar. ES č. 883/2004) podlieham výlučne nemeckému právu. Napriek tomu mi za fiktívne „dlžné\" obdobia vystavila niekoľko výkazov nedoplatkov — a jeden z nich drží ako exekučný titul aj potom, čo istinu znížila na 0,00 €. Z desaťeurového „poplatku\" bez právneho titulu sa tak stal podklad pre exekúciu, trovy a blokáciu účtu.\n\nIde o priamy zásah do majetkových práv občana EÚ na základe pohľadávky, ktorá neexistuje. Tá istá poisťovňa pritom jeden z troch identických výkazov z vlastného podnetu zrušila — čím sama priznala, že dlh nikdy nebol. Selektívne udržiavanie práve tých titulov, ktoré generujú poplatky a trovy, nie je náhoda; je to vzorec, biznis model založený na neznalosti zákonov a zneužívaní právomoci verejných činiteľov.\n\nNamiesto nápravy dozorný úrad (ÚDZS) podnet odmietol ako neopodstatnený — obišiel nosné ustanovenie práva EÚ, použil len tú časť normy, ktorá sa hodí, a test, ktorý si sám otvoril, vôbec nevykonal. Tento sprievodný text dokumentuje, ako sa obštrukciami, jednostranným výkladom a krytím vlastných inštitúcií zakrýva jednoduchá pravda: za nulový dlh niet titulu na exekúciu.\n\nTouto námietkou žiadam predsedu úradu o opätovné posúdenie a o výkon dohľadu. Iniciatíva FIA FOX vec zverejňuje výlučne s cieľom informovať verejnosť o postupe orgánov vo veci verejného záujmu. Plné znenie podania a dôkazov je dostupné cez dokumenty tejto kauzy vyššie.",
@@ -194,29 +194,29 @@ const CASES = {
     }
   },
   "Nichtigkeitsklage — Zusammenschluss (Joint Venture) M.10815": {
-    id:"case-m10815", block:"kauzy",
+    id:"case-m10815", block:"kauzy", court:"Všeobecný súd Európskej únie",
     short: "M.10815",
     meta: { cat:["eu"], area:["kartell"], az:"T‑61/26", ourref:"" },
     docs: {
       "Nichtigkeitsklage (Art. 263 AEUV) — M.10815 · QES": {
-        de:DE_QES, en:EN_PDF, sk:SK_PDF, hr:EN_PDF, pl:EN_PDF, es:EN_PDF, it:EN_PDF, fr:EN_PDF, sv:EN_PDF, _fallback:EN_PDF, _date:"14. 04. 2026"
+        de:DE_QES, en:EN_PDF, sk:SK_PDF, hr:EN_PDF, pl:EN_PDF, es:EN_PDF, it:EN_PDF, fr:EN_PDF, sv:EN_PDF, _fallback:EN_PDF, _date:"14. 04. 2026", _cmt:true
       },
       "Antrag auf Beiordnung eines Rechtsanwalts · QES":
-        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQChXB4ZzJ8SRYM8W9cBv1dMAQZlsgSadNwJV5WW-Um2SfM",{_date:"13. 12. 2025",_fname:"03_ANTWORT AUF DIE ABLEHNUNG DES ANTRAGS AUF ZUGANG ZU e-CURIA_signed with QES.pdf"}),
+        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQChXB4ZzJ8SRYM8W9cBv1dMAQZlsgSadNwJV5WW-Um2SfM",{_date:"13. 12. 2025",_cmt:true,_fname:"03_ANTWORT AUF DIE ABLEHNUNG DES ANTRAGS AUF ZUGANG ZU e-CURIA_signed with QES.pdf"}),
       "Antwort auf die Ablehnung des e‑Curia‑Zugangs · QES":
-        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQAh1zho_IyrQZ_dD0WW9HB_AQk7CawuKtkzri4tct2S9so",{_date:"24. 12. 2025"}),
+        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQAh1zho_IyrQZ_dD0WW9HB_AQk7CawuKtkzri4tct2S9so",{_date:"24. 12. 2025",_cmt:true}),
       "e‑Curia — Antrag auf Kontoeröffnung":
-        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQBxZRBASQGfSKDFtMTGFnCDAewoSLcTWCiX-k1mpA3ww1Y",{_date:"—"}),
+        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQBxZRBASQGfSKDFtMTGFnCDAewoSLcTWCiX-k1mpA3ww1Y",{_date:"—",_cmt:true}),
       "Eingangsbestätigung der Klage / Az.-Zuteilung (Kanzlei des Gerichts)":
-        recv("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQAOYIIgM3OYR7hFAjs_vzEoAXD6AIbrfInX1Jciaiz72V0",{_date:"—"}),
+        recv("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQAOYIIgM3OYR7hFAjs_vzEoAXD6AIbrfInX1Jciaiz72V0",{_date:"—",_cmt:true}),
       "⚠️ Beschluss des Gerichtspräsidenten — Ablehnung der Prozesskostenhilfe · VERTRAULICH (Kennzeichnung des Gerichts vor Veröffentlichung prüfen)":
         recv("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQAPEEPuZd_iT5Bne-p2oslVAXWzmb0ZkWmlQedpwxHVO8Q",{_date:"—"}),
       "Begleitschreiben der Kanzlei (T‑61/26 AJ)":
-        recv("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQABZBHvtQJ7R5GHTZAPap0-AbHh0mwshOBo-upiM_-UZNs",{_date:"—"}),
+        recv("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQABZBHvtQJ7R5GHTZAPap0-AbHh0mwshOBo-upiM_-UZNs",{_date:"—",_cmt:true}),
       "Europäische Kommission — Schreiben / Stellungnahme":
-        recv("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQDpWWat2A1STY6NqI4E8L9IAZ84t4GYSuL3x74x-Pc3lDA",{_date:"—"}),
+        recv("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQDpWWat2A1STY6NqI4E8L9IAZ84t4GYSuL3x74x-Pc3lDA",{_date:"—",_cmt:true}),
       "Eilantrag — Zustellungsbestätigung (Lesebestätigung)":
-        recv("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQAwiQC1y7XTR5dPnZ1gORaWAQqJgkQcOlk6-fZG2lYjINM",{_date:"—"})
+        recv("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQAwiQC1y7XTR5dPnZ1gORaWAQqJgkQcOlk6-fZG2lYjINM",{_date:"—",_cmt:true})
     }
   },
   "Beschwerde wegen Kartellpraktiken — DG COMP": {
@@ -231,12 +231,12 @@ const CASES = {
     }
   },
   "Strafrechtliche Mitteilung gegen Deutsche Telekom AG": {
-    id:"case-telekom", block:"kauzy",
+    id:"case-telekom", block:"kauzy", court:"Policajná inšpekcia Landshut",
     short: "Telekom",
     meta: { cat:["de"], area:["strafrecht"], az:"", ourref:"" },
     docs: {
       "Strafrechtliche Mitteilung":
-        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQDUGe_w9cSIQaBMiSflVsC0AfDCgKAeyVZZcrKAPqFmm0Q?e=mE3dwu",{_date:"11.07.2024",_imp:true,_fname:"Strafrechtliche Mitteilung_Telekom - Schufa_sharp_EN_DE_SK_signed with QES.pdf"})
+        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQDUGe_w9cSIQaBMiSflVsC0AfDCgKAeyVZZcrKAPqFmm0Q?e=mE3dwu",{_date:"11.07.2024",_imp:true,_cmt:true,_fname:"Strafrechtliche Mitteilung_Telekom - Schufa_sharp_EN_DE_SK_signed with QES.pdf"})
     }
   }
 };
