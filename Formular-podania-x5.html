@@ -220,11 +220,14 @@ const CASES = {
     }
   },
   "Beschwerde wegen Kartellpraktiken — DG COMP": {
-    id:"case-dgcomp", block:"kauzy",
+    id:"case-dgcomp", block:"kauzy", court:"Confirmatory Application (Regulation (EC) No 1049/2001)",
     short: "DG COMP",
-    meta: { cat:["eu"], area:["kartell"], az:"", ourref:"" },
+    meta: { cat:["eu"], area:["kartell","gdpr"], az:"", ourref:"TFIA-2026-JV-001" },
+    begleit: "V tejto veci som sa obrátil priamo na Európsku komisiu — Generálne riaditeľstvo pre hospodársku súťaž (DG COMP). Konanie má dve vetvy: formálnu sťažnosť (Form C) na kartelové praktiky štyroch dominantných telekomunikačných operátorov — Deutsche Telekom, Orange, Telefónica a Vodafone (čl. 101 a 102 ZFEÚ) — a žiadosť o prístup k dokumentom ich spoločného podniku schváleného rozhodnutím M.10815, podľa nariadenia (ES) č. 1049/2001 a čl. 15 ZFEÚ.\n\nPrístup k dokumentom je jadrom veci: Komisia koncentráciu schválila na základe podkladov, ktoré nie sú verejne dostupné, a podstatné časti dohody o spoločnom podniku sú začiernené alebo utajené. Bez nich nemôže verejnosť ani súd overiť, čo si štyria dominantní operátori dohodli v oblastiach koordinácie cien, zdieľania údajov a prístupu k infraštruktúre. DG COMP prístup 7. januára 2026 odmietlo — s abstraktným odôvodnením, bez individuálneho preskúmania jednotlivých dokumentov, bez posúdenia prevažujúceho verejného záujmu a bez zváženia čiastočného prístupu podľa čl. 4 ods. 6 nariadenia.\n\nPotvrdzujúcu žiadosť (confirmatory application) som podal v posledný deň zákonnej lehoty, 26. januára 2026, cez platformu AskTheEU. Technická chyba rozhrania spôsobila, že správa nebola okamžite preposlaná inštitúcii — Access Info Europe prijatie v lehote písomne potvrdila a je pripravená ho dosvedčiť. Odmietnuť preukázateľne včasné podanie len pre technické nepreposlanie by bolo neprimeraným formalizmom v rozpore s čl. 41 a 47 Charty základných práv EÚ; Komisia navyše prijatie žiadosti sama potvrdila a vec postúpila príslušnému útvaru, čím vykonala formálny procesný úkon, ktorý nemôže spätne poprieť. Pre prípad opačného postupu som si vyhradil sťažnosť európskemu ombudsmanovi a súdne prostriedky nápravy.\n\nIniciatíva FIA FOX vec zverejňuje výlučne s cieľom informovať verejnosť o postupe inštitúcií vo veci verejného záujmu. Plné znenie podaní a dôkazov je dostupné cez dokumenty tejto kauzy vyššie.",
     docs: {
-      "Förmliche Beschwerde (Form C) — mutmaßliche Kartellpraktiken": { _date:"10. 03. 2026", _access:"pwd" }
+      "Förmliche Beschwerde (Form C) — mutmaßliche Kartellpraktiken": { _date:"10. 03. 2026", _access:"pwd", _cmt:true },
+      "Formálne odvolanie proti pôvodnému rozhodnutiu o odmietnutí prístupu k dokumentom JV":
+        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQDotrjA_R0FQ4bixq7kYe7eAfkd4b8wlNgNI8d6oTUDblE",{_date:"07.02.2026",_imp:true,_cmt:true,_fname:"02_Confirmatory_Appeal against the Decision Refusing Access to JV Documents_signed with QES.pdf"})
     }
   },
   "Strafrechtliche Mitteilung gegen Deutsche Telekom AG": {
@@ -239,7 +242,7 @@ const CASES = {
 };
 const CASE_NAMES = Object.keys(CASES);
 const KAUZY = {
-  "k-jv":   {label:"🇩🇪🇪🇺 Telekom — kartel / Joint Venture", spis:"TFIA-2026-JV-008", jur:["de","eu"], konania:["Nichtigkeitsklage — Zusammenschluss (Joint Venture) M.10815","Beschwerde wegen Kartellpraktiken — DG COMP","Strafrechtliche Mitteilung gegen Deutsche Telekom AG"]},
+  "k-jv":   {label:"🇩🇪🇪🇺 Telekom — kartel / Joint Venture", spis:"TFIA-2026-JV", jur:["de","eu"], konania:["Nichtigkeitsklage — Zusammenschluss (Joint Venture) M.10815","Beschwerde wegen Kartellpraktiken — DG COMP","Strafrechtliche Mitteilung gegen Deutsche Telekom AG"]},
   "k-fon":  {label:"🇩🇪 Telefónica — podvod", spis:"TCFIA-2026-FON-008", jur:["de"], konania:[]},
   "k-lra":  {label:"🇩🇪 Landratsamt — Bußgeld", spis:"LRA-2026-BG-000", jur:["de"], konania:[]},
   "k-ins":  {label:"🇩🇪 Insolvenčný návrh (Personal)", spis:"PER-DE-2026-INS-005", jur:["de"], konania:[]},
