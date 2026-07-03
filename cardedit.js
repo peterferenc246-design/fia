@@ -78,7 +78,7 @@
     var frame = document.getElementById("fia-formx5-frame");
     if (!frame){ return; }
     var st = document.createElement("style");
-    st.textContent = "#fia-kauzy .item{position:relative}.fx-edit{position:absolute;top:8px;right:10px;border:1px solid #C9A100;background:#FFF8E6;border-radius:8px;padding:2px 9px;font-size:13px;line-height:1.5;cursor:pointer;z-index:3;font-family:'Segoe UI',Calibri,Arial,sans-serif;color:#7a5a06}.fx-edit:hover{background:#FFEFC2}";
+    st.textContent = "#fia-kauzy .item{position:relative}.fx-edit{position:absolute;top:8px;right:10px;border:1px solid #C9A100;background:#FFF8E6;border-radius:8px;padding:2px 9px;font-size:13px;line-height:1.5;cursor:pointer;z-index:3;font-family:'Segoe UI',Calibri,Arial,sans-serif;color:#7a5a06}.fx-edit:hover{background:#FFEFC2}.fx-reply{position:absolute;top:8px;right:104px;border:1px solid #7FA8D9;background:#EAF2FB;border-radius:8px;padding:2px 9px;font-size:13px;line-height:1.5;cursor:pointer;z-index:3;font-family:'Segoe UI',Calibri,Arial,sans-serif;color:#0C447C}.fx-reply:hover{background:#D6E6F2}";
     document.head.appendChild(st);
     function addBtns(){
       var items = document.querySelectorAll("#fia-kauzy .item");
@@ -92,11 +92,25 @@
         b.onclick = function(ev){
           ev.preventDefault(); ev.stopPropagation();
           var snap = snapFor(it);
-          frame.contentWindow.postMessage({ type:"fiafox-edit", snap:snap }, "https://cdn.jsdelivr.net");
+          frame.contentWindow.postMessage({ type:"fiafox-edit", snap:snap }, new URL(frame.src).origin);
           var wrap = document.getElementById("fia-formx5-wrap");
           if (wrap){ wrap.scrollIntoView({ behavior:"smooth", block:"start" }); }
         };
         it.appendChild(b);
+        if (!it.querySelector(".fx-reply")){
+          var r = document.createElement("button");
+          r.type = "button"; r.className = "fx-reply";
+          r.textContent = "\u21a9 Odpoveda\u0165";
+          r.title = "Vytvori\u0165 odpove\u010f na toto podanie vo formul\u00e1ri x5 (opa\u010dn\u00fd smer + v\u00e4zba vl\u00e1kna)";
+          r.onclick = function(ev){
+            ev.preventDefault(); ev.stopPropagation();
+            var snap = snapFor(it);
+            frame.contentWindow.postMessage({ type:"fiafox-reply", snap:snap }, new URL(frame.src).origin);
+            var wrap = document.getElementById("fia-formx5-wrap");
+            if (wrap){ wrap.scrollIntoView({ behavior:"smooth", block:"start" }); }
+          };
+          it.appendChild(r);
+        }
       });
     }
     addBtns();
