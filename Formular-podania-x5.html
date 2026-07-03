@@ -184,7 +184,7 @@ function single(u,opt){ const o={_fallback:u}; LANGS.forEach(l=>o[l]=u); if(opt)
 function recv(u,opt){ const o=single(u,opt); o._dir="recv"; return o; }
 const CASES = {
   "Námietka — exekúcia za nulový dlh (ÚDZS)": {
-    id:"case-udzs-namietka", block:"testcases", court:"Úrad pre dohľad nad zdravotnou starostlivosťou (ÚDZS)",
+    id:"case-udzs-namietka", block:"testcases", court:"Úrad pre dohľad nad zdravotnou starostlivosťou (ÚDZS)", stav:"eingereicht",
     short: "ÚDZS",
     meta: { cat:["sk"], area:[], az:"12479/2026/911 · 43831/2026 · PO 1328/2026", ourref:"PR-2026-EXS-028" },
     begleit: "Táto kauza ukazuje, ako justícia ohýba právo proti bežnému občanovi. Slovenská zdravotná poisťovňa (VšZP) sama uznala, že moje verejné zdravotné poistenie v SR skončilo už v roku 2016 a že podľa koordinačného práva EÚ (čl. 11 nar. ES č. 883/2004) podlieham výlučne nemeckému právu. Napriek tomu mi za fiktívne „dlžné\" obdobia vystavila niekoľko výkazov nedoplatkov — a jeden z nich drží ako exekučný titul aj potom, čo istinu znížila na 0,00 €. Z desaťeurového „poplatku\" bez právneho titulu sa tak stal podklad pre exekúciu, trovy a blokáciu účtu.\n\nIde o priamy zásah do majetkových práv občana EÚ na základe pohľadávky, ktorá neexistuje. Tá istá poisťovňa pritom jeden z troch identických výkazov z vlastného podnetu zrušila — čím sama priznala, že dlh nikdy nebol. Selektívne udržiavanie práve tých titulov, ktoré generujú poplatky a trovy, nie je náhoda; je to vzorec, biznis model založený na neznalosti zákonov a zneužívaní právomoci verejných činiteľov.\n\nNamiesto nápravy dozorný úrad (ÚDZS) podnet odmietol ako neopodstatnený — obišiel nosné ustanovenie práva EÚ, použil len tú časť normy, ktorá sa hodí, a test, ktorý si sám otvoril, vôbec nevykonal. Tento sprievodný text dokumentuje, ako sa obštrukciami, jednostranným výkladom a krytím vlastných inštitúcií zakrýva jednoduchá pravda: za nulový dlh niet titulu na exekúciu.\n\nTouto námietkou žiadam predsedu úradu o opätovné posúdenie a o výkon dohľadu. Iniciatíva FIA FOX vec zverejňuje výlučne s cieľom informovať verejnosť o postupe orgánov vo veci verejného záujmu. Plné znenie podania a dôkazov je dostupné cez dokumenty tejto kauzy vyššie.",
@@ -194,7 +194,7 @@ const CASES = {
     }
   },
   "Nichtigkeitsklage — Zusammenschluss (Joint Venture) M.10815": {
-    id:"case-m10815", block:"kauzy", court:"Všeobecný súd Európskej únie",
+    id:"case-m10815", block:"kauzy", court:"Všeobecný súd Európskej únie", stav:"laeuft",
     short: "M.10815",
     begleit: "Týmto podaním napádam pred Všeobecným súdom Európskej únie (vec T‑61/26) rozhodnutie Európskej komisie vo veci M.10815, ktorým Komisia povolila vznik spoločného podniku štyroch dominantných operátorov — Deutsche Telekom, Orange, Telefónica a Vodafone — podľa nariadenia (ES) č. 139/2004.\n\nŽalobu podávam ako občan Európskej únie. Tvrdím, že Komisia koncentráciu schválila bez riadneho a úplného preskúmania (čl. 6 a 8 nariadenia 139/2004), čím v telekomunikačnom sektore upevnila oligopolnú štruktúru. Tá udržiava jedny z najvyšších cien internetu a mobilných dát v Európe, umožňuje pokračovanie nezákonných praktík pri spracúvaní osobných údajov (automatizovaný credit scoring, odmietanie služieb) a poškodzuje finančné záujmy Únie pri projektoch financovaných z verejných zdrojov.\n\nŽiadam súd, aby rozhodnutie M.10815 zrušil, uložil Komisii vykonať nové preskúmanie koncentrácie so zohľadnením všetkých opomenutých skutočností, a priznal náhradu trov konania.\n\nCieľom iniciatívy FIA FOX je férový a konkurenčný internetový trh v EÚ a transparentné informovanie verejnosti o priebehu konania. Plné znenie žaloby a dôkazov je dostupné cez dokumenty tejto veci vyššie.",
     meta: { cat:["eu"], area:["kartell"], az:"T‑61/26", ourref:"" },
@@ -221,18 +221,18 @@ const CASES = {
     }
   },
   "Beschwerde wegen Kartellpraktiken — DG COMP": {
-    id:"case-dgcomp", block:"kauzy", court:"Confirmatory Application (Regulation (EC) No 1049/2001)",
+    id:"case-dgcomp", block:"kauzy", court:"Confirmatory Application (Regulation (EC) No 1049/2001)", stav:"eingereicht",
     short: "DG COMP",
     meta: { cat:["eu"], area:["kartell","gdpr"], az:"", ourref:"TFIA-2026-JV-001" },
     begleit: "V tejto veci som sa obrátil priamo na Európsku komisiu — Generálne riaditeľstvo pre hospodársku súťaž (DG COMP). Konanie má dve vetvy: formálnu sťažnosť (Form C) na kartelové praktiky štyroch dominantných telekomunikačných operátorov — Deutsche Telekom, Orange, Telefónica a Vodafone (čl. 101 a 102 ZFEÚ) — a žiadosť o prístup k dokumentom ich spoločného podniku schváleného rozhodnutím M.10815, podľa nariadenia (ES) č. 1049/2001 a čl. 15 ZFEÚ.\n\nPrístup k dokumentom je jadrom veci: Komisia koncentráciu schválila na základe podkladov, ktoré nie sú verejne dostupné, a podstatné časti dohody o spoločnom podniku sú začiernené alebo utajené. Bez nich nemôže verejnosť ani súd overiť, čo si štyria dominantní operátori dohodli v oblastiach koordinácie cien, zdieľania údajov a prístupu k infraštruktúre. DG COMP prístup 7. januára 2026 odmietlo — s abstraktným odôvodnením, bez individuálneho preskúmania jednotlivých dokumentov, bez posúdenia prevažujúceho verejného záujmu a bez zváženia čiastočného prístupu podľa čl. 4 ods. 6 nariadenia.\n\nPotvrdzujúcu žiadosť (confirmatory application) som podal v posledný deň zákonnej lehoty, 26. januára 2026, cez platformu AskTheEU. Technická chyba rozhrania spôsobila, že správa nebola okamžite preposlaná inštitúcii — Access Info Europe prijatie v lehote písomne potvrdila a je pripravená ho dosvedčiť. Odmietnuť preukázateľne včasné podanie len pre technické nepreposlanie by bolo neprimeraným formalizmom v rozpore s čl. 41 a 47 Charty základných práv EÚ; Komisia navyše prijatie žiadosti sama potvrdila a vec postúpila príslušnému útvaru, čím vykonala formálny procesný úkon, ktorý nemôže spätne poprieť. Pre prípad opačného postupu som si vyhradil sťažnosť európskemu ombudsmanovi a súdne prostriedky nápravy.\n\nIniciatíva FIA FOX vec zverejňuje výlučne s cieľom informovať verejnosť o postupe inštitúcií vo veci verejného záujmu. Plné znenie podaní a dôkazov je dostupné cez dokumenty tejto kauzy vyššie.",
     docs: {
       "Förmliche Beschwerde (Form C) — mutmaßliche Kartellpraktiken": { _date:"10. 03. 2026", _access:"pwd", _cmt:true },
       "Formálne odvolanie proti pôvodnému rozhodnutiu o odmietnutí prístupu k dokumentom JV":
-        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQDotrjA_R0FQ4bixq7kYe7eAfkd4b8wlNgNI8d6oTUDblE",{_date:"07.02.2026",_imp:true,_cmt:true,_fname:"02_Confirmatory_Appeal against the Decision Refusing Access to JV Documents_signed with QES.pdf"})
+        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQDotrjA_R0FQ4bixq7kYe7eAfkd4b8wlNgNI8d6oTUDblE",{_date:"07.02.2026",_imp:true,_cmt:true,_fname:"02_Confirmatory_Appeal against the Decision Refusing Access to JV Documents_signed with QES.pdf",_extra:{label:"🔗 AskTheEU",url:"https://www.asktheeu.org/request/request_for_access_to_documents_30"}})
     }
   },
   "Strafrechtliche Mitteilung gegen Deutsche Telekom AG": {
-    id:"case-telekom", block:"kauzy", court:"Policajná inšpekcia Landshut",
+    id:"case-telekom", block:"kauzy", court:"Policajná inšpekcia Landshut", stav:"eingereicht",
     short: "Telekom",
     begleit: "Dňa 11. júla 2024 som na Policajnej inšpekcii Landshut podal trestné oznámenie proti Deutsche Telekom AG v súvislosti s konaním agentúry SCHUFA Holding AG. Predmetom je podozrenie z podvodného mechanizmu pri odmietaní prístupu k internetu: Telekom rozhodol o mojej žiadosti o pevné internetové pripojenie výlučne automatizovane, na základe „bonity\u201c od SCHUFA, ktorá moje osobné údaje spracúvala a obchodovala bez môjho informovaného súhlasu.\n\nIde o zakázané automatizované individuálne rozhodovanie podľa čl. 22 GDPR a spracúvanie bez právneho základu podľa čl. 6 GDPR. Dôsledok pre mňa bol konkrétny a merateľný: namiesto pevného pripojenia za bežnú cenu som bol donútený kupovať 5G prepaid dáta za 108 € mesačne — mesačné navýšenie o 68 € oproti DSL, za päť rokov aj s routerom približne 4 380 €. Odmietnutím základnej služby bola zároveň porušená povinnosť univerzálnej služby (§ 78 TKG) a moje právo na otvorený internet podľa nariadenia (EÚ) 2015/2120 — prístup k internetu je dnes základnou podmienkou práce, komunikácie s úradmi aj vzdelávania.\n\nTrestné oznámenie dokumentuje mechanizmus, ktorý považujem za jadro celej kauzy Telekom — kartel / Joint Venture: úverová agentúra predáva scoring spotrebiteľov bez ich súhlasu, operátori ním automatizovane odmieňajú a odmietajú žiadateľov a následne im predávajú predražené tarify. To isté oznámenie preto slúži aj ako dôkaz A3 v žalobe o neplatnosť rozhodnutia M.10815 pred Všeobecným súdom EÚ (vec T‑61/26). Zo strany orgánov som k tomuto oznámeniu dodnes nedostal potvrdenie o začatí vyšetrovania — aj táto nečinnosť je zdokumentovanou súčasťou kauzy.\n\nIniciatíva FIA FOX vec zverejňuje výlučne s cieľom informovať verejnosť o postupe orgánov vo veci verejného záujmu. Plné znenie podania a dôkazov je dostupné cez dokumenty tejto kauzy vyššie.",
     meta: { cat:["de"], area:["strafrecht"], az:"", ourref:"" },
@@ -290,9 +290,10 @@ function buildItem(date,subj,urls,access,fallback,important,fname,snap,comments,
   const fnameHtml = esc(fname) ? `<span class="admin-fname">🛈 ${hesc(fname)}</span>` : "";
   const pwHtml = (access==="pwd" && esc(pwhint)) ? '<div class="pwnote" style="margin:3px 0 0;font-size:12.5px;font-weight:600;color:#854F0B">🔒 '+hesc(pwhint)+'</div>' : "";
   const snapAttr = snap ? " data-snap='"+hsnap(snap)+"'" : "";
+  const extraHtml = (snap&&snap.extra&&snap.extra.url) ? `<a class="open" href="${hesc(snap.extra.url)}" target="_blank" rel="noopener">${hesc(snap.extra.label||"🔗 Odkaz")}</a>` : "";
   return `<div class="item${impCls}"${snapAttr}><div class="top"><span class="date">${hesc(date)||"—"}</span>`+
          `<span class="acc ${cls}">${badgeHtml}</span></div>`+
-         `<div class="subj">${impMark}${hesc(subj)}</div>${fnameHtml}${pwHtml}${link}${comments?cmtBlock():""}</div>`;
+         `<div class="subj">${impMark}${hesc(subj)}</div>${fnameHtml}${pwHtml}${link}${extraHtml}${comments?cmtBlock():""}</div>`;
 }
 
 // ===== SLOT — nezávislý vstupný blok =====
@@ -384,7 +385,7 @@ function makeSlot(idx){
       <div class="row" data-pwhintrow style="margin-top:10px;display:none">
         <div class="fld"><label>🔒 Pokyn k heslu — zobrazí sa návštevníkovi (heslo drží SharePoint; sem píš LEN ako ho získať)</label><input data-pwhint placeholder="napr. Heslo na vyžiadanie na info@foxprof.club"></div>
       </div>
-      <div class="fld" style="margin-top:12px;flex:0 0 auto"><label>Orgán / súd (data-court — riadok pod názvom karty)</label><input data-courtnew placeholder="napr. Úrad pre dohľad nad zdravotnou starostlivosťou / Všeobecný súd EÚ" title="Vloží sa do .court riadku karty. 9 jazykov doplní Claude."></div>
+      <div class="fld" style="margin-top:12px;flex:0 0 auto"><label>Orgán / súd (data-court — riadok pod názvom karty)</label><input data-courtnew placeholder="napr. Úrad pre dohľad nad zdravotnou starostlivosťou / Všeobecný súd EÚ" title="Vloží sa do .court riadku karty. 9 jazykov doplní Claude."></div><div class="fld" style="margin-top:12px;flex:0 0 auto"><label>Stav konania (pill na karte — 9 jazykov doplní Claude)</label><select data-stav><option value="laeuft">Prebieha (modrá p-blue)</option><option value="eingereicht">Podané (žltá p-amber)</option><option value="abgeschlossen">Ukončené (zelená p-green)</option></select></div>
         <p class="nchint" data-courthint>🏛 Orgán/súd sa zobrazí pod názvom kauzy (riadok <code>.court</code>). Stačí 1 jazyk — ostatných 8 doplní Claude.</p>
         <div class="nc-refs">
             <div class="fld"><label>Az. — súdna / úradná spis. zn. (data-az)</label><input data-az placeholder="napr. T‑61/26"></div>
@@ -399,7 +400,8 @@ function makeSlot(idx){
       <div class="row" style="margin-top:12px">
         <div class="fld">
           <label>🛈 Názov súboru — vidíš LEN ty ako prihlásený admin, verejnosť nie (pomôcka pri kontrole, ktorý súbor je za predmetom)</label>
-          <input data-fname placeholder="napr. 03_ANTWORT…_signed with QES.pdf">
+          <input data-fname placeholder="napr. 03_ANTWORT…_signed with QES.pdf"></div>
+      <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky (voliteľné — napr. AskTheEU; jeden odkaz viditeľný vo všetkých jazykoch)</label><input data-extralabel placeholder="Text odkazu, napr. 🔗 AskTheEU" style="margin-bottom:6px"><input data-extraurl placeholder="https://…">
         </div>
       </div>
         <div class="newcase" data-newcase style="display:none">
@@ -492,6 +494,7 @@ function makeSlot(idx){
   const metaRow=q("[data-metarow]"), dateInp=q("[data-date]"), noDate=q("[data-nodate]");
   const subjInp=q("[data-subj]"), accessSel=q("[data-access]"), impChk=q("[data-imp]"), fnameInp=q("[data-fname]"), cmtChk=q("[data-cmt]"); const pwhintInp=q("[data-pwhint]"), pwhintRow=q("[data-pwhintrow]");
   const langsBox=q("[data-langs]"), fallbackInp=q("[data-fallback]");
+  const stavSel=q("[data-stav]"), extraLbl=q("[data-extralabel]"), extraUrl=q("[data-extraurl]");
   const fillBtn=q("[data-fill]");
   const ssum=q("[data-ssum]"), sstate=q("[data-sstate]");
 
@@ -638,6 +641,7 @@ function makeSlot(idx){
     updateNewcaseVis();
     const def=(!isNew&&CASES[konanieSel.value])?CASES[konanieSel.value]:null;
     if(courtNew) courtNew.value=(def&&def.court)?def.court:"";
+    if(stavSel) stavSel.value=(def&&def.stav)?def.stav:"laeuft";
     docSel.innerHTML="";
     if(def&&def.docs){ Object.keys(def.docs).forEach(name=>{ const o=document.createElement("option"); o.value=name; o.textContent=name; docSel.appendChild(o); }); }
     const on=document.createElement("option"); on.value=NEWDOC; on.textContent="➕ Nový dokument"; docSel.appendChild(on);
@@ -650,6 +654,7 @@ function makeSlot(idx){
     if(isNewDoc||!def||!def.docs||!def.docs[docSel.value]){
       clearLangFields();
       dateInp.value=""; noDate.checked=false; dateInp.disabled=false; accessSel.value="pub"; impChk.checked=false; important=false; cmtChk.checked=false; comments=false; fnameInp.value="";
+      if(extraLbl){ extraLbl.value=""; extraUrl.value=""; }
       if(action!=="del") setAction("new");
       fillBtn.disabled=true; fillBtn.textContent="⚡ Vyber existujúci dokument";
     }else{
@@ -664,6 +669,7 @@ function makeSlot(idx){
       impChk.checked=!!d._imp; important=!!d._imp;
       cmtChk.checked=!!d._cmt; comments=!!d._cmt;
       fnameInp.value=d._fname||"";
+      if(extraLbl){ extraLbl.value=(d._extra&&d._extra.label)||""; extraUrl.value=(d._extra&&d._extra.url)||""; }
       if(action!=="del") setAction("fix");
       fixSubj.value=docSel.value;
       subjInp.value=docSel.value;
@@ -728,8 +734,8 @@ function makeSlot(idx){
   function fixDiff(){
     if(!snapBase) return {cur:{},ch:{}};
     var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};
-    var __cd=collectCats();var cur={date:(noDate.checked?"\u2014":esc(dateInp.value)),access:accessSel.value,important:(impChk.checked?"1":"0"),comments:(cmtChk.checked?"1":"0"),subj:(esc(subjInp.value)||esc(fixSubj.value)),fname:esc(fnameInp.value),fallback:esc(fallbackInp.value),begleit:esc(begleitInp.value),urls:nu(collectUrls()),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cd.jur.slice().sort().join(" "),area:__cd.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:(pwhintInp?esc(pwhintInp.value):"")};
-    var base={date:snapBase.date,access:snapBase.access,important:(snapBase.important?"1":"0"),comments:(snapBase.comments?"1":"0"),subj:snapBase.subj,fname:snapBase.fname,fallback:snapBase.fallback,begleit:snapBase.begleit,urls:snapBase.urls,row1:snapBase.row1,rspis:snapBase.rspis,row3:snapBase.row3,court:snapBase.court,cat:snapBase.cat,area:snapBase.area,az:snapBase.az,ourref:snapBase.ourref,pwhint:snapBase.pwhint};
+    var __cd=collectCats();var cur={date:(noDate.checked?"\u2014":esc(dateInp.value)),access:accessSel.value,important:(impChk.checked?"1":"0"),comments:(cmtChk.checked?"1":"0"),subj:(esc(subjInp.value)||esc(fixSubj.value)),fname:esc(fnameInp.value),fallback:esc(fallbackInp.value),begleit:esc(begleitInp.value),urls:nu(collectUrls()),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cd.jur.slice().sort().join(" "),area:__cd.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:(pwhintInp?esc(pwhintInp.value):""),stav:(stavSel?stavSel.value:""),extralabel:(extraLbl?esc(extraLbl.value):""),extraurl:(extraUrl?esc(extraUrl.value):"")};
+    var base={date:snapBase.date,access:snapBase.access,important:(snapBase.important?"1":"0"),comments:(snapBase.comments?"1":"0"),subj:snapBase.subj,fname:snapBase.fname,fallback:snapBase.fallback,begleit:snapBase.begleit,urls:snapBase.urls,row1:snapBase.row1,rspis:snapBase.rspis,row3:snapBase.row3,court:snapBase.court,cat:snapBase.cat,area:snapBase.area,az:snapBase.az,ourref:snapBase.ourref,pwhint:snapBase.pwhint,stav:(snapBase.stav||""),extralabel:(snapBase.extralabel||""),extraurl:(snapBase.extraurl||"")};
     var ch={};Object.keys(cur).forEach(function(k){ if(String(cur[k])!==String(base[k])) ch[k]=cur[k]; });
     return {cur:cur, ch:ch};
   }
@@ -782,7 +788,7 @@ function makeSlot(idx){
     h+="└──────────────────────────────────────\n";
     var _fd=(action==="fix"&&snapBase)?fixDiff():null;
     if(_fd){
-      var NM={date:"D\u00e1tum",access:"Pr\u00edstup",important:"D\u00f4le\u017eit\u00e9",comments:"Koment\u00e1re",subj:"Predmet",fname:"N\u00e1zov s\u00faboru",fallback:"Fallback odkaz",begleit:"Sprievodn\u00fd text (Begleittext)",urls:"Odkazy na dokument",row1:"Riadok 1 \u2014 n\u00e1zov kauzy (dla\u017edica)",rspis:"Riadok 2 \u2014 spis. zn. (dla\u017edica)",row3:"Riadok 3 \u2014 rezervn\u00fd (dla\u017edica)",court:"Org\u00e1n/s\u00fad (.court)",cat:"Jurisdikcia (data-cat)",area:"Oblas\u0165 pr\u00e1va (data-area)",az:"Spis. zn. s\u00fadu (data-az)",ourref:"Na\u0161a spis. zn. (data-ourref)",pwhint:"Pokyn k heslu"};
+      var NM={date:"D\u00e1tum",access:"Pr\u00edstup",important:"D\u00f4le\u017eit\u00e9",comments:"Koment\u00e1re",subj:"Predmet",fname:"N\u00e1zov s\u00faboru",fallback:"Fallback odkaz",begleit:"Sprievodn\u00fd text (Begleittext)",urls:"Odkazy na dokument",row1:"Riadok 1 \u2014 n\u00e1zov kauzy (dla\u017edica)",rspis:"Riadok 2 \u2014 spis. zn. (dla\u017edica)",row3:"Riadok 3 \u2014 rezervn\u00fd (dla\u017edica)",court:"Org\u00e1n/s\u00fad (.court)",cat:"Jurisdikcia (data-cat)",area:"Oblas\u0165 pr\u00e1va (data-area)",az:"Spis. zn. s\u00fadu (data-az)",ourref:"Na\u0161a spis. zn. (data-ourref)",pwhint:"Pokyn k heslu",stav:"Stav konania (pill)",extralabel:"Extra odkaz \u2014 text",extraurl:"Extra odkaz \u2014 URL"};
       var ks=Object.keys(_fd.ch);
       if(!ks.length){ h+="ZMENEN\u00c9 POLIA: \u017eiadne \u2014 v tejto polo\u017eke sa ni\u010d nezmenilo, netreba aktualizova\u0165.\n"; }
       else { h+="ZMENEN\u00c9 POLIA (aktualizuj IBA tieto, ostatn\u00e9 nechaj bez zmeny):\n"; ks.forEach(function(k){ h+="  \u2022 "+(NM[k]||k)+"\n"; }); }
@@ -804,6 +810,7 @@ function makeSlot(idx){
         if(("cat" in ch)||("area" in ch)||("az" in ch)||("ourref" in ch)||("court" in ch)){
           h+="— ZMENA ATRIBÚTOV KARTY KONANIA → uprav <details class=\"case\" …> v #303 (platí pre VŠETKY položky konania, aj staršie) —\n";
           if("court" in ch) h+="Orgán/súd (.court, 1 jazyk — rozlož do 9): "+(hesc(courtNew.value)||"(prázdne)")+"\n";
+          if("stav" in ch) h+="Stav konania (pill .p-blue/.p-amber/.p-green, 9 jaz. — rozlož): "+({laeuft:"Prebieha (p-blue)",eingereicht:"Podané (p-amber)",abgeschlossen:"Ukončené (p-green)"}[stavSel.value]||stavSel.value)+"\n";
           if("cat" in ch) h+="Nastav data-cat na: "+(c.jur.join(" ")||"(nevybrané)")+"\n";
           if("area" in ch) h+="Nastav data-area na: "+(c.area.join(" ")||"(nevybrané)")+"\n";
           if("az" in ch) h+="Nastav data-az na: "+(hesc(azInp.value)||"(prázdne)")+"\n";
@@ -885,7 +892,7 @@ function makeSlot(idx){
 
   function buildSnap(subj,date,urls,access,fallback,important,fname,comments,pwhint){
     const c=collectCats();
-    return {v:1, kauzaKey:kauzaSel.value, kauza:currentCaseName(), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments, pwhint:esc(pwhint)};
+    return {v:1, kauzaKey:kauzaSel.value, kauza:currentCaseName(), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments, pwhint:esc(pwhint), stav:(stavSel?stavSel.value:""), extra:((extraUrl&&esc(extraUrl.value))?{label:(esc(extraLbl.value)||"🔗 Odkaz"),url:esc(extraUrl.value)}:null)};
   }
   // predvyplnenie slotu z karty #303 (nezavisle od kniznice CASES)
   function applySnap(snap){
@@ -922,8 +929,10 @@ function makeSlot(idx){
     if(snap.ourref!==undefined){ ourrefInp.value=snap.ourref||""; }
     if(courtNew && snap.court){ courtNew.value=snap.court; }
     if(begleitInp && snap.begleit){ begleitInp.value=snap.begleit; }
+    if(stavSel && snap.stav){ stavSel.value=snap.stav; }
+    if(extraLbl && snap.extra){ extraLbl.value=snap.extra.label||""; extraUrl.value=snap.extra.url||""; }
     validateUrls(); updateSummary();
-    (function(){var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};var __cc=collectCats();snapBase={date:(snap.date||""),access:(snap.access||"pub"),important:!!snap.important,comments:!!snap.comments,subj:(snap.subj||""),fname:(snap.fname||""),fallback:(snap.fallback||""),begleit:(snap.begleit||""),urls:nu(snap.urls||{}),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cc.jur.slice().sort().join(" "),area:__cc.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:(pwhintInp?esc(pwhintInp.value):"")};})();
+    (function(){var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};var __cc=collectCats();snapBase={date:(snap.date||""),access:(snap.access||"pub"),important:!!snap.important,comments:!!snap.comments,subj:(snap.subj||""),fname:(snap.fname||""),fallback:(snap.fallback||""),begleit:(snap.begleit||""),urls:nu(snap.urls||{}),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cc.jur.slice().sort().join(" "),area:__cc.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:(pwhintInp?esc(pwhintInp.value):""),stav:(stavSel?stavSel.value:""),extralabel:(extraLbl?esc(extraLbl.value):""),extraurl:(extraUrl?esc(extraUrl.value):"")};})();
     saveLastEdit(kauzaSel.value,konanieSel.value);
   }
 
