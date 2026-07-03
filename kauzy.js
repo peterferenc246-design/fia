@@ -423,3 +423,32 @@
     init();
   }
 })();
+
+/* fia-thread-highlight — zvyraznenie vlakna odpovede (klik/hover na .thr alebo .replyto) */
+(function(){
+  function items(t){ return document.querySelectorAll('#fia-kauzy .item[data-thread="'+t+'"]'); }
+  function setHl(t,on){ [].forEach.call(items(t),function(e){ e.classList.toggle('thr-hl',on); }); }
+  function tOf(el){
+    var it = el.closest ? el.closest('.item[data-thread]') : null;
+    return it ? it.getAttribute('data-thread') : null;
+  }
+  document.addEventListener('mouseover', function(ev){
+    var h = ev.target.closest ? ev.target.closest('#fia-kauzy .thr, #fia-kauzy .replyto') : null;
+    if(!h) return; var t=tOf(h); if(t) setHl(t,true);
+  });
+  document.addEventListener('mouseout', function(ev){
+    var h = ev.target.closest ? ev.target.closest('#fia-kauzy .thr, #fia-kauzy .replyto') : null;
+    if(!h) return; var t=tOf(h); if(t) setHl(t,false);
+  });
+  document.addEventListener('click', function(ev){
+    var h = ev.target.closest ? ev.target.closest('#fia-kauzy .thr, #fia-kauzy .replyto') : null;
+    if(!h) return; var t=tOf(h); if(!t) return;
+    ev.preventDefault();
+    var all=items(t); if(!all.length) return;
+    [].forEach.call(all,function(e){ e.classList.add('thr-hl'); });
+    var self=h.closest('.item'); var partner=null;
+    [].forEach.call(all,function(e){ if(e!==self) partner=e; });
+    if(partner){ partner.scrollIntoView({behavior:'smooth',block:'center'}); }
+    setTimeout(function(){ [].forEach.call(all,function(e){ e.classList.remove('thr-hl'); }); }, 2600);
+  });
+})();
