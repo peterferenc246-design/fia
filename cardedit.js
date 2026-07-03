@@ -46,7 +46,7 @@
       ourref = caseEl.getAttribute("data-ourref")||"";
     }
     var comments = !!(item.querySelector(".kcmt") || item.querySelector(".cmt-wrap"));
-    return { v:1, kauza:kauza, subj:subj, dir:dir, mode:"item", date:date,
+    return { v:1, kauza:kauza, caseId:(caseEl?(caseEl.id||""):""), subj:subj, dir:dir, mode:"item", date:date,
       access:access, important:important, fname:fname, fallback:fallback,
       urls:urls, cats:cats, az:az, ourref:ourref, comments:comments };
   }
@@ -63,6 +63,8 @@
     if (raw){
       try {
         var snap = JSON.parse(raw);
+        var ce = item.closest("details.case");
+        if (ce && ce.id){ snap.caseId = ce.id; }
         // data-snap je bohatý základ (kauzaKey, urls, az…), ALE stavové polia,
         // ktoré sa na karte menia po vzniku snapu, prepíšeme aktuálnou pravdou z DOM.
         snap.comments  = dom.comments;   // ← prítomnosť .kcmt/.cmt-wrap na karte
