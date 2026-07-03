@@ -198,7 +198,7 @@ const UDZS_ORIG = "https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/in
 function single(u,opt){ const o={_fallback:u}; LANGS.forEach(l=>o[l]=u); if(opt) Object.assign(o,opt); return o; }
 function recv(u,opt){ const o=single(u,opt); o._dir="recv"; return o; }
 const CASES = {
-  "Námietka — exekúcia za nulový dlh (ÚDZS)": {
+  "Adriana Soldan Steinerova — nezákonná exekúcia za nulový dlh (ÚDZS) a zásah do majetkových práv": {
     id:"case-udzs-namietka", block:"testcases", court:"Úrad pre dohľad nad zdravotnou starostlivosťou (ÚDZS)", stav:"eingereicht",
     short: "ÚDZS",
     meta: { cat:["sk"], area:[], az:"12479/2026/911 · 43831/2026 · PO 1328/2026", ourref:"PR-2026-EXS-028" },
@@ -208,7 +208,7 @@ const CASES = {
         single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQAGHienAiTHTox36s0piVkCAVG_UHteH3xZQZtQq6zFLVY",{_date:"06.06.2026",_imp:true,_cmt:true,_fname:"18_Podnet_ÚDZS_zrušenie_výkazu_2427017713_SK_EN_signed with QES.pdf"}),
       "Námietka proti oznámeniu o neopodstatnenosti podnetu (predseda ÚDZS Hroššo)":
         single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQCToS09y5pISYhWGDP_WG3xARZpOKB15UCbsqDjkH7aDrE?e=zWU4Iv",{_date:"29.06.2026",_imp:true,_cmt:true,_fname:"19_Namietka_ÚDZS_predseda_Hroššo_SK·EN·DE·ES·FR·PL·IT_signed with QES.pdf"}),
-      "Podnet na výkon dohľadu na zrušenie výkazu nedoplatkov — oznámenie ÚDZS o neopodstatnenosti (vybavil a podpísal JUDr. Marek Hroššo)": {
+      "Oznámenie ÚDZS o neopodstatnenosti podnetu (vybavil a podpísal JUDr. Marek Hroššo)": {
         de:UDZS_TRANS, en:UDZS_TRANS, sk:UDZS_ORIG, hr:UDZS_TRANS, pl:UDZS_TRANS, es:UDZS_TRANS, it:UDZS_TRANS, fr:UDZS_TRANS, sv:UDZS_TRANS, _fallback:UDZS_TRANS,
         _dir:"recv", _date:"29.06.2026", _cmt:true,
         _fname:"02_Priama_odpoved_Ferenc_VsZP_nn.pdf · 02a_Priama_odpoved_UDZS_SK-EN-DE-HR-PL-ES-IT-FR-SV_analyza.pdf (GitHub docs/, commit c0bd4c88)",
@@ -271,7 +271,7 @@ const KAUZY = {
   "k-fon":  {label:"🇩🇪 Telefónica — podvod", spis:"TCFIA-2026-FON-008", jur:["de"], konania:[]},
   "k-lra":  {label:"🇩🇪 Landratsamt — Bußgeld", spis:"LRA-2026-BG-000", jur:["de"], konania:[]},
   "k-ins":  {label:"🇩🇪 Insolvenčný návrh (Personal)", spis:"PER-DE-2026-INS-005", jur:["de"], konania:[]},
-  "k-exs":  {label:"🇸🇰 Vymáhanie odškodného 15 000 €", spis:"PR-2026-EXS-026", jur:["sk"], konania:["Námietka — exekúcia za nulový dlh (ÚDZS)"]},
+  "k-exs":  {label:"🇸🇰 Vymáhanie odškodného 15 000 €", spis:"PR-2026-EXS-026", jur:["sk"], konania:["Adriana Soldan Steinerova — nezákonná exekúcia za nulový dlh (ÚDZS) a zásah do majetkových práv"]},
   "k-vszp": {label:"🇸🇰 Odškodné 10 000 € — VšZP", spis:"PR-2026-VsZ-006", jur:["sk"], konania:[]},
   "k-ms":   {label:"🇩🇪🇪🇺 Microsoft — GDPR porušenia", spis:"PIF-EU-2026-MBS-004", jur:["de","eu"], konania:[]},
   "k-dak":  {label:"🇩🇪 DAK — podvod (poisťovňa)", spis:"PER-DE-2026-DAK-", jur:["de"], konania:[]}
