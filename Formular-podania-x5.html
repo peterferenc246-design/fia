@@ -182,6 +182,8 @@ const ACC_PWD = {de:"🔒 Passwort",en:"🔒 Password",sk:"🔒 Heslo",hr:"🔒 
 const DE_QES = "https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQB3IGef-GG-TbkQXvX6NdbQAd8G1-zv2I6Exxw6qW9ASrI";
 const EN_PDF = "https://foxprof.club/wp-content/uploads/2026/06/01.EN_Action_Annulment_M10815_EN_v2.pdf";
 const SK_PDF = "https://foxprof.club/wp-content/uploads/2026/06/01.01_Klage_Nichtigkeit_EK_Entscheidung_M10815_DT_O2_Vodafone_Orange_SK.pdf";
+const UDZS_TRANS = "https://cdn.jsdelivr.net/gh/peterferenc246-design/fia@c0bd4c884b1694a39e6d94f64e3409e4a17588c0/docs/02a_Priama_odpoved_UDZS_SK-EN-DE-HR-PL-ES-IT-FR-SV_analyza.pdf";
+const UDZS_ORIG = "https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQB2XGBkgNWHSJ-1sF405V40AfCWW3NzsKYI_H_U3MgtCJc";
 
 // ===== KNIŽNICA KÁUZ A DOKUMENTOV — reálny aktuálny stav odkazov v #303 =====
 function single(u,opt){ const o={_fallback:u}; LANGS.forEach(l=>o[l]=u); if(opt) Object.assign(o,opt); return o; }
@@ -194,7 +196,13 @@ const CASES = {
     begleit: "Táto kauza ukazuje, ako justícia ohýba právo proti bežnému občanovi. Slovenská zdravotná poisťovňa (VšZP) sama uznala, že moje verejné zdravotné poistenie v SR skončilo už v roku 2016 a že podľa koordinačného práva EÚ (čl. 11 nar. ES č. 883/2004) podlieham výlučne nemeckému právu. Napriek tomu mi za fiktívne „dlžné\" obdobia vystavila niekoľko výkazov nedoplatkov — a jeden z nich drží ako exekučný titul aj potom, čo istinu znížila na 0,00 €. Z desaťeurového „poplatku\" bez právneho titulu sa tak stal podklad pre exekúciu, trovy a blokáciu účtu.\n\nIde o priamy zásah do majetkových práv občana EÚ na základe pohľadávky, ktorá neexistuje. Tá istá poisťovňa pritom jeden z troch identických výkazov z vlastného podnetu zrušila — čím sama priznala, že dlh nikdy nebol. Selektívne udržiavanie práve tých titulov, ktoré generujú poplatky a trovy, nie je náhoda; je to vzorec, biznis model založený na neznalosti zákonov a zneužívaní právomoci verejných činiteľov.\n\nNamiesto nápravy dozorný úrad (ÚDZS) podnet odmietol ako neopodstatnený — obišiel nosné ustanovenie práva EÚ, použil len tú časť normy, ktorá sa hodí, a test, ktorý si sám otvoril, vôbec nevykonal. Tento sprievodný text dokumentuje, ako sa obštrukciami, jednostranným výkladom a krytím vlastných inštitúcií zakrýva jednoduchá pravda: za nulový dlh niet titulu na exekúciu.\n\nTouto námietkou žiadam predsedu úradu o opätovné posúdenie a o výkon dohľadu. Iniciatíva FIA FOX vec zverejňuje výlučne s cieľom informovať verejnosť o postupe orgánov vo veci verejného záujmu. Plné znenie podania a dôkazov je dostupné cez dokumenty tejto kauzy vyššie.",
     docs: {
       "Námietka proti oznámeniu o neopodstatnenosti podnetu (predseda ÚDZS Hroššo)":
-        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQCToS09y5pISYhWGDP_WG3xARZpOKB15UCbsqDjkH7aDrE?e=zWU4Iv",{_date:"29.06.2026",_imp:true,_cmt:true,_fname:"19_Namietka_ÚDZS_predseda_Hroššo_SK·EN·DE·ES·FR·PL·IT_signed with QES.pdf"})
+        single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQCToS09y5pISYhWGDP_WG3xARZpOKB15UCbsqDjkH7aDrE?e=zWU4Iv",{_date:"29.06.2026",_imp:true,_cmt:true,_fname:"19_Namietka_ÚDZS_predseda_Hroššo_SK·EN·DE·ES·FR·PL·IT_signed with QES.pdf"}),
+      "Podnet na výkon dohľadu na zrušenie výkazu nedoplatkov — oznámenie ÚDZS o neopodstatnenosti (vybavil a podpísal JUDr. Marek Hroššo)": {
+        de:UDZS_TRANS, en:UDZS_TRANS, sk:UDZS_ORIG, hr:UDZS_TRANS, pl:UDZS_TRANS, es:UDZS_TRANS, it:UDZS_TRANS, fr:UDZS_TRANS, sv:UDZS_TRANS, _fallback:UDZS_TRANS,
+        _dir:"recv", _date:"29.06.2026", _cmt:true,
+        _fname:"02_Priama_odpoved_Ferenc_VsZP_nn.pdf · 02a_Priama_odpoved_UDZS_SK-EN-DE-HR-PL-ES-IT-FR-SV_analyza.pdf (GitHub docs/, commit c0bd4c88)",
+        _extra:{label:"🔗 Original (SK)", url:UDZS_ORIG}
+      }
     }
   },
   "Nichtigkeitsklage — Zusammenschluss (Joint Venture) M.10815": {
