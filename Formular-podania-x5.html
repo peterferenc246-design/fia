@@ -401,10 +401,12 @@ function makeSlot(idx){
           </div>
           <label class="chk imp" style="margin-top:12px"><input type="checkbox" data-imp> ❗ Označiť ako dôležité (červený výkričník + ľavý okraj)</label>
       <label class="chk" style="margin-top:12px"><input type="checkbox" data-cmt> 💬 Povoliť komentáre k tomuto dokumentu (kcmt + cmt-wrap placeholder)</label>
-      <div class="fld" style="margin-top:12px"><label>↩ Odpoveď na (vlákno — vyber dokument OPAČNÉHO smeru, na ktorý táto položka reaguje)</label><select data-replyto><option value="">— bez väzby —</option></select></div>
-      <div class="fld" style="margin-top:12px"><label>🛈 Názov súboru — vidíš LEN ty ako prihlásený admin, verejnosť nie (pomôcka pri kontrole, ktorý súbor je za predmetom)</label><input data-fname></div>
-      <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky — text (voliteľné)</label><input data-extralabel></div>
-      <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky — URL (voliteľné)</label><input data-extraurl></div>
+      <div style="flex:0 0 100%;width:100%">
+        <div class="fld" style="margin-top:12px"><label>↩ Odpoveď na (vlákno — vyber dokument OPAČNÉHO smeru, na ktorý táto položka reaguje)</label><select data-replyto><option value="">— bez väzby —</option></select></div>
+        <div class="fld" style="margin-top:12px"><label>🛈 Názov súboru — vidíš LEN ty ako prihlásený admin, verejnosť nie (pomôcka pri kontrole, ktorý súbor je za predmetom)</label><input data-fname></div>
+        <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky — text (voliteľné)</label><input data-extralabel></div>
+        <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky — URL (voliteľné)</label><input data-extraurl></div>
+      </div>
         <div class="newcase" data-newcase style="display:none">
           <p class="nctitle">🏷 Kategórie a spis. značky kauzy <span style="font-weight:600;color:#6B7C91">(pri existujúcej kauze sú predvyplnené z #303 — klikni a zmeň; zmena sa prenesie na celú kartu vrátane starších položiek)</span></p>
           <p class="nchint">Klikni kategórie — <b>zapni/vypni</b>, môžeš zvoliť aj viac naraz (jurisdikcia aj oblasť).</p>
