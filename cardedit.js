@@ -50,6 +50,12 @@
       access:access, important:important, fname:fname, fallback:fallback,
       urls:urls, cats:cats, az:az, ourref:ourref, comments:comments };
   }
+  function isRecv(item){
+    var col = item.closest(".col");
+    if (!col || !col.parentNode){ return false; }
+    var cols = col.parentNode.querySelectorAll(":scope > .col");
+    return (cols.length>1 && cols[1]===col);
+  }
   function snapFor(item){
     // Reálny stav položky z DOM (nikdy neklame — číta priamo z karty na #303).
     var dom = buildSnapFromDom(item);
@@ -97,7 +103,7 @@
           if (wrap){ wrap.scrollIntoView({ behavior:"smooth", block:"start" }); }
         };
         it.appendChild(b);
-        if (!it.querySelector(".fx-reply")){
+        if (isRecv(it) && !it.querySelector(".fx-reply")){
           var r = document.createElement("button");
           r.type = "button"; r.className = "fx-reply";
           r.textContent = "\u21a9 Odpoveda\u0165";
@@ -115,6 +121,16 @@
     }
     addBtns();
     document.addEventListener("click", function(){ setTimeout(addBtns, 60); }, true);
+    document.addEventListener("click", function(ev){
+      var sum = ev.target.closest ? ev.target.closest("#fia-kauzy details.case > summary") : null;
+      if (!sum){ return; }
+      var caseEl = sum.parentNode;
+      setTimeout(function(){
+        if (caseEl.open && caseEl.id){
+          frame.contentWindow.postMessage({ type:"fiafox-focus", caseId:caseEl.id }, new URL(frame.src).origin);
+        }
+      }, 40);
+    }, true);
   }
   if (document.readyState === "loading"){ document.addEventListener("DOMContentLoaded", init); }
   else { init(); }
