@@ -334,7 +334,7 @@ function makeSlot(idx){
         <select data-kauza>${kauzaOptions()}</select>
         <div class="newcase" data-newk style="display:none">
           <p class="nctitle">🆕 Nová kauza — len dlaždica do registra <span style="font-weight:600;color:#6B7C91">(konania pridáš zvlášť, pod túto kauzu)</span></p>
-          <div class="fld"><label>Názov kauzy (1 jazyk — Claude rozloží do 9)</label><input data-knewname placeholder="napr. Vymáhanie odškodného 15 000 €"></div>
+          <div class="fld"><label>Názov kauzy (1 jazyk — Claude rozloží do 9)</label><input data-knewname></div>
           <div class="catgrp"><div class="glbl">Jurisdikcia / krajina (data-jur dlaždice)</div>
             <div class="chips-pick">
               <span class="catchip" data-kjur="eu"><img src="https://flagcdn.com/eu.svg" alt="">EU<span class="ck">✓</span></span>
@@ -342,7 +342,7 @@ function makeSlot(idx){
               <span class="catchip" data-kjur="sk"><img src="https://flagcdn.com/sk.svg" alt="">Slovensko<span class="ck">✓</span></span>
             </div>
           </div>
-          <div class="fld"><label>Spis. zn. kauzy (data-spis)</label><input data-kspis placeholder="napr. PR‑2026‑EXS‑027"></div>
+          <div class="fld"><label>Spis. zn. kauzy (data-spis)</label><input data-kspis></div>
         </div>
       </div>
     </div>
@@ -364,8 +364,8 @@ function makeSlot(idx){
           </div>
           <div>
             <div class="glbl" style="margin-bottom:6px">Tri riadky karty — 4. (počet konaní) je systémový</div>
-            <div class="fld"><label>Riadok 1 — názov kauzy (1 jazyk; ostatných 8 doplní Claude)</label><input data-row1 placeholder="napr. Vymáhanie odškodného 15 000 €"></div>
-            <div class="fld" style="margin-top:8px"><label>Riadok 2 — spis. zn. (data-spis)</label><input data-kauzaspis placeholder="napr. PR-2026-EXS-026"></div>
+            <div class="fld"><label>Riadok 1 — názov kauzy (1 jazyk; ostatných 8 doplní Claude)</label><input data-row1></div>
+            <div class="fld" style="margin-top:8px"><label>Riadok 2 — spis. zn. (data-spis)</label><input data-kauzaspis></div>
             <div class="fld" style="margin-top:8px"><label>Riadok 3 — rezervný (zatiaľ voľný)</label><input data-row3 placeholder="(rezervný riadok dlaždice)"></div>
           </div>
         </div>
@@ -387,13 +387,13 @@ function makeSlot(idx){
         </div>
       </div>
       <div class="row" data-pwhintrow style="margin-top:10px;display:none">
-        <div class="fld"><label>🔒 Pokyn k heslu — zobrazí sa návštevníkovi (heslo drží SharePoint; sem píš LEN ako ho získať)</label><input data-pwhint placeholder="napr. Heslo na vyžiadanie na info@foxprof.club"></div>
+        <div class="fld"><label>🔒 Pokyn k heslu — zobrazí sa návštevníkovi (heslo drží SharePoint; sem píš LEN ako ho získať)</label><input data-pwhint></div>
       </div>
-      <div class="fld" style="margin-top:12px;flex:0 0 auto"><label>Orgán / súd (data-court — riadok pod názvom karty)</label><input data-courtnew placeholder="napr. Úrad pre dohľad nad zdravotnou starostlivosťou / Všeobecný súd EÚ" title="Vloží sa do .court riadku karty. 9 jazykov doplní Claude."></div><div class="fld" style="margin-top:12px;flex:0 0 auto"><label>Stav konania (pill na karte — 9 jazykov doplní Claude)</label><select data-stav><option value="laeuft">Prebieha (modrá p-blue)</option><option value="eingereicht">Podané (žltá p-amber)</option><option value="abgeschlossen">Ukončené (zelená p-green)</option></select></div>
+      <div class="fld" style="margin-top:12px;flex:0 0 auto"><label>Orgán / súd (data-court — riadok pod názvom karty)</label><input data-courtnew title="Vloží sa do .court riadku karty. 9 jazykov doplní Claude."></div><div class="fld" style="margin-top:12px;flex:0 0 auto"><label>Stav konania (pill na karte — 9 jazykov doplní Claude)</label><select data-stav><option value="laeuft">Prebieha (modrá p-blue)</option><option value="eingereicht">Podané (žltá p-amber)</option><option value="abgeschlossen">Ukončené (zelená p-green)</option></select></div>
         <p class="nchint" data-courthint>🏛 Orgán/súd sa zobrazí pod názvom kauzy (riadok <code>.court</code>). Stačí 1 jazyk — ostatných 8 doplní Claude.</p>
         <div class="nc-refs">
-            <div class="fld"><label>Az. — súdna / úradná spis. zn. (data-az)</label><input data-az placeholder="napr. T‑61/26"></div>
-            <div class="fld"><label>Naša spis. zn. — interná (data-ourref)</label><input data-ourref placeholder="napr. PR‑2026‑EXS‑017"></div>
+            <div class="fld"><label>Az. — súdna / úradná spis. zn. (data-az)</label><input data-az></div>
+            <div class="fld"><label>Naša spis. zn. — interná (data-ourref)</label><input data-ourref></div>
           </div>
           <div class="begleit-wrap">
             <p class="nctitle" style="margin-top:14px">📝 Sprievodný text (Begleittext) — modal kauzy <span style="font-weight:600;color:#6B7C91">(voliteľné; píš po SK → Claude rozloží do 9 jazykov a vytvorí/napojí modal kauzy)</span></p>
@@ -404,7 +404,7 @@ function makeSlot(idx){
       <div class="row" style="margin-top:12px">
         <div class="fld">
           <label>🛈 Názov súboru — vidíš LEN ty ako prihlásený admin, verejnosť nie (pomôcka pri kontrole, ktorý súbor je za predmetom)</label>
-          <input data-fname placeholder="napr. 03_ANTWORT…_signed with QES.pdf"></div>
+          <input data-fname></div>
       <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky (voliteľné — napr. AskTheEU; jeden odkaz viditeľný vo všetkých jazykoch)</label><input data-extralabel placeholder="Text odkazu, napr. 🔗 AskTheEU" style="margin-bottom:6px"><input data-extraurl placeholder="https://…"></div>
       <div class="fld" style="margin-top:12px"><label>↩ Odpoveď na (vlákno — vyber dokument OPAČNÉHO smeru, na ktorý táto položka reaguje)</label><select data-replyto><option value="">— bez väzby —</option></select>
         </div>
@@ -451,7 +451,7 @@ function makeSlot(idx){
     <div class="row" style="margin-top:14px;display:none" data-fixrow>
       <div class="fld">
         <label data-fixlbl>Predmet riadku, ktorý meníme (presne ako je v #303)</label>
-        <input data-fixsubj placeholder="napr. Nichtigkeitsklage (Art. 263 AEUV) — M.10815 · QES">
+        <input data-fixsubj>
       </div>
     </div>
     <div class="delwarn" data-delwarn>🗑 <b>Vymazať položku:</b> Claude odstráni z #303 riadok s týmto presným predmetom v zvolenej kauze/smere. Negeneruje sa markup. Skontroluj, že predmet sedí na 1 riadok.</div>
@@ -980,6 +980,8 @@ function makeSlot(idx){
     if(docSel){ docSel.value=NEWDOC; applyDoc(); } /* focus = čistý slot, žiadny auto-výber dokumentu */
     if(subjInp) subjInp.value="";
     if(fixSubj) fixSubj.value="";
+    if(dateInp){ dateInp.value=""; dateInp.disabled=false; }
+    if(noDate) noDate.checked=false;
     refreshReplyList("");
     updateSummary();
   }
@@ -992,6 +994,9 @@ function makeSlot(idx){
     refreshReplyList(snap.subj||"");
     if(subjInp) subjInp.value="";
     if(fixSubj) fixSubj.value="";
+    if(dateInp){ dateInp.value=""; dateInp.disabled=false; }
+    if(noDate) noDate.checked=false;
+    if(fnameInp) fnameInp.value="";
     snapBase=null;
     updateSummary();
   }
