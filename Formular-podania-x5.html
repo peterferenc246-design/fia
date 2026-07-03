@@ -154,7 +154,7 @@
         <button class="b-copy" id="copy">📋 Kopírovať všetko</button>
       </div>
     </div>
-    <textarea id="out" placeholder="Tu sa objaví hotový výstup pre všetky vyplnené sloty…" readonly></textarea>
+    <textarea id="out" readonly></textarea>
     <div class="note">Pošli <b>celý</b> blok Claudovi do chatu. Každé podanie má vlastnú hlavičku (kauza · smer · akcia). Pri <b>Vymazať</b> sa negeneruje markup — len pokyn, ktorý riadok odstrániť. Claude všetko zapracuje do #303 cez <code>page-sections.replace</code> jedným zápisom; ty publikuješ cez Quick Edit.</div>
   </div>
 
@@ -366,7 +366,7 @@ function makeSlot(idx){
             <div class="glbl" style="margin-bottom:6px">Tri riadky karty — 4. (počet konaní) je systémový</div>
             <div class="fld"><label>Riadok 1 — názov kauzy (1 jazyk; ostatných 8 doplní Claude)</label><input data-row1></div>
             <div class="fld" style="margin-top:8px"><label>Riadok 2 — spis. zn. (data-spis)</label><input data-kauzaspis></div>
-            <div class="fld" style="margin-top:8px"><label>Riadok 3 — rezervný (zatiaľ voľný)</label><input data-row3 placeholder="(rezervný riadok dlaždice)"></div>
+            <div class="fld" style="margin-top:8px"><label>Riadok 3 — rezervný (zatiaľ voľný)</label><input data-row3></div>
           </div>
         </div>
       </div>
@@ -375,12 +375,12 @@ function makeSlot(idx){
       <div class="fld">
         <label>Názov karty konania! (karta v kauze)</label>
         <select data-konanie></select>
-        <input data-kauzanew placeholder="Napíš názov nového konania" style="display:none;margin-top:8px">
+        <input data-kauzanew style="display:none;margin-top:8px">
       <div class="row" style="margin-top:14px" data-metarow>
-        <div class="fld" style="flex:0 0 150px"><label>Dátum</label><input data-date placeholder="14. 04. 2026">
+        <div class="fld" style="flex:0 0 150px"><label>Dátum</label><input data-date>
           <label class="chk"><input type="checkbox" data-nodate> bez dátumu (—)</label>
         </div>
-        <div class="fld"><label>Predmet (subj)</label><input data-subj placeholder="Nichtigkeitsklage (Art. 263 AEUV) — M.10815 · QES"></div>
+        <div class="fld"><label>Predmet (subj)</label><input data-subj></div>
         <div class="fld" style="flex:0 0 160px">
           <label>Prístup</label>
           <select data-access><option value="pub">🌐 Verejné</option><option value="pwd">🔒 Heslo</option></select>
@@ -397,18 +397,14 @@ function makeSlot(idx){
           </div>
           <div class="begleit-wrap">
             <p class="nctitle" style="margin-top:14px">📝 Sprievodný text (Begleittext) — modal kauzy <span style="font-weight:600;color:#6B7C91">(voliteľné; píš po SK → Claude rozloží do 9 jazykov a vytvorí/napojí modal kauzy)</span></p>
-            <textarea data-begleit class="begleit-ta" placeholder="Stručne: o čo v podaní ide, prečo bolo podané, stav/odpovede, tvoj komentár — transparentne pre verejnosť. Prázdny riadok = nový odsek. (Pole roztiahneš za pravý dolný roh.)"></textarea>
+            <textarea data-begleit class="begleit-ta"></textarea>
           </div>
           <label class="chk imp" style="margin-top:12px"><input type="checkbox" data-imp> ❗ Označiť ako dôležité (červený výkričník + ľavý okraj)</label>
       <label class="chk" style="margin-top:12px"><input type="checkbox" data-cmt> 💬 Povoliť komentáre k tomuto dokumentu (kcmt + cmt-wrap placeholder)</label>
-      <div class="row" style="margin-top:12px">
-        <div class="fld">
-          <label>🛈 Názov súboru — vidíš LEN ty ako prihlásený admin, verejnosť nie (pomôcka pri kontrole, ktorý súbor je za predmetom)</label>
-          <input data-fname></div>
-      <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky (voliteľné — napr. AskTheEU; jeden odkaz viditeľný vo všetkých jazykoch)</label><input data-extralabel placeholder="Text odkazu, napr. 🔗 AskTheEU" style="margin-bottom:6px"><input data-extraurl placeholder="https://…"></div>
-      <div class="fld" style="margin-top:12px"><label>↩ Odpoveď na (vlákno — vyber dokument OPAČNÉHO smeru, na ktorý táto položka reaguje)</label><select data-replyto><option value="">— bez väzby —</option></select>
-        </div>
-      </div>
+      <div class="fld" style="margin-top:12px"><label>↩ Odpoveď na (vlákno — vyber dokument OPAČNÉHO smeru, na ktorý táto položka reaguje)</label><select data-replyto><option value="">— bez väzby —</option></select></div>
+      <div class="fld" style="margin-top:12px"><label>🛈 Názov súboru — vidíš LEN ty ako prihlásený admin, verejnosť nie (pomôcka pri kontrole, ktorý súbor je za predmetom)</label><input data-fname></div>
+      <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky — text (voliteľné)</label><input data-extralabel></div>
+      <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky — URL (voliteľné)</label><input data-extraurl></div>
         <div class="newcase" data-newcase style="display:none">
           <p class="nctitle">🏷 Kategórie a spis. značky kauzy <span style="font-weight:600;color:#6B7C91">(pri existujúcej kauze sú predvyplnené z #303 — klikni a zmeň; zmena sa prenesie na celú kartu vrátane starších položiek)</span></p>
           <p class="nchint">Klikni kategórie — <b>zapni/vypni</b>, môžeš zvoliť aj viac naraz (jurisdikcia aj oblasť).</p>
@@ -476,7 +472,7 @@ function makeSlot(idx){
       <div class="row" style="margin-top:12px">
         <div class="fld">
           <label>Fallback URL — pre každý prázdny jazyk (napr. EN PDF)</label>
-          <input data-fallback placeholder="https://foxprof.club/wp-content/uploads/.../EN.pdf">
+          <input data-fallback>
         </div>
       </div>
     </div>
@@ -509,7 +505,7 @@ function makeSlot(idx){
     rowEl.innerHTML =
       `<img class="flag" src="https://flagcdn.com/${FLAG[l]}.svg" alt="${l.toUpperCase()}">`+
       `<span class="lcode">${l.toUpperCase()}</span>`+
-      `<input data-lang="${l}" placeholder="URL pre ${l.toUpperCase()} (prázdne → fallback)">`;
+      `<input data-lang="${l}">`;
     langsBox.appendChild(rowEl);
   });
 
@@ -670,6 +666,7 @@ function makeSlot(idx){
     if(isNewDoc||!def||!def.docs||!def.docs[docSel.value]){
       clearLangFields();
       dateInp.value=""; noDate.checked=false; dateInp.disabled=false; accessSel.value="pub"; impChk.checked=false; important=false; cmtChk.checked=false; comments=false; fnameInp.value="";
+      if(subjInp) subjInp.value="";
       if(pwhintInp){ pwhintInp.value=""; updatePwVis(); }
       if(extraLbl){ extraLbl.value=""; extraUrl.value=""; }
       if(action!=="del") setAction("new");
@@ -707,7 +704,19 @@ function makeSlot(idx){
   function updatePwVis(){ if(pwhintRow) pwhintRow.style.display=(accessSel.value==="pwd")?"":"none"; }
   accessSel.onchange=()=>{ updatePwVis(); updateSummary(); };
   if(pwhintInp) pwhintInp.oninput=updateSummary;
-  if(replySel) replySel.onchange=updateSummary;
+  if(replySel) replySel.onchange=function(){
+    if(replySel.value){
+      if(docSel && docSel.value!==NEWDOC){ docSel.value=NEWDOC; applyDoc(); }
+      if(subjInp) subjInp.value="";
+      if(dateInp){ dateInp.value=""; dateInp.disabled=false; }
+      if(noDate) noDate.checked=false;
+      if(fnameInp) fnameInp.value="";
+      if(azInp) azInp.value="";
+      if(ourrefInp) ourrefInp.value="";
+      setAction("new");
+    }
+    updateSummary();
+  };
   begleitInp.oninput=updateSummary;
   docSel.onchange=applyDoc;
   fillBtn.onclick=applyDoc;
@@ -997,6 +1006,8 @@ function makeSlot(idx){
     if(dateInp){ dateInp.value=""; dateInp.disabled=false; }
     if(noDate) noDate.checked=false;
     if(fnameInp) fnameInp.value="";
+    if(azInp) azInp.value="";
+    if(ourrefInp) ourrefInp.value="";
     snapBase=null;
     updateSummary();
   }
