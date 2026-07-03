@@ -970,6 +970,19 @@ function makeSlot(idx){
   }
 
   // API objekt (onState dopĺňa builder po vytvorení tabu)
+  function focusCase(caseId){
+    if(esc(subjInp.value) || esc(fixSubj.value)){ return; } /* nerozbíjaj rozpracované (begleit je auto-prefill z knižnice, nie práca používateľa) */
+    let kn=null; for(const k in CASES){ if(CASES[k].id===caseId){ kn=k; break; } }
+    if(!kn) return;
+    const kk=kauzaKeyForKonanie(kn); if(!kk) return;
+    kauzaSel.value=kk; refreshKonanieList();
+    konanieSel.value=kn; refreshDocList();
+    if(docSel){ docSel.value=NEWDOC; applyDoc(); } /* focus = čistý slot, žiadny auto-výber dokumentu */
+    if(subjInp) subjInp.value="";
+    if(fixSubj) fixSubj.value="";
+    refreshReplyList("");
+    updateSummary();
+  }
   function applyReplyFrom(snap){
     applySnap(snap);
     const nd=(snap.dir==="sent")?"recv":"sent";
@@ -982,7 +995,7 @@ function makeSlot(idx){
     snapBase=null;
     updateSummary();
   }
-  const api = { root, collect, reset, dupInfo, onState:null, applySnap, applyReplyFrom,
+  const api = { root, collect, reset, dupInfo, onState:null, applySnap, applyReplyFrom, focusCase,
     previewMarkup:()=>{ const r=collect(); return r?{markup:r.markup,mode:r.mode}:null; },
     activate:()=>{ slots.forEach(s=>s.root.classList.remove("active")); root.classList.add("active"); } };
 
@@ -1027,6 +1040,10 @@ window.addEventListener("message", function(e){
   if(!/^https:\/\/(www\.)?foxprof\.club$/.test(e.origin)){ return; }
   const d=e.data;
   if(!d){ return; }
+  if(d.type==="fiafox-focus"){
+    if(d.caseId){ slots[0].focusCase(d.caseId); }
+    return;
+  }
   if(d.type!=="fiafox-edit" && d.type!=="fiafox-reply"){ return; }
   if(!d.snap){ return; }
   const s0=slots[0];
