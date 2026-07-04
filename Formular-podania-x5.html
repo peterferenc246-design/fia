@@ -883,6 +883,25 @@ function makeSlot(idx){
     h+="\u2502 RIADKY DLAŽDICE: .rt(názov)=\u201e"+hesc(cardName)+"\u201c \u00b7 .rs(spis)=\u201e"+hesc(kauzaSpis)+"\u201c \u00b7 .rx(rezervný)="+(cardRez?("\u201e"+hesc(cardRez)+"\u201c"):"(prázdny)")+"\n";
     h+="│ MODAL (ak je Begleittext): id=\""+_cardId+"-modal\", tlačidlo Begleittext napoj na href=\"#"+_cardId+"-modal\"\n";
     h+="└──────────────────────────────────────\n";
+    if(mode==="item"){
+      var _uAll=collectUrls(); var _uv=LANGS.map(function(l){return _uAll[l]||"";}); var _same=_uv.every(function(v){return v===_uv[0];});
+      var _c2=collectCats();
+      h+="— VŠETKY POLIA POLOŽKY (kompletný stav zo slotu — kontroluj proti #303) —\n";
+      h+="Dátum: "+(noDate.checked?"— (bez dátumu)":(hesc(dateInp.value)||"(prázdny!)"))+"\n";
+      h+="Predmet (subj): "+(hesc(subjInp.value)||"(prázdny)")+"\n";
+      h+="Prístup: "+(accessSel.value==="pwd"?("🔒 Heslo — pokyn k heslu: "+((pwhintInp&&hesc(pwhintInp.value))||"(nevyplnené)")):"🌐 Verejné")+"\n";
+      h+="Dôležité (❗): "+(important?"ÁNO":"NIE")+" · Komentáre (💬): "+(comments?"ÁNO":"NIE")+"\n";
+      h+="🛈 Názov súboru (len admin): "+(hesc(fnameInp.value)||"(prázdne)")+"\n";
+      h+="🔗 Extra odkaz položky: "+((extraUrl&&esc(extraUrl.value))?("„"+(hesc(extraLbl.value)||"🔗 Odkaz")+"“ → "+hesc(extraUrl.value)):"(žiadny)")+"\n";
+      h+="↩ Odpoveď na (vlákno): "+((replySel&&replySel.value)?("„"+hesc(replySel.value)+"“"):"(bez väzby)")+"\n";
+      if(_same){ h+="Odkaz na dokument (rovnaký pre 9 jazykov): "+(_uv[0]?hesc(_uv[0]):"(prázdne)")+"\n"; }
+      else { h+="Odkazy na dokument (per jazyk):\n"; LANGS.forEach(function(l){ h+="  "+l.toUpperCase()+": "+(hesc(_uAll[l])||"(prázdne)")+"\n"; }); }
+      h+="Fallback odkaz: "+(hesc(fallbackInp.value)||"(prázdny)")+"\n";
+      h+="Jurisdikcia (data-cat): "+(_c2.jur.join(" ")||"(nevybrané)")+" · Oblasť práva (data-area): "+(_c2.area.join(" ")||"(nevybrané)")+"\n";
+      h+="Az. (data-az): "+(hesc(azInp.value)||"(prázdne)")+" · Naša spis. zn. (data-ourref): "+(hesc(ourrefInp.value)||"(prázdne)")+"\n";
+      h+="Stav konania (pill): "+({laeuft:"Prebieha (p-blue)",eingereicht:"Podané (p-amber)",abgeschlossen:"Ukončené (p-green)"}[stavSel?stavSel.value:""]||"(—)")+"\n";
+      h+="Begleittext: "+(esc(begleitInp.value)?"ÁNO":"NIE")+"\n";
+    }
     var _fd=(action==="fix"&&snapBase)?fixDiff():null;
     if(_fd){
       var NM={date:"D\u00e1tum",access:"Pr\u00edstup",important:"D\u00f4le\u017eit\u00e9",comments:"Koment\u00e1re",subj:"Predmet",fname:"N\u00e1zov s\u00faboru",fallback:"Fallback odkaz",begleit:"Sprievodn\u00fd text (Begleittext)",urls:"Odkazy na dokument",row1:"Riadok 1 \u2014 n\u00e1zov kauzy (dla\u017edica)",rspis:"Riadok 2 \u2014 spis. zn. (dla\u017edica)",row3:"Riadok 3 \u2014 rezervn\u00fd (dla\u017edica)",cardsubj:"Predmet konania (riadok 2 karty)",court:"Org\u00e1n/s\u00fad (.court)",cat:"Jurisdikcia (data-cat)",area:"Oblas\u0165 pr\u00e1va (data-area)",az:"Spis. zn. s\u00fadu (data-az)",ourref:"Na\u0161a spis. zn. (data-ourref)",pwhint:"Pokyn k heslu",stav:"Stav konania (pill)",extralabel:"Extra odkaz \u2014 text",extraurl:"Extra odkaz \u2014 URL",replyto:"\u21a9 Odpove\u010f na (vl\u00e1kno)"};
