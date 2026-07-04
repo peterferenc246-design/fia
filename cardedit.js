@@ -46,9 +46,10 @@
       ourref = caseEl.getAttribute("data-ourref")||"";
     }
     var comments = !!(item.querySelector(".kcmt") || item.querySelector(".cmt-wrap"));
+    var thread = item.getAttribute("data-thread") || "";
     return { v:1, kauza:kauza, caseId:(caseEl?(caseEl.id||""):""), subj:subj, dir:dir, mode:"item", date:date,
       access:access, important:important, fname:fname, fallback:fallback,
-      urls:urls, cats:cats, az:az, ourref:ourref, comments:comments };
+      urls:urls, cats:cats, az:az, ourref:ourref, comments:comments, thread:thread };
   }
   function isRecv(item){
     var col = item.closest(".col");
@@ -70,6 +71,7 @@
         snap.comments  = dom.comments;   // ← prítomnosť .kcmt/.cmt-wrap na karte
         snap.important = dom.important;  // ← trieda .imp
         snap.access    = dom.access;     // ← acc-pwd vs acc-pub
+        snap.thread    = dom.thread;     // ← živé data-thread z karty (ID reťaze vlákna)
         // ak by v snape chýbali, doplň z DOM
         if (snap.subj == null)  snap.subj  = dom.subj;
         if (snap.date == null)  snap.date  = dom.date;
