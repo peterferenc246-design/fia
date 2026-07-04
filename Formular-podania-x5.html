@@ -834,7 +834,7 @@ function makeSlot(idx){
   function fixDiff(){
     if(!snapBase) return {cur:{},ch:{}};
     var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};
-    var __cd=collectCats();var cur={date:(noDate.checked?"\u2014":esc(dateInp.value)),access:accessSel.value,important:(impChk.checked?"1":"0"),comments:(cmtChk.checked?"1":"0"),subj:(esc(subjInp.value)||esc(fixSubj.value)),fname:esc(fnameInp.value),fallback:esc(fallbackInp.value),begleit:esc(begleitInp.value),urls:nu(collectUrls()),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),cardsubj:(cardSubjInp?esc(cardSubjInp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cd.jur.slice().sort().join(" "),area:__cd.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:(pwhintInp?esc(pwhintInp.value):""),stav:(stavSel?stavSel.value:""),extralabel:(extraLbl?esc(extraLbl.value):""),extraurl:(extraUrl?esc(extraUrl.value):""),replyto:(replySel?replySel.value:"")};
+    var __cd=collectCats();var cur={date:(noDate.checked?"\u2014":esc(dateInp.value)),access:accessSel.value,important:(impChk.checked?"1":"0"),comments:(cmtChk.checked?"1":"0"),subj:(esc(subjInp.value)||esc(fixSubj.value)),fname:esc(fnameInp.value),fallback:esc(fallbackInp.value),begleit:esc(begleitInp.value),urls:nu(collectUrls()),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),cardsubj:(cardSubjInp?esc(cardSubjInp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cd.jur.slice().sort().join(" "),area:__cd.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:((accessSel.value==="pwd"&&pwhintInp)?esc(pwhintInp.value):""),stav:(stavSel?stavSel.value:""),extralabel:(extraLbl?esc(extraLbl.value):""),extraurl:(extraUrl?esc(extraUrl.value):""),replyto:(replySel?replySel.value:"")};
     var base={date:snapBase.date,access:snapBase.access,important:(snapBase.important?"1":"0"),comments:(snapBase.comments?"1":"0"),subj:snapBase.subj,fname:snapBase.fname,fallback:snapBase.fallback,begleit:snapBase.begleit,urls:snapBase.urls,row1:snapBase.row1,rspis:snapBase.rspis,row3:snapBase.row3,cardsubj:(snapBase.cardsubj||""),court:snapBase.court,cat:snapBase.cat,area:snapBase.area,az:snapBase.az,ourref:snapBase.ourref,pwhint:snapBase.pwhint,stav:(snapBase.stav||""),extralabel:(snapBase.extralabel||""),extraurl:(snapBase.extraurl||""),replyto:(snapBase.replyto||"")};
     var ch={};Object.keys(cur).forEach(function(k){ if(String(cur[k])!==String(base[k])) ch[k]=cur[k]; });
     return {cur:cur, ch:ch};
@@ -1008,8 +1008,9 @@ function makeSlot(idx){
       if(!subj && attrsChanged()){ return { text: header(), markup: null, mode, important }; } // len zmena atribútov karty — bez položky
       if(!subj) throw new Error(`Slot ${idx+1}: vyplň Predmet (subj).`);
       const dateVal=noDate.checked?"—":dateInp.value;
-      const snap=buildSnap(subj,dateVal,urls,accessSel.value,fb,important,fnameInp.value,comments,pwhintInp?pwhintInp.value:"");
-      markup=buildItem(dateVal,subj,urls,accessSel.value,fb,important,fnameInp.value,snap,comments,pwhintInp?pwhintInp.value:"");
+      const pwv=(accessSel.value==="pwd"&&pwhintInp)?pwhintInp.value:"";
+      const snap=buildSnap(subj,dateVal,urls,accessSel.value,fb,important,fnameInp.value,comments,pwv);
+      markup=buildItem(dateVal,subj,urls,accessSel.value,fb,important,fnameInp.value,snap,comments,pwv);
     }else{
       markup=docMulti(urls,fb);
     }
