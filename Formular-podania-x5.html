@@ -905,8 +905,14 @@ function makeSlot(idx){
         const norm=a=>(a||[]).slice().sort().join(" ");
         const catChg=norm(c.jur)!==norm(m.cat), areaChg=norm(c.area)!==norm(m.area);
         const azChg=esc(azInp.value)!==esc(m.az||""), refChg=esc(ourrefInp.value)!==esc(m.ourref||"");
-        if(catChg||areaChg||azChg||refChg){
-          h+="— ZMENA KATEGÓRIÍ/ZNAČIEK KONANIA (nová položka) → uprav atribúty karty <details class=\"case\" …> v #303 —\n";
+        const courtChg=!!(def&&courtNew)&&esc(courtNew.value)!==esc(def.court||"");
+        const cardsubjChg=!!(def&&cardSubjInp)&&esc(cardSubjInp.value)!==esc(def.cardsubj||"");
+        const stavChg=!!(def&&stavSel)&&stavSel.value!==(def.stav||"laeuft");
+        if(catChg||areaChg||azChg||refChg||courtChg||cardsubjChg||stavChg){
+          h+="— ZMENA ATRIBÚTOV/ZNAČIEK KONANIA (nová položka) → uprav kartu <details class=\"case\" …> v #303 (platí pre VŠETKY položky konania) —\n";
+          if(cardsubjChg) h+="Predmet konania (RIADOK 2 pod názvom karty — .court-subj, 1 jazyk — rozlož do 9): "+(hesc(cardSubjInp.value)||"(prázdne)")+"\n";
+          if(courtChg) h+="Orgán/súd (.court/.case-meta, 1 jazyk — rozlož do 9): "+(hesc(courtNew.value)||"(prázdne)")+"\n";
+          if(stavChg) h+="Stav konania (pill .p-blue/.p-amber/.p-green, 9 jaz. — rozlož): "+({laeuft:"Prebieha (p-blue)",eingereicht:"Podané (žltá p-amber)",abgeschlossen:"Ukončené (p-green)"}[stavSel.value]||stavSel.value)+"\n";
           if(catChg) h+="Nastav data-cat na: "+(c.jur.join(" ")||"(nevybrané)")+"\n";
           if(areaChg) h+="Nastav data-area na: "+(c.area.join(" ")||"(nevybrané)")+"\n";
           if(azChg) h+="Nastav data-az na: "+(hesc(azInp.value)||"(prázdne)")+"\n";
@@ -914,6 +920,11 @@ function makeSlot(idx){
           h+="(Ak zmena data-area mení typ podania, uprav aj text v .case-meta a chip — 9 jazykov.)\n";
         }
       }
+    }
+    if(typeof konRenamed!=="undefined" && konRenamed && konanieSel.value===konRenamed.to){
+      h+="— PREMENOVANIE KONANIA → prepíš titulok karty (.case-title, 9 jaz. .gtl) aj hodnotu \"kauza\" vo VŠETKÝCH data-snap položkách karty —\n";
+      h+="Starý názov: "+hesc(konRenamed.from)+"\n";
+      h+="Nový názov (1 jazyk — rozlož do 9): "+hesc(konRenamed.to)+"\n";
     }
     if(replySel&&replySel.value) h+="↩ VLÁKNO ODPOVEDE: táto položka je odpoveď na \u201e"+hesc(replySel.value)+"\u201c — Claude: novej položke nechaj data-thread z markupu a PARTNERSKEJ položke s týmto predmetom doplň rovnaké data-thread + krúžok <span class=\"thr\">N</span> za badge prístupu (N = poradie vlákna na karte).\n";
     if(accessSel.value==="pwd") h+="Prístup: 🔒 HESLO — dokument musí byť chránený heslom na SharePointe (register naň len odkazuje). Pokyn k heslu (zobrazí sa návštevníkovi): "+(hesc(pwhintInp.value)||"(nevyplnené)")+"\n";
@@ -1017,7 +1028,7 @@ function makeSlot(idx){
     if(extraLbl && snap.extra){ extraLbl.value=snap.extra.label||""; extraUrl.value=snap.extra.url||""; }
     if(replySel){ refreshReplyList(snap.replyTo||""); }
     validateUrls(); updateSummary();
-    (function(){var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};var __cc=collectCats();snapBase={date:(snap.date||""),access:(snap.access||"pub"),important:!!snap.important,comments:!!snap.comments,subj:(snap.subj||""),fname:(snap.fname||""),fallback:(snap.fallback||""),begleit:(snap.begleit||""),urls:nu(snap.urls||{}),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),cardsubj:(cardSubjInp?esc(cardSubjInp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cc.jur.slice().sort().join(" "),area:__cc.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:(pwhintInp?esc(pwhintInp.value):""),stav:(stavSel?stavSel.value:""),extralabel:(extraLbl?esc(extraLbl.value):""),extraurl:(extraUrl?esc(extraUrl.value):""),replyto:(replySel?replySel.value:"")};})();
+    (function(){var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};var __cc=collectCats();snapBase={date:(snap.date||""),access:(snap.access||"pub"),important:!!snap.important,comments:!!snap.comments,subj:(snap.subj||""),fname:(snap.fname||""),fallback:(snap.fallback||""),begleit:(begleitInp?esc(begleitInp.value):""),urls:nu(snap.urls||{}),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),cardsubj:(cardSubjInp?esc(cardSubjInp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cc.jur.slice().sort().join(" "),area:__cc.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:(pwhintInp?esc(pwhintInp.value):""),stav:(stavSel?stavSel.value:""),extralabel:(extraLbl?esc(extraLbl.value):""),extraurl:(extraUrl?esc(extraUrl.value):""),replyto:(replySel?replySel.value:"")};})();
     saveLastEdit(kauzaSel.value,konanieSel.value);
   }
 
@@ -1084,6 +1095,7 @@ function makeSlot(idx){
 
   // ===== KONCOMBO — klik do poľa = editácia názvu (Enter potvrdí), ▾ rozbalí zoznam =====
   const konInput=q("[data-koninput]"), konArrow=q("[data-konarrow]"), konList=q("[data-konlist]");
+  let konRenamed=null; // {from,to} — pokyn na prepis titulku karty pri generovaní
   const KON_NEW_LBL="➕ Nové konanie (nová karta)";
   function konLabel(v){ return v==="__new__" ? KON_NEW_LBL : (v||""); }
   function syncKonInput(){ if(konInput) konInput.value=konLabel(konanieSel.value); }
@@ -1125,6 +1137,7 @@ function makeSlot(idx){
       KAUZA_KEYS.forEach(function(k){ const a=KAUZY[k].konania, i=a.indexOf(old); if(i>=0) a[i]=nn; });
       [].forEach.call(konanieSel.options,function(o){ if(o.value===old){ o.value=nn; o.textContent=nn; } });
       konanieSel.value=nn;
+      konRenamed={from:(konRenamed&&konRenamed.to===old)?konRenamed.from:old, to:nn};
       refreshReplyList(""); saveLastEdit(kauzaSel.value,nn); updateSummary();
       syncKonInput(); konFlash(true);
     });
@@ -1132,8 +1145,8 @@ function makeSlot(idx){
   }
   document.addEventListener("click",function(){ konToggle(false); });
   (function(){ const _k=kauzaSel.onchange, _n=konanieSel.onchange;
-    kauzaSel.onchange=function(){ if(_k)_k(); syncKonInput(); };
-    konanieSel.onchange=function(){ if(_n)_n(); syncKonInput(); };
+    kauzaSel.onchange=function(){ if(_k)_k(); syncKonInput(); if(konRenamed&&konanieSel.value!==konRenamed.to) konRenamed=null; };
+    konanieSel.onchange=function(){ if(_n)_n(); syncKonInput(); if(konRenamed&&konanieSel.value!==konRenamed.to) konRenamed=null; };
   })();
   syncKonInput();
 
@@ -1181,7 +1194,7 @@ function makeSlot(idx){
       const nd={}; Object.keys(def.docs).forEach(function(k){ nd[k===old?nn:k]=def.docs[k]; }); def.docs=nd;
       [].forEach.call(docSel.options,function(o){ if(o.value===old){ o.value=nn; o.textContent=nn; } });
       docSel.value=nn;
-      if(fixSubj) fixSubj.value=nn;
+      if(fixSubj) fixSubj.value=old; // kotva: starý predmet riadku, ako je v #303 — podľa neho Claude riadok nájde
       if(subjInp) subjInp.value=nn;
       refreshReplyList(""); updateSummary();
       syncDocInput(); docFlash(true);
