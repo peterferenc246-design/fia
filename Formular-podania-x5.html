@@ -973,7 +973,12 @@ function makeSlot(idx){
       h+="Obsah (píšem po SK — rozlož do všetkých 9 jazykov; prázdny riadok = nový odsek <p>):\n";
       h+=esc(begleitInp.value)+"\n";
     }
-    if(action==="fix") h+="Vymeniť riadok s predmetom: "+(hesc(fixSubj.value)||"(NEVYPLNENÉ — doplň predmet riadku!)")+"\n";
+    if(action==="fix"){
+      h+="Vymeniť riadok s predmetom: "+(hesc(fixSubj.value)||"(NEVYPLNENÉ — doplň predmet riadku!)")+"\n";
+      if(snapBase && esc(fixSubj.value) && esc(snapBase.subj||"") && esc(fixSubj.value)!==esc(snapBase.subj||"")){
+        h+="\u{1F6D1} STOP \u2014 NEKONZISTENTN\u00dd POKYN: cie\u013eov\u00fd riadok na v\u00fdmenu (\u201e"+hesc(fixSubj.value)+"\u201c) NIE JE polo\u017eka na\u010d\u00edtan\u00e1 do slotu (\u201e"+hesc(snapBase.subj||"")+"\u201c). Markup nesie d\u00e1ta na\u010d\u00edtanej polo\u017eky \u2014 z\u00e1pis by prep\u00edsal IN\u00dd riadok jej obsahom (hybrid). Claude: NEVYKON\u00c1VA\u0164, vr\u00e1ti\u0165 Petrovi na kontrolu.\n";
+      }
+    }
     h+="Typ markupu: "+(mode==="item"?"celý riadok .item":"len odkaz (span-y .gtl)")+"\n";
     h+="### MARKUP (toto vloží Claude do #303) ###\n";
     return h;
@@ -1070,6 +1075,15 @@ function makeSlot(idx){
     saveLastEdit(kauzaSel.value,konanieSel.value);
   }
 
+  // nekonzistencia: cieľový riadok (fixSubj) ≠ položka načítaná do slotu (snapBase.subj)
+  function mismatchInfo(){
+    if(!isUsed()) return null;
+    if(action!=="fix"||!snapBase) return null;
+    var f=esc(fixSubj.value); if(!f) return null;
+    var b=esc(snapBase.subj||"");
+    if(b && f!==b) return { idx:idx, target:f, loaded:b };
+    return null;
+  }
   // duplicita: rovnaký Predmet v tej istej kauze (necitlivé na medzery/veľkosť)
   function dupInfo(){
     if(!isUsed()) return null;
@@ -1115,7 +1129,7 @@ function makeSlot(idx){
     snapBase=null;
     updateSummary();
   }
-  const api = { root, collect, reset, dupInfo, onState:null, applySnap, applyReplyFrom, focusCase,
+  const api = { root, collect, reset, dupInfo, mismatchInfo, onState:null, applySnap, applyReplyFrom, focusCase,
     previewMarkup:()=>{ const r=collect(); return r?{markup:r.markup,mode:r.mode}:null; },
     activate:()=>{ slots.forEach(s=>s.root.classList.remove("active")); root.classList.add("active"); } };
 
@@ -1326,7 +1340,18 @@ document.getElementById("genAll").onclick=()=>{
         dupWarn+="\u2503 \u2192 Premenuj Predmet v jednom zo slotov (inak vzniknú 2 rovnaké riadky).\n";
       }
     });
+    let mmWarn="";
+    slots.forEach(s=>{ const m=s.mismatchInfo&&s.mismatchInfo(); if(m){
+      mmWarn+="\u2503 Slot "+(m.idx+1)+": cie\u013eov\u00fd riadok \u2260 na\u010d\u00edtan\u00e1 polo\u017eka.\n";
+      mmWarn+="\u2503    Vymeni\u0165: \u201e"+m.target+"\u201c\n";
+      mmWarn+="\u2503    V slote:  \u201e"+m.loaded+"\u201c\n";
+      mmWarn+="\u2503 \u2192 Markup nesie d\u00e1ta na\u010d\u00edtanej polo\u017eky \u2014 z\u00e1pis by prep\u00edsal IN\u00dd riadok jej obsahom.\n";
+      mmWarn+="\u2503 \u2192 Vr\u00e1\u0165 \u201eVymeni\u0165 riadok s predmetom\u201c na na\u010d\u00edtan\u00fa polo\u017eku, alebo na\u010d\u00edtaj spr\u00e1vnu polo\u017eku cez \u270f\ufe0f.\n";
+    } });
     let out=parts.join("\n\n");
+    if(mmWarn){
+      out="\u250f\u2501\u2501\u2501\u2501\u2501 \u{1F6D1} NEKONZISTENTN\u00dd CIE\u013d \u2014 CLAUDE: NEVYKON\u00c1VA\u0164 \u2501\u2501\u2501\u2501\u2501\u2513\n"+mmWarn+"\u2517\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u251b\n\n"+out;
+    }
     if(dupWarn){
       const box="\u250f\u2501\u2501\u2501\u2501\u2501 \u26a0\ufe0f DUPLICITA \u2014 TREBA ZMENIŤ NÁZOV PREDMETU \u2501\u2501\u2501\u2501\u2501\u2513\n"
         + dupWarn
