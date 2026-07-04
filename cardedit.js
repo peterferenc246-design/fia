@@ -86,7 +86,7 @@
     var frame = document.getElementById("fia-formx5-frame");
     if (!frame){ return; }
     var st = document.createElement("style");
-    st.textContent = "#fia-kauzy .item{position:relative}.fx-edit{position:absolute;top:8px;right:10px;border:1px solid #C9A100;background:#FFF8E6;border-radius:8px;padding:2px 9px;font-size:13px;line-height:1.5;cursor:pointer;z-index:3;font-family:'Segoe UI',Calibri,Arial,sans-serif;color:#7a5a06}.fx-edit:hover{background:#FFEFC2}.fx-reply{position:absolute;top:8px;right:104px;border:1px solid #7FA8D9;background:#EAF2FB;border-radius:8px;padding:2px 9px;font-size:13px;line-height:1.5;cursor:pointer;z-index:3;font-family:'Segoe UI',Calibri,Arial,sans-serif;color:#0C447C}.fx-reply:hover{background:#D6E6F2}";
+    st.textContent = "#fia-kauzy .item .top{display:flex;flex-wrap:wrap;align-items:center;gap:6px;row-gap:4px}.fx-edit,.fx-reply{position:static;border-radius:8px;padding:2px 9px;font-size:13px;line-height:1.5;cursor:pointer;font-family:'Segoe UI',Calibri,Arial,sans-serif;white-space:nowrap}.fx-edit{border:1px solid #C9A100;background:#FFF8E6;color:#7a5a06;margin-left:auto}.fx-edit:hover{background:#FFEFC2}.fx-reply{border:1px solid #7FA8D9;background:#EAF2FB;color:#0C447C;margin-left:auto}.fx-reply~.fx-edit,#fia-kauzy .item .top .fx-reply+.fx-edit{margin-left:0}";
     document.head.appendChild(st);
     function addBtns(){
       var items = document.querySelectorAll("#fia-kauzy .item");
@@ -104,7 +104,7 @@
           var wrap = document.getElementById("fia-formx5-wrap");
           if (wrap){ wrap.scrollIntoView({ behavior:"smooth", block:"start" }); }
         };
-        it.appendChild(b);
+        var top = it.querySelector(".top") || it;
         if (isRecv(it) && !it.querySelector(".fx-reply")){
           var r = document.createElement("button");
           r.type = "button"; r.className = "fx-reply";
@@ -117,8 +117,9 @@
             var wrap = document.getElementById("fia-formx5-wrap");
             if (wrap){ wrap.scrollIntoView({ behavior:"smooth", block:"start" }); }
           };
-          it.appendChild(r);
+          top.appendChild(r);
         }
+        top.appendChild(b);
       });
     }
     addBtns();
