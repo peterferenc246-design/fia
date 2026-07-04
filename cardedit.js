@@ -47,9 +47,10 @@
     }
     var comments = !!(item.querySelector(".kcmt") || item.querySelector(".cmt-wrap"));
     var thread = item.getAttribute("data-thread") || "";
+    var kcEl = item.querySelector(".kcmt"); var cmtid = kcEl ? (kcEl.getAttribute("data-doc")||"") : "";
     return { v:1, kauza:kauza, caseId:(caseEl?(caseEl.id||""):""), subj:subj, dir:dir, mode:"item", date:date,
       access:access, important:important, fname:fname, fallback:fallback,
-      urls:urls, cats:cats, az:az, ourref:ourref, comments:comments, thread:thread };
+      urls:urls, cats:cats, az:az, ourref:ourref, comments:comments, thread:thread, cmtid:cmtid };
   }
   function isRecv(item){
     var col = item.closest(".col");
@@ -72,6 +73,7 @@
         snap.important = dom.important;  // ← trieda .imp
         snap.access    = dom.access;     // ← acc-pwd vs acc-pub
         snap.thread    = dom.thread;     // ← živé data-thread z karty (ID reťaze vlákna)
+        snap.cmtid     = dom.cmtid;      // ← živý komentárový slug (.kcmt data-doc)
         // ak by v snape chýbali, doplň z DOM
         if (snap.subj == null)  snap.subj  = dom.subj;
         if (snap.date == null)  snap.date  = dom.date;
