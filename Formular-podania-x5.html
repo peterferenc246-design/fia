@@ -1029,7 +1029,7 @@ function makeSlot(idx){
 
   function buildSnap(subj,date,urls,access,fallback,important,fname,comments,pwhint){
     const c=collectCats();
-    return {v:1, kauzaKey:kauzaSel.value, kauza:currentCaseName(), cardsubj:(cardSubjInp?esc(cardSubjInp.value):""), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments, pwhint:esc(pwhint), begleit:(begleitInp?esc(begleitInp.value):""), stav:(stavSel?stavSel.value:""), extra:((extraUrl&&esc(extraUrl.value))?{label:(esc(extraLbl.value)||"🔗 Odkaz"),url:esc(extraUrl.value)}:null), replyTo:((replySel&&replySel.value)?replySel.value:"")};
+    return {v:1, kauzaKey:kauzaSel.value, kauza:currentCaseName(), cardsubj:(cardSubjInp?esc(cardSubjInp.value):""), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments, pwhint:esc(pwhint), begleit:(begleitInp?esc(begleitInp.value):""), court:(courtNew?esc(courtNew.value):""), stav:(stavSel?stavSel.value:""), extra:((extraUrl&&esc(extraUrl.value))?{label:(esc(extraLbl.value)||"🔗 Odkaz"),url:esc(extraUrl.value)}:null), replyTo:((replySel&&replySel.value)?replySel.value:"")};
   }
   // predvyplnenie slotu z karty #303 (nezavisle od kniznice CASES)
   function applySnap(snap){
