@@ -1324,11 +1324,27 @@ document.getElementById("clearAll").onclick=()=>{
   document.getElementById("out").value="";
   document.getElementById("prev").innerHTML='<span class="prev-empty">Náhľad sa zobrazí po kliknutí na „👁 Náhľad" v niektorom slote.</span>';
 };
-document.getElementById("copy").onclick=()=>{
-  const v=document.getElementById("out").value; if(!v){ document.getElementById("out").value="⚠️ Najprv klikni „Generovať“."; return; }
-  const fn=async()=>{ try{ await navigator.clipboard.writeText(v); }
-    catch{ const t=document.getElementById("out"); t.removeAttribute("readonly"); t.select(); document.execCommand("copy"); t.setAttribute("readonly","true"); } };
-  fn(); document.getElementById("copy").classList.remove("lit"); const c=document.getElementById("copied"); c.classList.add("show"); setTimeout(()=>c.classList.remove("show"),1600);
+document.getElementById("copy").onclick=async()=>{
+  const t=document.getElementById("out"); const v=t.value;
+  if(!v){ t.value="⚠️ Najprv klikni „Generovať“."; return; }
+  const c=document.getElementById("copied");
+  let ok=false;
+  try{ await navigator.clipboard.writeText(v); ok=true; }
+  catch(e){
+    try{ t.removeAttribute("readonly"); t.focus(); t.select(); ok=document.execCommand("copy")===true; t.setAttribute("readonly","true"); }catch(e2){ ok=false; }
+  }
+  if(ok && navigator.clipboard && navigator.clipboard.readText){
+    try{ const chk=await navigator.clipboard.readText(); if(chk!==v) ok=false; }catch(e){ /* čítanie nedostupné — nechaj ok */ }
+  }
+  document.getElementById("copy").classList.remove("lit");
+  if(ok){
+    c.textContent="✅ Skopírované — "+v.length+" znakov"; c.classList.add("show");
+    setTimeout(()=>c.classList.remove("show"),2600);
+  }else{
+    t.removeAttribute("readonly"); t.focus(); t.select();
+    c.textContent="⚠️ KOPÍROVANIE ZLYHALO — text je označený, stlač Ctrl+C"; c.classList.add("show");
+    setTimeout(()=>{ c.classList.remove("show"); t.setAttribute("readonly","true"); },6000);
+  }
 };
 </script>
 </body>
