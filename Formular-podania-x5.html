@@ -322,9 +322,9 @@ function buildItem(date,subj,urls,access,fallback,important,fname,snap,comments,
   const snapAttr = snap ? " data-snap='"+hsnap(snap)+"'" : "";
   const extraHtml = (snap&&snap.extra&&snap.extra.url) ? `<a class="open" href="${hesc(snap.extra.url)}" target="_blank" rel="noopener">${hesc(snap.extra.label||"🔗 Odkaz")}</a>` : "";
   const RPL={de:"↩ Antwort auf:",en:"↩ Reply to:",sk:"↩ Odpoveď na:",hr:"↩ Odgovor na:",pl:"↩ Odpowiedź na:",es:"↩ Respuesta a:",it:"↩ Risposta a:",fr:"↩ Réponse à :",sv:"↩ Svar på:"};
-  const thrId = (snap&&snap.replyTo) ? ("thr-"+slugify(snap.replyTo)) : "";
+  const thrId = (snap&&snap.thread) ? snap.thread : ((snap&&snap.replyTo) ? ("thr-"+slugify(snap.replyTo)) : "");
   const thrAttr = thrId ? ` data-thread="${thrId}"` : "";
-  const replyHtml = thrId ? `<div class="replyto">${LANGS.map(l=>`<span class="gtl ${l}">${RPL[l]}</span>`).join("")} <span class="rt-subj">${hesc(snap.replyTo)}</span></div>` : "";
+  const replyHtml = (snap&&snap.replyTo) ? `<div class="replyto">${LANGS.map(l=>`<span class="gtl ${l}">${RPL[l]}</span>`).join("")} <span class="rt-subj">${hesc(snap.replyTo)}</span></div>` : "";
   return `<div class="item${impCls}"${thrAttr}${snapAttr}><div class="top"><span class="date">${hesc(date)||"—"}</span>`+
          `<span class="acc ${cls}">${badgeHtml}</span></div>`+
          `${replyHtml}<div class="subj">${impMark}${hesc(subj)}</div>${fnameHtml}${pwHtml}${link}${extraHtml}${comments?cmtBlock():""}</div>`;
@@ -347,6 +347,7 @@ function makeSlot(idx){
   const NEWDOC="__newdoc__";
   let mode="item", action="new", dir="sent", important=false, comments=false;
   let snapBase=null;
+  let loadedThread="";
 
   const root=document.createElement("div");
   root.className="slot";
@@ -720,6 +721,7 @@ function makeSlot(idx){
       if(subjInp) subjInp.value="";
       if(pwhintInp){ pwhintInp.value=""; updatePwVis(); }
       if(extraLbl){ extraLbl.value=""; extraUrl.value=""; }
+      loadedThread="";
       if(action!=="del") setAction("new");
       fillBtn.disabled=true; fillBtn.textContent="⚡ Vyber existujúci dokument";
     }else{
@@ -736,6 +738,7 @@ function makeSlot(idx){
       fnameInp.value=d._fname||"";
       if(pwhintInp){ pwhintInp.value=d._pwhint||""; updatePwVis(); }
       if(extraLbl){ extraLbl.value=(d._extra&&d._extra.label)||""; extraUrl.value=(d._extra&&d._extra.url)||""; }
+      loadedThread=(d._thread||"");
       if(action!=="del") setAction("fix");
       fixSubj.value=docSel.value;
       subjInp.value=docSel.value;
@@ -1022,14 +1025,14 @@ function makeSlot(idx){
     if(azInp) azInp.value=""; if(ourrefInp) ourrefInp.value=""; if(begleitInp) begleitInp.value="";
     subjInp.value=""; fixSubj.value=""; dateInp.value=""; noDate.checked=false; dateInp.disabled=false;
     impChk.checked=false; important=false; cmtChk.checked=false; comments=false; accessSel.value="pub"; fnameInp.value=""; if(pwhintInp) pwhintInp.value=""; updatePwVis();
-    snapBase=null;
+    snapBase=null; loadedThread="";
     setMode("item"); setAction("new"); setDir("sent");
     refreshKonanieList();
   }
 
   function buildSnap(subj,date,urls,access,fallback,important,fname,comments,pwhint){
     const c=collectCats();
-    return {v:1, kauzaKey:kauzaSel.value, kauza:currentCaseName(), cardsubj:(cardSubjInp?esc(cardSubjInp.value):""), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments, pwhint:esc(pwhint), begleit:(begleitInp?esc(begleitInp.value):""), court:(courtNew?esc(courtNew.value):""), stav:(stavSel?stavSel.value:""), extra:((extraUrl&&esc(extraUrl.value))?{label:(esc(extraLbl.value)||"🔗 Odkaz"),url:esc(extraUrl.value)}:null), replyTo:((replySel&&replySel.value)?replySel.value:"")};
+    return {v:1, kauzaKey:kauzaSel.value, kauza:currentCaseName(), cardsubj:(cardSubjInp?esc(cardSubjInp.value):""), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments, pwhint:esc(pwhint), begleit:(begleitInp?esc(begleitInp.value):""), court:(courtNew?esc(courtNew.value):""), thread:(loadedThread||((replySel&&replySel.value)?("thr-"+slugify(replySel.value)):"")), stav:(stavSel?stavSel.value:""), extra:((extraUrl&&esc(extraUrl.value))?{label:(esc(extraLbl.value)||"🔗 Odkaz"),url:esc(extraUrl.value)}:null), replyTo:((replySel&&replySel.value)?replySel.value:"")};
   }
   // predvyplnenie slotu z karty #303 (nezavisle od kniznice CASES)
   function applySnap(snap){
@@ -1058,6 +1061,7 @@ function makeSlot(idx){
     impChk.checked=!!snap.important; important=!!snap.important;
     cmtChk.checked=!!snap.comments; comments=!!snap.comments;
     fnameInp.value=snap.fname||"";
+    loadedThread=snap.thread||"";
     clearLangFields();
     if(snap.urls){ LANGS.forEach(function(l){ setField(l, snap.urls[l]||""); }); }
     fallbackInp.value=snap.fallback||"";
@@ -1104,7 +1108,7 @@ function makeSlot(idx){
     const kk=kauzaKeyForKonanie(kn); if(!kk) return;
     kauzaSel.value=kk; refreshKonanieList();
     konanieSel.value=kn; refreshDocList();
-    if(docSel){ docSel.value=NEWDOC; applyDoc(); } /* focus = čistý slot, žiadny auto-výber dokumentu */
+    if(docSel){ docSel.value=NEWDOC; applyDoc(); } loadedThread=""; /* focus = čistý slot, žiadny auto-výber dokumentu */
     if(subjInp) subjInp.value="";
     if(fixSubj) fixSubj.value="";
     if(dateInp){ dateInp.value=""; dateInp.disabled=false; }
