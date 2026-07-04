@@ -1330,17 +1330,23 @@ document.getElementById("copy").onclick=async()=>{
   if(!v){ t.value="⚠️ Najprv klikni „Generovať“."; return; }
   const c=document.getElementById("copied");
   let ok=false;
-  try{ await navigator.clipboard.writeText(v); ok=true; }
-  catch(e){
-    try{ t.removeAttribute("readonly"); t.focus(); t.select(); ok=document.execCommand("copy")===true; t.setAttribute("readonly","true"); }catch(e2){ ok=false; }
+  try{ await navigator.clipboard.writeText(v); ok=true; }catch(e){}
+  if(!ok){
+    try{ t.removeAttribute("readonly"); t.focus(); t.select(); t.setSelectionRange(0,v.length);
+         ok=document.execCommand("copy")===true; t.setAttribute("readonly","true");
+         if(window.getSelection) window.getSelection().removeAllRanges();
+    }catch(e2){ ok=false; }
   }
-  if(ok && navigator.clipboard && navigator.clipboard.readText){
-    try{ const chk=await navigator.clipboard.readText(); if(chk!==v) ok=false; }catch(e){ /* čítanie nedostupné — nechaj ok */ }
+  // spätné OVERENIE obsahu schránky (iframe má clipboard-read)
+  let verified=null;
+  if(navigator.clipboard && navigator.clipboard.readText){
+    try{ const chk=await navigator.clipboard.readText(); verified=(chk===v); }catch(e){ verified=null; }
   }
+  if(verified===false) ok=false;
   document.getElementById("copy").classList.remove("lit");
   if(ok){
-    c.textContent="✅ Skopírované — "+v.length+" znakov"; c.classList.add("show");
-    setTimeout(()=>c.classList.remove("show"),2600);
+    c.textContent=(verified===true ? "✅ OVERENÉ v schránke — " : "✅ Skopírované — ")+v.length+" znakov"; c.classList.add("show");
+    setTimeout(()=>c.classList.remove("show"),3500);
   }else{
     t.removeAttribute("readonly"); t.focus(); t.select();
     c.textContent="⚠️ KOPÍROVANIE ZLYHALO — text je označený, stlač Ctrl+C"; c.classList.add("show");
