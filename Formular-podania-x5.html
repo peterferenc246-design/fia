@@ -171,6 +171,7 @@
       <h2 style="margin:0">Výsledok pre Claude <span class="copied" id="copied">skopírované ✓</span></h2>
       <div class="btnrow" style="margin:0">
         <button class="b-copy" id="copy">📋 Kopírovať všetko</button>
+        <button class="b-copy" id="dl" title="Uloží markup ako súbor markup-podania.txt — prilož ho Claudovi do chatu (súbory prechádzajú spoľahlivo)">⬇ Stiahnuť .txt</button>
       </div>
     </div>
     <textarea id="out" readonly></textarea>
@@ -1345,6 +1346,19 @@ document.getElementById("copy").onclick=async()=>{
     c.textContent="⚠️ KOPÍROVANIE ZLYHALO — text je označený, stlač Ctrl+C"; c.classList.add("show");
     setTimeout(()=>{ c.classList.remove("show"); t.setAttribute("readonly","true"); },6000);
   }
+};
+document.getElementById("dl").onclick=()=>{
+  const v=document.getElementById("out").value;
+  if(!v){ document.getElementById("out").value="⚠️ Najprv klikni „Generovať“."; return; }
+  const b=new Blob([v],{type:"text/plain;charset=utf-8"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(b);
+  a.download="markup-podania.txt";
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },500);
+  const c=document.getElementById("copied");
+  c.textContent="⬇ Stiahnuté: markup-podania.txt ("+v.length+" znakov) — prilož súbor do chatu"; c.classList.add("show");
+  setTimeout(()=>c.classList.remove("show"),4000);
 };
 </script>
 </body>
