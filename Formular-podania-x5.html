@@ -1329,18 +1329,20 @@ document.getElementById("copy").onclick=async()=>{
   const t=document.getElementById("out"); const v=t.value;
   if(!v){ t.value="⚠️ Najprv klikni „Generovať“."; return; }
   const c=document.getElementById("copied");
-  let ok=false;
-  try{ await navigator.clipboard.writeText(v); ok=true; }catch(e){}
+  let ok=false, why="";
+  const nl=s=>String(s).replace(/\r\n/g,"\n");
+  try{ await navigator.clipboard.writeText(v); ok=true; }catch(e){ why=(e&&e.name)||"API"; }
   if(!ok){
     try{ t.removeAttribute("readonly"); t.focus(); t.select(); t.setSelectionRange(0,v.length);
          ok=document.execCommand("copy")===true; t.setAttribute("readonly","true");
          if(window.getSelection) window.getSelection().removeAllRanges();
-    }catch(e2){ ok=false; }
+         if(!ok && !why) why="execCommand";
+    }catch(e2){ ok=false; if(!why) why=(e2&&e2.name)||"execCommand"; }
   }
-  // spätné OVERENIE obsahu schránky (iframe má clipboard-read)
+  // spätné OVERENIE obsahu schránky — tolerantné na konce riadkov (Windows \r\n)
   let verified=null;
   if(navigator.clipboard && navigator.clipboard.readText){
-    try{ const chk=await navigator.clipboard.readText(); verified=(chk===v); }catch(e){ verified=null; }
+    try{ const chk=await navigator.clipboard.readText(); verified=(nl(chk)===nl(v)); if(verified===false) why="obsah schránky nesedí"; }catch(e){ verified=null; }
   }
   if(verified===false) ok=false;
   document.getElementById("copy").classList.remove("lit");
@@ -1349,8 +1351,8 @@ document.getElementById("copy").onclick=async()=>{
     setTimeout(()=>c.classList.remove("show"),3500);
   }else{
     t.removeAttribute("readonly"); t.focus(); t.select();
-    c.textContent="⚠️ KOPÍROVANIE ZLYHALO — text je označený, stlač Ctrl+C"; c.classList.add("show");
-    setTimeout(()=>{ c.classList.remove("show"); t.setAttribute("readonly","true"); },6000);
+    c.textContent="⚠️ KOPÍROVANIE ZLYHALO ("+(why||"neznámy dôvod")+") — text je označený, stlač Ctrl+C"; c.classList.add("show");
+    setTimeout(()=>{ c.classList.remove("show"); t.setAttribute("readonly","true"); },8000);
   }
 };
 document.getElementById("dl").onclick=()=>{
