@@ -785,6 +785,22 @@ function makeSlot(idx){
 
   function collectUrls(){ const u={}; root.querySelectorAll('[data-lang]').forEach(i=>{ if(esc(i.value)) u[i.dataset.lang]=i.value; }); return u; }
 
+  // zmenili sa atribúty KARTY oproti knižnici? (Az/ourref/kategórie/Orgán/Predmet konania/Stav/Begleit/premenovanie)
+  function attrsChanged(){
+    if(kauzaSel.value===""||kauzaSel.value==="__newk__"||konanieSel.value==="__new__") return false;
+    const def=CASES[konanieSel.value]; if(!def) return false;
+    const m=def.meta||{cat:[],area:[],az:"",ourref:""};
+    const c=collectCats(); const norm=a=>(a||[]).slice().sort().join(" ");
+    if(norm(c.jur)!==norm(m.cat)||norm(c.area)!==norm(m.area)) return true;
+    if(esc(azInp.value)!==esc(m.az||"")) return true;
+    if(esc(ourrefInp.value)!==esc(m.ourref||"")) return true;
+    if(courtNew&&esc(courtNew.value)!==esc(def.court||"")) return true;
+    if(cardSubjInp&&esc(cardSubjInp.value)!==esc(def.cardsubj||"")) return true;
+    if(stavSel&&stavSel.value!==(def.stav||"laeuft")) return true;
+    if(esc(begleitInp.value)!==esc(def.begleit||"")) return true;
+    try{ if(konRenamed&&konanieSel.value===konRenamed.to) return true; }catch(e){}
+    return false;
+  }
   // je slot „použitý"?
   function isUsed(){
     if(action==="del"||action==="fix") return true;
@@ -794,6 +810,7 @@ function makeSlot(idx){
     if(esc(begleitInp.value)) return true;
     let any=false; root.querySelectorAll('[data-lang]').forEach(i=>{ if(esc(i.value)) any=true; });
     if(any||esc(fallbackInp.value)) return true;
+    if(attrsChanged()) return true;
     return false;
   }
   function updateSummary(){ updatePwVis();
@@ -960,6 +977,7 @@ function makeSlot(idx){
     if(mode==="item"){
       const subj=esc(subjInp.value);
       if(!subj && konanieSel.value==="__new__"){ return { text: header(), markup: null, mode, important }; }
+      if(!subj && attrsChanged()){ return { text: header(), markup: null, mode, important }; } // len zmena atribútov karty — bez položky
       if(!subj) throw new Error(`Slot ${idx+1}: vyplň Predmet (subj).`);
       const dateVal=noDate.checked?"—":dateInp.value;
       const snap=buildSnap(subj,dateVal,urls,accessSel.value,fb,important,fnameInp.value,comments,pwhintInp?pwhintInp.value:"");
