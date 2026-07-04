@@ -423,13 +423,24 @@ function makeSlot(idx){
       <div class="sec-doc">📄 POLIA DOKUMENTU (položky) — platia pre JEDEN dokument vo vlákne, nie pre celú kartu</div>
       <p class="sec-note">Predmet dokumentu, dátum, prístup, smer, súbor a odkazy sa vzťahujú na konkrétnu položku (Podnet / Oznámenie / Námietka …).</p>
       <div class="row" style="margin-top:14px" data-metarow>
-        <div class="fld" style="flex:0 0 150px"><label>Dátum</label><input data-date>
+        <div class="fld" style="flex:0 0 170px"><label>Dátum</label><input data-date>
           <label class="chk"><input type="checkbox" data-nodate> bez dátumu (—)</label>
         </div>
-        <div class="fld"><label>Predmet dokumentu (subj — názov položky vo vlákne)</label><input data-subj></div>
-        <div class="fld" style="flex:0 0 160px">
+        <div class="fld" style="flex:0 0 200px">
           <label>Prístup</label>
           <select data-access><option value="pub">🌐 Verejné</option><option value="pwd">🔒 Heslo</option></select>
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <div class="fld" style="flex:1 1 100%">
+          <label>Predmet dokumentu (položka vo vlákne) — vyber existujúci (odoslané aj prijaté) · klik = editovať názov · Enter = potvrdiť/vytvoriť · ▾ = celý zoznam</label>
+          <div class="koncombo" data-doccombo>
+            <input data-docinput autocomplete="off" spellcheck="false">
+            <button type="button" class="konarrow" data-docarrow title="Rozbaliť zoznam dokumentov (odoslané aj prijaté)">▾</button>
+            <div class="konlist" data-doclist></div>
+          </div>
+          <select data-doc style="display:none"></select>
+          <input data-subj style="display:none">
         </div>
       </div>
       <div class="row" data-pwhintrow style="margin-top:10px;display:none">
@@ -463,17 +474,7 @@ function makeSlot(idx){
         </div>
       </div>
     </div>
-    <div class="row" style="margin-top:14px">
-      <div class="fld">
-        <label>Dokument (vyber existujúci → polia sa predvyplnia; alebo „Nový") — klik = editovať názov, Enter = potvrdiť, ▾ = zoznam</label>
-        <div class="koncombo" data-doccombo>
-          <input data-docinput autocomplete="off" spellcheck="false">
-          <button type="button" class="konarrow" data-docarrow title="Rozbaliť zoznam dokumentov">▾</button>
-          <div class="konlist" data-doclist></div>
-        </div>
-        <select data-doc style="display:none"></select>
-      </div>
-    </div>
+
     <div class="row" style="margin-top:14px">
       <div class="fld">
         <label>Akcia</label>
