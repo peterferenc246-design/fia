@@ -305,8 +305,8 @@ function docMulti(urls, fallback){
   }).join("");
 }
 const CMT_LBL={de:"Kommentieren",en:"Comment",sk:"Komentovať",hr:"Komentiraj",pl:"Skomentuj",es:"Comentar",it:"Commenta",fr:"Commenter",sv:"Kommentera"};
-function cmtBlock(){
-  const id="cmt-PLACEHOLDER";
+function cmtBlock(cmtid){
+  const id=cmtid||"cmt-PLACEHOLDER";
   const lbls=LANGS.map(l=>`<span class="gtl ${l}">💬 ${CMT_LBL[l]}</span>`).join("");
   return `<a class="kcmt" data-doc="${id}" href="#">${lbls} (<span class="ccount" data-doc="${id}">0</span>)</a><div class="cmt-wrap" data-doc="${id}"></div>`;
 }
@@ -327,7 +327,7 @@ function buildItem(date,subj,urls,access,fallback,important,fname,snap,comments,
   const replyHtml = (snap&&snap.replyTo) ? `<div class="replyto">${LANGS.map(l=>`<span class="gtl ${l}">${RPL[l]}</span>`).join("")} <span class="rt-subj">${hesc(snap.replyTo)}</span></div>` : "";
   return `<div class="item${impCls}"${thrAttr}${snapAttr}><div class="top"><span class="date">${hesc(date)||"—"}</span>`+
          `<span class="acc ${cls}">${badgeHtml}</span></div>`+
-         `${replyHtml}<div class="subj">${impMark}${hesc(subj)}</div>${fnameHtml}${pwHtml}${link}${extraHtml}${comments?cmtBlock():""}</div>`;
+         `${replyHtml}<div class="subj">${impMark}${hesc(subj)}</div>${fnameHtml}${pwHtml}${link}${extraHtml}${comments?cmtBlock(snap&&snap.cmtid):""}</div>`;
 }
 
 // ===== SLOT — nezávislý vstupný blok =====
@@ -347,7 +347,7 @@ function makeSlot(idx){
   const NEWDOC="__newdoc__";
   let mode="item", action="new", dir="sent", important=false, comments=false;
   let snapBase=null;
-  let loadedThread="";
+  let loadedThread="", loadedCmt="";
 
   const root=document.createElement("div");
   root.className="slot";
@@ -721,7 +721,7 @@ function makeSlot(idx){
       if(subjInp) subjInp.value="";
       if(pwhintInp){ pwhintInp.value=""; updatePwVis(); }
       if(extraLbl){ extraLbl.value=""; extraUrl.value=""; }
-      loadedThread="";
+      loadedThread=""; loadedCmt="";
       if(action!=="del") setAction("new");
       fillBtn.disabled=true; fillBtn.textContent="⚡ Vyber existujúci dokument";
     }else{
@@ -738,7 +738,7 @@ function makeSlot(idx){
       fnameInp.value=d._fname||"";
       if(pwhintInp){ pwhintInp.value=d._pwhint||""; updatePwVis(); }
       if(extraLbl){ extraLbl.value=(d._extra&&d._extra.label)||""; extraUrl.value=(d._extra&&d._extra.url)||""; }
-      loadedThread=(d._thread||"");
+      loadedThread=(d._thread||""); loadedCmt=(d._cmtid||"");
       if(action!=="del") setAction("fix");
       fixSubj.value=docSel.value;
       subjInp.value=docSel.value;
@@ -1025,14 +1025,14 @@ function makeSlot(idx){
     if(azInp) azInp.value=""; if(ourrefInp) ourrefInp.value=""; if(begleitInp) begleitInp.value="";
     subjInp.value=""; fixSubj.value=""; dateInp.value=""; noDate.checked=false; dateInp.disabled=false;
     impChk.checked=false; important=false; cmtChk.checked=false; comments=false; accessSel.value="pub"; fnameInp.value=""; if(pwhintInp) pwhintInp.value=""; updatePwVis();
-    snapBase=null; loadedThread="";
+    snapBase=null; loadedThread=""; loadedCmt="";
     setMode("item"); setAction("new"); setDir("sent");
     refreshKonanieList();
   }
 
   function buildSnap(subj,date,urls,access,fallback,important,fname,comments,pwhint){
     const c=collectCats();
-    return {v:1, kauzaKey:kauzaSel.value, kauza:currentCaseName(), cardsubj:(cardSubjInp?esc(cardSubjInp.value):""), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments, pwhint:esc(pwhint), begleit:(begleitInp?esc(begleitInp.value):""), court:(courtNew?esc(courtNew.value):""), thread:(loadedThread||((replySel&&replySel.value)?("thr-"+slugify(replySel.value)):"")), stav:(stavSel?stavSel.value:""), extra:((extraUrl&&esc(extraUrl.value))?{label:(esc(extraLbl.value)||"🔗 Odkaz"),url:esc(extraUrl.value)}:null), replyTo:((replySel&&replySel.value)?replySel.value:"")};
+    return {v:1, kauzaKey:kauzaSel.value, kauza:currentCaseName(), cardsubj:(cardSubjInp?esc(cardSubjInp.value):""), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments, cmtid:(loadedCmt||""), pwhint:esc(pwhint), begleit:(begleitInp?esc(begleitInp.value):""), court:(courtNew?esc(courtNew.value):""), thread:(loadedThread||((replySel&&replySel.value)?("thr-"+slugify(replySel.value)):"")), stav:(stavSel?stavSel.value:""), extra:((extraUrl&&esc(extraUrl.value))?{label:(esc(extraLbl.value)||"🔗 Odkaz"),url:esc(extraUrl.value)}:null), replyTo:((replySel&&replySel.value)?replySel.value:"")};
   }
   // predvyplnenie slotu z karty #303 (nezavisle od kniznice CASES)
   function applySnap(snap){
@@ -1061,7 +1061,7 @@ function makeSlot(idx){
     impChk.checked=!!snap.important; important=!!snap.important;
     cmtChk.checked=!!snap.comments; comments=!!snap.comments;
     fnameInp.value=snap.fname||"";
-    loadedThread=snap.thread||"";
+    loadedThread=snap.thread||""; loadedCmt=snap.cmtid||"";
     clearLangFields();
     if(snap.urls){ LANGS.forEach(function(l){ setField(l, snap.urls[l]||""); }); }
     fallbackInp.value=snap.fallback||"";
@@ -1108,7 +1108,7 @@ function makeSlot(idx){
     const kk=kauzaKeyForKonanie(kn); if(!kk) return;
     kauzaSel.value=kk; refreshKonanieList();
     konanieSel.value=kn; refreshDocList();
-    if(docSel){ docSel.value=NEWDOC; applyDoc(); } loadedThread=""; /* focus = čistý slot, žiadny auto-výber dokumentu */
+    if(docSel){ docSel.value=NEWDOC; applyDoc(); } loadedThread=""; loadedCmt=""; /* focus = čistý slot, žiadny auto-výber dokumentu */
     if(subjInp) subjInp.value="";
     if(fixSubj) fixSubj.value="";
     if(dateInp){ dateInp.value=""; dateInp.disabled=false; }
