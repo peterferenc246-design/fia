@@ -66,6 +66,10 @@
   button:disabled{opacity:.45;cursor:not-allowed}
   textarea{width:100%;min-height:170px;font:12.5px/1.5 ui-monospace,"Cascadia Code",Consolas,monospace;
     padding:12px;border:1px solid var(--line);border-radius:10px;background:#0f1b2d;color:#d7e3f4;resize:vertical;white-space:pre-wrap;word-break:break-all}
+  /* OPRAVA: default modré selection je na tmavo-modrom pozadí (#0f1b2d) neviditeľné —
+     dávame zlaté highlight aby Peter videl, čo bolo označené po kliku Kopírovať */
+  textarea#out::selection{background:#FFCB3E;color:#000}
+  textarea#out::-moz-selection{background:#FFCB3E;color:#000}
   .out-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap}
   .copied{color:var(--ok);background:var(--okbg);font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;display:none}
   .copied.show{display:inline-block}
