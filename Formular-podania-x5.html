@@ -946,6 +946,9 @@ function makeSlot(idx){
       h+="Az. (data-az): "+(hesc(azInp.value)||"(prázdne)")+" · Naša spis. zn. (data-ourref): "+(hesc(ourrefInp.value)||"(prázdne)")+"\n";
       h+="Stav konania (pill): "+({laeuft:"Prebieha (p-blue)",eingereicht:"Podané (p-amber)",abgeschlossen:"Ukončené (p-green)"}[stavSel?stavSel.value:""]||"(—)")+"\n";
       h+="Begleittext: "+(esc(begleitInp.value)?"ÁNO":"NIE")+"\n";
+      h+="— POLIA KARTY KONANIA (aktuálny živý stav — VŽDY vypísané, nezávislé od change-detekcie) —\n";
+      h+="Predmet konania (RIADOK 2 karty — .court-subj, 1 jazyk — rozlož do 9): "+(cardSubjInp?(hesc(cardSubjInp.value)||"(prázdne)"):"(pole neexistuje)")+"\n";
+      h+="Orgán/súd (.court/.case-meta, 1 jazyk — rozlož do 9): "+(courtNew?(hesc(courtNew.value)||"(prázdne)"):"(pole neexistuje)")+"\n";
     }
     var _fd=(action==="fix"&&snapBase)?fixDiff():null;
     if(_fd){
