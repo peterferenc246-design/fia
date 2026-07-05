@@ -1247,7 +1247,14 @@ function makeSlot(idx){
   const docInput=q("[data-docinput]"), docArrow=q("[data-docarrow]"), docList=q("[data-doclist]");
   const DOC_NEW_LBL="➕ Nový dokument";
   function docLabel(v){ return v===NEWDOC ? DOC_NEW_LBL : (v||""); }
-  function syncDocInput(){ if(docInput) docInput.value=docLabel(docSel.value); }
+  function syncDocInput(){
+    if(!docInput) return;
+    // NOVÉ: pri Novom dokumente ukáž Petrove predmet (subjInp) ak je vyplnené —
+    // aby text napísaný cez Enter nezmizol po blur (bez tejto opravy sa docInput
+    // resetuje na label „➕ Nový dokument" a používateľ si myslí, že nič nezapísal)
+    if(docSel.value===NEWDOC && subjInp && subjInp.value){ docInput.value=subjInp.value; return; }
+    docInput.value=docLabel(docSel.value);
+  }
   function docFlash(ok){ if(!docInput) return; docInput.style.background=ok?"#EAF3DE":"#FDE8E8"; setTimeout(function(){docInput.style.background="";},650); }
   function docToggle(open){
     if(!docList) return;
