@@ -50,6 +50,14 @@
     rbtns.forEach(function (b) {
       b.addEventListener('click', function () {
         rbtns.forEach(function (x) { x.classList.toggle('active', x === b); });
+        // NOVÉ: informuj všetky iframe (x5 formular) o kliku na dlaždicu — spis rieši mapovanie
+        var sp = b.getAttribute('data-spis');
+        if (sp) {
+          var frames = document.querySelectorAll('iframe');
+          for (var i = 0; i < frames.length; i++) {
+            try { frames[i].contentWindow.postMessage({type:'fiafox-registerclick', spis:sp}, '*'); } catch (e) {}
+          }
+        }
       });
     });
 
