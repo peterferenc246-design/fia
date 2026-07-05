@@ -766,13 +766,22 @@ function makeSlot(idx){
   }
   kauzaSel.onchange=()=>{ refreshKonanieList(); refreshReplyList(""); saveLastEdit(kauzaSel.value,konanieSel.value); };
   konanieSel.onchange=()=>{ refreshDocList(); refreshReplyList(""); saveLastEdit(kauzaSel.value,konanieSel.value); };
-  // NOVÉ: počúvaj postMessage z parenta (#303) — klik na dlaždicu v registri prepne kauzu v x5
+  // NOVÉ v2: postMessage z parenta — explicit force set spis/label/preview (odolné voči iným reset handlerom)
   window.addEventListener("message", function(ev){
     try{
       const d=ev.data; if(!d||d.type!=="fiafox-registerclick"||!d.spis) return;
       let hit=null;
       for(const k of KAUZA_KEYS){ if(KAUZY[k].spis===d.spis){ hit=k; break; } }
-      if(hit && kauzaSel.value!==hit){ kauzaSel.value=hit; refreshKonanieList(); refreshReplyList(""); }
+      if(!hit) return;
+      kauzaSel.value=hit;
+      refreshKonanieList();
+      refreshReplyList("");
+      // Force set — garancia že spis a názov obsahujú plné hodnoty z KAUZY
+      const kk=KAUZY[hit];
+      if(kauzaspisInp && kk && kk.spis){ kauzaspisInp.value=kk.spis; }
+      if(row1Inp && kk && kk.label){ row1Inp.value=stripFlag(kk.label); }
+      if(typeof renderCardPrev==="function") renderCardPrev();
+      if(typeof updateSummary==="function") updateSummary();
     }catch(e){}
   });
   kauzaNew.oninput=updateSummary;
