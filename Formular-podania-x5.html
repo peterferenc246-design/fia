@@ -578,10 +578,12 @@ function makeSlot(idx){
       const turnOn=!c.classList.contains('on');
       c.classList.toggle('on',turnOn);
       if(turnOn) root.querySelectorAll('.catchip[data-jur]').forEach(x=>x.classList.remove('on'));
+      filterKauzaByJur();
     } else if(c.hasAttribute('data-jur')){
       // krajina: toggle + zhasni "Všetky"
       c.classList.toggle('on');
       const allB=root.querySelector('.catchip[data-jurall]'); if(allB) allB.classList.remove('on');
+      filterKauzaByJur();
     } else if(c.hasAttribute('data-areall')){
       const items=[...root.querySelectorAll('.catchip[data-areaval]')];
       const turnOn=!items.every(x=>x.classList.contains('on'));
@@ -592,6 +594,22 @@ function makeSlot(idx){
     }
     updateSummary();
   });
+  // NOVÉ: filter Kauza dropdown-u podľa aktívnej jurisdikcie (Všetky/EU/DE/SK)
+  function filterKauzaByJur(){
+    const cats=collectCats(); const jurs=cats.jur||[];
+    const isAll = jurs.includes("all") || jurs.length===0;
+    Array.from(kauzaSel.options).forEach(function(opt){
+      if(!opt.value || opt.value==="__newk__"){ opt.hidden=false; return; }
+      const kk=KAUZY[opt.value]; if(!kk){ opt.hidden=false; return; }
+      const kj=kk.jur||[];
+      opt.hidden = !isAll && !jurs.some(function(j){ return kj.indexOf(j)>=0; });
+    });
+    const cur=kauzaSel.selectedOptions[0];
+    if(cur && cur.hidden){
+      const first=Array.from(kauzaSel.options).find(function(o){ return !o.hidden && o.value && o.value!=="__newk__"; });
+      if(first){ kauzaSel.value=first.value; refreshKonanieList(); }
+    }
+  }
   function collectCats(){
     const allOn=root.querySelector('.catchip[data-jurall].on');
     const jur=allOn ? ["all"] : [...root.querySelectorAll('.catchip[data-jur].on')].map(c=>c.dataset.jur);
