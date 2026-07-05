@@ -1421,30 +1421,32 @@ document.getElementById("copy").onclick=async()=>{
   const t=document.getElementById("out"); const v=t.value;
   if(!v){ t.value="⚠️ Najprv klikni „Generovať“."; return; }
   const c=document.getElementById("copied");
-  // OPRAVA: text v textarea VŽDY označíme — Peter môže urobiť natívne Ctrl+C
-  // v <textarea>, ktorý funguje aj keď clipboard API v cross-origin iframe zlyhá
-  t.removeAttribute("readonly"); t.focus(); t.select(); t.setSelectionRange(0,v.length);
+  // OPRAVA cross-origin iframe: pošli text rodičovi (foxprof.club), kde má
+  // same-origin clipboard prístup. Parent má listener x5-clipboard-bridge.js.
+  let parentReplied=false, parentOk=false, parentWhy="";
+  const onReply=(ev)=>{ try{ const d=ev.data; if(d&&d.type==="fiafox-copy-result"){
+    parentReplied=true; parentOk=!!d.ok; parentWhy=d.why||"";
+  } }catch(e){} };
+  window.addEventListener("message", onReply);
+  try{ window.parent.postMessage({type:"fiafox-copy", text:v}, "*"); }catch(e){}
+  // Súbežne skús aj lokálny clipboard (možno funguje)
   let ok=false, why="";
-  const nl=s=>String(s).replace(/\r\n/g,"\n");
   try{ await navigator.clipboard.writeText(v); ok=true; }catch(e){ why=(e&&e.name)||"API"; }
-  if(!ok){
-    try{ ok=document.execCommand("copy")===true;
-         if(!ok && !why) why="execCommand";
-    }catch(e2){ ok=false; if(!why) why=(e2&&e2.name)||"execCommand"; }
-  }
-  // spätné OVERENIE obsahu schránky — tolerantné na konce riadkov (Windows \r\n)
-  let verified=null;
-  if(navigator.clipboard && navigator.clipboard.readText){
-    try{ const chk=await navigator.clipboard.readText(); verified=(nl(chk)===nl(v)); if(verified===false) why="obsah schránky nesedí"; }catch(e){ verified=null; }
-  }
-  if(verified===false) ok=false;
+  // Počkaj 400ms na odpoveď parenta
+  await new Promise(r=>setTimeout(r,400));
+  window.removeEventListener("message", onReply);
+  // Text v textarea VŽDY označíme — Peter môže Ctrl+C priamo, ak nič nefungovalo
+  t.removeAttribute("readonly"); t.focus(); t.select(); t.setSelectionRange(0,v.length);
   document.getElementById("copy").classList.remove("lit");
-  if(ok){
-    c.textContent="✅ Skopírované ("+v.length+" znakov) · text ostal OZNAČENÝ — ak Ctrl+V nefunguje, urob Ctrl+C priamo v textovom poli"; c.classList.add("show");
+  if(parentReplied && parentOk){
+    c.textContent="✅ Skopírované cez rodiča ("+v.length+" znakov) — Ctrl+V do Claude by mal fungovať"; c.classList.add("show");
+    setTimeout(()=>{ c.classList.remove("show"); t.setAttribute("readonly","true"); if(window.getSelection) window.getSelection().removeAllRanges(); },10000);
+  } else if(ok){
+    c.textContent="✅ Skopírované lokálne ("+v.length+" znakov) · text OZNAČENÝ — ak Ctrl+V nefunguje, Ctrl+C priamo v texte"; c.classList.add("show");
     setTimeout(()=>{ c.classList.remove("show"); t.setAttribute("readonly","true"); if(window.getSelection) window.getSelection().removeAllRanges(); },12000);
-  }else{
-    c.textContent="⚠️ AUTOMATICKÉ KOPÍROVANIE ZLYHALO ("+(why||"neznámy dôvod")+") — text je označený, stlač Ctrl+C RUČNE v textovom poli"; c.classList.add("show");
-    setTimeout(()=>{ c.classList.remove("show"); t.setAttribute("readonly","true"); },12000);
+  } else {
+    c.textContent="⚠️ AUTO KOPÍROVANIE ZLYHALO (parent:"+(parentWhy||"no-reply")+", local:"+(why||"?")+") — text je OZNAČENÝ, stlač Ctrl+C ručne"; c.classList.add("show");
+    setTimeout(()=>{ c.classList.remove("show"); t.setAttribute("readonly","true"); },15000);
   }
 };
 document.getElementById("dl").onclick=()=>{
