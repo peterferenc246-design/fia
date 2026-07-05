@@ -1069,6 +1069,12 @@ function makeSlot(idx){
     if(newcaseBlk) newcaseBlk.style.display="none";
     root.querySelectorAll('.catchip').forEach(c=>c.classList.remove('on'));
     if(azInp) azInp.value=""; if(ourrefInp) ourrefInp.value=""; if(begleitInp) begleitInp.value="";
+    root.querySelectorAll('[data-lang]').forEach(function(i){ i.value=""; });
+    if(fallbackInp) fallbackInp.value="";
+    if(replySel) replySel.selectedIndex=0;
+    if(extraLbl) extraLbl.value=""; if(extraUrl) extraUrl.value="";
+    if(row1Inp) row1Inp.value=""; if(row3Inp) row3Inp.value=""; if(kauzaspisInp) kauzaspisInp.value="";
+    if(stavSel) stavSel.selectedIndex=0;
     subjInp.value=""; fixSubj.value=""; dateInp.value=""; noDate.checked=false; dateInp.disabled=false;
     impChk.checked=false; important=false; cmtChk.checked=false; comments=false; accessSel.value="pub"; fnameInp.value=""; if(pwhintInp) pwhintInp.value=""; updatePwVis();
     snapBase=null; loadedThread=""; loadedCmt="";
@@ -1337,6 +1343,9 @@ for(let i=0;i<5;i++){
   const tl=tab.querySelector('[data-tlabel]'), ts=tab.querySelector('[data-tstate]'), td=tab.querySelector('[data-tdot]');
   s.onState=(label,stateTxt,cls)=>{ tl.textContent=label; ts.textContent=stateTxt; td.className="tdot"+(cls?(" "+cls):""); };
 }
+
+// ===== čistý štart: vyčisti všetky sloty pri každom načítaní (aj bfcache restore) — bráni obnove starých hodnôt prehliadačom =====
+window.addEventListener("pageshow", function(){ slots.forEach(function(s){ s.reset(); }); });
 
 // ===== Edit z karty #303 cez postMessage =====
 window.addEventListener("message", function(e){
