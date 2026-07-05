@@ -1425,33 +1425,42 @@ document.getElementById("copy").onclick=async()=>{
   const t=document.getElementById("out"); const v=t.value;
   if(!v){ t.value="⚠️ Najprv klikni „Generovať“."; return; }
   const c=document.getElementById("copied");
-  // OPRAVA cross-origin iframe: pošli text rodičovi (foxprof.club), kde má
-  // same-origin clipboard prístup. Parent má listener x5-clipboard-bridge.js.
-  let parentReplied=false, parentOk=false, parentWhy="";
-  const onReply=(ev)=>{ try{ const d=ev.data; if(d&&d.type==="fiafox-copy-result"){
-    parentReplied=true; parentOk=!!d.ok; parentWhy=d.why||"";
-  } }catch(e){} };
-  window.addEventListener("message", onReply);
-  try{ window.parent.postMessage({type:"fiafox-copy", text:v}, "*"); }catch(e){}
-  // Súbežne skús aj lokálny clipboard (možno funguje)
-  let ok=false, why="";
-  try{ await navigator.clipboard.writeText(v); ok=true; }catch(e){ why=(e&&e.name)||"API"; }
-  // Počkaj 400ms na odpoveď parenta
-  await new Promise(r=>setTimeout(r,400));
-  window.removeEventListener("message", onReply);
-  // Text v textarea VŽDY označíme — Peter môže Ctrl+C priamo, ak nič nefungovalo
+  const nl=s=>String(s).replace(/\r\n/g,"\n");
+  // Krok 1: označ text v textarea (viditeľne zlato-žlté cez ::selection CSS)
   t.removeAttribute("readonly"); t.focus(); t.select(); t.setSelectionRange(0,v.length);
-  document.getElementById("copy").classList.remove("lit");
-  if(parentReplied && parentOk){
-    c.textContent="✅ Skopírované cez rodiča ("+v.length+" znakov) — Ctrl+V do Claude by mal fungovať"; c.classList.add("show");
-    setTimeout(()=>{ c.classList.remove("show"); t.setAttribute("readonly","true"); if(window.getSelection) window.getSelection().removeAllRanges(); },10000);
-  } else if(ok){
-    c.textContent="✅ Skopírované lokálne ("+v.length+" znakov) · text OZNAČENÝ — ak Ctrl+V nefunguje, Ctrl+C priamo v texte"; c.classList.add("show");
-    setTimeout(()=>{ c.classList.remove("show"); t.setAttribute("readonly","true"); if(window.getSelection) window.getSelection().removeAllRanges(); },12000);
-  } else {
-    c.textContent="⚠️ AUTO KOPÍROVANIE ZLYHALO (parent:"+(parentWhy||"no-reply")+", local:"+(why||"?")+") — text je OZNAČENÝ, stlač Ctrl+C ručne"; c.classList.add("show");
-    setTimeout(()=>{ c.classList.remove("show"); t.setAttribute("readonly","true"); },15000);
+  // Krok 2: skús 3 spôsoby zápisu do schránky
+  let ok=false, method="", why="";
+  // 2a) navigator.clipboard.writeText — primárna moderná cesta
+  try{ await navigator.clipboard.writeText(v); ok=true; method="writeText"; }catch(e){ why="writeText:"+((e&&e.name)||"?"); }
+  // 2b) execCommand("copy") — fallback pre cross-origin iframe kde clipboard API mlčky zlyháva
+  if(!ok){
+    try{ ok=document.execCommand("copy")===true; if(ok) method="execCommand"; else why+=" | execCommand:false"; }
+    catch(e2){ why+=" | execCommand:"+((e2&&e2.name)||"?"); }
   }
+  // 2c) postMessage do parenta (same-origin bridge) — pre prípad, že iframe má úplný block
+  let bridgeOk=false;
+  try{
+    const onReply=(ev)=>{ try{ if(ev.data&&ev.data.type==="fiafox-copy-result"&&ev.data.ok) bridgeOk=true; }catch(e){} };
+    window.addEventListener("message", onReply);
+    window.parent.postMessage({type:"fiafox-copy", text:v}, "*");
+    await new Promise(r=>setTimeout(r,300));
+    window.removeEventListener("message", onReply);
+    if(bridgeOk && !ok){ ok=true; method="bridge"; }
+  }catch(e){}
+  // Krok 3: OVERENIE — načítaj späť zo schránky a porovnaj (diagnostika pre Petra)
+  let verify="?";
+  if(navigator.clipboard && navigator.clipboard.readText){
+    try{ const chk=await navigator.clipboard.readText();
+         verify=(nl(chk)===nl(v)) ? "OK ("+chk.length+" zn.)" : "NESEDÍ (schránka:"+chk.length+" zn., MK:"+v.length+" zn.)";
+    }catch(e){ verify="readText blokovaný ("+((e&&e.name)||"?")+")"; }
+  } else { verify="readText API chýba"; }
+  document.getElementById("copy").classList.remove("lit");
+  // Zobraz Petrovi presný stav — clipboard OK => problém pri paste do Claude; nie OK => problém pri copy
+  const line1 = ok ? ("✅ Copy "+method+" ("+v.length+" zn.)") : ("❌ COPY ZLYHAL: "+why);
+  const line2 = " · overenie schránky: "+verify;
+  c.textContent = line1 + line2 + " · text zostal OZNAČENÝ pre ručný Ctrl+C";
+  c.classList.add("show");
+  setTimeout(()=>{ c.classList.remove("show"); t.setAttribute("readonly","true"); if(window.getSelection) window.getSelection().removeAllRanges(); },20000);
 };
 document.getElementById("dl").onclick=()=>{
   const v=document.getElementById("out").value;
