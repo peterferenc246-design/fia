@@ -36,7 +36,7 @@
       var single = item.querySelector("a.open[href]");
       if (single){ fallback = single.getAttribute("href"); }
     }
-    var cats = { jur: [], area: [] }; var az = "", ourref = "";
+    var cats = { jur: [], area: [] }; var az = "", ourref = "", cardsubj = "", stav = "";
     if (caseEl){
       var c = (caseEl.getAttribute("data-cat")||"").trim();
       if (c){ cats.jur = c.split(/\s+/); }
@@ -44,13 +44,18 @@
       if (ar){ cats.area = ar.split(/\s+/); }
       az = caseEl.getAttribute("data-az")||"";
       ourref = caseEl.getAttribute("data-ourref")||"";
+      var csEl = caseEl.querySelector(".court-subj .gtl.sk") || caseEl.querySelector(".court-subj .gtl.de");
+      if (csEl){ cardsubj = csEl.textContent.trim(); }
+      var pillEl = caseEl.querySelector(".pill");
+      if (pillEl){ stav = pillEl.classList.contains("p-amber") ? "eingereicht" : (pillEl.classList.contains("p-green") ? "abgeschlossen" : "laeuft"); }
     }
     var comments = !!(item.querySelector(".kcmt") || item.querySelector(".cmt-wrap"));
     var thread = item.getAttribute("data-thread") || "";
     var kcEl = item.querySelector(".kcmt"); var cmtid = kcEl ? (kcEl.getAttribute("data-doc")||"") : "";
     return { v:1, kauza:kauza, caseId:(caseEl?(caseEl.id||""):""), subj:subj, dir:dir, mode:"item", date:date,
       access:access, important:important, fname:fname, fallback:fallback,
-      urls:urls, cats:cats, az:az, ourref:ourref, comments:comments, thread:thread, cmtid:cmtid };
+      urls:urls, cats:cats, az:az, ourref:ourref, comments:comments, thread:thread, cmtid:cmtid,
+      cardsubj:cardsubj, stav:stav };
   }
   function isRecv(item){
     var col = item.closest(".col");
@@ -74,12 +79,18 @@
         snap.access    = dom.access;     // ← acc-pwd vs acc-pub
         snap.thread    = dom.thread;     // ← živé data-thread z karty (ID reťaze vlákna)
         snap.cmtid     = dom.cmtid;      // ← živý komentárový slug (.kcmt data-doc)
-        // ak by v snape chýbali, doplň z DOM
-        if (snap.subj == null)  snap.subj  = dom.subj;
-        if (snap.date == null)  snap.date  = dom.date;
-        if (snap.dir  == null)  snap.dir   = dom.dir;
-        if (!snap.urls || !Object.keys(snap.urls).length) snap.urls = dom.urls;
-        if (snap.fname == null) snap.fname = dom.fname;
+        // zobrazované polia karty/položky VŽDY prepíšeme aktuálnou pravdou z DOM,
+        // aby sa každá oprava na karte prejavila v ✏️ Upraviť okamžite:
+        if (dom.subj)     snap.subj     = dom.subj;      // Predmet dokumentu (položka)
+        if (dom.cardsubj) snap.cardsubj = dom.cardsubj;  // Predmet konania (riadok 2 karty)
+        if (dom.stav)     snap.stav     = dom.stav;      // Stav (pill)
+        snap.date   = dom.date;                          // Dátum
+        snap.cats   = dom.cats;                          // jurisdikcia + oblasť práva
+        snap.az     = dom.az;                            // Az. súdu
+        snap.ourref = dom.ourref;                        // Naša spis. zn.
+        if (dom.fname != null) snap.fname = dom.fname;   // Názov súboru (admin)
+        if (dom.urls && Object.keys(dom.urls).length) snap.urls = dom.urls; // 9 jazykových odkazov
+        if (snap.dir == null) snap.dir = dom.dir;
         return snap;
       } catch(e){}
     }
