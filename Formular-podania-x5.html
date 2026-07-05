@@ -395,6 +395,16 @@ function makeSlot(idx){
             <span class="catchip" data-jur="sk"><img src="https://flagcdn.com/sk.svg" alt="">Slovensko<span class="ck">✓</span></span>
           </div>
         </div>
+        <div class="catgrp" style="margin-top:12px">
+          <div class="glbl">Oblasť práva (data-area) — zaradenie karty do kategórií (klikni, viac naraz)</div>
+          <div class="chips-pick">
+            <span class="catchip cat-all" data-areall>🌐 Všetky<span class="ck">✓</span></span>
+            <span class="catchip" data-areaval="kartell">Kartelové právo<span class="ck">✓</span></span>
+            <span class="catchip" data-areaval="gdpr">GDPR<span class="ck">✓</span></span>
+            <span class="catchip" data-areaval="strafrecht">Trestné oznámenie<span class="ck">✓</span></span>
+            <span class="catchip" data-areaval="majetok">Zasahovanie do majetkových práv<span class="ck">✓</span></span>
+          </div>
+        </div>
         <div class="cardedit">
           <div>
             <div class="glbl" style="margin-bottom:6px">Náhľad dlaždice kauzy (tá istá karta)</div>
@@ -473,10 +483,10 @@ function makeSlot(idx){
             <div class="glbl">Oblasť práva (data-area)</div>
             <div class="chips-pick">
               <span class="catchip cat-all" data-areall>🌐 Všetky<span class="ck">✓</span></span>
-              <span class="catchip" data-areaval="kartell">Kartellrecht<span class="ck">✓</span></span>
+              <span class="catchip" data-areaval="kartell">Kartelové právo<span class="ck">✓</span></span>
               <span class="catchip" data-areaval="gdpr">GDPR<span class="ck">✓</span></span>
               <span class="catchip" data-areaval="strafrecht">Trestné oznámenie<span class="ck">✓</span></span>
-              <span class="catchip" data-areaval="majetok">Zasahovanie do majetkových práv občana<span class="ck">✓</span></span>
+              <span class="catchip" data-areaval="majetok">Zasahovanie do majetkových práv<span class="ck">✓</span></span>
             </div>
           </div>
         </div>
@@ -575,8 +585,8 @@ function makeSlot(idx){
   function syncAllChip(grp){
     const attr=grp==='jur'?'data-jur':'data-areaval', allSel=grp==='jur'?'[data-jurall]':'[data-areall]';
     const items=[...root.querySelectorAll('.catchip['+attr+']')];
-    const allBtn=root.querySelector('.catchip'+allSel);
-    if(allBtn) allBtn.classList.toggle('on', items.length>0 && items.every(x=>x.classList.contains('on')));
+    const allOn=items.length>0 && items.every(x=>x.classList.contains('on'));
+    root.querySelectorAll('.catchip'+allSel).forEach(b=>b.classList.toggle('on', allOn));
   }
   root.querySelectorAll('.catchip').forEach(c=>c.onclick=()=>{
     if(c.hasAttribute('data-jurall')){
@@ -596,7 +606,9 @@ function makeSlot(idx){
       items.forEach(x=>x.classList.toggle('on',turnOn));
       syncAllChip('area');
     } else if(c.hasAttribute('data-areaval')){
-      c.classList.toggle('on'); syncAllChip('area');
+      const v=c.dataset.areaval, on=!c.classList.contains('on');
+      root.querySelectorAll('.catchip[data-areaval="'+v+'"]').forEach(x=>x.classList.toggle('on',on));
+      syncAllChip('area');
     }
     updateSummary();
   });
@@ -619,7 +631,7 @@ function makeSlot(idx){
   function collectCats(){
     const allOn=root.querySelector('.catchip[data-jurall].on');
     const jur=allOn ? ["all"] : [...root.querySelectorAll('.catchip[data-jur].on')].map(c=>c.dataset.jur);
-    const area=[...root.querySelectorAll('.catchip[data-areaval].on')].map(c=>c.dataset.areaval);
+    const area=[...new Set([...root.querySelectorAll('.catchip[data-areaval].on')].map(c=>c.dataset.areaval))];
     return {jur,area};
   }
   function setCats(jur,area){
