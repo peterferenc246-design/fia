@@ -36,7 +36,7 @@
       var single = item.querySelector("a.open[href]");
       if (single){ fallback = single.getAttribute("href"); }
     }
-    var cats = { jur: [], area: [] }; var az = "", ourref = "", cardsubj = "", stav = "", court = "";
+    var cats = { jur: [], area: [] }; var az = "", ourref = "", cardsubj = "", stav = "", court = "", begleit = "";
     if (caseEl){
       var c = (caseEl.getAttribute("data-cat")||"").trim();
       if (c){ cats.jur = c.split(/\s+/); }
@@ -54,6 +54,17 @@
         if (_mt.indexOf("\u2696")>=0 && _mt.indexOf(":")>=0){ court = _mt.slice(_mt.indexOf(":")+1).split(" \u00b7 ")[0].trim(); break; }
       }
       if (!court){ court = caseEl.getAttribute("data-court")||""; }
+      if (caseEl.id){
+        var _modal = document.getElementById(caseEl.id + "-modal");
+        if (_modal){
+          var _skb = _modal.querySelector(".gtl-b.sk") || _modal.querySelector(".gtl-b.de");
+          if (_skb){
+            var _ps = _skb.querySelectorAll("p"), _arr = [];
+            for (var _pi=0; _pi<_ps.length; _pi++){ var _pt=(_ps[_pi].textContent||"").trim(); if(_pt){ _arr.push(_pt); } }
+            begleit = _arr.join("\n\n");
+          }
+        }
+      }
     }
     var comments = !!(item.querySelector(".kcmt") || item.querySelector(".cmt-wrap"));
     var thread = item.getAttribute("data-thread") || "";
@@ -61,7 +72,7 @@
     return { v:1, kauza:kauza, caseId:(caseEl?(caseEl.id||""):""), subj:subj, dir:dir, mode:"item", date:date,
       access:access, important:important, fname:fname, fallback:fallback,
       urls:urls, cats:cats, az:az, ourref:ourref, comments:comments, thread:thread, cmtid:cmtid,
-      cardsubj:cardsubj, stav:stav, court:court };
+      cardsubj:cardsubj, stav:stav, court:court, begleit:begleit };
   }
   function isRecv(item){
     var col = item.closest(".col");
@@ -91,6 +102,7 @@
         if (dom.cardsubj) snap.cardsubj = dom.cardsubj;  // Predmet konania (riadok 2 karty)
         if (dom.stav)     snap.stav     = dom.stav;      // Stav (pill)
         if (dom.court)    snap.court    = dom.court;     // Orgán/súd (data-court, ak je na karte)
+        if (dom.begleit)  snap.begleit  = dom.begleit;   // Sprievodný text (naživo z modálu karty)
         snap.date   = dom.date;                          // Dátum
         snap.cats   = dom.cats;                          // jurisdikcia + oblasť práva
         snap.az     = dom.az;                            // Az. súdu

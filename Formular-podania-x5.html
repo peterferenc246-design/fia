@@ -476,6 +476,10 @@ function makeSlot(idx){
         <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky — text (voliteľné)</label><input data-extralabel></div>
         <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky — URL (voliteľné)</label><input data-extraurl></div>
       </div>
+          <div class="begleit-wrap">
+            <p class="nctitle" style="margin-top:14px">🗒️ Príkazy pre <b style="color:#C00000">CLAUDE</b> <span style="font-weight:600;color:#6B7C91">(voľné pole — sem píš doplňujúce príkazy pre Clauda; prenesú sa do MK, NEZOBRAZUJÚ sa na webe)</span></p>
+            <textarea data-claudecmd class="begleit-ta"></textarea>
+          </div>
         <div class="newcase" data-newcase style="display:none">
           <p class="nctitle">🏷 Kategórie a spis. značky kauzy <span style="font-weight:600;color:#6B7C91">(pri existujúcej kauze sú predvyplnené z #303 — klikni a zmeň; zmena sa prenesie na celú kartu vrátane starších položiek)</span></p>
           <p class="nchint">Klikni kategórie — <b>zapni/vypni</b>, môžeš zvoliť aj viac naraz (jurisdikcia aj oblasť).</p>
@@ -555,7 +559,7 @@ function makeSlot(idx){
   const kauzaSel=q("[data-kauza]"), kauzaNew=q("[data-kauzanew]"), courtNew=q("[data-courtnew]"), courtHint=q("[data-courthint]"), docSel=q("[data-doc]");
   const cardSubjInp=q("[data-cardsubj]");
   const konanieSel=q("[data-konanie]"), newkBlk=q("[data-newk]"), kNewName=q("[data-knewname]"), kSpis=q("[data-kspis]"), kauzaspisInp=q("[data-kauzaspis]"); const row1Inp=q("[data-row1]"), row3Inp=q("[data-row3]"), cardPrev=q("[data-cardprev]");
-  const newcaseBlk=q("[data-newcase]"), azInp=q("[data-az]"), ourrefInp=q("[data-ourref]"), begleitInp=q("[data-begleit]");
+  const newcaseBlk=q("[data-newcase]"), azInp=q("[data-az]"), ourrefInp=q("[data-ourref]"), begleitInp=q("[data-begleit]"), claudecmdInp=q("[data-claudecmd]");
   const fixRow=q("[data-fixrow]"), fixSubj=q("[data-fixsubj]"), fixLbl=q("[data-fixlbl]");
   const delWarn=q("[data-delwarn]"), confid=q("[data-confid]");
   const contentBlock=q("[data-contentblock]"), linksBlock=q("[data-linksblock]");
@@ -827,6 +831,7 @@ function makeSlot(idx){
     updateSummary();
   };
   begleitInp.oninput=updateSummary;
+  if(claudecmdInp) claudecmdInp.oninput=updateSummary;
   docSel.onchange=applyDoc;
   fillBtn.onclick=applyDoc;
 
@@ -866,6 +871,7 @@ function makeSlot(idx){
     if(konanieSel.value==="__new__"&&esc(kauzaNew.value)) return true;
     if(esc(subjInp.value)) return true;
     if(esc(begleitInp.value)) return true;
+    if(claudecmdInp&&esc(claudecmdInp.value)) return true;
     let any=false; root.querySelectorAll('[data-lang]').forEach(i=>{ if(esc(i.value)) any=true; });
     if(any||esc(fallbackInp.value)) return true;
     if(attrsChanged()) return true;
@@ -940,6 +946,9 @@ function makeSlot(idx){
     h+="\u2502 RIADKY DLAŽDICE: .rt(názov)=\u201e"+hesc(cardName)+"\u201c \u00b7 .rs(spis)=\u201e"+hesc(kauzaSpis)+"\u201c \u00b7 .rx(rezervný)="+(cardRez?("\u201e"+hesc(cardRez)+"\u201c"):"(prázdny)")+"\n";
     h+="│ MODAL (ak je Begleittext): id=\""+_cardId+"-modal\", tlačidlo Begleittext napoj na href=\"#"+_cardId+"-modal\"\n";
     h+="└──────────────────────────────────────\n";
+    if(claudecmdInp&&esc(claudecmdInp.value)){
+      h+="\n### PRÍKAZY PRE CLAUDE (voľné pokyny od Petra — vykonaj/zohľadni) ###\n"+esc(claudecmdInp.value)+"\n### KONIEC PRÍKAZOV ###\n\n";
+    }
     if(mode==="item"){
       var _uAll=collectUrls(); var _uv=LANGS.map(function(l){return _uAll[l]||"";}); var _same=_uv.every(function(v){return v===_uv[0];});
       var _c2=collectCats();
@@ -1080,7 +1089,7 @@ function makeSlot(idx){
     if(newkBlk) newkBlk.style.display="none"; if(kNewName) kNewName.value=""; if(kSpis) kSpis.value="";
     if(newcaseBlk) newcaseBlk.style.display="none";
     root.querySelectorAll('.catchip').forEach(c=>c.classList.remove('on'));
-    if(azInp) azInp.value=""; if(ourrefInp) ourrefInp.value=""; if(begleitInp) begleitInp.value="";
+    if(azInp) azInp.value=""; if(ourrefInp) ourrefInp.value=""; if(begleitInp) begleitInp.value=""; if(claudecmdInp) claudecmdInp.value="";
     root.querySelectorAll('[data-lang]').forEach(function(i){ i.value=""; });
     if(fallbackInp) fallbackInp.value="";
     if(replySel) replySel.selectedIndex=0;
