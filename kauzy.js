@@ -25,6 +25,9 @@
     if (!wrap) return;
 
     var cases    = [].slice.call(wrap.querySelectorAll('details.case'));
+    var tcBox    = document.getElementById('fia-testcases');
+    var allCases = tcBox ? cases.concat([].slice.call(tcBox.querySelectorAll('details.case'))) : cases;
+    (function(){ var s=document.createElement('style'); s.textContent='details.case.hide{display:none!important}'; document.head.appendChild(s); })();
     // --- INJEKCIA: area-chip „Zasahovanie do majetkových práv občana" (data-filter=majetok) ---
     // Klon strafrecht chipu (zachová štruktúru + .gtl jazyky), vloženie hneď zaň. Bez zásahu do bloku 3.
     (function(){
@@ -43,20 +46,16 @@
     var sortbtns = [].slice.call(root.querySelectorAll('.sortbtn[data-sort]'));
     var dirBtn   = root.querySelector('#kdir');
 
-    var state = { filter: 'all', sort: 'date', dir: 'desc' };
+    var state = { sort: 'date', dir: 'desc' };
+    var selected = {};   // multi-select kategórií (prázdne = zobraz všetko)
 
     function attr(el, key) { return el.getAttribute('data-' + key) || ''; }
 
     // Rozsvieti chipy podľa kategórií práve otvorených (a filtrom neskrytých) kaúz.
     function relight() {
-      var lit = {};
-      cases.forEach(function (c) {
-        if (c.classList.contains('hide')) return;
-        (attr(c, 'cat') + ' ' + attr(c, 'area')).split(/\s+/).forEach(function (x) { if (x) lit[x] = true; });
-      });
       chips.forEach(function (chip) {
         var f = attr(chip, 'filter');
-        var on = f && f !== 'all' && lit[f];
+        var on = f && f !== 'all' && selected[f];
         if (on) {
           chip.classList.add('lit');
           chip.style.boxShadow   = LIT_SHADOW;
@@ -70,10 +69,11 @@
     }
 
     function applyFilter() {
-      var f = state.filter;
-      cases.forEach(function (c) {
+      var keys = Object.keys(selected);
+      var noFilter = keys.length === 0;
+      allCases.forEach(function (c) {
         var vals = (attr(c, 'cat') + ' ' + attr(c, 'area')).split(/\s+/);
-        var show = f === 'all' || vals.indexOf(f) >= 0;
+        var show = noFilter || keys.some(function (k) { return vals.indexOf(k) >= 0; });
         c.classList.toggle('hide', !show);
       });
       relight();
@@ -94,14 +94,22 @@
       }).forEach(function (c) { wrap.appendChild(c); });
     }
 
+    function clearCats() {
+      selected = {};
+      chips.forEach(function (x) { x.classList.remove('active'); });
+      applyFilter();
+    }
     chips.forEach(function (chip) {
       chip.addEventListener('click', function () {
-        chips.forEach(function (x) { x.classList.remove('active'); });
-        chip.classList.add('active');
-        state.filter = attr(chip, 'filter') || 'all';
+        var f = attr(chip, 'filter');
+        if (!f || f === 'all') { clearCats(); return; }
+        if (selected[f]) { delete selected[f]; chip.classList.remove('active'); }
+        else { selected[f] = true; chip.classList.add('active'); }
         applyFilter();
       });
     });
+    var regAll = document.querySelector('#fia-reg .rbtn[data-regall]');
+    if (regAll) { regAll.addEventListener('click', clearCats); }
 
     // Svietenie kategórií pri otvorení/zatvorení ktorejkoľvek kauzy.
     cases.forEach(function (c) {
