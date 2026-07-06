@@ -48,7 +48,12 @@
       if (csEl){ cardsubj = csEl.textContent.trim(); }
       var pillEl = caseEl.querySelector(".pill");
       if (pillEl){ stav = pillEl.classList.contains("p-amber") ? "eingereicht" : (pillEl.classList.contains("p-green") ? "abgeschlossen" : "laeuft"); }
-      court = caseEl.getAttribute("data-court")||"";
+      var _sks = caseEl.querySelectorAll(".gtl.sk");
+      for (var _mi=0; _mi<_sks.length; _mi++){
+        var _mt = _sks[_mi].textContent || "";
+        if (_mt.indexOf("\u2696")>=0 && _mt.indexOf(":")>=0){ court = _mt.slice(_mt.indexOf(":")+1).split(" \u00b7 ")[0].trim(); break; }
+      }
+      if (!court){ court = caseEl.getAttribute("data-court")||""; }
     }
     var comments = !!(item.querySelector(".kcmt") || item.querySelector(".cmt-wrap"));
     var thread = item.getAttribute("data-thread") || "";
