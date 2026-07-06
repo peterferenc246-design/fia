@@ -36,7 +36,7 @@
       var single = item.querySelector("a.open[href]");
       if (single){ fallback = single.getAttribute("href"); }
     }
-    var cats = { jur: [], area: [] }; var az = "", ourref = "", cardsubj = "", stav = "";
+    var cats = { jur: [], area: [] }; var az = "", ourref = "", cardsubj = "", stav = "", court = "";
     if (caseEl){
       var c = (caseEl.getAttribute("data-cat")||"").trim();
       if (c){ cats.jur = c.split(/\s+/); }
@@ -48,6 +48,7 @@
       if (csEl){ cardsubj = csEl.textContent.trim(); }
       var pillEl = caseEl.querySelector(".pill");
       if (pillEl){ stav = pillEl.classList.contains("p-amber") ? "eingereicht" : (pillEl.classList.contains("p-green") ? "abgeschlossen" : "laeuft"); }
+      court = caseEl.getAttribute("data-court")||"";
     }
     var comments = !!(item.querySelector(".kcmt") || item.querySelector(".cmt-wrap"));
     var thread = item.getAttribute("data-thread") || "";
@@ -55,7 +56,7 @@
     return { v:1, kauza:kauza, caseId:(caseEl?(caseEl.id||""):""), subj:subj, dir:dir, mode:"item", date:date,
       access:access, important:important, fname:fname, fallback:fallback,
       urls:urls, cats:cats, az:az, ourref:ourref, comments:comments, thread:thread, cmtid:cmtid,
-      cardsubj:cardsubj, stav:stav };
+      cardsubj:cardsubj, stav:stav, court:court };
   }
   function isRecv(item){
     var col = item.closest(".col");
@@ -84,6 +85,7 @@
         if (dom.subj)     snap.subj     = dom.subj;      // Predmet dokumentu (položka)
         if (dom.cardsubj) snap.cardsubj = dom.cardsubj;  // Predmet konania (riadok 2 karty)
         if (dom.stav)     snap.stav     = dom.stav;      // Stav (pill)
+        if (dom.court)    snap.court    = dom.court;     // Orgán/súd (data-court, ak je na karte)
         snap.date   = dom.date;                          // Dátum
         snap.cats   = dom.cats;                          // jurisdikcia + oblasť práva
         snap.az     = dom.az;                            // Az. súdu
