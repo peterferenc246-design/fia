@@ -1082,7 +1082,7 @@ function makeSlot(idx){
   }
 
   function reset(){
-    kauzaSel.selectedIndex=0; kauzaNew.value=""; kauzaNew.style.display="none"; courtNew.value=""; courtNew.style.display="none"; if(courtHint) courtHint.style.display="none"; if(cardSubjInp) cardSubjInp.value="";
+    kauzaSel.selectedIndex=0; kauzaNew.value=""; kauzaNew.style.display="none"; courtNew.value=""; if(cardSubjInp) cardSubjInp.value="";
     if(newkBlk) newkBlk.style.display="none"; if(kNewName) kNewName.value=""; if(kSpis) kSpis.value="";
     if(newcaseBlk) newcaseBlk.style.display="none";
     root.querySelectorAll('.catchip').forEach(c=>c.classList.remove('on'));
