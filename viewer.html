@@ -29,6 +29,9 @@
   .pagewrap{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.4);margin:0 auto 12px;position:relative;}
   .pagewrap .pnum{position:absolute;top:4px;right:8px;font-size:11px;color:#999;}
   canvas{display:block;width:100%;height:auto;}
+  .linklayer{position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;pointer-events:none;}
+  .linklayer a{position:absolute;display:block;pointer-events:auto;}
+  .linklayer a:hover{background:rgba(255,192,0,.18);outline:1px solid rgba(255,192,0,.6);border-radius:2px;}
   #err{max-width:900px;margin:20px auto;background:#FDE8E8;border:1px solid var(--red);padding:12px;border-radius:8px;display:none;font-size:14px;}
 </style>
 </head>
@@ -165,7 +168,36 @@
       var w=wraps[n-1]; w.style.paddingBottom=""; w.appendChild(c);
       page.render({canvasContext:c.getContext("2d"),
         viewport:page.getViewport({scale:scale*dpr})});
+      addLinks(page, w);
     });
+  }
+  function addLinks(page, wrap){
+    if (wrap.querySelector(".linklayer")) return;
+    page.getAnnotations().then(function(anns){
+      if (wrap.querySelector(".linklayer")) return;
+      var vp1=page.getViewport({scale:1});
+      var layer=document.createElement("div"); layer.className="linklayer";
+      anns.forEach(function(a){
+        if (a.subtype!=="Link" || !a.rect || (!a.url && !a.dest)) return;
+        var vr=vp1.convertToViewportRectangle(a.rect);
+        var x1=Math.min(vr[0],vr[2]), x2=Math.max(vr[0],vr[2]),
+            y1=Math.min(vr[1],vr[3]), y2=Math.max(vr[1],vr[3]);
+        var el=document.createElement("a");
+        el.style.left=(x1/vp1.width*100)+"%"; el.style.top=(y1/vp1.height*100)+"%";
+        el.style.width=((x2-x1)/vp1.width*100)+"%"; el.style.height=((y2-y1)/vp1.height*100)+"%";
+        if (a.url){ el.href=a.url; el.target="_blank"; el.rel="noopener noreferrer"; }
+        else { el.href="#"; el.addEventListener("click", function(ev){ ev.preventDefault(); goToDest(a.dest); }); }
+        layer.appendChild(el);
+      });
+      wrap.appendChild(layer);
+    }).catch(function(){});
+  }
+  function goToDest(dest){
+    if (!dest || !pdfDoc) return;
+    (typeof dest==="string" ? pdfDoc.getDestination(dest) : Promise.resolve(dest)).then(function(d){
+      if (!d || !d[0]) return;
+      pdfDoc.getPageIndex(d[0]).then(function(idx){ jumpTo(idx+1); }).catch(function(){});
+    }).catch(function(){});
   }
   function updateCurrent(){
     var mid=window.scrollY+window.innerHeight/3, best=1;
