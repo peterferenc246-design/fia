@@ -19,7 +19,7 @@
       var clone = subjEl.cloneNode(true);
       var imp = clone.querySelector(".impx");
       if (imp){ imp.parentNode.removeChild(imp); }
-      subj = clone.textContent.trim();
+      var _sk = subjEl.querySelector(".gtl.sk") || subjEl.querySelector(".gtl"); subj = _sk ? _sk.textContent.trim() : clone.textContent.trim();
     }
     var date = txt(item.querySelector(".date")) || "—";
     var access = item.querySelector(".acc-pwd") ? "pwd" : "pub";
