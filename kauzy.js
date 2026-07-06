@@ -53,9 +53,14 @@
 
     // Rozsvieti chipy podľa kategórií práve otvorených (a filtrom neskrytých) kaúz.
     function relight() {
+      var lit = {};
+      allCases.forEach(function (c) {
+        if (!c.open || c.classList.contains('hide')) return;
+        (attr(c, 'cat') + ' ' + attr(c, 'area')).split(/\s+/).forEach(function (x) { if (x) lit[x] = true; });
+      });
       chips.forEach(function (chip) {
         var f = attr(chip, 'filter');
-        var on = f && f !== 'all' && selected[f];
+        var on = f && f !== 'all' && lit[f];
         if (on) {
           chip.classList.add('lit');
           chip.style.boxShadow   = LIT_SHADOW;
@@ -112,7 +117,7 @@
     if (regAll) { regAll.addEventListener('click', clearCats); }
 
     // Svietenie kategórií pri otvorení/zatvorení ktorejkoľvek kauzy.
-    cases.forEach(function (c) {
+    allCases.forEach(function (c) {
       c.addEventListener('toggle', relight);
     });
 
