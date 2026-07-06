@@ -51,10 +51,8 @@
     function relight() {
       var lit = {};
       cases.forEach(function (c) {
-        if (!c.open || c.classList.contains('hide')) return;
-        var cat = attr(c, 'cat'), area = attr(c, 'area');
-        if (cat)  lit[cat]  = true;
-        if (area) lit[area] = true;
+        if (c.classList.contains('hide')) return;
+        (attr(c, 'cat') + ' ' + attr(c, 'area')).split(/\s+/).forEach(function (x) { if (x) lit[x] = true; });
       });
       chips.forEach(function (chip) {
         var f = attr(chip, 'filter');
@@ -72,11 +70,10 @@
     }
 
     function applyFilter() {
+      var f = state.filter;
       cases.forEach(function (c) {
-        var f = state.filter;
-        var show = f === 'all'
-                || attr(c, 'cat')  === f
-                || attr(c, 'area') === f;
+        var vals = (attr(c, 'cat') + ' ' + attr(c, 'area')).split(/\s+/);
+        var show = f === 'all' || vals.indexOf(f) >= 0;
         c.classList.toggle('hide', !show);
       });
       relight();
