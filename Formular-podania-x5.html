@@ -724,7 +724,8 @@ function makeSlot(idx){
       const ks=(KAUZY[kauzaSel.value]&&KAUZY[kauzaSel.value].konania)||[];
       ks.forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;konanieSel.appendChild(o);});
       const on=document.createElement("option"); on.value="__new__"; on.textContent="➕ Nové konanie (nová karta)"; konanieSel.appendChild(on);
-      konanieSel.value = ks.length ? ks[0] : "__new__";
+      // Default = „Nové konanie": výber kauzy NESMIE predvyplniť polia existujúceho konania (Begleittext, Orgán/súd, Az., Stav). Existujúce konanie si používateľ vyberie sám.
+      konanieSel.value = "__new__";
     }
     if(kauzaspisInp) kauzaspisInp.value = (!isNewK && KAUZY[kauzaSel.value] && KAUZY[kauzaSel.value].spis) ? KAUZY[kauzaSel.value].spis : "";
     if(row1Inp) row1Inp.value = (!isNewK && KAUZY[kauzaSel.value]) ? stripFlag(KAUZY[kauzaSel.value].label) : "";
@@ -736,7 +737,7 @@ function makeSlot(idx){
   function refreshDocList(){
     const isNew=konanieSel.value==="__new__";
     kauzaNew.style.display=isNew?"block":"none";
-    if(isNew){ setCats([],[]); azInp.value=""; ourrefInp.value=""; }
+    if(isNew){ setCats([],[]); azInp.value=""; ourrefInp.value=""; if(begleitInp) begleitInp.value=""; }
     else { fillCatsFromCase(); }
     updateNewcaseVis();
     const def=(!isNew&&CASES[konanieSel.value])?CASES[konanieSel.value]:null;
@@ -1218,7 +1219,7 @@ function makeSlot(idx){
     if(le && le.k && KAUZY[le.k]){
       kauzaSel.value=le.k;
       refreshKonanieList();
-      if(le.n){ const opt=[].slice.call(konanieSel.options).find(o=>o.value===le.n); if(opt){ konanieSel.value=le.n; refreshDocList(); } }
+      // Neobnovuj posledné konanie — po načítaní ostáva „Nové konanie" s prázdnymi poľami (pridávanie nového konania musí začať čisté).
     } else { refreshKonanieList(); }
   }
   // init slotu
