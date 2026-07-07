@@ -1169,7 +1169,10 @@ function makeSlot(idx){
     const subjRaw=esc(action==="del"?fixSubj.value:subjInp.value);
     if(!subjRaw) return null;
     const subjNorm=subjRaw.toLowerCase().replace(/\s+/g," ").trim();
-    return { idx, kk, kauzaLabel, subjRaw, subjNorm };
+    // rozlišujúce polia: ten istý Predmet je duplicita LEN ak sa zhoduje aj smer + dátum + dokument + akcia
+    const dateKey=(noDate&&noDate.checked)?"\u2014":esc(dateInp?dateInp.value:"").trim();
+    const fnameKey=esc(fnameInp?fnameInp.value:"").toLowerCase().replace(/\s+/g," ").trim();
+    return { idx, kk, kauzaLabel, subjRaw, subjNorm, dir, action, dateKey, fnameKey };
   }
 
   // API objekt (onState dopĺňa builder po vytvorení tabu)
@@ -1415,16 +1418,16 @@ document.getElementById("genAll").onclick=()=>{
     if(!parts.length){ document.getElementById("out").value="⚠️ Nevyplnil si ani jeden slot (alebo je zvolený slot prázdny)."; return; }
     // ── detekcia duplicity: rovnaký Predmet v tej istej kauze ──
     const groups={};
-    slots.forEach(s=>{ const d=s.dupInfo&&s.dupInfo(); if(d){ const key=d.kk+"||"+d.subjNorm; (groups[key]=groups[key]||[]).push(d); } });
+    slots.forEach(s=>{ const d=s.dupInfo&&s.dupInfo(); if(d){ const key=[d.kk,d.subjNorm,d.dir,d.action,d.dateKey,d.fnameKey].join("||"); (groups[key]=groups[key]||[]).push(d); } });
     let dupWarn="";
     Object.keys(groups).forEach(key=>{
       const g=groups[key];
       if(g.length>1){
         const slotNums=g.map(o=>"Slot "+(o.idx+1)).join(" + ");
-        dupWarn+="\u2503 "+slotNums+": rovnaký Predmet v tej istej kauze.\n";
+        dupWarn+="\u2503 "+slotNums+": IDENTICKÝ riadok (rovnaká kauza + Predmet + smer + dátum + dokument).\n";
         dupWarn+="\u2503    Kauza:   "+g[0].kauzaLabel+"\n";
         dupWarn+="\u2503    Predmet: \u201e"+g[0].subjRaw+"\u201c\n";
-        dupWarn+="\u2503 \u2192 Premenuj Predmet v jednom zo slotov (inak vzniknú 2 rovnaké riadky).\n";
+        dupWarn+="\u2503 \u2192 Odlíš aspoň jedno pole (smer / dátum / dokument / Predmet), inak vzniknú 2 identické riadky.\n";
       }
     });
     let mmWarn="";
@@ -1440,7 +1443,7 @@ document.getElementById("genAll").onclick=()=>{
       out="\u250f\u2501\u2501\u2501\u2501\u2501 \u{1F6D1} NEKONZISTENTN\u00dd CIE\u013d \u2014 CLAUDE: NEVYKON\u00c1VA\u0164 \u2501\u2501\u2501\u2501\u2501\u2513\n"+mmWarn+"\u2517\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u251b\n\n"+out;
     }
     if(dupWarn){
-      const box="\u250f\u2501\u2501\u2501\u2501\u2501 \u26a0\ufe0f DUPLICITA \u2014 TREBA ZMENIŤ NÁZOV PREDMETU \u2501\u2501\u2501\u2501\u2501\u2513\n"
+      const box="\u250f\u2501\u2501\u2501\u2501\u2501 \u26a0\ufe0f DUPLICITA \u2014 IDENTICKÝ RIADOK (ODLÍŠ SMER/DÁTUM/DOKUMENT) \u2501\u2501\u2501\u2501\u2501\u2513\n"
         + dupWarn
         + "\u2517\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u251b\n\n";
       out=box+out;
