@@ -333,7 +333,7 @@ function buildItem(date,subj,urls,access,fallback,important,fname,snap,comments,
   const replyHtml = (snap&&snap.replyTo) ? `<div class="replyto">${LANGS.map(l=>`<span class="gtl ${l}">${RPL[l]}</span>`).join("")} <span class="rt-subj">${hesc(snap.replyTo)}</span></div>` : "";
   return `<div class="item${impCls}"${thrAttr}${snapAttr}><div class="top"><span class="date">${hesc(date)||"—"}</span>`+
          `<span class="acc ${cls}">${badgeHtml}</span></div>`+
-         `${replyHtml}<div class="subj">${impMark}${hesc(subj)}</div>${fnameHtml}${pwHtml}${link}${extraHtml}${comments?cmtBlock(snap&&snap.cmtid):""}</div>`;
+         `${replyHtml}<div class="subj">${impMark}${LANGS.map(l=>`<span class="gtl ${l}">${hesc(subj)}</span>`).join("")}</div>${fnameHtml}${pwHtml}${link}${extraHtml}${comments?cmtBlock(snap&&snap.cmtid):""}</div>`;
 }
 
 // ===== SLOT — nezávislý vstupný blok =====
@@ -954,6 +954,7 @@ function makeSlot(idx){
       h+="— VŠETKY POLIA POLOŽKY (kompletný stav zo slotu — kontroluj proti #303) —\n";
       h+="Dátum: "+(noDate.checked?"— (bez dátumu)":(hesc(dateInp.value)||"(prázdny!)"))+"\n";
       h+="Predmet (subj): "+(hesc(subjInp.value)||"(prázdny)")+"\n";
+      h+="   ↳ Predmet položky (.subj v .item) — 1 jazyk, rozlož do 9 .gtl (Claude preloží tak ako Predmet konania).\n";
       h+="Prístup: "+(accessSel.value==="pwd"?("🔒 Heslo — pokyn k heslu: "+((pwhintInp&&hesc(pwhintInp.value))||"(nevyplnené)")):"🌐 Verejné")+"\n";
       h+="Dôležité (❗): "+(important?"ÁNO":"NIE")+" · Komentáre (💬): "+(comments?"ÁNO":"NIE")+"\n";
       h+="🛈 Názov súboru (len admin): "+(hesc(fnameInp.value)||"(prázdne)")+"\n";
