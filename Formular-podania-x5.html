@@ -746,8 +746,9 @@ function makeSlot(idx){
     docSel.innerHTML="";
     if(def&&def.docs){ Object.keys(def.docs).forEach(name=>{ const o=document.createElement("option"); o.value=name; o.textContent=name; docSel.appendChild(o); }); }
     const on=document.createElement("option"); on.value=NEWDOC; on.textContent="➕ Nový dokument"; docSel.appendChild(on);
-    const firstDoc=(def&&def.docs)?Object.keys(def.docs)[0]:null;
-    docSel.value=firstDoc||NEWDOC; applyDoc();
+    // NEDEFAULTuj na prvý existujúci dokument — inak sa pri výbere kauzy predvyplnia polia cudzieho podania.
+    // Vždy začni na „Nový dokument" (čisté polia, akcia = Pridať); existujúci dokument si vyberie používateľ sám.
+    docSel.value=NEWDOC; applyDoc();
   }
   function applyDoc(){
     const def=CASES[konanieSel.value];
