@@ -62,11 +62,13 @@
        doc2  = URL sekundárneho PDF (voliteľné — jazyky mimo primárneho)
        page  = úvodná strana v primárnom PDF
        langs = CODE:PAGE[:2],...   tretí token "2" = jazyk žije v doc2
+       orig  = URL podpísaného originálu (QES) — tlačidlo download; ak chýba, sťahuje sa doc
      Bez parametrov beží DEMO konfigurácia case-telekom (9 jazykov).
      ============================================================ */
   var qs = new URLSearchParams(location.search);
   var DOC1 = qs.get("doc") || "";
   var DOC2 = qs.get("doc2") || "";
+  var ORIG = qs.get("orig") || "";   // voliteľné: URL podpísaného originálu (QES) pre tlačidlo download
   var LANGS = qs.get("langs") || "";
   var TARGET = Math.max(1, parseInt(qs.get("page") || "1", 10) || 1);
   var ACTIVE_DOC = qs.get("d") === "2" ? 2 : 1;                  // ktorý doc je otvorený
@@ -118,7 +120,7 @@
   var elPages=document.getElementById("pages"), elCur=document.getElementById("cur"),
       elTotal=document.getElementById("total"), elStatus=document.getElementById("status"),
       elErr=document.getElementById("err");
-  document.getElementById("dl").href = DOC;
+  document.getElementById("dl").href = ORIG || DOC;
   if (!window.pdfjsLib){ fail("PDF.js sa nenačítal."); return; }
   pdfjsLib.GlobalWorkerOptions.workerSrc =
     "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
