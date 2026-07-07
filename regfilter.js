@@ -153,6 +153,35 @@
 
     // start: nic viditelne, kym sa neklikne kauza v registri
     showOnly([]);
+
+    // DEEP-LINK: ak URL obsahuje #case-... , otvor prislusnu kauzu + kartu (zdielacie odkazy).
+    function openFromHash() {
+      var h = (location.hash || "").replace(/^#/, "");
+      if (!h) { return; }
+      var target = null;
+      allCards().forEach(function (c) { if (c.id === h) { target = c; } });
+      if (!target) { return; }
+      var owner = null;
+      rbtns.forEach(function (b) {
+        if (owner) { return; }
+        var ids = b.hasAttribute("data-regall") ? allCards().map(function (c) { return c.id; }) : idsFor(b);
+        if (ids.indexOf(h) !== -1) { owner = b; }
+      });
+      rbtns.forEach(function (x) { x.classList.remove("active"); });
+      if (owner) {
+        activeBtn = owner;
+        owner.classList.add("active");
+        if (owner.hasAttribute("data-regall")) { showOnly(allCards().map(function (c) { return c.id; })); }
+        else { showOnly(idsFor(owner)); }
+      } else {
+        activeBtn = null;
+        showOnly([h]);
+      }
+      try { target.open = true; } catch (e) {}
+      setTimeout(function () { try { target.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {} }, 80);
+    }
+    openFromHash();
+    window.addEventListener("hashchange", openFromHash);
   }
 
   if (document.readyState === "loading") {
