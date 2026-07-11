@@ -61,8 +61,9 @@
        doc   = URL primárneho PDF  (alebo skratka)
        doc2  = URL sekundárneho PDF (voliteľné — jazyky mimo primárneho)
        page  = úvodná strana v primárnom PDF
-       langs = CODE:PAGE[:2],...   tretí token "2" = jazyk žije v doc2
-       orig  = URL podpísaného originálu (QES) — tlačidlo download; ak chýba, sťahuje sa doc
+       langs = CODE:PAGE[:2|:o],...   tretí token "2" = jazyk žije v doc2;
+               "o" = vlajka je externý odkaz na orig= (reálne odoslaný podpísaný originál, nový tab)
+       orig  = URL podpísaného originálu (QES) — tlačidlo download + cieľ vlajok s tokenom ":o"; ak chýba, sťahuje sa doc
      Bez parametrov beží DEMO konfigurácia case-telekom (9 jazykov).
      ============================================================ */
   var qs = new URLSearchParams(location.search);
@@ -78,7 +79,7 @@
   // ---- jazyková lišta ----
   var langs = LANGS ? LANGS.split(",").map(function(s){
     var p = s.split(":");
-    return { code: p[0].toUpperCase(), page: parseInt(p[1], 10) || 1, doc: p[2] === "2" ? 2 : 1 };
+    return { code: p[0].toUpperCase(), page: parseInt(p[1], 10) || 1, doc: p[2] === "2" ? 2 : 1, ext: p[2] === "o" };
   }) : [];
   var bar = document.getElementById("langbar");
   langs.forEach(function(L){
@@ -86,7 +87,12 @@
     a.textContent = L.code;
     a.className = "f-" + L.code;
     a.dataset.code = L.code;
-    if (L.doc === ACTIVE_DOC) {
+    if (L.ext) {
+      // jazyk existuje ako reálne odoslaný podpísaný originál -> externý odkaz na OneDrive (orig)
+      a.href = ORIG || "#";
+      a.target = "_blank";
+      a.rel = "noopener";
+    } else if (L.doc === ACTIVE_DOC) {
       a.href = "#";
       a.onclick = function(ev){ ev.preventDefault(); jumpTo(L.page); setActive(L.code); };
     } else {
