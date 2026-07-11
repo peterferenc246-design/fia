@@ -56,6 +56,7 @@
 <script>
 (function(){
   "use strict";
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   /* ============================================================
      PARAMETRE (produkčné rozhranie):
        doc   = URL primárneho PDF  (alebo skratka)
@@ -157,14 +158,25 @@
     jumpTo(TARGET);
   }).catch(function(e){ fail(e && e.message ? e.message : String(e)); });
 
-  function jumpTo(n){
+  function jumpTo(n, tries){
     if (!wraps.length) return;
     n = Math.min(Math.max(1,n), wraps.length);
+    tries = tries || 0;
     renderPage(n);
-    setTimeout(function(){
-      wraps[n-1].scrollIntoView({behavior:"instant",block:"start"});
+    if (n > 1) renderPage(n-1);
+    if (n < wraps.length) renderPage(n+1);
+    var doScroll = function(){
+      var hdr = document.querySelector("header");
+      var off = (hdr ? hdr.offsetHeight : 0) + 4;
+      var y = wraps[n-1].getBoundingClientRect().top + window.pageYOffset - off;
+      window.scrollTo(0, y < 0 ? 0 : y);
       updateCurrent();
-    },50);
+      if (tries < 10){
+        var cur = parseInt(elCur.textContent, 10) || 1;
+        if (cur !== n) setTimeout(function(){ jumpTo(n, tries+1); }, 130);
+      }
+    };
+    requestAnimationFrame(function(){ requestAnimationFrame(doScroll); });
   }
   function renderPage(n){
     if (rendered[n] || !pdfDoc) return;
