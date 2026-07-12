@@ -22,6 +22,7 @@
   #relbar .rlab{font-size:11px;color:#cfe0f5;white-space:nowrap;margin-right:2px;}
   #relbar a.relflag{width:30px;padding:3px 0;text-align:center;border-radius:5px;color:#fff;
     font-weight:bold;font-size:12px;text-decoration:none;border:2px solid transparent;}
+  #relbar a.relflag.f-DE,#langbar a.f-DE{background:#345086;}
   /* jazyková lišta — FOX0: každý jazyk svoja farba, aktívny zlatý rámček */
   #langbar{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;}
   #langbar a{padding:4px 0;width:44px;text-align:center;border-radius:5px;color:#fff;
@@ -111,6 +112,20 @@
     }
     bar.appendChild(a);
   });
+  // ---- lokalizované popisy tlačidiel podľa jazyka konania ----
+  var QES_LABELS={DE:"Signiertes Original (QES)",EN:"Signed original (QES)",SK:"Podpísaný originál (QES)",HR:"Potpisani izvornik (QES)",PL:"Podpisany oryginał (QES)",ES:"Original firmado (QES)",IT:"Originale firmato (QES)",FR:"Original signé (QES)",SV:"Signerat original (QES)"};
+  var REL_LABELS_EINW={DE:"Einwendung gegen die Vollstreckung (ZOLL/DAK)",EN:"Objection to enforcement (Einwendung ZOLL/DAK)",SK:"Námietka proti exekúcii (Einwendung ZOLL/DAK)",HR:"Prigovor protiv ovrhe (Einwendung ZOLL/DAK)",PL:"Sprzeciw wobec egzekucji (Einwendung ZOLL/DAK)",ES:"Oposición a la ejecución (Einwendung ZOLL/DAK)",IT:"Opposizione all'esecuzione (Einwendung ZOLL/DAK)",FR:"Opposition à l'exécution (Einwendung ZOLL/DAK)",SV:"Bestridande av verkställighet (Einwendung ZOLL/DAK)"};
+  var relButtonEl=null;
+  function updateLabels(code){
+    code=(code||"").toUpperCase();
+    var dl=document.getElementById("dl");
+    if(dl) dl.textContent="⬇ "+(QES_LABELS[code]||QES_LABELS.SK);
+    if(relButtonEl){
+      var isEinw=/ZOLL\/DAK/i.test(RELLABEL);
+      relButtonEl.textContent=isEinw?("⚖ "+(REL_LABELS_EINW[code]||REL_LABELS_EINW.EN)):RELLABEL;
+    }
+  }
+
   // ---- súvisiaci dokument (rel) — vlajky jazykov + tlačidlo v páse ----
   var REL = qs.get("rel") || "";
   var RELLANGS = qs.get("rellangs") || "";
@@ -136,16 +151,18 @@
     });
     var rb = document.createElement("a");
     rb.className = "btn rel";
-    rb.textContent = RELLABEL;
     rb.href = relURL(rlangs.length ? rlangs[0].page : 1);
     relbarEl.appendChild(rb);
+    relButtonEl = rb;
     relbarEl.style.display = "";
   }
+  (function(){ var best=null; langs.forEach(function(L){ if(L.doc===ACTIVE_DOC && L.page<=TARGET){ if(!best||L.page>=best.page) best=L; } }); updateLabels(best?best.code:"SK"); })();
 
   function setActive(code){
     bar.querySelectorAll("a").forEach(function(a){
       a.classList.toggle("active", a.dataset.code === code);
     });
+    updateLabels(code);
   }
   function activeByPage(p){
     var best = null;
