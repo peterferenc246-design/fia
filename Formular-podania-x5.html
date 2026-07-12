@@ -331,6 +331,14 @@ const KAUZY = {
   "k-ms":   {label:"🇩🇪🇪🇺 Microsoft — GDPR porušenia", spis:"PIF-EU-2026-MBS-002", jur:["de","eu"], konania:["Microsoft — inštitucionálne porušenie GDPR a cezhraničný podvod na DPH"]},
   "k-dak":  {label:"🇩🇪 DAK — podvod (poisťovňa)", spis:"PER-DE-2026-DAK-", jur:["de"], konania:[]}
 };
+let curLang = "sk";
+const KONANIA_I18N = {
+  "Nichtigkeitsklage — Zusammenschluss (Joint Venture) M.10815": {de:"Nichtigkeitsklage — Zusammenschluss (Joint Venture) M.10815",en:"Action for annulment — concentration (Joint Venture) M.10815",sk:"Žaloba o neplatnosť — koncentrácia (Joint Venture) M.10815",hr:"Tužba za poništenje — koncentracija (Joint Venture) M.10815",pl:"Skarga o stwierdzenie nieważności — koncentracja (Joint Venture) M.10815",es:"Recurso de anulación — concentración (empresa común) M.10815",it:"Ricorso di annullamento — concentrazione (impresa comune) M.10815",fr:"Recours en annulation — concentration (entreprise commune) M.10815",sv:"Talan om ogiltigförklaring — koncentration (Joint Venture) M.10815"},
+  "Beschwerde wegen Kartellpraktiken — DG COMP": {de:"Beschwerde wegen Kartellpraktiken — DG COMP",en:"Complaint about cartel practices — DG COMP",sk:"Sťažnosť na kartelové praktiky — DG COMP",hr:"Pritužba zbog kartelnih praksi — DG COMP",pl:"Skarga dotycząca praktyk kartelowych — DG COMP",es:"Denuncia por prácticas de cártel — DG COMP",it:"Denuncia per pratiche di cartello — DG COMP",fr:"Plainte pour pratiques d'entente — DG COMP",sv:"Klagomål om kartellpraxis — DG COMP"},
+  "Strafrechtliche Mitteilung gegen Deutsche Telekom AG": {de:"Strafanzeige gegen Telekom Deutschland GmbH und Schufa Holding AG - Landshut",en:"Criminal complaint against Telekom Deutschland GmbH and Schufa Holding AG - Landshut",sk:"Trestné oznámenie proti Telekom Deutschland GmbH a Schufa Holding AG - Landshut",hr:"Kaznena prijava protiv Telekom Deutschland GmbH i Schufa Holding AG - Landshut",pl:"Zawiadomienie o przestępstwie przeciwko Telekom Deutschland GmbH i Schufa Holding AG - Landshut",es:"Denuncia penal contra Telekom Deutschland GmbH y Schufa Holding AG - Landshut",it:"Denuncia penale contro Telekom Deutschland GmbH e Schufa Holding AG - Landshut",fr:"Plainte pénale contre Telekom Deutschland GmbH et Schufa Holding AG - Landshut",sv:"Brottsanmälan mot Telekom Deutschland GmbH och Schufa Holding AG - Landshut"},
+  "V širšom zmysle kauzy – kartelové prepojenia Schufa, bánk, Telekomu a spolkovej vlády Nemecka": {de:"Im weiteren Sinne des Falls – kartellartige Verflechtungen von Schufa, Banken, Telekom und der deutschen Bundesregierung",en:"In the broader sense of the case – cartel-like interconnections of Schufa, banks, Telekom and the German federal government",sk:"V širšom zmysle kauzy – kartelové prepojenia Schufa, bánk, Telekomu a spolkovej vlády Nemecka",hr:"U širem smislu slučaja – kartelska povezanost Schufe, banaka, Telekoma i njemačke savezne vlade",pl:"W szerszym sensie sprawy – kartelowe powiązania Schufy, banków, Telekomu i niemieckiego rządu federalnego",es:"En sentido amplio del caso – interconexiones de tipo cártel entre Schufa, bancos, Telekom y el Gobierno federal alemán",it:"In senso più ampio del caso – interconnessioni di tipo cartello tra Schufa, banche, Telekom e il governo federale tedesco",fr:"Au sens large de l'affaire – interconnexions de type entente entre la Schufa, les banques, Telekom et le gouvernement fédéral allemand",sv:"I vidare mening av fallet – kartelliknande sammanflätningar av Schufa, banker, Telekom och den tyska förbundsregeringen"}
+};
+function konDisplay(n){ var m=KONANIA_I18N[n]; return (m&&m[curLang])||n; }
 const KAUZA_KEYS = Object.keys(KAUZY);
 // kauzaKeyForKonanie: ktora kauza obsahuje dane konanie (nazov)
 function kauzaKeyForKonanie(kn){ for(const k of KAUZA_KEYS){ if(KAUZY[k].konania.indexOf(kn)>=0) return k; } return null; }
@@ -386,7 +394,7 @@ function kauzaOptions(){
 }
 function konanieOptions(kk){
   const ks=(KAUZY[kk]&&KAUZY[kk].konania)||[];
-  return ks.map(n=>`<option value="${n.replace(/"/g,'&quot;')}">${n}</option>`).join("")
+  return ks.map(n=>`<option value="${n.replace(/"/g,'&quot;')}">${konDisplay(n)}</option>`).join("")
     + `<option value="__new__">➕ Nové konanie (nová karta)</option>`;
 }
 function saveLastEdit(k,n){ try{ localStorage.setItem("fiafox_last_edit", JSON.stringify({k:k,n:n})); }catch(e){} }
@@ -764,7 +772,7 @@ function makeSlot(idx){
     konanieSel.innerHTML="";
     if(!isNewK){
       const ks=(KAUZY[kauzaSel.value]&&KAUZY[kauzaSel.value].konania)||[];
-      ks.forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;konanieSel.appendChild(o);});
+      ks.forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=konDisplay(n);konanieSel.appendChild(o);});
       const on=document.createElement("option"); on.value="__new__"; on.textContent="➕ Nové konanie (nová karta)"; konanieSel.appendChild(on);
       // Default = „Nové konanie": výber kauzy NESMIE predvyplniť polia existujúceho konania (Begleittext, Orgán/súd, Az., Stav). Existujúce konanie si používateľ vyberie sám.
       konanieSel.value = "__new__";
@@ -829,10 +837,13 @@ function makeSlot(idx){
   }
   kauzaSel.onchange=()=>{ refreshKonanieList(); refreshReplyList(""); saveLastEdit(kauzaSel.value,konanieSel.value); };
   konanieSel.onchange=()=>{ refreshDocList(); refreshReplyList(""); saveLastEdit(kauzaSel.value,konanieSel.value); };
+  function relabelKonania(){ if(typeof konanieSel==="undefined"||!konanieSel) return; for(var i=0;i<konanieSel.options.length;i++){ var o=konanieSel.options[i]; if(o.value&&o.value!=="__new__"&&o.value!=="__newk__") o.textContent=konDisplay(o.value); } }
   // NOVÉ v2: postMessage z parenta — explicit force set spis/label/preview (odolné voči iným reset handlerom)
   window.addEventListener("message", function(ev){
     try{
-      const d=ev.data; if(!d||d.type!=="fiafox-registerclick"||!d.spis) return;
+      const d=ev.data; if(!d) return;
+      if(d.type==="fiafox-lang"&&d.lang){ curLang=d.lang; relabelKonania(); return; }
+      if(d.type!=="fiafox-registerclick"||!d.spis) return;
       let hit=null;
       for(const k of KAUZA_KEYS){ if(KAUZY[k].spis===d.spis){ hit=k; break; } }
       if(!hit) return;
@@ -847,6 +858,7 @@ function makeSlot(idx){
       if(typeof updateSummary==="function") updateSummary();
     }catch(e){}
   });
+  try{ window.parent.postMessage({type:"fiafox-lang-req"},"*"); }catch(e){}
   kauzaNew.oninput=updateSummary;
   if(kNewName) kNewName.oninput=updateSummary;
   if(kSpis) kSpis.oninput=updateSummary;
