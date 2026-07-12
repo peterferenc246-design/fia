@@ -307,20 +307,22 @@ const CASES = {
         single("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQDUGe_w9cSIQaBMiSflVsC0AfDCgKAeyVZZcrKAPqFmm0Q?e=mE3dwu",{_date:"11.07.2024",_imp:true,_cmt:true,_fname:"Strafrechtliche Mitteilung_Telekom - Schufa_sharp_EN_DE_SK_signed with QES.pdf"})
     }
   },
-  "Im weiteren Sinne des Falls – kartellartige Verflechtungen von Schufa, Banken, Telekom und der deutschen Bundesregierung": {
+  "V širšom zmysle kauzy – kartelové prepojenia Schufa, bánk, Telekomu a spolkovej vlády Nemecka": {
     id:"case-v-sirsom-zmysle-kauzy-kartelove-prepojen", block:"kauzy", court:"Bundesanstalt für Finanzdienstleistungsaufsicht (BaFin)", stav:"laeuft",
     short: "BaFin / Commerzbank",
     cardsubj:"NÁVRH NA VYKONANIE SPRÁVNEHO KONANIA proti Commerzbank Deutschland",
     meta: { cat:["de"], area:["kartell","majetok"], az:"", ourref:"TFIA-2026-JV-010" },
     begleit: "Toto podanie dokumentuje, akým spôsobom som si u Commerzbank uplatňoval zákonné právo na základný platobný účet (Basiskonto) podľa § 31 a nasl. zákona o platobných účtoch (Zahlungskontengesetz, ZKG), vrátane jeho vedenia ako účtu s ochranou pred exekúciou (P-Konto). Banka mi zriadenie účtu najprv odmietla, hoci na základný účet má podľa zákona nárok každý spotrebiteľ.\n\nÚčet banka napokon zriadila až po tom, čo som vec eskaloval a oznámil sťažnosť nemeckému Spolkovému úradu pre dohľad nad finančnými službami (BaFin). Následne mi však odmietala zaslať prihlasovacie údaje, čím mi fakticky znemožňovala účet používať. Prístupové údaje mi zaslala až po ďalšej urgencii a opätovnom poukázaní na dohľad BaFinu — dňa 7. júla 2026.\n\nPrípad zapadá do širšieho vzorca tejto kauzy: systémovo významná banka sťažuje spotrebiteľovi prístup k základnej finančnej službe a svoju zákonnú povinnosť si splní až pod tlakom dohľadového orgánu. Iniciatíva FIA FOX vec zverejňuje výlučne s cieľom informovať verejnosť o postupe inštitúcií vo veci verejného záujmu.",
     docs: {
-      "NÁVRH NA VYKONANIE SPRÁVNEHO KONANIA proti Commerzbank Deutschland": { _date:"07.07.2026", _imp:true, _cmt:true, _access:"pub", _fname:"07_BaFin_Commerzbank_Verwaltungsverfahren_BaFin_DE_EN_SK_FR_GA_HR_PL_IT_ES_SV_signed with QES.pdf" }
+      "NÁVRH NA VYKONANIE SPRÁVNEHO KONANIA proti Commerzbank Deutschland": { _date:"07.07.2026", _imp:true, _cmt:true, _access:"pub", _fname:"07_BaFin_Commerzbank_Verwaltungsverfahren_BaFin_DE_EN_SK_FR_GA_HR_PL_IT_ES_SV_signed with QES.pdf" },
+      "Commerzbank zaslala prístupové údaje k základnému účtu (Basiskonto) po eskalácii a dohľade BaFin":
+        recv("https://peterferencfoxpro-my.sharepoint.com/:b:/g/personal/info_foxprof_club/IQD43IEp92lhTp0VHij9ZnxtAdjrMgqHRShHLqpg0Yzomm0?e=tZrSvL",{_date:"07.07.2026",_cmt:true,_access:"pub",_fname:"PIN 7 Jul 2026.pdf"})
     }
   }
 };
 const CASE_NAMES = Object.keys(CASES);
 const KAUZY = {
-  "k-jv":   {label:"🇩🇪🇪🇺 Telekom — kartel / Joint Venture", spis:"TFIA-2026-JV", jur:["de","eu"], konania:["Nichtigkeitsklage — Zusammenschluss (Joint Venture) M.10815","Beschwerde wegen Kartellpraktiken — DG COMP","Strafrechtliche Mitteilung gegen Deutsche Telekom AG","Im weiteren Sinne des Falls – kartellartige Verflechtungen von Schufa, Banken, Telekom und der deutschen Bundesregierung"]},
+  "k-jv":   {label:"🇩🇪🇪🇺 Telekom — kartel / Joint Venture", spis:"TFIA-2026-JV", jur:["de","eu"], konania:["Nichtigkeitsklage — Zusammenschluss (Joint Venture) M.10815","Beschwerde wegen Kartellpraktiken — DG COMP","Strafrechtliche Mitteilung gegen Deutsche Telekom AG","V širšom zmysle kauzy – kartelové prepojenia Schufa, bánk, Telekomu a spolkovej vlády Nemecka"]},
   "k-fon":  {label:"🇩🇪 Telefónica — podvod", spis:"TCFIA-2026-FON-008", jur:["de"], konania:[]},
   "k-lra":  {label:"🇩🇪 Landratsamt — Bußgeld", spis:"LRA-2026-BG", jur:["de"], konania:["Nezákonne uložená pokuta okresným úradom","Súdne konanie – Landgericht Landshut (Erzwingungshaft)"]},
   "k-ins":  {label:"🇩🇪 Insolvenčný návrh (Personal)", spis:"PER-DE-2026-INS-005", jur:["de"], konania:[]},
