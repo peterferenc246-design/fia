@@ -339,6 +339,17 @@ const KONANIA_I18N = {
   "V širšom zmysle kauzy – kartelové prepojenia Schufa, bánk, Telekomu a spolkovej vlády Nemecka": {de:"Im weiteren Sinne des Falls – kartellartige Verflechtungen von Schufa, Banken, Telekom und der deutschen Bundesregierung",en:"In the broader sense of the case – cartel-like interconnections of Schufa, banks, Telekom and the German federal government",sk:"V širšom zmysle kauzy – kartelové prepojenia Schufa, bánk, Telekomu a spolkovej vlády Nemecka",hr:"U širem smislu slučaja – kartelska povezanost Schufe, banaka, Telekoma i njemačke savezne vlade",pl:"W szerszym sensie sprawy – kartelowe powiązania Schufy, banków, Telekomu i niemieckiego rządu federalnego",es:"En sentido amplio del caso – interconexiones de tipo cártel entre Schufa, bancos, Telekom y el Gobierno federal alemán",it:"In senso più ampio del caso – interconnessioni di tipo cartello tra Schufa, banche, Telekom e il governo federale tedesco",fr:"Au sens large de l'affaire – interconnexions de type entente entre la Schufa, les banques, Telekom et le gouvernement fédéral allemand",sv:"I vidare mening av fallet – kartelliknande sammanflätningar av Schufa, banker, Telekom och den tyska förbundsregeringen"}
 };
 function konDisplay(n){ var m=KONANIA_I18N[n]; return (m&&m[curLang])||n; }
+const KAUZA_LBL_I18N = {
+  "k-jv":{de:"🇩🇪🇪🇺 Telekom — Kartell / Joint Venture",en:"🇩🇪🇪🇺 Telekom — cartel / joint venture",sk:"🇩🇪🇪🇺 Telekom — kartel / Joint Venture",hr:"🇩🇪🇪🇺 Telekom — kartel / zajednički pothvat",pl:"🇩🇪🇪🇺 Telekom — kartel / wspólne przedsiębiorstwo",es:"🇩🇪🇪🇺 Telekom — cártel / empresa común",it:"🇩🇪🇪🇺 Telekom — cartello / impresa comune",fr:"🇩🇪🇪🇺 Telekom — entente / entreprise commune",sv:"🇩🇪🇪🇺 Telekom — kartell / joint venture"},
+  "k-fon":{de:"🇩🇪 Telefónica — Betrug",en:"🇩🇪 Telefónica — fraud",sk:"🇩🇪 Telefónica — podvod",hr:"🇩🇪 Telefónica — prijevara",pl:"🇩🇪 Telefónica — oszustwo",es:"🇩🇪 Telefónica — fraude",it:"🇩🇪 Telefónica — frode",fr:"🇩🇪 Telefónica — fraude",sv:"🇩🇪 Telefónica — bedrägeri"},
+  "k-lra":{de:"🇩🇪 Landratsamt — Bußgeld",en:"🇩🇪 Landratsamt — administrative fine",sk:"🇩🇪 Landratsamt — pokuta",hr:"🇩🇪 Landratsamt — novčana kazna",pl:"🇩🇪 Landratsamt — grzywna",es:"🇩🇪 Landratsamt — multa",it:"🇩🇪 Landratsamt — sanzione",fr:"🇩🇪 Landratsamt — amende",sv:"🇩🇪 Landratsamt — böter"},
+  "k-ins":{de:"🇩🇪 Insolvenzantrag (privat)",en:"🇩🇪 Insolvency petition (personal)",sk:"🇩🇪 Insolvenčný návrh (osobný)",hr:"🇩🇪 Prijedlog za stečaj (osobni)",pl:"🇩🇪 Wniosek o upadłość (osobisty)",es:"🇩🇪 Solicitud de insolvencia (personal)",it:"🇩🇪 Istanza di insolvenza (personale)",fr:"🇩🇪 Demande d'insolvabilité (personnelle)",sv:"🇩🇪 Konkursansökan (privat)"},
+  "k-exs":{de:"🇸🇰 Schadenersatzforderung 15 000 €",en:"🇸🇰 Damages claim €15,000",sk:"🇸🇰 Vymáhanie odškodného 15 000 €",hr:"🇸🇰 Zahtjev za naknadu štete 15 000 €",pl:"🇸🇰 Roszczenie odszkodowawcze 15 000 €",es:"🇸🇰 Reclamación de daños 15 000 €",it:"🇸🇰 Richiesta di risarcimento 15 000 €",fr:"🇸🇰 Demande de dommages-intérêts 15 000 €",sv:"🇸🇰 Skadeståndskrav 15 000 €"},
+  "k-vszp":{de:"🇸🇰 Schadenersatz 10 000 € — VšZP",en:"🇸🇰 Damages €10,000 — VšZP",sk:"🇸🇰 Odškodné 10 000 € — VšZP",hr:"🇸🇰 Naknada štete 10 000 € — VšZP",pl:"🇸🇰 Odszkodowanie 10 000 € — VšZP",es:"🇸🇰 Indemnización 10 000 € — VšZP",it:"🇸🇰 Risarcimento 10 000 € — VšZP",fr:"🇸🇰 Dommages-intérêts 10 000 € — VšZP",sv:"🇸🇰 Skadestånd 10 000 € — VšZP"},
+  "k-ms":{de:"🇩🇪🇪🇺 Microsoft — DSGVO-Verstöße",en:"🇩🇪🇪🇺 Microsoft — GDPR breaches",sk:"🇩🇪🇪🇺 Microsoft — porušenia GDPR",hr:"🇩🇪🇪🇺 Microsoft — povrede GDPR-a",pl:"🇩🇪🇪🇺 Microsoft — naruszenia RODO",es:"🇩🇪🇪🇺 Microsoft — infracciones del RGPD",it:"🇩🇪🇪🇺 Microsoft — violazioni del GDPR",fr:"🇩🇪🇪🇺 Microsoft — violations du RGPD",sv:"🇩🇪🇪🇺 Microsoft — GDPR-överträdelser"},
+  "k-dak":{de:"🇩🇪 DAK — Betrug (Krankenkasse)",en:"🇩🇪 DAK — fraud (health insurer)",sk:"🇩🇪 DAK — podvod (poisťovňa)",hr:"🇩🇪 DAK — prijevara (osiguravatelj)",pl:"🇩🇪 DAK — oszustwo (ubezpieczyciel)",es:"🇩🇪 DAK — fraude (aseguradora)",it:"🇩🇪 DAK — frode (assicurazione)",fr:"🇩🇪 DAK — fraude (assurance maladie)",sv:"🇩🇪 DAK — bedrägeri (sjukkassa)"}
+};
+function kauzaLbl(k){ var m=KAUZA_LBL_I18N[k]; return (m&&m[curLang])||(KAUZY[k]&&KAUZY[k].label)||k; }
 const KAUZA_KEYS = Object.keys(KAUZY);
 // kauzaKeyForKonanie: ktora kauza obsahuje dane konanie (nazov)
 function kauzaKeyForKonanie(kn){ for(const k of KAUZA_KEYS){ if(KAUZY[k].konania.indexOf(kn)>=0) return k; } return null; }
@@ -389,7 +400,7 @@ function buildItem(date,subj,urls,access,fallback,important,fname,snap,comments,
 // ===== SLOT — nezávislý vstupný blok =====
 function kauzaOptions(){
   return `<option value="">— vyber kauzu (prázdny slot) —</option>`
-    + KAUZA_KEYS.map(k=>`<option value="${k}">${KAUZY[k].label}</option>`).join("")
+    + KAUZA_KEYS.map(k=>`<option value="${k}">${kauzaLbl(k)}</option>`).join("")
     + `<option value="__newk__">➕ Nová kauza (nová dlaždica do registra)</option>`;
 }
 function konanieOptions(kk){
@@ -838,11 +849,12 @@ function makeSlot(idx){
   kauzaSel.onchange=()=>{ refreshKonanieList(); refreshReplyList(""); saveLastEdit(kauzaSel.value,konanieSel.value); };
   konanieSel.onchange=()=>{ refreshDocList(); refreshReplyList(""); saveLastEdit(kauzaSel.value,konanieSel.value); };
   function relabelKonania(){ if(typeof konanieSel==="undefined"||!konanieSel) return; for(var i=0;i<konanieSel.options.length;i++){ var o=konanieSel.options[i]; if(o.value&&o.value!=="__new__"&&o.value!=="__newk__") o.textContent=konDisplay(o.value); } }
+  function relabelKauzy(){ if(typeof kauzaSel==="undefined"||!kauzaSel) return; for(var i=0;i<kauzaSel.options.length;i++){ var o=kauzaSel.options[i]; if(o.value&&o.value!=="__newk__"&&KAUZY[o.value]) o.textContent=kauzaLbl(o.value); } }
   // NOVÉ v2: postMessage z parenta — explicit force set spis/label/preview (odolné voči iným reset handlerom)
   window.addEventListener("message", function(ev){
     try{
       const d=ev.data; if(!d) return;
-      if(d.type==="fiafox-lang"&&d.lang){ curLang=d.lang; relabelKonania(); return; }
+      if(d.type==="fiafox-lang"&&d.lang){ curLang=d.lang; relabelKonania(); relabelKauzy(); return; }
       if(d.type!=="fiafox-registerclick"||!d.spis) return;
       let hit=null;
       for(const k of KAUZA_KEYS){ if(KAUZY[k].spis===d.spis){ hit=k; break; } }
