@@ -331,7 +331,7 @@ const KAUZY = {
   "k-ms":   {label:"🇩🇪🇪🇺 Microsoft — GDPR porušenia", spis:"PIF-EU-2026-MBS-002", jur:["de","eu"], konania:["Microsoft — inštitucionálne porušenie GDPR a cezhraničný podvod na DPH"]},
   "k-dak":  {label:"🇩🇪 DAK — podvod (poisťovňa)", spis:"PER-DE-2026-DAK-", jur:["de"], konania:[]}
 };
-let curLang = "sk";
+let curLang = (function(){ try{ var m=(location.hash||"").match(/lang=([a-z]{2})/i); if(m){ var L=m[1].toLowerCase(); if(["de","en","sk","hr","pl","es","it","fr","sv"].indexOf(L)>=0) return L; } }catch(e){} return "sk"; })();
 const KONANIA_I18N = {
   "Nichtigkeitsklage — Zusammenschluss (Joint Venture) M.10815": {de:"Nichtigkeitsklage — Zusammenschluss (Joint Venture) M.10815",en:"Action for annulment — concentration (Joint Venture) M.10815",sk:"Žaloba o neplatnosť — koncentrácia (Joint Venture) M.10815",hr:"Tužba za poništenje — koncentracija (Joint Venture) M.10815",pl:"Skarga o stwierdzenie nieważności — koncentracja (Joint Venture) M.10815",es:"Recurso de anulación — concentración (empresa común) M.10815",it:"Ricorso di annullamento — concentrazione (impresa comune) M.10815",fr:"Recours en annulation — concentration (entreprise commune) M.10815",sv:"Talan om ogiltigförklaring — koncentration (Joint Venture) M.10815"},
   "Beschwerde wegen Kartellpraktiken — DG COMP": {de:"Beschwerde wegen Kartellpraktiken — DG COMP",en:"Complaint about cartel practices — DG COMP",sk:"Sťažnosť na kartelové praktiky — DG COMP",hr:"Pritužba zbog kartelnih praksi — DG COMP",pl:"Skarga dotycząca praktyk kartelowych — DG COMP",es:"Denuncia por prácticas de cártel — DG COMP",it:"Denuncia per pratiche di cartello — DG COMP",fr:"Plainte pour pratiques d'entente — DG COMP",sv:"Klagomål om kartellpraxis — DG COMP"},
@@ -848,8 +848,8 @@ function makeSlot(idx){
   }
   kauzaSel.onchange=()=>{ refreshKonanieList(); refreshReplyList(""); saveLastEdit(kauzaSel.value,konanieSel.value); };
   konanieSel.onchange=()=>{ refreshDocList(); refreshReplyList(""); saveLastEdit(kauzaSel.value,konanieSel.value); };
-  function relabelKonania(){ if(typeof konanieSel==="undefined"||!konanieSel) return; for(var i=0;i<konanieSel.options.length;i++){ var o=konanieSel.options[i]; if(o.value&&o.value!=="__new__"&&o.value!=="__newk__") o.textContent=konDisplay(o.value); } }
-  function relabelKauzy(){ if(typeof kauzaSel==="undefined"||!kauzaSel) return; for(var i=0;i<kauzaSel.options.length;i++){ var o=kauzaSel.options[i]; if(o.value&&o.value!=="__newk__"&&KAUZY[o.value]) o.textContent=kauzaLbl(o.value); } }
+  function relabelKonania(){ if(typeof konanieSel==="undefined"||!konanieSel) return; for(var i=0;i<konanieSel.options.length;i++){ var o=konanieSel.options[i]; if(o.value&&o.value!=="__new__"&&o.value!=="__newk__") o.textContent=konDisplay(o.value); } try{ var _v=konanieSel.value; konanieSel.value=_v; }catch(e){} }
+  function relabelKauzy(){ if(typeof kauzaSel==="undefined"||!kauzaSel) return; for(var i=0;i<kauzaSel.options.length;i++){ var o=kauzaSel.options[i]; if(o.value&&o.value!=="__newk__"&&KAUZY[o.value]) o.textContent=kauzaLbl(o.value); } try{ var _v=kauzaSel.value; kauzaSel.value=_v; }catch(e){} }
   // NOVÉ v2: postMessage z parenta — explicit force set spis/label/preview (odolné voči iným reset handlerom)
   window.addEventListener("message", function(ev){
     try{
@@ -871,6 +871,7 @@ function makeSlot(idx){
     }catch(e){}
   });
   try{ window.parent.postMessage({type:"fiafox-lang-req"},"*"); }catch(e){}
+  window.addEventListener("hashchange", function(){ try{ var m=(location.hash||"").match(/lang=([a-z]{2})/i); if(m){ var L=m[1].toLowerCase(); if(["de","en","sk","hr","pl","es","it","fr","sv"].indexOf(L)>=0){ curLang=L; relabelKonania(); relabelKauzy(); } } }catch(e){} });
   kauzaNew.oninput=updateSummary;
   if(kNewName) kNewName.oninput=updateSummary;
   if(kSpis) kSpis.oninput=updateSummary;
