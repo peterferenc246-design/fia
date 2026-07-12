@@ -17,6 +17,11 @@
     background:var(--lightblue);color:var(--navy);font-weight:bold;text-decoration:none;display:inline-block;}
   .row1 a.btn.dl{background:var(--gold);color:#000;}
   .spacer{flex:1;}
+  .row1 a.btn.rel{background:var(--red);color:#fff;}
+  #relbar{display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap;margin-right:2px;}
+  #relbar .rlab{font-size:11px;color:#cfe0f5;white-space:nowrap;margin-right:2px;}
+  #relbar a.relflag{width:30px;padding:3px 0;text-align:center;border-radius:5px;color:#fff;
+    font-weight:bold;font-size:12px;text-decoration:none;border:2px solid transparent;}
   /* jazyková lišta — FOX0: každý jazyk svoja farba, aktívny zlatý rámček */
   #langbar{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;}
   #langbar a{padding:4px 0;width:44px;text-align:center;border-radius:5px;color:#fff;
@@ -44,6 +49,7 @@
     <button id="zoomOut" title="Zmenšiť">−</button>
     <button id="zoomIn" title="Zväčšiť">+</button>
     <span class="spacer"></span>
+    <span id="relbar" style="display:none"></span>
     <a id="dl" class="btn dl" href="#" download>⬇ Podpísaný originál (QES)</a>
   </div>
   <nav id="langbar" aria-label="Jazyky dokumentu"></nav>
@@ -105,6 +111,37 @@
     }
     bar.appendChild(a);
   });
+  // ---- súvisiaci dokument (rel) — vlajky jazykov + tlačidlo v páse ----
+  var REL = qs.get("rel") || "";
+  var RELLANGS = qs.get("rellangs") || "";
+  var RELLABEL = qs.get("rellabel") || "Súvisiaci dokument";
+  var RELORIG = qs.get("relorig") || "";
+  if (REL) {
+    var relbarEl = document.getElementById("relbar");
+    var relURL = function(pg){
+      var u = "viewer.html?doc=" + REL + "&langs=" + RELLANGS + "&page=" + pg;
+      if (RELORIG) u += "&orig=" + RELORIG;
+      return u;
+    };
+    var rlangs = RELLANGS ? RELLANGS.split(",").map(function(s){
+      var p = s.split(":"); return { code: p[0].toUpperCase(), page: parseInt(p[1],10) || 1 };
+    }) : [];
+    rlangs.forEach(function(L){
+      var fa = document.createElement("a");
+      fa.className = "relflag f-" + L.code;
+      fa.textContent = L.code;
+      fa.href = relURL(L.page);
+      fa.title = RELLABEL + " — " + L.code;
+      relbarEl.appendChild(fa);
+    });
+    var rb = document.createElement("a");
+    rb.className = "btn rel";
+    rb.textContent = RELLABEL;
+    rb.href = relURL(rlangs.length ? rlangs[0].page : 1);
+    relbarEl.appendChild(rb);
+    relbarEl.style.display = "";
+  }
+
   function setActive(code){
     bar.querySelectorAll("a").forEach(function(a){
       a.classList.toggle("active", a.dataset.code === code);
