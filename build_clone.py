@@ -85,7 +85,7 @@ def build(lang, tsv, out):
 <td class="sigR"><img src="sig.png"><br><span class="role">{esc(ROLE[lang])}</span></td>
 </tr></table>
 </body></html>"""
-    HTML(string=doc, base_url=os.path.dirname(os.path.abspath(out)) or ".").write_pdf(out)
+    HTML(string=doc, base_url=os.path.dirname(os.path.abspath(__file__))).write_pdf(out)
     print("built", out, lang)
 
 # fix banner svg wrapper (flag span needs the svg to size)
