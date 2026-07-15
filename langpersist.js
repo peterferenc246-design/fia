@@ -1,24 +1,13 @@
-/* FIA FOX — langpersist.js — jazykova perzistencia registra #303 (foxprof.club)
+/* FIA FOX — langpersist.js — jazykova perzistencia REGISTRA #303 (foxprof.club)
    Doplnok k WPCode kauzy.js: NEDUPLIKUJE filter/sort/share/komentare.
-   Riesi len:
-   - pri nacitani rozpozna jazyk: ?lang=XX -> jazyk odkazujucej stranky (Polylang prefix
-     /sk/ /en/ ...; bez prefixu = DE; reload tej istej stranky sa ignoruje) -> localStorage 'fiaLang' -> DE
-   - pocuva zmenu #klng (klik vlajky) -> ulozi volbu a prepise odkaz Domov (.lbhome) na jazykovu URL
-   Bezi az po dobehnuti footer skriptov (male oneskorenie), aby prebilo default DE.
+   Dopredny smer: register pri nacitani prevezme jazyk podla stranky, z ktorej sa prislo
+   (Polylang prefix /sk/ /en/ ...). Poradie: ?lang=XX -> referrer -> localStorage 'fiaLang' -> DE.
+   Klik na vlajku v registri si volbu zapamata.
+   DOLEZITE: odkaz "Domov" (.lbhome) sa UMYSELNE NEPREPISUJE — vzdy vedie na DE domovsku
+   stranku (kampan je primarne DE), aby home nenaskakoval v inom jazyku.
 */
 (function () {
   var LANGS = ['de','en','sk','hr','pl','es','it','fr','sv'];
-  var HOME = {
-    de:'https://foxprof.club/',
-    en:'https://foxprof.club/en/welcome/',
-    sk:'https://foxprof.club/sk/164-2/',
-    hr:'https://foxprof.club/hr/dobrodosli/',
-    pl:'https://foxprof.club/pl/witamy/',
-    es:'https://foxprof.club/es/bienvenidos/',
-    it:'https://foxprof.club/it/benvenuti/',
-    fr:'https://foxprof.club/fr/bienvenue/',
-    sv:'https://foxprof.club/sv/209-2/'
-  };
   function ok(L){ return L && LANGS.indexOf(L) >= 0; }
   function store(L){ try { localStorage.setItem('fiaLang', L); } catch (e) {} }
   function stored(){ try { var v = localStorage.getItem('fiaLang'); return ok(v) ? v : null; } catch (e) { return null; } }
@@ -43,23 +32,23 @@
     for (var i = 0; i < LANGS.length; i++) { var r = document.getElementById('klng-' + LANGS[i]); if (r && r.checked) return LANGS[i]; }
     return 'de';
   }
-  function paint(L){
+  function paintBar(L){
     var bar = document.getElementById('fia-langbar');
     if (!bar) return;
     LANGS.forEach(function (x) { bar.classList.toggle('lang-' + x, x === L); });
     [].forEach.call(bar.querySelectorAll('.lbf'), function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === L); });
-    var h = bar.querySelector('.lbhome'); if (h && HOME[L]) h.setAttribute('href', HOME[L]);
+    /* .lbhome href sa zamerne NEMENI — Domov vzdy DE */
   }
   function apply(L){
     if (!ok(L)) L = 'de';
     var r = document.getElementById('klng-' + L);
     if (r && !r.checked) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
-    paint(L); store(L);
+    paintBar(L); store(L);
   }
   function bind(){
     LANGS.forEach(function (x) {
       var r = document.getElementById('klng-' + x);
-      if (r) r.addEventListener('change', function () { var c = cur(); paint(c); store(c); });
+      if (r) r.addEventListener('change', function () { var c = cur(); paintBar(c); store(c); });
     });
     apply(detect());
   }
