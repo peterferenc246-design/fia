@@ -381,56 +381,23 @@
   if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',init); } else { init(); }
 })();
 
-/* ===== FIA FOX — kauzy.js · CAST 4: jazykovy langbar (#fia-langbar) — S PERZISTENCIOU =====
-   Sticky pruh pred #fia-kauzy: vlavo Domov (9 jazykov, href sa prisposobuje jazyku),
-   vpravo 9 vlajok. Prepinanie cez zdielane #klng-XX (CSS .gtl).
-   NOVE — jazyk sa PAMATA a rozpoznava z kontextu:
-   poradie pri nacitani: ?lang=XX -> jazyk odkazujucej stranky (referrer Polylang prefix
-   /sk/ /en/ ...; bez prefixu = DE; reload tej istej stranky sa ignoruje) -> ulozena volba
-   (localStorage 'fiaLang') -> DE. Klik na vlajku ulozi volbu. Odkaz Domov (.lbhome)
-   vzdy mieri na domovsku stranku v aktivnom jazyku (Polylang URL).
+/* ===== FIA FOX — kauzy.js · ČASŤ 4: jazykový langbar (#fia-langbar) =====
+   Samostatný sticky pruh PRED #fia-kauzy: vľavo tlačidlo Domov (9 jazykov),
+   vpravo 9 vlajok. Keďže langbar je iný blok než #fia-kauzy, CSS selektor
+   #klng-XX:checked ~ ... naň nedosiahne — preto sa rieši týmto JS:
+   - klik vlajky .lbf[data-lang] → nastaví zdieľané #klng-XX (checked) + dispatch 'change'
+     (to prepne legacy karty v #fia-kauzy aj register #fia-reg cez ich vlastné listenery),
+     rozsvieti aktívnu vlajku a prepne triedu #fia-langbar.lang-XX (zobrazí text Domov v danom jazyku).
+   - počúva 'change' na #klng-XX (zmena cez register alebo legacy vlajky) a drží langbar v sync.
 */
 (function () {
   var LANGS = ['de','en','sk','hr','pl','es','it','fr','sv'];
-  var HOME = {
-    de:'https://foxprof.club/',
-    en:'https://foxprof.club/en/welcome/',
-    sk:'https://foxprof.club/sk/164-2/',
-    hr:'https://foxprof.club/hr/dobrodosli/',
-    pl:'https://foxprof.club/pl/witamy/',
-    es:'https://foxprof.club/es/bienvenidos/',
-    it:'https://foxprof.club/it/benvenuti/',
-    fr:'https://foxprof.club/fr/bienvenue/',
-    sv:'https://foxprof.club/sv/209-2/'
-  };
-  function ok(L){ return L && LANGS.indexOf(L) >= 0; }
-  function store(L){ try { localStorage.setItem('fiaLang', L); } catch (e) {} }
-  function stored(){ try { var v = localStorage.getItem('fiaLang'); return ok(v) ? v : null; } catch (e) { return null; } }
-  function fromQuery(){
-    var m = (location.search + location.hash).match(/[?&#]lang=([A-Za-z]{2})/);
-    var L = m && m[1].toLowerCase();
-    return ok(L) ? L : null;
-  }
-  function fromReferrer(){
-    try {
-      if (!document.referrer) return null;
-      var u = new URL(document.referrer);
-      if (u.hostname !== location.hostname) return null;
-      if (u.pathname === location.pathname) return null;
-      var seg = (u.pathname.split('/').filter(Boolean)[0] || '').toLowerCase();
-      if (ok(seg) && seg !== 'de') return seg;
-      return 'de';
-    } catch (e) { return null; }
-  }
-  function detect(){ return fromQuery() || fromReferrer() || stored() || 'de'; }
 
   function init() {
     var bar = document.getElementById('fia-langbar');
     if (!bar) return;
     var btns = [].slice.call(bar.querySelectorAll('.lbf[data-lang]'));
-    var home = bar.querySelector('.lbhome');
 
-    function setHome(L){ if (home && HOME[L]) home.setAttribute('href', HOME[L]); }
     function curChecked() {
       for (var i = 0; i < LANGS.length; i++) {
         var r = document.getElementById('klng-' + LANGS[i]);
@@ -441,25 +408,23 @@
     function setActive(L) {
       btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === L); });
       LANGS.forEach(function (x) { bar.classList.toggle('lang-' + x, x === L); });
-      setHome(L);
-    }
-    function applyLang(L, persist) {
-      if (!ok(L)) L = 'de';
-      var r = document.getElementById('klng-' + L);
-      if (r && !r.checked) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
-      setActive(L);
-      if (persist) store(L);
     }
 
     btns.forEach(function (b) {
-      b.addEventListener('click', function () { applyLang(b.getAttribute('data-lang'), true); });
+      b.addEventListener('click', function () {
+        var L = b.getAttribute('data-lang');
+        var r = document.getElementById('klng-' + L);
+        if (r) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
+        setActive(L);
+      });
     });
+
     LANGS.forEach(function (x) {
       var r = document.getElementById('klng-' + x);
       if (r) r.addEventListener('change', function () { setActive(curChecked()); });
     });
 
-    applyLang(detect(), true);
+    setActive(curChecked());
   }
 
   if (document.readyState === 'loading') {
