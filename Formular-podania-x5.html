@@ -838,6 +838,22 @@ function makeSlot(idx){
     metaRow.style.opacity=mode==="item"?"1":".45"; metaRow.style.pointerEvents=mode==="item"?"auto":"none"; }
   root.querySelectorAll('[data-mode] button').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
 
+  // „Predmet dokumentu" sa odvíja od Akcie: pri PRIDAŤ iba „Nový dokument" (žiadne existujúce položky),
+  // existujúce položky sa ponúknu LEN pri OPRAVIŤ / VYMAZAŤ. (Pri Pridať zavádzaš novú položku, prípadnú
+  // väzbu na existujúcu spravíš cez „Odpoveď na".)
+  function rebuildDocOptions(){
+    if(!konanieSel || !docSel) return;
+    const def=(konanieSel.value!=="__new__"&&CASES[konanieSel.value])?CASES[konanieSel.value]:null;
+    const prev=docSel.value;
+    docSel.innerHTML="";
+    if((action==="fix"||action==="del") && def && def.docs){
+      Object.keys(def.docs).forEach(name=>{ const o=document.createElement("option"); o.value=name; o.textContent=docDisplay(name); docSel.appendChild(o); });
+    }
+    const on=document.createElement("option"); on.value=NEWDOC; on.textContent="➕ Nový dokument"; docSel.appendChild(on);
+    let keep=false;
+    if(prev){ for(let i=0;i<docSel.options.length;i++){ if(docSel.options[i].value===prev){ docSel.value=prev; keep=true; break; } } }
+    if(!keep){ docSel.value=NEWDOC; }
+  }
   function applyActionUI(){
     root.querySelectorAll('[data-action] button').forEach(x=>{
       const on=x.dataset.a===action; x.classList.toggle('on',on); x.classList.toggle('del',x.dataset.a==="del"&&on);
@@ -849,10 +865,16 @@ function makeSlot(idx){
     contentBlock.style.display=isDel?"none":"block";
     linksBlock.style.display=isDel?"none":"block";
     updateNewcaseVis();
+    rebuildDocOptions();  // pri Pridať len „Nový dokument"; existujúce položky len pri Opraviť/Vymazať
     updateSummary();
   }
   function setAction(a){ action=a; applyActionUI(); }
-  root.querySelectorAll('[data-action] button').forEach(b=>b.onclick=()=>setAction(b.dataset.a));
+  root.querySelectorAll('[data-action] button').forEach(b=>b.onclick=()=>{
+    const a=b.dataset.a; const wasFixDel=(action==="fix"||action==="del");
+    setAction(a);
+    // prechod na Pridať z Opraviť/Vymazať = čistý štart (Nový dokument, prázdne polia)
+    if(a==="new" && wasFixDel){ if(docSel) docSel.value=NEWDOC; applyDoc(); }
+  });
 
   function refreshReplyList(keep){
     if(!replySel) return;
@@ -924,11 +946,9 @@ function makeSlot(idx){
     if(courtNew) courtNew.value=(def&&def.court)?def.court:"";
     if(cardSubjInp) cardSubjInp.value=(def&&def.cardsubj)?def.cardsubj:"";
     if(stavSel) stavSel.value=(def&&def.stav)?def.stav:"laeuft";
-    docSel.innerHTML="";
-    if(def&&def.docs){ Object.keys(def.docs).forEach(name=>{ const o=document.createElement("option"); o.value=name; o.textContent=docDisplay(name); docSel.appendChild(o); }); }
-    const on=document.createElement("option"); on.value=NEWDOC; on.textContent="➕ Nový dokument"; docSel.appendChild(on);
+    rebuildDocOptions();
     // NEDEFAULTuj na prvý existujúci dokument — inak sa pri výbere kauzy predvyplnia polia cudzieho podania.
-    // Vždy začni na „Nový dokument" (čisté polia, akcia = Pridať); existujúci dokument si vyberie používateľ sám.
+    // Vždy začni na „Nový dokument" (čisté polia, akcia = Pridať); existujúci dokument si vyberie používateľ (najprv Akcia Opraviť/Vymazať).
     docSel.value=NEWDOC; applyDoc();
   }
   function applyDoc(){
