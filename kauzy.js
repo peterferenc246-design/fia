@@ -84,11 +84,15 @@
       relight();
     }
 
+    // pripnuté konania (data-pin=N) idú VŽDY hore, medzi sebou podľa čísla 1,2,3…; nepripnuté = bez čísla (za nimi)
+    function pinRank(el) { var p = parseInt(el.getAttribute('data-pin'), 10); return (p > 0) ? p : Infinity; }
     function applySort() {
       var key = state.sort;
       var dir = state.dir === 'asc' ? 1 : -1;
-      cases.slice().sort(function (a, b) {
-        var va = attr(a, key), vb = attr(b, key);
+      function cmp(a, b) {
+        var pa = pinRank(a), pb = pinRank(b);
+        if (pa !== pb) return pa - pb;                 // pripnuté hore, podľa data-pin
+        var va = attr(a, key), vb = attr(b, key);      // zvyšok podľa zvoleného radenia
         var ea = va === '', eb = vb === '';
         if (ea && eb) return 0;
         if (ea) return 1;        // prázdne vždy dole
@@ -96,7 +100,10 @@
         if (va < vb) return -1 * dir;
         if (va > vb) return  1 * dir;
         return 0;
-      }).forEach(function (c) { wrap.appendChild(c); });
+      }
+      cases.slice().sort(cmp).forEach(function (c) { wrap.appendChild(c); });
+      // pripnuté hore aj v testovacom kontajneri (kým prebieha migrácia test → ostrá karta)
+      if (tcBox) { [].slice.call(tcBox.querySelectorAll('details.case')).sort(cmp).forEach(function (c) { tcBox.appendChild(c); }); }
     }
 
     function clearCats() {
