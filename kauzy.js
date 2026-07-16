@@ -27,7 +27,10 @@
     var cases    = [].slice.call(wrap.querySelectorAll('details.case'));
     var tcBox    = document.getElementById('fia-testcases');
     var allCases = tcBox ? cases.concat([].slice.call(tcBox.querySelectorAll('details.case'))) : cases;
-    (function(){ var s=document.createElement('style'); s.textContent='details.case.hide{display:none!important}'; document.head.appendChild(s); })();
+    (function(){ var s=document.createElement('style'); s.textContent='details.case.hide{display:none!important}'
+      +'.pinbadge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#FFCB3E,#F0B400);color:#3d2f00;border:1px solid #C9A100;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:800;line-height:1;margin-right:8px;white-space:nowrap;vertical-align:middle}'
+      +'.pinbadge .pinnum{background:#1F3864;color:#fff;border-radius:999px;min-width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;font-size:10.5px;padding:0 4px;font-weight:800}';
+      document.head.appendChild(s); })();
     // --- INJEKCIA: area-chip „Zasahovanie do majetkových práv občana" (data-filter=majetok) ---
     // Klon strafrecht chipu (zachová štruktúru + .gtl jazyky), vloženie hneď zaň. Bez zásahu do bloku 3.
     (function(){
@@ -105,6 +108,23 @@
       // pripnuté hore aj v testovacom kontajneri (kým prebieha migrácia test → ostrá karta)
       if (tcBox) { [].slice.call(tcBox.querySelectorAll('details.case')).sort(cmp).forEach(function (c) { tcBox.appendChild(c); }); }
     }
+    // 📌 vizuálna visačka „Pripnuté" na pripnutých kartách — viditeľná aj pre verejnosť (9 jazykov ako zvyšok registra)
+    function renderPinBadges() {
+      allCases.forEach(function (c) {
+        var pin = parseInt(c.getAttribute('data-pin'), 10);
+        var host = c.querySelector('.head-right') || c.querySelector('summary');
+        if (!host) return;
+        var ex = host.querySelector('.pinbadge');
+        if (pin > 0) {
+          if (!ex) {
+            var b = document.createElement('span');
+            b.className = 'pinbadge';
+            b.innerHTML = '\uD83D\uDCCC <span class="gtl de">Angepinnt</span><span class="gtl en">Pinned</span><span class="gtl sk">Pripnuté</span><span class="gtl hr">Prikvačeno</span><span class="gtl pl">Przypięte</span><span class="gtl es">Fijado</span><span class="gtl it">Fissato</span><span class="gtl fr">Épinglé</span><span class="gtl sv">Fäst</span> <span class="pinnum">' + pin + '</span>';
+            host.insertBefore(b, host.firstChild);
+          } else { var nn = ex.querySelector('.pinnum'); if (nn) nn.textContent = pin; }
+        } else { if (ex && ex.parentNode) ex.parentNode.removeChild(ex); }
+      });
+    }
 
     function clearCats() {
       selected = {};
@@ -153,6 +173,7 @@
     applyFilter();
     applySort();
     relight();
+    renderPinBadges();
   }
 
   if (document.readyState === 'loading') {
