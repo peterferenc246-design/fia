@@ -118,6 +118,20 @@
     }
     return dom;
   }
+  /* ===== ŽIVÝ REGISTER = ZDROJ PRAVDY: harvest VŠETKÝCH položiek (reálne + testcases) do formulára ===== */
+  function harvestInventory(){
+    var out = [];
+    var items = document.querySelectorAll("#fia-kauzy .item, #fia-testcases .item");
+    [].slice.call(items).forEach(function(it){
+      if (!it.querySelector(".subj")){ return; }
+      try { var s = snapFor(it); if (s && s.subj){ out.push(s); } } catch(e){}
+    });
+    return out;
+  }
+  function sendInventory(frame){
+    if (!frame){ return; }
+    try { frame.contentWindow.postMessage({ type:"fiafox-inventory", items: harvestInventory() }, new URL(frame.src).origin); } catch(e){}
+  }
   function init(){
     if (!document.body.classList.contains("logged-in")){ return; }
     var frame = document.getElementById("fia-formx5-frame");
@@ -126,7 +140,7 @@
     st.textContent = "#fia-kauzy .item .top{display:flex;flex-wrap:wrap;align-items:center;gap:6px;row-gap:4px}.fx-edit,.fx-reply{position:static;border-radius:8px;padding:2px 9px;font-size:13px;line-height:1.5;cursor:pointer;font-family:'Segoe UI',Calibri,Arial,sans-serif;white-space:nowrap}.fx-edit{border:1px solid #C9A100;background:#FFF8E6;color:#7a5a06;margin-left:auto}.fx-edit:hover{background:#FFEFC2}.fx-reply{border:1px solid #7FA8D9;background:#EAF2FB;color:#0C447C;margin-left:auto}.fx-reply~.fx-edit,#fia-kauzy .item .top .fx-reply+.fx-edit{margin-left:0}";
     document.head.appendChild(st);
     function addBtns(){
-      var items = document.querySelectorAll("#fia-kauzy .item");
+      var items = document.querySelectorAll("#fia-kauzy .item, #fia-testcases .item");
       [].slice.call(items).forEach(function(it){
         if (!it.querySelector(".subj")){ return; }
         if (it.querySelector(".fx-edit")){ return; }
@@ -160,6 +174,14 @@
       });
     }
     addBtns();
+    // Živý inventár do formulára (zdroj pravdy = register): pošli po načítaní + na vyžiadanie z iframe + po zmene DOM
+    setTimeout(function(){ sendInventory(frame); }, 400);
+    setTimeout(function(){ sendInventory(frame); }, 1500);
+    window.addEventListener("message", function(ev){
+      if (ev.source !== frame.contentWindow){ return; }
+      var d = ev.data;
+      if (d && d.type === "fiafox-inv-req"){ sendInventory(frame); }
+    });
     document.addEventListener("click", function(){ setTimeout(addBtns, 60); }, true);
     document.addEventListener("click", function(ev){
       var sum = ev.target.closest ? ev.target.closest("#fia-kauzy details.case > summary") : null;

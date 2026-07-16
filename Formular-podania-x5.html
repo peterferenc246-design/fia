@@ -405,6 +405,73 @@ function kauzaLbl(k){ var m=KAUZA_LBL_I18N[k]; return (m&&m[curLang])||(KAUZY[k]
 const KAUZA_KEYS = Object.keys(KAUZY);
 // kauzaKeyForKonanie: ktora kauza obsahuje dane konanie (nazov)
 function kauzaKeyForKonanie(kn){ for(const k of KAUZA_KEYS){ if(KAUZY[k].konania.indexOf(kn)>=0) return k; } return null; }
+/* ===== ŽIVÝ REGISTER = ZDROJ PRAVDY: merge inventára z #303 do KAUZY/CASES =====
+   Register #303 je kanonické úložisko (data-snap na každej položke). Formulár si sem
+   vlieva živý inventár, takže rozbaľovače (Kauza / Konanie / Predmet dokumentu / Odpoveď na)
+   VŽDY zodpovedajú tomu, čo je naozaj na webe. Hardcoded KAUZY/CASES ostávajú len ako
+   núdzový fallback, kým inventár nedorazí. Aditívne (nikdy nemaže), live prepisuje hardcoded. */
+function _snapToDoc(snap){
+  var d={};
+  (LANGS||[]).forEach(function(l){ if(snap.urls && snap.urls[l]) d[l]=snap.urls[l]; });
+  if(snap.fallback) d._fallback=snap.fallback;
+  d._date=(snap.date!=null?snap.date:"");
+  if(snap.dir==="recv") d._dir="recv";
+  if(snap.access) d._access=snap.access;
+  if(snap.important) d._imp=true;
+  if(snap.comments) d._cmt=true;
+  if(snap.fname) d._fname=snap.fname;
+  if(snap.pwhint) d._pwhint=snap.pwhint;
+  if(snap.extra) d._extra=snap.extra;
+  if(snap.thread) d._thread=snap.thread;
+  if(snap.cmtid) d._cmtid=snap.cmtid;
+  return d;
+}
+function mergeLiveInventory(items){
+  if(!items || !items.length) return false;
+  var changed=false;
+  items.forEach(function(snap){
+    try{
+      if(!snap || !snap.subj) return;
+      // 1) kanonický názov konania — ak caseId sedí na existujúce CASES, použi jeho kľúč (proti duplicitám)
+      var konanie=snap.kauza||"";
+      if(snap.caseId){ for(var nm in CASES){ if(CASES[nm] && CASES[nm].id===snap.caseId){ konanie=nm; break; } } }
+      if(!konanie) return;
+      // 2) kauzaKey
+      var kk=snap.kauzaKey || kauzaKeyForKonanie(konanie) || "";
+      if(kk==="__newk__") kk="";
+      // 3) zabezpeč KAUZA_KEYS + KAUZY[kk] (nová kauza sa pridá, existujúca sa doplní o konanie)
+      if(kk){
+        if(!KAUZY[kk]){ KAUZY[kk]={label:kk, spis:(snap.rspis||""), jur:((snap.cats&&snap.cats.jur)||[]), konania:[]}; if(KAUZA_KEYS.indexOf(kk)<0) KAUZA_KEYS.push(kk); changed=true; }
+        if(KAUZY[kk].konania.indexOf(konanie)<0){ KAUZY[kk].konania.push(konanie); changed=true; }
+      }
+      // 4) zabezpeč/aktualizuj CASES[konanie] (živé polia karty prepíšu hardcoded — register je pravda)
+      if(!CASES[konanie]){ CASES[konanie]={id:(snap.caseId||""), docs:{}, court:(snap.court||""), cardsubj:(snap.cardsubj||""), stav:(snap.stav||"laeuft"), meta:{cat:((snap.cats&&snap.cats.jur)||[]), area:((snap.cats&&snap.cats.area)||[]), az:(snap.az||""), ourref:(snap.ourref||"")}, begleit:(snap.begleit||"")}; changed=true; }
+      else {
+        if(snap.caseId) CASES[konanie].id=snap.caseId;
+        if(snap.court) CASES[konanie].court=snap.court;
+        if(snap.cardsubj) CASES[konanie].cardsubj=snap.cardsubj;
+        if(snap.stav) CASES[konanie].stav=snap.stav;
+        if(snap.begleit) CASES[konanie].begleit=snap.begleit;
+        if(!CASES[konanie].meta) CASES[konanie].meta={cat:[],area:[],az:"",ourref:""};
+        if(snap.cats){ if(snap.cats.jur) CASES[konanie].meta.cat=snap.cats.jur; if(snap.cats.area) CASES[konanie].meta.area=snap.cats.area; }
+        if(snap.az!=null) CASES[konanie].meta.az=snap.az;
+        if(snap.ourref!=null) CASES[konanie].meta.ourref=snap.ourref;
+      }
+      if(!CASES[konanie].docs) CASES[konanie].docs={};
+      // 5) dokument = živý snap; NEDEGRADUJ existujúce per-jazyk odkazy, ak živý snap má len fallback
+      var doc=_snapToDoc(snap);
+      var existing=CASES[konanie].docs[snap.subj];
+      if(existing){
+        var liveHasLang=(LANGS||[]).some(function(l){ return doc[l]; });
+        if(!liveHasLang){ (LANGS||[]).forEach(function(l){ if(existing[l]) doc[l]=existing[l]; }); if(!doc._fallback && existing._fallback) doc._fallback=existing._fallback; }
+      }
+      CASES[konanie].docs[snap.subj]=doc;
+      changed=true;
+    }catch(e){}
+  });
+  if(changed){ try{ CASE_NAMES.length=0; Object.keys(CASES).forEach(function(k){ CASE_NAMES.push(k); }); }catch(e){} }
+  return changed;
+}
 
 // ===== Generátory (zrkadlia Python; buildItem rozšírený o ❗ important) =====
 const esc = s => (s||"").trim();
@@ -1195,6 +1262,9 @@ function makeSlot(idx){
       const dateVal=noDate.checked?"—":dateInp.value;
       const pwv=(accessSel.value==="pwd"&&pwhintInp)?pwhintInp.value:"";
       const snap=buildSnap(subj,dateVal,urls,accessSel.value,fb,important,fnameInp.value,comments,pwv);
+      // POISTKA (round-trip väzba): žiadna položka sa nevygeneruje bez úplného previazania kauza→konanie→predmet.
+      // Vďaka tomu každá vygenerovaná položka nesie kompletný data-snap a dá sa cez cardedit.js snapFor prečítať späť do formulára (register = zdroj pravdy).
+      if(!snap.kauzaKey || !snap.kauza || !snap.subj){ throw new Error(`Slot ${idx+1}: položka nie je previazaná s kauzou/konaním/predmetom — nemôžem generovať (chýba väzba na formulár).`); }
       markup=buildItem(dateVal,subj,urls,accessSel.value,fb,important,fnameInp.value,snap,comments,pwv);
     }else{
       markup=docMulti(urls,fb);
@@ -1330,7 +1400,38 @@ function makeSlot(idx){
     snapBase=null;
     updateSummary();
   }
-  const api = { root, collect, reset, dupInfo, mismatchInfo, onState:null, applySnap, applyReplyFrom, focusCase,
+  // Po prijatí živého inventára: aditívne prekresli rozbaľovače tohto slotu (netknutý slot prekreslí, rozpracovaný nechá)
+  function syncLive(){
+    try{
+      // a) doplň chýbajúce Kauza-options podľa KAUZA_KEYS (nové kauzy)
+      var curK=kauzaSel.value;
+      KAUZA_KEYS.forEach(function(k){
+        var has=false; for(var i=0;i<kauzaSel.options.length;i++){ if(kauzaSel.options[i].value===k){ has=true; break; } }
+        if(!has){ var o=document.createElement("option"); o.value=k; o.textContent=kauzaLbl(k);
+          var nk=null; for(var j=0;j<kauzaSel.options.length;j++){ if(kauzaSel.options[j].value==="__newk__"){ nk=kauzaSel.options[j]; break; } }
+          if(nk) kauzaSel.insertBefore(o,nk); else kauzaSel.appendChild(o); }
+      });
+      try{ kauzaSel.value=curK; }catch(e){}
+      // b) netknutý slot (bez Predmetu) → prekresli Konanie+Dokument z merged dát; rozpracovaný len doplň chýbajúce Konania
+      if(!esc(subjInp.value) && !esc(fixSubj.value)){
+        var curKon=konanieSel.value;
+        refreshKonanieList();
+        if(curKon && curKon!=="__new__"){
+          var ok=false; for(var m=0;m<konanieSel.options.length;m++){ if(konanieSel.options[m].value===curKon){ ok=true; break; } }
+          if(ok){ konanieSel.value=curKon; refreshDocList(); }
+        }
+      } else if(kauzaSel.value && KAUZY[kauzaSel.value]){
+        (KAUZY[kauzaSel.value].konania||[]).forEach(function(n){
+          var has=false; for(var i=0;i<konanieSel.options.length;i++){ if(konanieSel.options[i].value===n){ has=true; break; } }
+          if(!has){ var o=document.createElement("option"); o.value=n; o.textContent=konDisplay(n);
+            var nn=null; for(var j=0;j<konanieSel.options.length;j++){ if(konanieSel.options[j].value==="__new__"){ nn=konanieSel.options[j]; break; } }
+            if(nn) konanieSel.insertBefore(o,nn); else konanieSel.appendChild(o); }
+        });
+      }
+      if(replySel) refreshReplyList(replySel.value||"");
+    }catch(e){}
+  }
+  const api = { root, collect, reset, dupInfo, mismatchInfo, onState:null, applySnap, applyReplyFrom, focusCase, syncLive,
     previewMarkup:()=>{ const r=collect(); return r?{markup:r.markup,mode:r.mode}:null; },
     activate:()=>{ slots.forEach(s=>s.root.classList.remove("active")); root.classList.add("active"); } };
 
@@ -1493,6 +1594,9 @@ for(let i=0;i<5;i++){
 
 // ===== čistý štart: vyčisti všetky sloty pri každom načítaní (aj bfcache restore) — bráni obnove starých hodnôt prehliadačom =====
 window.addEventListener("pageshow", function(){ slots.forEach(function(s){ s.reset(); }); });
+// Vyžiadaj si živý inventár z #303 (register = zdroj pravdy); deferred, nech je listener už registrovaný. cardedit.js ho pošle aj proaktívne.
+setTimeout(function(){ try{ window.parent.postMessage({type:"fiafox-inv-req"},"*"); }catch(_e){} }, 0);
+setTimeout(function(){ try{ window.parent.postMessage({type:"fiafox-inv-req"},"*"); }catch(_e){} }, 1200);
 document.querySelectorAll("input,textarea,select").forEach(function(el){ el.setAttribute("autocomplete","off"); });
 
 // ===== Edit z karty #303 cez postMessage =====
@@ -1500,6 +1604,10 @@ window.addEventListener("message", function(e){
   if(!/^https:\/\/(www\.)?foxprof\.club$/.test(e.origin)){ return; }
   const d=e.data;
   if(!d){ return; }
+  if(d.type==="fiafox-inventory"){
+    try{ if(mergeLiveInventory(d.items)){ slots.forEach(function(s){ if(s.syncLive) s.syncLive(); }); } }catch(_e){}
+    return;
+  }
   if(d.type==="fiafox-focus"){
     if(d.caseId){ slots[0].focusCase(d.caseId); }
     return;
