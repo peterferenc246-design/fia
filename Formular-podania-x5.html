@@ -744,9 +744,9 @@ function makeSlot(idx){
     const def=CASES[konanieSel.value];
     if(def&&def.docs){ Object.keys(def.docs).forEach(function(nm){
       const dd=def.docs[nm]; const ddir=(dd&&dd._dir)||"sent";
-      if(ddir!==dir){ const o=document.createElement("option"); o.value=nm; o.textContent=(ddir==="sent"?"↗ ":"↙ ")+nm; replySel.appendChild(o); }
+      if(ddir!==dir){ const o=document.createElement("option"); o.value=nm; o.textContent=(ddir==="sent"?"↗ ":"↙ ")+docDisplay(nm); replySel.appendChild(o); }
     }); }
-    if(prev){ replySel.value=prev; if(replySel.value!==prev){ const o=document.createElement("option"); o.value=prev; o.textContent="• "+prev; replySel.appendChild(o); replySel.value=prev; } }
+    if(prev){ replySel.value=prev; if(replySel.value!==prev){ const o=document.createElement("option"); o.value=prev; o.textContent="• "+docDisplay(prev); replySel.appendChild(o); replySel.value=prev; } }
   }
   function setDir(d){ dir=d; root.querySelectorAll('[data-dir] button').forEach(x=>x.classList.toggle('on',x.dataset.d===d));
     confid.classList.toggle('show',dir==="recv"); refreshReplyList(); }
@@ -1415,7 +1415,7 @@ function makeSlot(idx){
   document.addEventListener("click",function(){ docToggle(false); });
   (function(){ const _ad=applyDoc; applyDoc=function(){ _ad(); syncDocInput(); }; docSel.onchange=applyDoc; })();
   syncDocInput();
-  try{ (window.__fiafoxLangSync=window.__fiafoxLangSync||[]).push(function(){ try{ relabelDoc(); }catch(_e){} try{ syncKonInput(); }catch(_e){} try{ syncDocInput(); }catch(_e){} }); }catch(_e){}
+  try{ (window.__fiafoxLangSync=window.__fiafoxLangSync||[]).push(function(){ try{ relabelDoc(); }catch(_e){} try{ refreshReplyList(); }catch(_e){} try{ syncKonInput(); }catch(_e){} try{ syncDocInput(); }catch(_e){} }); }catch(_e){}
   setAction("new"); updateSummary();
 
   return api;
