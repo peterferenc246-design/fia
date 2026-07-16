@@ -445,12 +445,13 @@ function mergeLiveInventory(items){
         if(KAUZY[kk].konania.indexOf(konanie)<0){ KAUZY[kk].konania.push(konanie); changed=true; }
       }
       // 4) zabezpeč/aktualizuj CASES[konanie] (živé polia karty prepíšu hardcoded — register je pravda)
-      if(!CASES[konanie]){ CASES[konanie]={id:(snap.caseId||""), docs:{}, court:(snap.court||""), cardsubj:(snap.cardsubj||""), stav:(snap.stav||"laeuft"), meta:{cat:((snap.cats&&snap.cats.jur)||[]), area:((snap.cats&&snap.cats.area)||[]), az:(snap.az||""), ourref:(snap.ourref||"")}, begleit:(snap.begleit||"")}; changed=true; }
+      if(!CASES[konanie]){ CASES[konanie]={id:(snap.caseId||""), docs:{}, court:(snap.court||""), cardsubj:(snap.cardsubj||""), stav:(snap.stav||"laeuft"), meta:{cat:((snap.cats&&snap.cats.jur)||[]), area:((snap.cats&&snap.cats.area)||[]), az:(snap.az||""), ourref:(snap.ourref||"")}, begleit:(snap.begleit||""), pin:(snap.pin||"")}; changed=true; }
       else {
         if(snap.caseId) CASES[konanie].id=snap.caseId;
         if(snap.court) CASES[konanie].court=snap.court;
         if(snap.cardsubj) CASES[konanie].cardsubj=snap.cardsubj;
         if(snap.stav) CASES[konanie].stav=snap.stav;
+        if(snap.pin!=null) CASES[konanie].pin=snap.pin;
         if(snap.begleit) CASES[konanie].begleit=snap.begleit;
         if(!CASES[konanie].meta) CASES[konanie].meta={cat:[],area:[],az:"",ourref:""};
         if(snap.cats){ if(snap.cats.jur) CASES[konanie].meta.cat=snap.cats.jur; if(snap.cats.area) CASES[konanie].meta.area=snap.cats.area; }
@@ -613,6 +614,7 @@ function makeSlot(idx){
       <div class="fld" style="margin-top:10px;flex:0 0 auto"><label>Riadok 2 — <b>Predmet konania</b> (pod názvom karty; 1 jazyk — 8 doplní Claude)</label><input data-cardsubj title="Vloží sa ako riadok pod názvom karty (predmet celého konania). 9 jazykov doplní Claude."></div>
       <div class="fld" style="margin-top:10px;flex:0 0 auto"><label>Riadok 3 — <b>Orgán / súd</b> (data-court)</label><input data-courtnew title="Vloží sa do .court/.case-meta riadku karty. 9 jazykov doplní Claude."></div>
       <div class="fld" style="margin-top:10px;flex:0 0 auto"><label>Stav konania (pill na karte — 9 jazykov doplní Claude)</label><select data-stav><option value="laeuft">Prebieha (modrá p-blue)</option><option value="eingereicht">Podané (žltá p-amber)</option><option value="abgeschlossen">Ukončené (zelená p-green)</option></select></div>
+      <div class="fld pinfld" style="margin-top:10px;flex:0 0 auto;background:#FFF8E6;border:1px dashed #C9A100;border-radius:10px;padding:9px 12px"><label>📌 <b>Pripnúť konanie navrch</b> — poradie v rámci kauzy <span style="font-weight:600;color:#6B7C91">(prázdne = nemeniť; platí pre existujúce konanie)</span></label><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:2px"><span style="display:inline-flex;align-items:center;gap:6px">na pozíciu <input data-pinpos type="number" min="1" placeholder="1,2,3…" style="width:78px" title="Konanie sa vloží na túto pozíciu navrch kauzy; ostatné pripnuté sa posunú nadol. Prepočíta sa nad živým registrom."></span><label style="display:inline-flex;align-items:center;gap:6px;font-weight:700;color:#8a3b3b;cursor:pointer"><input data-pinoff type="checkbox" style="width:auto"> Odopnúť (dať dole medzi nepripnuté)</label></div><div class="pinladder" data-pinladder style="margin-top:7px;font-size:12px;color:#5a4300"></div></div>
       <div class="refline" style="margin-top:10px">
         <div class="fld"><label>Riadok 3 — <b>Az.</b> súdna / úradná spis. zn. (data-az)</label><input data-az></div>
         <div class="fld"><label>Riadok 3 — <b>Naša spis. zn.</b> interná (data-ourref)</label><input data-ourref></div>
@@ -735,6 +737,7 @@ function makeSlot(idx){
   const q=s=>root.querySelector(s);
   const kauzaSel=q("[data-kauza]"), kauzaNew=q("[data-kauzanew]"), courtNew=q("[data-courtnew]"), courtHint=q("[data-courthint]"), docSel=q("[data-doc]");
   const cardSubjInp=q("[data-cardsubj]");
+  const pinPosInp=q("[data-pinpos]"), pinOffChk=q("[data-pinoff]"), pinLadderEl=q("[data-pinladder]");
   const konanieSel=q("[data-konanie]"), newkBlk=q("[data-newk]"), kNewName=q("[data-knewname]"), kSpis=q("[data-kspis]"), kauzaspisInp=q("[data-kauzaspis]"); const row1Inp=q("[data-row1]"), row3Inp=q("[data-row3]"), cardPrev=q("[data-cardprev]");
   const newcaseBlk=q("[data-newcase]"), azInp=q("[data-az]"), ourrefInp=q("[data-ourref]"), begleitInp=q("[data-begleit]"), claudecmdInp=q("[data-claudecmd]");
   const fixRow=q("[data-fixrow]"), fixSubj=q("[data-fixsubj]"), fixLbl=q("[data-fixlbl]");
@@ -985,8 +988,10 @@ function makeSlot(idx){
     }
     validateUrls(); updateSummary();
   }
-  kauzaSel.onchange=()=>{ refreshKonanieList(); refreshReplyList(""); saveLastEdit(kauzaSel.value,konanieSel.value); };
-  konanieSel.onchange=()=>{ refreshDocList(); refreshReplyList(""); saveLastEdit(kauzaSel.value,konanieSel.value); };
+  kauzaSel.onchange=()=>{ refreshKonanieList(); refreshReplyList(""); saveLastEdit(kauzaSel.value,konanieSel.value); if(pinPosInp)pinPosInp.value=""; if(pinOffChk)pinOffChk.checked=false; updatePinLadder(); };
+  konanieSel.onchange=()=>{ refreshDocList(); refreshReplyList(""); saveLastEdit(kauzaSel.value,konanieSel.value); if(pinPosInp)pinPosInp.value=""; if(pinOffChk)pinOffChk.checked=false; updatePinLadder(); };
+  if(pinPosInp) pinPosInp.oninput=function(){ if(pinPosInp.value&&pinOffChk)pinOffChk.checked=false; updatePinLadder(); };
+  if(pinOffChk) pinOffChk.onchange=function(){ if(pinOffChk.checked&&pinPosInp)pinPosInp.value=""; updatePinLadder(); };
   function relabelKonania(){ if(typeof konanieSel==="undefined"||!konanieSel) return; for(var i=0;i<konanieSel.options.length;i++){ var o=konanieSel.options[i]; if(o.value&&o.value!=="__new__"&&o.value!=="__newk__") o.textContent=konDisplay(o.value); } try{ var _v=konanieSel.value; konanieSel.value=_v; }catch(e){} }
   function relabelKauzy(){ if(typeof kauzaSel==="undefined"||!kauzaSel) return; for(var i=0;i<kauzaSel.options.length;i++){ var o=kauzaSel.options[i]; if(o.value&&o.value!=="__newk__"&&KAUZY[o.value]) o.textContent=kauzaLbl(o.value); } try{ var _v=kauzaSel.value; kauzaSel.value=_v; }catch(e){} }
   // NOVÉ v2: postMessage z parenta — explicit force set spis/label/preview (odolné voči iným reset handlerom)
@@ -1080,6 +1085,7 @@ function makeSlot(idx){
     let any=false; root.querySelectorAll('[data-lang]').forEach(i=>{ if(esc(i.value)) any=true; });
     if(any||esc(fallbackInp.value)) return true;
     if(attrsChanged()) return true;
+    if((pinPosInp&&pinPosInp.value)||(pinOffChk&&pinOffChk.checked)) return true;
     return false;
   }
   function updateSummary(){ updatePwVis();
@@ -1103,6 +1109,61 @@ function makeSlot(idx){
     var base={date:snapBase.date,access:snapBase.access,important:(snapBase.important?"1":"0"),comments:(snapBase.comments?"1":"0"),subj:snapBase.subj,fname:snapBase.fname,fallback:snapBase.fallback,begleit:snapBase.begleit,urls:snapBase.urls,row1:snapBase.row1,rspis:snapBase.rspis,row3:snapBase.row3,cardsubj:(snapBase.cardsubj||""),court:snapBase.court,cat:snapBase.cat,area:snapBase.area,az:snapBase.az,ourref:snapBase.ourref,pwhint:snapBase.pwhint,stav:(snapBase.stav||""),extralabel:(snapBase.extralabel||""),extraurl:(snapBase.extraurl||""),replyto:(snapBase.replyto||"")};
     var ch={};Object.keys(cur).forEach(function(k){ if(String(cur[k])!==String(base[k])) ch[k]=cur[k]; });
     return {cur:cur, ch:ch};
+  }
+  // ===== 📌 PIN — rebrík pripnutých konaní v rámci kauzy (jadro overené v prototype) =====
+  function pinLadderFor(kk, targetKon, newPos, off){
+    var names=(KAUZY[kk]&&KAUZY[kk].konania)?KAUZY[kk].konania.slice():[];
+    var arr=names.map(function(n){ var p=parseInt((CASES[n]&&CASES[n].pin)||"",10); return {name:n, id:(CASES[n]&&CASES[n].id)||("case-"+slugify(n)), pin:(p>0?p:0)}; });
+    function renum(){ arr.filter(function(x){return x.pin>0;}).sort(function(a,b){return a.pin-b.pin;}).forEach(function(x,i){x.pin=i+1;}); }
+    var t=null,i; for(i=0;i<arr.length;i++){ if(arr[i].name===targetKon){ t=arr[i]; break; } }
+    var changed=false, removed=null;
+    if(t){
+      if(off){ if(t.pin>0){ t.pin=0; renum(); changed=true; removed=t; } }
+      else if(newPos>0){
+        if(t.pin>0){ t.pin=0; renum(); }                              // najprv vyber z rebríka
+        var cnt=arr.filter(function(x){return x.pin>0;}).length;
+        var pos=Math.max(1,Math.min(newPos,cnt+1));
+        arr.forEach(function(x){ if(x.pin>0 && x.pin>=pos) x.pin++; }); // posuň ≥pos nadol
+        t.pin=pos; renum(); changed=true;
+      }
+    }
+    var ladder=arr.filter(function(x){return x.pin>0;}).sort(function(a,b){return a.pin-b.pin;});
+    return {ladder:ladder, removed:removed, changed:changed, kk:kk};
+  }
+  function pinState(){
+    var kk=kauzaSel.value, kon=konanieSel.value;
+    var off=!!(pinOffChk&&pinOffChk.checked);
+    var np=(pinPosInp&&pinPosInp.value)?parseInt(pinPosInp.value,10):0;
+    var valid=(kk&&kk!=="__newk__"&&kon&&kon!=="__new__"&&KAUZY[kk]);
+    return {kk:kk, kon:kon, off:off, np:(np>0?np:0), valid:!!valid};
+  }
+  function updatePinLadder(){
+    if(!pinLadderEl) return;
+    var s=pinState();
+    if(!s.valid){ pinLadderEl.innerHTML='<span style="color:#8a3b3b">Pripínanie platí pre existujúce konanie v existujúcej kauze.</span>'; return; }
+    if(!s.off && !s.np){
+      var cur=pinLadderFor(s.kk,s.kon,0,false).ladder;
+      pinLadderEl.innerHTML = cur.length ? ('Aktuálne pripnuté: '+cur.map(function(x){return '<b>'+x.pin+'.</b> '+esc(konDisplay(x.name)||x.name);}).join(' · ')) : '<span style="color:#6B7C91">Kauza zatiaľ nemá pripnuté konania.</span>';
+      return;
+    }
+    var r=pinLadderFor(s.kk,s.kon,s.np,s.off);
+    var txt = r.ladder.length ? ('Nové poradie navrch: '+r.ladder.map(function(x){var me=(x.name===s.kon);return (me?'<b style="color:#1F3864">':'<b>')+x.pin+'.</b> '+(me?'<b style="color:#1F3864">':'')+esc(konDisplay(x.name)||x.name)+(me?'</b>':'');}).join(' · ')) : '(žiadne pripnuté konanie)';
+    if(r.removed){ txt += ' · <span style="color:#8a3b3b">odopnuté: '+esc(konDisplay(r.removed.name)||r.removed.name)+'</span>'; }
+    pinLadderEl.innerHTML = txt;
+  }
+  function pinInstruction(){
+    var s=pinState();
+    if(!s.valid || (!s.off && !s.np)) return "";
+    var r=pinLadderFor(s.kk,s.kon,s.np,s.off);
+    if(!r.changed) return "";
+    var lbl=(KAUZY[s.kk]&&KAUZY[s.kk].label)||s.kk;
+    var h="\n### 📌 PIN — NOVÉ PORADIE NAVRCH (kauza: "+hesc(lbl)+") ###\n";
+    h+="Aplikuj atribút data-pin na <details class=\"case\" …> týchto konaní (pripnuté hore podľa čísla, potom podľa dátumu):\n";
+    r.ladder.forEach(function(x){ h+="  "+x.id+" → data-pin=\""+x.pin+"\"\n"; });
+    if(r.removed){ h+="  "+r.removed.id+" → ODSTRÁNIŤ data-pin (odopnuté, spadne medzi nepripnuté)\n"; }
+    h+="Konania tejto kauzy tu neuvedené ostávajú bez data-pin (nepripnuté). Piny sú per-kauza (každá kauza má vlastný rebrík 1,2,3…).\n";
+    h+="### KONIEC PIN ###\n";
+    return h;
   }
   function header(){
     const kk=kauzaSel.value;
@@ -1151,6 +1212,7 @@ function makeSlot(idx){
     h+="\u2502 RIADKY DLAŽDICE: .rt(názov)=\u201e"+hesc(cardName)+"\u201c \u00b7 .rs(spis)=\u201e"+hesc(kauzaSpis)+"\u201c \u00b7 .rx(rezervný)="+(cardRez?("\u201e"+hesc(cardRez)+"\u201c"):"(prázdny)")+"\n";
     h+="│ MODAL (ak je Begleittext): id=\""+_cardId+"-modal\", tlačidlo Begleittext napoj na href=\"#"+_cardId+"-modal\"\n";
     h+="└──────────────────────────────────────\n";
+    h+=pinInstruction();
     if(claudecmdInp&&esc(claudecmdInp.value)){
       h+="\n### PRÍKAZY PRE CLAUDE (voľné pokyny od Petra — vykonaj/zohľadni) ###\n"+esc(claudecmdInp.value)+"\n### KONIEC PRÍKAZOV ###\n\n";
     }
@@ -1587,7 +1649,7 @@ function makeSlot(idx){
   (function(){ const _ad=applyDoc; applyDoc=function(){ _ad(); syncDocInput(); }; docSel.onchange=applyDoc; })();
   syncDocInput();
   try{ (window.__fiafoxLangSync=window.__fiafoxLangSync||[]).push(function(){ try{ relabelDoc(); }catch(_e){} try{ refreshReplyList(); }catch(_e){} try{ syncKonInput(); }catch(_e){} try{ syncDocInput(); }catch(_e){} }); }catch(_e){}
-  setAction("new"); updateSummary();
+  setAction("new"); updateSummary(); updatePinLadder();
 
   return api;
 }

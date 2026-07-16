@@ -36,7 +36,7 @@
       var single = item.querySelector("a.open[href]");
       if (single){ fallback = single.getAttribute("href"); }
     }
-    var cats = { jur: [], area: [] }; var az = "", ourref = "", cardsubj = "", stav = "", court = "", begleit = "", rspis = "";
+    var cats = { jur: [], area: [] }; var az = "", ourref = "", cardsubj = "", stav = "", court = "", begleit = "", rspis = "", pin = "";
     if (caseEl){
       var c = (caseEl.getAttribute("data-cat")||"").trim();
       if (c){ cats.jur = c.split(/\s+/); }
@@ -44,6 +44,7 @@
       if (ar){ cats.area = ar.split(/\s+/); }
       az = caseEl.getAttribute("data-az")||"";
       ourref = caseEl.getAttribute("data-ourref")||"";
+      pin = caseEl.getAttribute("data-pin")||"";
       var csEl = caseEl.querySelector(".court-subj .gtl.sk") || caseEl.querySelector(".court-subj .gtl.de");
       if (csEl){ cardsubj = csEl.textContent.trim(); }
       var pillEl = caseEl.querySelector(".pill");
@@ -74,7 +75,7 @@
     return { v:1, kauza:kauza, caseId:(caseEl?(caseEl.id||""):""), subj:subj, dir:dir, mode:"item", date:date,
       access:access, important:important, fname:fname, fallback:fallback,
       urls:urls, cats:cats, az:az, ourref:ourref, comments:comments, thread:thread, cmtid:cmtid,
-      cardsubj:cardsubj, stav:stav, court:court, begleit:begleit, rspis:rspis };
+      cardsubj:cardsubj, stav:stav, court:court, begleit:begleit, rspis:rspis, pin:pin };
   }
   function isRecv(item){
     var col = item.closest(".col");
@@ -110,6 +111,7 @@
         snap.cats   = dom.cats;                          // jurisdikcia + oblasť práva
         snap.az     = dom.az;                            // Az. súdu
         snap.ourref = dom.ourref;                        // Naša spis. zn.
+        snap.pin    = dom.pin;                            // 📌 pozícia pripnutia navrch (data-pin)
         if (dom.fname != null) snap.fname = dom.fname;   // Názov súboru (admin)
         if (dom.urls && Object.keys(dom.urls).length) snap.urls = dom.urls; // 9 jazykových odkazov
         if (snap.dir == null) snap.dir = dom.dir;
