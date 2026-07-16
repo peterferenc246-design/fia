@@ -854,7 +854,7 @@ function makeSlot(idx){
   window.addEventListener("message", function(ev){
     try{
       const d=ev.data; if(!d) return;
-      if(d.type==="fiafox-lang"&&d.lang){ curLang=d.lang; relabelKonania(); relabelKauzy(); return; }
+      if(d.type==="fiafox-lang"&&d.lang){ curLang=d.lang; relabelKonania(); relabelKauzy(); try{ (window.__fiafoxLangSync||[]).forEach(function(f){f();}); }catch(e){} return; }
       if(d.type!=="fiafox-registerclick"||!d.spis) return;
       let hit=null;
       for(const k of KAUZA_KEYS){ if(KAUZY[k].spis===d.spis){ hit=k; break; } }
@@ -871,7 +871,7 @@ function makeSlot(idx){
     }catch(e){}
   });
   try{ window.parent.postMessage({type:"fiafox-lang-req"},"*"); }catch(e){}
-  window.addEventListener("hashchange", function(){ try{ var m=(location.hash||"").match(/lang=([a-z]{2})/i); if(m){ var L=m[1].toLowerCase(); if(["de","en","sk","hr","pl","es","it","fr","sv"].indexOf(L)>=0){ curLang=L; relabelKonania(); relabelKauzy(); } } }catch(e){} });
+  window.addEventListener("hashchange", function(){ try{ var m=(location.hash||"").match(/lang=([a-z]{2})/i); if(m){ var L=m[1].toLowerCase(); if(["de","en","sk","hr","pl","es","it","fr","sv"].indexOf(L)>=0){ curLang=L; relabelKonania(); relabelKauzy(); try{ (window.__fiafoxLangSync||[]).forEach(function(f){f();}); }catch(e){} } } }catch(e){} });
   kauzaNew.oninput=updateSummary;
   if(kNewName) kNewName.oninput=updateSummary;
   if(kSpis) kSpis.oninput=updateSummary;
@@ -1298,7 +1298,7 @@ function makeSlot(idx){
   const konInput=q("[data-koninput]"), konArrow=q("[data-konarrow]"), konList=q("[data-konlist]");
   let konRenamed=null; // {from,to} — pokyn na prepis titulku karty pri generovaní
   const KON_NEW_LBL="➕ Nové konanie (nová karta)";
-  function konLabel(v){ return v==="__new__" ? KON_NEW_LBL : (v||""); }
+  function konLabel(v){ return v==="__new__" ? KON_NEW_LBL : konDisplay(v||""); }
   function syncKonInput(){ if(konInput) konInput.value=konLabel(konanieSel.value); }
   function konFlash(ok){ if(!konInput) return; konInput.style.background=ok?"#EAF3DE":"#FDE8E8"; setTimeout(function(){konInput.style.background="";},650); }
   function konToggle(open){
@@ -1412,6 +1412,7 @@ function makeSlot(idx){
   document.addEventListener("click",function(){ docToggle(false); });
   (function(){ const _ad=applyDoc; applyDoc=function(){ _ad(); syncDocInput(); }; docSel.onchange=applyDoc; })();
   syncDocInput();
+  try{ (window.__fiafoxLangSync=window.__fiafoxLangSync||[]).push(function(){ try{ syncKonInput(); }catch(_e){} try{ syncDocInput(); }catch(_e){} }); }catch(_e){}
   setAction("new"); updateSummary();
 
   return api;
