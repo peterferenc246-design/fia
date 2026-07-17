@@ -72,10 +72,29 @@
     var comments = !!(item.querySelector(".kcmt") || item.querySelector(".cmt-wrap"));
     var thread = item.getAttribute("data-thread") || "";
     var kcEl = item.querySelector(".kcmt"); var cmtid = kcEl ? (kcEl.getAttribute("data-doc")||"") : "";
+    var summary = "", summodId = "";
+    var _sumBtn = item.querySelector("a.sumopen");
+    if (_sumBtn){ var _h = _sumBtn.getAttribute("href")||""; if (_h.charAt(0)==="#") summodId = _h.slice(1); }
+    var _sumMod = item.querySelector(".summod");
+    if (_sumMod){
+      if (!summodId) summodId = _sumMod.id||"";
+      var _ssk = _sumMod.querySelector(".gtl-b.sk") || _sumMod.querySelector(".gtl-b.de");
+      if (_ssk){
+        var _sps = _ssk.querySelectorAll("p"), _sarr = [];
+        for (var _spi=0; _spi<_sps.length; _spi++){
+          var _sh = _sps[_spi].innerHTML || "";
+          _sh = _sh.replace(/<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, "[$2]($1)");
+          _sh = _sh.replace(/<br\s*\/?>/gi, "\n");
+          var _td = document.createElement("div"); _td.innerHTML = _sh; _sh = (_td.textContent||"").trim();
+          if (_sh) _sarr.push(_sh);
+        }
+        summary = _sarr.join("\n\n");
+      }
+    }
     return { v:1, kauza:kauza, caseId:(caseEl?(caseEl.id||""):""), subj:subj, dir:dir, mode:"item", date:date,
       access:access, important:important, fname:fname, fallback:fallback,
       urls:urls, cats:cats, az:az, ourref:ourref, comments:comments, thread:thread, cmtid:cmtid,
-      cardsubj:cardsubj, stav:stav, court:court, begleit:begleit, rspis:rspis, pin:pin };
+      cardsubj:cardsubj, stav:stav, court:court, begleit:begleit, rspis:rspis, pin:pin, summary:summary, summodId:summodId };
   }
   function isRecv(item){
     var col = item.closest(".col");
@@ -114,6 +133,8 @@
         snap.pin    = dom.pin;                            // 📌 pozícia pripnutia navrch (data-pin)
         if (dom.fname != null) snap.fname = dom.fname;   // Názov súboru (admin)
         if (dom.urls && Object.keys(dom.urls).length) snap.urls = dom.urls; // 9 jazykových odkazov
+        snap.summodId = dom.summodId || snap.summodId || "";
+        if ((snap.summary == null || snap.summary === "") && dom.summary) snap.summary = dom.summary;
         if (snap.dir == null) snap.dir = dom.dir;
         return snap;
       } catch(e){}

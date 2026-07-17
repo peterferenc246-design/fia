@@ -424,6 +424,8 @@ function _snapToDoc(snap){
   if(snap.extra) d._extra=snap.extra;
   if(snap.thread) d._thread=snap.thread;
   if(snap.cmtid) d._cmtid=snap.cmtid;
+  if(snap.summary) d._summary=snap.summary;
+  if(snap.summodId) d._summod=snap.summodId;
   return d;
 }
 function mergeLiveInventory(items){
@@ -497,7 +499,31 @@ function cmtBlock(cmtid){
   const lbls=LANGS.map(l=>`<span class="gtl ${l}">💬 ${CMT_LBL[l]}</span>`).join("");
   return `<a class="kcmt" data-doc="${id}" href="#">${lbls} (<span class="ccount" data-doc="${id}">0</span>)</a><div class="cmt-wrap" data-doc="${id}"></div>`;
 }
+// ===== Súhrn dokumentu (položka) — tlačidlo 📄 Súhrn + modal .kmodal.summod (reuse existujúcich tried, žiadna nová CSS na #303) =====
+const SUM_LBL={de:"Zusammenfassung",en:"Summary",sk:"Súhrn",hr:"Sažetak",pl:"Streszczenie",es:"Resumen",it:"Riepilogo",fr:"Résumé",sv:"Sammanfattning"};
+const SUM_H={de:"Zusammenfassung des Dokuments",en:"Document summary",sk:"Súhrn dokumentu",hr:"Sažetak dokumenta",pl:"Streszczenie dokumentu",es:"Resumen del documento",it:"Riepilogo del documento",fr:"Résumé du document",sv:"Sammanfattning av dokumentet"};
+function sumParasHtml(md){
+  return String(md||"").split(/\n\s*\n/).map(function(p){
+    var t=hesc(p);
+    t=t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,function(m,txt,url){return '<a href="'+url.replace(/"/g,"&quot;")+'" target="_blank" rel="noopener">'+txt+'</a>';});
+    t=t.replace(/\n/g,"<br>");
+    t=t.trim();
+    return t?("<p>"+t+"</p>"):"";
+  }).join("");
+}
+function sumButton(summId){
+  return `<a class="open sumopen" href="#${summId}">📄 ${LANGS.map(l=>`<span class="gtl ${l}">${SUM_LBL[l]}</span>`).join("")}</a>`;
+}
+function sumModalHtml(summId,md){
+  const paras=sumParasHtml(md);
+  const boxes=LANGS.map(l=>`<div class="gtl-b ${l}"><h3>${hesc(SUM_H[l])}</h3>${paras}</div>`).join("");
+  return `<div id="${summId}" class="kmodal summod"><div class="kmodal-box"><a class="kmodal-close" href="#fia-kauzy" aria-label="Close">×</a>${boxes}</div></div>`;
+}
 function buildItem(date,subj,urls,access,fallback,important,fname,snap,comments,pwhint){
+  const _sumRaw = snap ? (snap.summary||"") : "";
+  const _hasSum = esc(_sumRaw)!=="";
+  const _summId = _hasSum ? (esc(snap&&snap.summodId)||"summod-PLACEHOLDER") : "";
+  if(snap && _hasSum){ snap.summodId = _summId; }
   const badge = access==="pwd"?ACC_PWD:ACC_PUB;
   const cls = access==="pwd"?"acc-pwd":"acc-pub";
   const badgeHtml = LANGS.map(l=>`<span class="gtl ${l}">${badge[l]}</span>`).join("");
@@ -514,7 +540,7 @@ function buildItem(date,subj,urls,access,fallback,important,fname,snap,comments,
   const replyHtml = (snap&&snap.replyTo) ? `<div class="replyto">${LANGS.map(l=>`<span class="gtl ${l}">${RPL[l]}</span>`).join("")} <span class="rt-subj">${hesc(snap.replyTo)}</span></div>` : "";
   return `<div class="item${impCls}"${thrAttr}${snapAttr}><div class="top"><span class="date">${hesc(date)||"—"}</span>`+
          `<span class="acc ${cls}">${badgeHtml}</span></div>`+
-         `${replyHtml}<div class="subj">${impMark}${LANGS.map(l=>`<span class="gtl ${l}">${hesc(subj)}</span>`).join("")}</div>${fnameHtml}${pwHtml}${link}${extraHtml}${comments?cmtBlock(snap&&snap.cmtid):""}</div>`;
+         `${replyHtml}<div class="subj">${impMark}${LANGS.map(l=>`<span class="gtl ${l}">${hesc(subj)}</span>`).join("")}</div>${fnameHtml}${pwHtml}${link}${extraHtml}${_hasSum?sumButton(_summId):""}${comments?cmtBlock(snap&&snap.cmtid):""}${_hasSum?sumModalHtml(_summId,_sumRaw):""}</div>`;
 }
 
 // ===== SLOT — nezávislý vstupný blok =====
@@ -534,7 +560,7 @@ function makeSlot(idx){
   const NEWDOC="__newdoc__";
   let mode="item", action="new", dir="sent", important=false, comments=false;
   let snapBase=null;
-  let loadedThread="", loadedCmt="";
+  let loadedThread="", loadedCmt="", loadedSummod="";
 
   const root=document.createElement("div");
   root.className="slot";
@@ -657,6 +683,7 @@ function makeSlot(idx){
         <div class="fld" style="margin-top:12px"><label>🛈 Názov súboru — vidíš LEN ty ako prihlásený admin, verejnosť nie (pomôcka pri kontrole, ktorý súbor je za predmetom)</label><input data-fname></div>
         <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky — text (voliteľné)</label><input data-extralabel></div>
         <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky — URL (voliteľné)</label><input data-extraurl></div>
+        <div class="fld" style="margin-top:12px"><label>📄 Súhrn dokumentu <span style="font-weight:600;color:#6B7C91">(voliteľné; krátky súhrn tejto položky — píš po SK, Claude rozloží do 9 jazykov. Zobrazí sa aj verejnosti cez tlačidlo 📄 Súhrn pri položke. Tlačidlom „🔗 Vložiť odkaz" vložíš hypertextový odkaz — najprv označ text, potom klikni.)</span></label><div style="margin:4px 0"><button type="button" class="b-ghost b-sm" data-sumlink>🔗 Vložiť odkaz</button></div><textarea data-summary class="begleit-ta"></textarea></div>
         <div class="fld" style="margin-top:12px"><label>🗒️ Príkazy pre <b style="color:#C00000">CLAUDE</b> <span style="font-weight:600;color:#6B7C91">(voľné pole — sem píš doplňujúce príkazy pre Clauda; prenesú sa do MK, NEZOBRAZUJÚ sa na webe)</span></label><textarea data-claudecmd class="begleit-ta"></textarea></div>
       </div>
         <div class="newcase" data-newcase style="display:none">
@@ -747,6 +774,7 @@ function makeSlot(idx){
   const subjInp=q("[data-subj]"), accessSel=q("[data-access]"), impChk=q("[data-imp]"), fnameInp=q("[data-fname]"), cmtChk=q("[data-cmt]"); const pwhintInp=q("[data-pwhint]"), pwhintRow=q("[data-pwhintrow]");
   const langsBox=q("[data-langs]"), fallbackInp=q("[data-fallback]");
   const stavSel=q("[data-stav]"), extraLbl=q("[data-extralabel]"), extraUrl=q("[data-extraurl]"), replySel=q("[data-replyto]");
+  const summaryInp=q("[data-summary]"), sumLinkBtn=q("[data-sumlink]");
   const fillBtn=q("[data-fill]");
   const ssum=q("[data-ssum]"), sstate=q("[data-sstate]");
 
@@ -963,6 +991,7 @@ function makeSlot(idx){
       if(subjInp) subjInp.value="";
       if(pwhintInp){ pwhintInp.value=""; updatePwVis(); }
       if(extraLbl){ extraLbl.value=""; extraUrl.value=""; }
+      if(summaryInp) summaryInp.value=""; loadedSummod="";
       loadedThread=""; loadedCmt="";
       if(action!=="del") setAction("new");
       fillBtn.disabled=true; fillBtn.textContent="⚡ Vyber existujúci dokument";
@@ -981,6 +1010,7 @@ function makeSlot(idx){
       if(pwhintInp){ pwhintInp.value=d._pwhint||""; updatePwVis(); }
       if(extraLbl){ extraLbl.value=(d._extra&&d._extra.label)||""; extraUrl.value=(d._extra&&d._extra.url)||""; }
       loadedThread=(d._thread||""); loadedCmt=(d._cmtid||"");
+      if(summaryInp) summaryInp.value=d._summary||""; loadedSummod=(d._summod||"");
       if(action!=="del") setAction("fix");
       fixSubj.value=docSel.value;
       subjInp.value=docSel.value;
@@ -1041,6 +1071,21 @@ function makeSlot(idx){
     updateSummary();
   };
   begleitInp.oninput=updateSummary;
+  if(summaryInp) summaryInp.oninput=updateSummary;
+  if(sumLinkBtn) sumLinkBtn.onclick=function(){
+    if(!summaryInp) return;
+    var url=window.prompt("URL odkazu (musí začínať https://):","https://");
+    if(url===null) return; url=(url||"").trim();
+    if(!/^https:\/\//i.test(url)){ alert("Odkaz musí začínať https://"); return; }
+    var ta=summaryInp, s=ta.selectionStart||0, e=ta.selectionEnd||0, val=ta.value||"";
+    var txt=val.slice(s,e);
+    if(!txt){ txt=(window.prompt("Text odkazu (čo sa zobrazí):","")||"").trim(); }
+    if(!txt) txt=url;
+    var ins="["+txt+"]("+url+")";
+    ta.value=val.slice(0,s)+ins+val.slice(e);
+    var pos=s+ins.length; ta.focus(); try{ ta.setSelectionRange(pos,pos); }catch(_e){}
+    updateSummary();
+  };
   if(claudecmdInp) claudecmdInp.oninput=updateSummary;
   docSel.onchange=applyDoc;
   fillBtn.onclick=applyDoc;
@@ -1105,8 +1150,8 @@ function makeSlot(idx){
   function fixDiff(){
     if(!snapBase) return {cur:{},ch:{}};
     var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};
-    var __cd=collectCats();var cur={date:(noDate.checked?"\u2014":esc(dateInp.value)),access:accessSel.value,important:(impChk.checked?"1":"0"),comments:(cmtChk.checked?"1":"0"),subj:(esc(subjInp.value)||esc(fixSubj.value)),fname:esc(fnameInp.value),fallback:esc(fallbackInp.value),begleit:esc(begleitInp.value),urls:nu(collectUrls()),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),cardsubj:(cardSubjInp?esc(cardSubjInp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cd.jur.slice().sort().join(" "),area:__cd.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:((accessSel.value==="pwd"&&pwhintInp)?esc(pwhintInp.value):""),stav:(stavSel?stavSel.value:""),extralabel:(extraLbl?esc(extraLbl.value):""),extraurl:(extraUrl?esc(extraUrl.value):""),replyto:(replySel?replySel.value:"")};
-    var base={date:snapBase.date,access:snapBase.access,important:(snapBase.important?"1":"0"),comments:(snapBase.comments?"1":"0"),subj:snapBase.subj,fname:snapBase.fname,fallback:snapBase.fallback,begleit:snapBase.begleit,urls:snapBase.urls,row1:snapBase.row1,rspis:snapBase.rspis,row3:snapBase.row3,cardsubj:(snapBase.cardsubj||""),court:snapBase.court,cat:snapBase.cat,area:snapBase.area,az:snapBase.az,ourref:snapBase.ourref,pwhint:snapBase.pwhint,stav:(snapBase.stav||""),extralabel:(snapBase.extralabel||""),extraurl:(snapBase.extraurl||""),replyto:(snapBase.replyto||"")};
+    var __cd=collectCats();var cur={date:(noDate.checked?"\u2014":esc(dateInp.value)),access:accessSel.value,important:(impChk.checked?"1":"0"),comments:(cmtChk.checked?"1":"0"),subj:(esc(subjInp.value)||esc(fixSubj.value)),fname:esc(fnameInp.value),fallback:esc(fallbackInp.value),begleit:esc(begleitInp.value),summary:(summaryInp?esc(summaryInp.value):""),urls:nu(collectUrls()),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),cardsubj:(cardSubjInp?esc(cardSubjInp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cd.jur.slice().sort().join(" "),area:__cd.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:((accessSel.value==="pwd"&&pwhintInp)?esc(pwhintInp.value):""),stav:(stavSel?stavSel.value:""),extralabel:(extraLbl?esc(extraLbl.value):""),extraurl:(extraUrl?esc(extraUrl.value):""),replyto:(replySel?replySel.value:"")};
+    var base={date:snapBase.date,access:snapBase.access,important:(snapBase.important?"1":"0"),comments:(snapBase.comments?"1":"0"),subj:snapBase.subj,fname:snapBase.fname,fallback:snapBase.fallback,begleit:snapBase.begleit,summary:(snapBase.summary||""),urls:snapBase.urls,row1:snapBase.row1,rspis:snapBase.rspis,row3:snapBase.row3,cardsubj:(snapBase.cardsubj||""),court:snapBase.court,cat:snapBase.cat,area:snapBase.area,az:snapBase.az,ourref:snapBase.ourref,pwhint:snapBase.pwhint,stav:(snapBase.stav||""),extralabel:(snapBase.extralabel||""),extraurl:(snapBase.extraurl||""),replyto:(snapBase.replyto||"")};
     var ch={};Object.keys(cur).forEach(function(k){ if(String(cur[k])!==String(base[k])) ch[k]=cur[k]; });
     return {cur:cur, ch:ch};
   }
@@ -1235,13 +1280,14 @@ function makeSlot(idx){
       h+="Az. (data-az): "+(hesc(azInp.value)||"(prázdne)")+" · Naša spis. zn. (data-ourref): "+(hesc(ourrefInp.value)||"(prázdne)")+"\n";
       h+="Stav konania (pill): "+({laeuft:"Prebieha (p-blue)",eingereicht:"Podané (p-amber)",abgeschlossen:"Ukončené (p-green)"}[stavSel?stavSel.value:""]||"(—)")+"\n";
       h+="Begleittext: "+(esc(begleitInp.value)?"ÁNO":"NIE")+"\n";
+      h+="📄 Súhrn dokumentu (položka): "+((summaryInp&&esc(summaryInp.value))?"ÁNO":"NIE")+"\n";
       h+="— POLIA KARTY KONANIA (aktuálny živý stav — VŽDY vypísané, nezávislé od change-detekcie) —\n";
       h+="Predmet konania (RIADOK 2 karty — .court-subj, 1 jazyk — rozlož do 9): "+(cardSubjInp?(hesc(cardSubjInp.value)||"(prázdne)"):"(pole neexistuje)")+"\n";
       h+="Orgán/súd (.court/.case-meta, 1 jazyk — rozlož do 9): "+(courtNew?(hesc(courtNew.value)||"(prázdne)"):"(pole neexistuje)")+"\n";
     }
     var _fd=(action==="fix"&&snapBase)?fixDiff():null;
     if(_fd){
-      var NM={date:"D\u00e1tum",access:"Pr\u00edstup",important:"D\u00f4le\u017eit\u00e9",comments:"Koment\u00e1re",subj:"Predmet",fname:"N\u00e1zov s\u00faboru",fallback:"Fallback odkaz",begleit:"Sprievodn\u00fd text (Begleittext)",urls:"Odkazy na dokument",row1:"Riadok 1 \u2014 n\u00e1zov kauzy (dla\u017edica)",rspis:"Riadok 2 \u2014 spis. zn. (dla\u017edica)",row3:"Riadok 3 \u2014 rezervn\u00fd (dla\u017edica)",cardsubj:"Predmet konania (riadok 2 karty)",court:"Org\u00e1n/s\u00fad (.court)",cat:"Jurisdikcia (data-cat)",area:"Oblas\u0165 pr\u00e1va (data-area)",az:"Spis. zn. s\u00fadu (data-az)",ourref:"Na\u0161a spis. zn. (data-ourref)",pwhint:"Pokyn k heslu",stav:"Stav konania (pill)",extralabel:"Extra odkaz \u2014 text",extraurl:"Extra odkaz \u2014 URL",replyto:"\u21a9 Odpove\u010f na (vl\u00e1kno)"};
+      var NM={date:"D\u00e1tum",access:"Pr\u00edstup",important:"D\u00f4le\u017eit\u00e9",comments:"Koment\u00e1re",subj:"Predmet",fname:"N\u00e1zov s\u00faboru",fallback:"Fallback odkaz",begleit:"Sprievodn\u00fd text (Begleittext)",summary:"S\u00fahrn dokumentu (polo\u017eka)",urls:"Odkazy na dokument",row1:"Riadok 1 \u2014 n\u00e1zov kauzy (dla\u017edica)",rspis:"Riadok 2 \u2014 spis. zn. (dla\u017edica)",row3:"Riadok 3 \u2014 rezervn\u00fd (dla\u017edica)",cardsubj:"Predmet konania (riadok 2 karty)",court:"Org\u00e1n/s\u00fad (.court)",cat:"Jurisdikcia (data-cat)",area:"Oblas\u0165 pr\u00e1va (data-area)",az:"Spis. zn. s\u00fadu (data-az)",ourref:"Na\u0161a spis. zn. (data-ourref)",pwhint:"Pokyn k heslu",stav:"Stav konania (pill)",extralabel:"Extra odkaz \u2014 text",extraurl:"Extra odkaz \u2014 URL",replyto:"\u21a9 Odpove\u010f na (vl\u00e1kno)"};
       var ks=Object.keys(_fd.ch);
       if(!ks.length){ h+="ZMENEN\u00c9 POLIA: \u017eiadne \u2014 v tejto polo\u017eke sa ni\u010d nezmenilo, netreba aktualizova\u0165.\n"; }
       else { h+="ZMENEN\u00c9 POLIA (aktualizuj IBA tieto, ostatn\u00e9 nechaj bez zmeny):\n"; ks.forEach(function(k){ h+="  \u2022 "+(NM[k]||k)+"\n"; }); }
@@ -1310,6 +1356,13 @@ function makeSlot(idx){
       h+="Obsah (píšem po SK — rozlož do všetkých 9 jazykov; prázdny riadok = nový odsek <p>):\n";
       h+=esc(begleitInp.value)+"\n";
     }
+    if(summaryInp && esc(summaryInp.value) && (!_fd || ("summary" in _fd.ch))){
+      h+="— 📄 SÚHRN DOKUMENTU (položka) → tlačidlo „Súhrn“ + modal .kmodal.summod —\n";
+      h+="V markupe je tlačidlo <a class=\"open sumopen\" href=\"#summod-PLACEHOLDER\"> (v riadku položky medzi „Otvoriť dokument“ a „Komentovať“) a modal <div class=\"kmodal summod\" id=\"summod-PLACEHOLDER\"> (na konci .item). Reuse .kmodal (CSS :target, bez JS, .kmodal-box + .kmodal-close ×). NAHRAĎ summod-PLACEHOLDER unikátnym ID (napr. summod-"+_cardId.replace(/^case-/,"")+"-NN) na VŠETKÝCH miestach: href tlačidla + id modalu + hodnota summodId v data-snap.\n";
+      h+="Modal má 9 jazykov cez .gtl-b (DE EN SK HR PL ES IT FR SV); text <p> je zatiaľ SK vo všetkých — PRELOŽ obsah <p> do ostatných 8 jazykov. Nadpisy <h3> sú už správne pre každý jazyk (nechaj). Hypertextové odkazy <a href> ZACHOVAJ (prelož len text odkazu, URL nemeň).\n";
+      h+="Obsah súhrnu (píšem po SK — prázdny riadok = nový odsek <p>; zápis [text](https://url) = hypertextový odkaz):\n";
+      h+=esc(summaryInp.value)+"\n";
+    }
     if(action==="fix"){
       h+="Vymeniť riadok s predmetom: "+(hesc(fixSubj.value)||"(NEVYPLNENÉ — doplň predmet riadku!)")+"\n";
       if(snapBase && esc(fixSubj.value) && esc(snapBase.subj||"") && esc(fixSubj.value)!==esc(snapBase.subj||"")){
@@ -1369,14 +1422,14 @@ function makeSlot(idx){
     if(stavSel) stavSel.selectedIndex=0;
     if(docInput) docInput.value=""; subjInp.value=""; fixSubj.value=""; dateInp.value=""; noDate.checked=false; dateInp.disabled=false;
     impChk.checked=false; important=false; cmtChk.checked=false; comments=false; accessSel.value="pub"; fnameInp.value=""; if(pwhintInp) pwhintInp.value=""; updatePwVis();
-    snapBase=null; loadedThread=""; loadedCmt="";
+    snapBase=null; loadedThread=""; loadedCmt=""; loadedSummod=""; if(summaryInp) summaryInp.value="";
     setMode("item"); setAction("new"); setDir("sent");
     refreshKonanieList();
   }
 
   function buildSnap(subj,date,urls,access,fallback,important,fname,comments,pwhint){
     const c=collectCats();
-    return {v:1, kauzaKey:kauzaSel.value, kauza:currentCaseName(), cardsubj:(cardSubjInp?esc(cardSubjInp.value):""), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments, cmtid:(loadedCmt||""), pwhint:esc(pwhint), begleit:(begleitInp?esc(begleitInp.value):""), court:(courtNew?esc(courtNew.value):""), thread:(loadedThread||((replySel&&replySel.value)?("thr-"+slugify(replySel.value)):"")), stav:(stavSel?stavSel.value:""), extra:((extraUrl&&esc(extraUrl.value))?{label:(esc(extraLbl.value)||"🔗 Odkaz"),url:esc(extraUrl.value)}:null), replyTo:((replySel&&replySel.value)?replySel.value:"")};
+    return {v:1, kauzaKey:kauzaSel.value, kauza:currentCaseName(), cardsubj:(cardSubjInp?esc(cardSubjInp.value):""), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments, cmtid:(loadedCmt||""), pwhint:esc(pwhint), begleit:(begleitInp?esc(begleitInp.value):""), court:(courtNew?esc(courtNew.value):""), thread:(loadedThread||((replySel&&replySel.value)?("thr-"+slugify(replySel.value)):"")), stav:(stavSel?stavSel.value:""), extra:((extraUrl&&esc(extraUrl.value))?{label:(esc(extraLbl.value)||"🔗 Odkaz"),url:esc(extraUrl.value)}:null), replyTo:((replySel&&replySel.value)?replySel.value:""), summary:(summaryInp?esc(summaryInp.value):""), summodId:(loadedSummod||"")};
   }
   // predvyplnenie slotu z karty #303 (nezavisle od kniznice CASES)
   function applySnap(snap){
@@ -1407,6 +1460,7 @@ function makeSlot(idx){
     cmtChk.checked=!!snap.comments; comments=!!snap.comments;
     fnameInp.value=snap.fname||"";
     loadedThread=snap.thread||""; loadedCmt=snap.cmtid||"";
+    if(summaryInp) summaryInp.value=snap.summary||""; loadedSummod=snap.summodId||"";
     clearLangFields();
     if(snap.urls){ LANGS.forEach(function(l){ setField(l, snap.urls[l]||""); }); }
     fallbackInp.value=snap.fallback||"";
@@ -1421,7 +1475,7 @@ function makeSlot(idx){
     if(replySel){ refreshReplyList(snap.replyTo||""); }
     if(kauzaspisInp && snap.rspis){ kauzaspisInp.value=snap.rspis; }
     validateUrls(); updateSummary();
-    (function(){var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};var __cc=collectCats();snapBase={date:(snap.date||""),access:(snap.access||"pub"),important:!!snap.important,comments:!!snap.comments,subj:(snap.subj||""),fname:(snap.fname||""),fallback:(snap.fallback||""),begleit:(begleitInp?esc(begleitInp.value):""),urls:nu(snap.urls||{}),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),cardsubj:(cardSubjInp?esc(cardSubjInp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cc.jur.slice().sort().join(" "),area:__cc.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:(pwhintInp?esc(pwhintInp.value):""),stav:(stavSel?stavSel.value:""),extralabel:(extraLbl?esc(extraLbl.value):""),extraurl:(extraUrl?esc(extraUrl.value):""),replyto:(replySel?replySel.value:"")};})();
+    (function(){var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};var __cc=collectCats();snapBase={date:(snap.date||""),access:(snap.access||"pub"),important:!!snap.important,comments:!!snap.comments,subj:(snap.subj||""),fname:(snap.fname||""),fallback:(snap.fallback||""),begleit:(begleitInp?esc(begleitInp.value):""),summary:(summaryInp?esc(summaryInp.value):""),urls:nu(snap.urls||{}),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),cardsubj:(cardSubjInp?esc(cardSubjInp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cc.jur.slice().sort().join(" "),area:__cc.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:(pwhintInp?esc(pwhintInp.value):""),stav:(stavSel?stavSel.value:""),extralabel:(extraLbl?esc(extraLbl.value):""),extraurl:(extraUrl?esc(extraUrl.value):""),replyto:(replySel?replySel.value:"")};})();
     saveLastEdit(kauzaSel.value,konanieSel.value);
   }
 
@@ -1457,7 +1511,7 @@ function makeSlot(idx){
     const kk=kauzaKeyForKonanie(kn); if(!kk) return;
     kauzaSel.value=kk; refreshKonanieList();
     konanieSel.value=kn; refreshDocList();
-    if(docSel){ docSel.value=NEWDOC; applyDoc(); } loadedThread=""; loadedCmt=""; /* focus = čistý slot, žiadny auto-výber dokumentu */
+    if(docSel){ docSel.value=NEWDOC; applyDoc(); } loadedThread=""; loadedCmt=""; loadedSummod=""; if(summaryInp) summaryInp.value=""; /* focus = čistý slot, žiadny auto-výber dokumentu */
     if(subjInp) subjInp.value="";
     if(fixSubj) fixSubj.value="";
     if(dateInp){ dateInp.value=""; dateInp.disabled=false; }
