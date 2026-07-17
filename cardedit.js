@@ -47,6 +47,12 @@
       pin = caseEl.getAttribute("data-pin")||"";
       var csEl = caseEl.querySelector(".court-subj .gtl.sk") || caseEl.querySelector(".court-subj .gtl.de");
       if (csEl){ cardsubj = csEl.textContent.trim(); }
+      // Fallback: ak karta nemá riadok .court-subj (Predmet konania), zober názov karty (.case-title),
+      // aby sa pole "Predmet konania" pri editácii vždy načítalo a ostalo synchronizované s kartou.
+      if (!cardsubj){
+        var ctEl = caseEl.querySelector(".case-title .gtl.sk") || caseEl.querySelector(".case-title .gtl.de");
+        if (ctEl){ cardsubj = ctEl.textContent.trim(); }
+      }
       var pillEl = caseEl.querySelector(".pill");
       if (pillEl){ stav = pillEl.classList.contains("p-amber") ? "eingereicht" : (pillEl.classList.contains("p-green") ? "abgeschlossen" : "laeuft"); }
       var _sks = caseEl.querySelectorAll(".gtl.sk");
