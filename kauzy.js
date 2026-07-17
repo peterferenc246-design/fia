@@ -91,13 +91,32 @@
 
     // pripnuté konania (data-pin=N) idú VŽDY hore, medzi sebou podľa čísla 1,2,3…; nepripnuté = bez čísla (za nimi)
     function pinRank(el) { var p = parseInt(el.getAttribute('data-pin'), 10); return (p > 0) ? p : Infinity; }
+    // mapa id karty → poradie kauzy v registri (na zoskupenie pripnutých po kauzách v pohľade „Zobraziť všetky")
+    var CARD_KAUZA = {};
+    (function () {
+      var regEl = document.getElementById('fia-reg');
+      if (!regEl) return;
+      var ti = 0;
+      [].slice.call(regEl.querySelectorAll('.rbtn')).forEach(function (b) {
+        if (b.hasAttribute('data-regall')) return;
+        (b.getAttribute('data-ids') || '').split(/\s+/).forEach(function (id) { if (id) { if (!(id in CARD_KAUZA)) { CARD_KAUZA[id] = ti; } } });
+        ti++;
+      });
+    })();
+    function kauzaKey(el) { var k = CARD_KAUZA[el.id]; return (k === undefined) ? 9999 : k; }
     function applySort() {
       var key = state.sort;
       var dir = state.dir === 'asc' ? 1 : -1;
       function cmp(a, b) {
         var pa = pinRank(a), pb = pinRank(b);
-        if (pa !== pb) return pa - pb;                 // pripnuté hore, podľa data-pin
-        var va = attr(a, key), vb = attr(b, key);      // zvyšok podľa zvoleného radenia
+        var apin = pa !== Infinity, bpin = pb !== Infinity;
+        if (apin !== bpin) return apin ? -1 : 1;       // pripnuté vždy nad nepripnutými
+        if (apin) {                                    // obe pripnuté: zoskup podľa kauzy, v nej podľa čísla pinu
+          var ka = kauzaKey(a), kb = kauzaKey(b);
+          if (ka !== kb) return ka - kb;               // kauzy v poradí registra (dôležité pri „Zobraziť všetky")
+          return pa - pb;                              // v rámci kauzy 1,2,3…
+        }
+        var va = attr(a, key), vb = attr(b, key);      // obe nepripnuté: zvolené radenie (dátum/az/…)
         var ea = va === '', eb = vb === '';
         if (ea && eb) return 0;
         if (ea) return 1;        // prázdne vždy dole
