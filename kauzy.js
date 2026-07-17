@@ -27,6 +27,8 @@
     var cases    = [].slice.call(wrap.querySelectorAll('details.case'));
     var tcBox    = document.getElementById('fia-testcases');
     var allCases = tcBox ? cases.concat([].slice.call(tcBox.querySelectorAll('details.case'))) : cases;
+    // pôvodné testovacie karty (#fia-testcases) — pripnuté z nich vytiahneme medzi reálne, aby pin fungoval naprieč kontajnermi
+    var TC_ORIG  = tcBox ? [].slice.call(tcBox.querySelectorAll('details.case')) : [];
     (function(){ var s=document.createElement('style'); s.textContent='details.case.hide{display:none!important}'
       +'.pinbadge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#FFCB3E,#F0B400);color:#3d2f00;border:1px solid #C9A100;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:800;line-height:1;margin-right:8px;white-space:nowrap;vertical-align:middle}'
       +'.pinbadge .pinnum{background:#1F3864;color:#fff;border-radius:999px;min-width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;font-size:10.5px;padding:0 4px;font-weight:800}';
@@ -104,8 +106,18 @@
         if (va > vb) return  1 * dir;
         return 0;
       }
-      cases.slice().sort(cmp).forEach(function (c) { wrap.appendChild(c); });
-      // pripnuté hore aj v testovacom kontajneri (kým prebieha migrácia test → ostrá karta)
+      // Pripnuté testovacie karty VYTIAHNI medzi reálne (do .cases), aby pin fungoval NAPRIEČ oboma
+      // kontajnermi (pripnutá testkarta preskočí nepripnuté reálne). Nepripnuté testkarty vráť do #fia-testcases.
+      // (case-zaloba a pod. majú štruktúru .case-head; ich .gtl aj visačka bežia cez .kwrap ako reálne karty.)
+      if (tcBox) {
+        TC_ORIG.forEach(function (c) {
+          var target = (pinRank(c) !== Infinity) ? wrap : tcBox;
+          if (c.parentNode !== target) { target.appendChild(c); }
+        });
+      }
+      // Zoraď .cases (reálne + vytiahnuté pripnuté testkarty): pin hore podľa čísla, potom zvolené radenie.
+      [].slice.call(wrap.querySelectorAll('details.case')).sort(cmp).forEach(function (c) { wrap.appendChild(c); });
+      // Zoraď zvyšné (nepripnuté) testkarty v #fia-testcases.
       if (tcBox) { [].slice.call(tcBox.querySelectorAll('details.case')).sort(cmp).forEach(function (c) { tcBox.appendChild(c); }); }
     }
     // 📌 vizuálna visačka „Pripnuté" na pripnutých kartách — viditeľná aj pre verejnosť (9 jazykov ako zvyšok registra)
