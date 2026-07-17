@@ -420,6 +420,7 @@ function _snapToDoc(snap){
   if(snap.important) d._imp=true;
   if(snap.comments) d._cmt=true;
   if(snap.fname) d._fname=snap.fname;
+  if(snap.fpath) d._fpath=snap.fpath;
   if(snap.pwhint) d._pwhint=snap.pwhint;
   if(snap.extra) d._extra=snap.extra;
   if(snap.thread) d._thread=snap.thread;
@@ -681,6 +682,7 @@ function makeSlot(idx){
       <div style="flex:0 0 auto;width:100%">
         <div class="fld" style="margin-top:12px"><label>↩ Odpoveď na (vlákno — vyber dokument OPAČNÉHO smeru, na ktorý táto položka reaguje)</label><select data-replyto><option value="">— bez väzby —</option></select></div>
         <div class="fld" style="margin-top:12px"><label>🛈 Názov súboru — vidíš LEN ty ako prihlásený admin, verejnosť nie (pomôcka pri kontrole, ktorý súbor je za predmetom)</label><input data-fname></div>
+        <div class="fld" style="margin-top:12px"><label>📁 Cesta k súboru — vidíš LEN ty ako prihlásený admin (kam máš súbor uložený; vlož si sem cestu, nech ju máš pri položke po ruke)</label><input data-fpath></div>
         <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky — text (voliteľné)</label><input data-extralabel></div>
         <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky — URL (voliteľné)</label><input data-extraurl></div>
         <div class="fld" style="margin-top:12px"><label>📄 Súhrn dokumentu <span style="font-weight:600;color:#6B7C91">(voliteľné; krátky súhrn tejto položky — píš po SK, Claude rozloží do 9 jazykov. Zobrazí sa aj verejnosti cez tlačidlo 📄 Súhrn pri položke. Tlačidlom „🔗 Vložiť odkaz" vložíš hypertextový odkaz — najprv označ text, potom klikni.)</span></label><div style="margin:4px 0"><button type="button" class="b-ghost b-sm" data-sumlink>🔗 Vložiť odkaz</button></div><textarea data-summary class="begleit-ta"></textarea></div>
@@ -771,7 +773,7 @@ function makeSlot(idx){
   const delWarn=q("[data-delwarn]"), confid=q("[data-confid]");
   const contentBlock=q("[data-contentblock]"), linksBlock=q("[data-linksblock]");
   const metaRow=q("[data-metarow]"), dateInp=q("[data-date]"), noDate=q("[data-nodate]");
-  const subjInp=q("[data-subj]"), accessSel=q("[data-access]"), impChk=q("[data-imp]"), fnameInp=q("[data-fname]"), cmtChk=q("[data-cmt]"); const pwhintInp=q("[data-pwhint]"), pwhintRow=q("[data-pwhintrow]");
+  const subjInp=q("[data-subj]"), accessSel=q("[data-access]"), impChk=q("[data-imp]"), fnameInp=q("[data-fname]"), fpathInp=q("[data-fpath]"), cmtChk=q("[data-cmt]"); const pwhintInp=q("[data-pwhint]"), pwhintRow=q("[data-pwhintrow]");
   const langsBox=q("[data-langs]"), fallbackInp=q("[data-fallback]");
   const stavSel=q("[data-stav]"), extraLbl=q("[data-extralabel]"), extraUrl=q("[data-extraurl]"), replySel=q("[data-replyto]");
   const summaryInp=q("[data-summary]"), sumLinkBtn=q("[data-sumlink]");
@@ -987,7 +989,7 @@ function makeSlot(idx){
     const isNewDoc=docSel.value===NEWDOC;
     if(isNewDoc||!def||!def.docs||!def.docs[docSel.value]){
       clearLangFields();
-      dateInp.value=""; noDate.checked=false; dateInp.disabled=false; accessSel.value="pub"; impChk.checked=false; important=false; cmtChk.checked=false; comments=false; fnameInp.value="";
+      dateInp.value=""; noDate.checked=false; dateInp.disabled=false; accessSel.value="pub"; impChk.checked=false; important=false; cmtChk.checked=false; comments=false; fnameInp.value=""; if(fpathInp) fpathInp.value="";
       if(subjInp) subjInp.value="";
       if(pwhintInp){ pwhintInp.value=""; updatePwVis(); }
       if(extraLbl){ extraLbl.value=""; extraUrl.value=""; }
@@ -1007,6 +1009,7 @@ function makeSlot(idx){
       impChk.checked=!!d._imp; important=!!d._imp;
       cmtChk.checked=!!d._cmt; comments=!!d._cmt;
       fnameInp.value=d._fname||"";
+      if(fpathInp) fpathInp.value=d._fpath||"";
       if(pwhintInp){ pwhintInp.value=d._pwhint||""; updatePwVis(); }
       if(extraLbl){ extraLbl.value=(d._extra&&d._extra.label)||""; extraUrl.value=(d._extra&&d._extra.url)||""; }
       loadedThread=(d._thread||""); loadedCmt=(d._cmtid||"");
@@ -1064,6 +1067,7 @@ function makeSlot(idx){
       if(dateInp){ dateInp.value=""; dateInp.disabled=false; }
       if(noDate) noDate.checked=false;
       if(fnameInp) fnameInp.value="";
+      if(fpathInp) fpathInp.value="";
       if(azInp) azInp.value="";
       if(ourrefInp) ourrefInp.value="";
       setAction("new");
@@ -1150,8 +1154,8 @@ function makeSlot(idx){
   function fixDiff(){
     if(!snapBase) return {cur:{},ch:{}};
     var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};
-    var __cd=collectCats();var cur={date:(noDate.checked?"\u2014":esc(dateInp.value)),access:accessSel.value,important:(impChk.checked?"1":"0"),comments:(cmtChk.checked?"1":"0"),subj:(esc(subjInp.value)||esc(fixSubj.value)),fname:esc(fnameInp.value),fallback:esc(fallbackInp.value),begleit:esc(begleitInp.value),summary:(summaryInp?esc(summaryInp.value):""),urls:nu(collectUrls()),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),cardsubj:(cardSubjInp?esc(cardSubjInp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cd.jur.slice().sort().join(" "),area:__cd.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:((accessSel.value==="pwd"&&pwhintInp)?esc(pwhintInp.value):""),stav:(stavSel?stavSel.value:""),extralabel:(extraLbl?esc(extraLbl.value):""),extraurl:(extraUrl?esc(extraUrl.value):""),replyto:(replySel?replySel.value:"")};
-    var base={date:snapBase.date,access:snapBase.access,important:(snapBase.important?"1":"0"),comments:(snapBase.comments?"1":"0"),subj:snapBase.subj,fname:snapBase.fname,fallback:snapBase.fallback,begleit:snapBase.begleit,summary:(snapBase.summary||""),urls:snapBase.urls,row1:snapBase.row1,rspis:snapBase.rspis,row3:snapBase.row3,cardsubj:(snapBase.cardsubj||""),court:snapBase.court,cat:snapBase.cat,area:snapBase.area,az:snapBase.az,ourref:snapBase.ourref,pwhint:snapBase.pwhint,stav:(snapBase.stav||""),extralabel:(snapBase.extralabel||""),extraurl:(snapBase.extraurl||""),replyto:(snapBase.replyto||"")};
+    var __cd=collectCats();var cur={date:(noDate.checked?"\u2014":esc(dateInp.value)),access:accessSel.value,important:(impChk.checked?"1":"0"),comments:(cmtChk.checked?"1":"0"),subj:(esc(subjInp.value)||esc(fixSubj.value)),fname:esc(fnameInp.value),fpath:(fpathInp?esc(fpathInp.value):""),fallback:esc(fallbackInp.value),begleit:esc(begleitInp.value),summary:(summaryInp?esc(summaryInp.value):""),urls:nu(collectUrls()),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),cardsubj:(cardSubjInp?esc(cardSubjInp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cd.jur.slice().sort().join(" "),area:__cd.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:((accessSel.value==="pwd"&&pwhintInp)?esc(pwhintInp.value):""),stav:(stavSel?stavSel.value:""),extralabel:(extraLbl?esc(extraLbl.value):""),extraurl:(extraUrl?esc(extraUrl.value):""),replyto:(replySel?replySel.value:"")};
+    var base={date:snapBase.date,access:snapBase.access,important:(snapBase.important?"1":"0"),comments:(snapBase.comments?"1":"0"),subj:snapBase.subj,fname:snapBase.fname,fpath:(snapBase.fpath||""),fallback:snapBase.fallback,begleit:snapBase.begleit,summary:(snapBase.summary||""),urls:snapBase.urls,row1:snapBase.row1,rspis:snapBase.rspis,row3:snapBase.row3,cardsubj:(snapBase.cardsubj||""),court:snapBase.court,cat:snapBase.cat,area:snapBase.area,az:snapBase.az,ourref:snapBase.ourref,pwhint:snapBase.pwhint,stav:(snapBase.stav||""),extralabel:(snapBase.extralabel||""),extraurl:(snapBase.extraurl||""),replyto:(snapBase.replyto||"")};
     var ch={};Object.keys(cur).forEach(function(k){ if(String(cur[k])!==String(base[k])) ch[k]=cur[k]; });
     return {cur:cur, ch:ch};
   }
@@ -1271,6 +1275,7 @@ function makeSlot(idx){
       h+="Prístup: "+(accessSel.value==="pwd"?("🔒 Heslo — pokyn k heslu: "+((pwhintInp&&hesc(pwhintInp.value))||"(nevyplnené)")):"🌐 Verejné")+"\n";
       h+="Dôležité (❗): "+(important?"ÁNO":"NIE")+" · Komentáre (💬): "+(comments?"ÁNO":"NIE")+"\n";
       h+="🛈 Názov súboru (len admin): "+(hesc(fnameInp.value)||"(prázdne)")+"\n";
+      h+="📁 Cesta k súboru (len admin): "+(hesc(fpathInp?fpathInp.value:"")||"(prázdne)")+"\n";
       h+="🔗 Extra odkaz položky: "+((extraUrl&&esc(extraUrl.value))?("„"+(hesc(extraLbl.value)||"🔗 Odkaz")+"“ → "+hesc(extraUrl.value)):"(žiadny)")+"\n";
       h+="↩ Odpoveď na (vlákno): "+((replySel&&replySel.value)?("„"+hesc(replySel.value)+"“"):"(bez väzby)")+"\n";
       if(_same){ h+="Odkaz na dokument (rovnaký pre 9 jazykov): "+(_uv[0]?hesc(_uv[0]):"(prázdne)")+"\n"; }
@@ -1287,7 +1292,7 @@ function makeSlot(idx){
     }
     var _fd=(action==="fix"&&snapBase)?fixDiff():null;
     if(_fd){
-      var NM={date:"D\u00e1tum",access:"Pr\u00edstup",important:"D\u00f4le\u017eit\u00e9",comments:"Koment\u00e1re",subj:"Predmet",fname:"N\u00e1zov s\u00faboru",fallback:"Fallback odkaz",begleit:"Sprievodn\u00fd text (Begleittext)",summary:"S\u00fahrn dokumentu (polo\u017eka)",urls:"Odkazy na dokument",row1:"Riadok 1 \u2014 n\u00e1zov kauzy (dla\u017edica)",rspis:"Riadok 2 \u2014 spis. zn. (dla\u017edica)",row3:"Riadok 3 \u2014 rezervn\u00fd (dla\u017edica)",cardsubj:"Predmet konania (riadok 2 karty)",court:"Org\u00e1n/s\u00fad (.court)",cat:"Jurisdikcia (data-cat)",area:"Oblas\u0165 pr\u00e1va (data-area)",az:"Spis. zn. s\u00fadu (data-az)",ourref:"Na\u0161a spis. zn. (data-ourref)",pwhint:"Pokyn k heslu",stav:"Stav konania (pill)",extralabel:"Extra odkaz \u2014 text",extraurl:"Extra odkaz \u2014 URL",replyto:"\u21a9 Odpove\u010f na (vl\u00e1kno)"};
+      var NM={date:"D\u00e1tum",access:"Pr\u00edstup",important:"D\u00f4le\u017eit\u00e9",comments:"Koment\u00e1re",subj:"Predmet",fname:"N\u00e1zov s\u00faboru",fpath:"Cesta k s\u00faboru",fallback:"Fallback odkaz",begleit:"Sprievodn\u00fd text (Begleittext)",summary:"S\u00fahrn dokumentu (polo\u017eka)",urls:"Odkazy na dokument",row1:"Riadok 1 \u2014 n\u00e1zov kauzy (dla\u017edica)",rspis:"Riadok 2 \u2014 spis. zn. (dla\u017edica)",row3:"Riadok 3 \u2014 rezervn\u00fd (dla\u017edica)",cardsubj:"Predmet konania (riadok 2 karty)",court:"Org\u00e1n/s\u00fad (.court)",cat:"Jurisdikcia (data-cat)",area:"Oblas\u0165 pr\u00e1va (data-area)",az:"Spis. zn. s\u00fadu (data-az)",ourref:"Na\u0161a spis. zn. (data-ourref)",pwhint:"Pokyn k heslu",stav:"Stav konania (pill)",extralabel:"Extra odkaz \u2014 text",extraurl:"Extra odkaz \u2014 URL",replyto:"\u21a9 Odpove\u010f na (vl\u00e1kno)"};
       var ks=Object.keys(_fd.ch);
       if(!ks.length){ h+="ZMENEN\u00c9 POLIA: \u017eiadne \u2014 v tejto polo\u017eke sa ni\u010d nezmenilo, netreba aktualizova\u0165.\n"; }
       else { h+="ZMENEN\u00c9 POLIA (aktualizuj IBA tieto, ostatn\u00e9 nechaj bez zmeny):\n"; ks.forEach(function(k){ h+="  \u2022 "+(NM[k]||k)+"\n"; }); }
@@ -1421,7 +1426,7 @@ function makeSlot(idx){
     if(row1Inp) row1Inp.value=""; if(row3Inp) row3Inp.value=""; if(kauzaspisInp) kauzaspisInp.value="";
     if(stavSel) stavSel.selectedIndex=0;
     if(docInput) docInput.value=""; subjInp.value=""; fixSubj.value=""; dateInp.value=""; noDate.checked=false; dateInp.disabled=false;
-    impChk.checked=false; important=false; cmtChk.checked=false; comments=false; accessSel.value="pub"; fnameInp.value=""; if(pwhintInp) pwhintInp.value=""; updatePwVis();
+    impChk.checked=false; important=false; cmtChk.checked=false; comments=false; accessSel.value="pub"; fnameInp.value=""; if(fpathInp) fpathInp.value=""; if(pwhintInp) pwhintInp.value=""; updatePwVis();
     snapBase=null; loadedThread=""; loadedCmt=""; loadedSummod=""; if(summaryInp) summaryInp.value="";
     setMode("item"); setAction("new"); setDir("sent");
     refreshKonanieList();
@@ -1429,7 +1434,7 @@ function makeSlot(idx){
 
   function buildSnap(subj,date,urls,access,fallback,important,fname,comments,pwhint){
     const c=collectCats();
-    return {v:1, kauzaKey:kauzaSel.value, kauza:currentCaseName(), cardsubj:(cardSubjInp?esc(cardSubjInp.value):""), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments, cmtid:(loadedCmt||""), pwhint:esc(pwhint), begleit:(begleitInp?esc(begleitInp.value):""), court:(courtNew?esc(courtNew.value):""), thread:(loadedThread||((replySel&&replySel.value)?("thr-"+slugify(replySel.value)):"")), stav:(stavSel?stavSel.value:""), extra:((extraUrl&&esc(extraUrl.value))?{label:(esc(extraLbl.value)||"🔗 Odkaz"),url:esc(extraUrl.value)}:null), replyTo:((replySel&&replySel.value)?replySel.value:""), summary:(summaryInp?esc(summaryInp.value):""), summodId:(loadedSummod||"")};
+    return {v:1, kauzaKey:kauzaSel.value, kauza:currentCaseName(), cardsubj:(cardSubjInp?esc(cardSubjInp.value):""), subj:esc(subj), dir, mode, date, access, important:!!important, fname:esc(fname), fpath:(fpathInp?esc(fpathInp.value):""), fallback:esc(fallback), urls, cats:c, az:esc(azInp.value), ourref:esc(ourrefInp.value), comments:!!comments, cmtid:(loadedCmt||""), pwhint:esc(pwhint), begleit:(begleitInp?esc(begleitInp.value):""), court:(courtNew?esc(courtNew.value):""), thread:(loadedThread||((replySel&&replySel.value)?("thr-"+slugify(replySel.value)):"")), stav:(stavSel?stavSel.value:""), extra:((extraUrl&&esc(extraUrl.value))?{label:(esc(extraLbl.value)||"🔗 Odkaz"),url:esc(extraUrl.value)}:null), replyTo:((replySel&&replySel.value)?replySel.value:""), summary:(summaryInp?esc(summaryInp.value):""), summodId:(loadedSummod||"")};
   }
   // predvyplnenie slotu z karty #303 (nezavisle od kniznice CASES)
   function applySnap(snap){
@@ -1459,6 +1464,7 @@ function makeSlot(idx){
     impChk.checked=!!snap.important; important=!!snap.important;
     cmtChk.checked=!!snap.comments; comments=!!snap.comments;
     fnameInp.value=snap.fname||"";
+    if(fpathInp) fpathInp.value=snap.fpath||"";
     loadedThread=snap.thread||""; loadedCmt=snap.cmtid||"";
     if(summaryInp) summaryInp.value=snap.summary||""; loadedSummod=snap.summodId||"";
     clearLangFields();
@@ -1475,7 +1481,7 @@ function makeSlot(idx){
     if(replySel){ refreshReplyList(snap.replyTo||""); }
     if(kauzaspisInp && snap.rspis){ kauzaspisInp.value=snap.rspis; }
     validateUrls(); updateSummary();
-    (function(){var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};var __cc=collectCats();snapBase={date:(snap.date||""),access:(snap.access||"pub"),important:!!snap.important,comments:!!snap.comments,subj:(snap.subj||""),fname:(snap.fname||""),fallback:(snap.fallback||""),begleit:(begleitInp?esc(begleitInp.value):""),summary:(summaryInp?esc(summaryInp.value):""),urls:nu(snap.urls||{}),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),cardsubj:(cardSubjInp?esc(cardSubjInp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cc.jur.slice().sort().join(" "),area:__cc.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:(pwhintInp?esc(pwhintInp.value):""),stav:(stavSel?stavSel.value:""),extralabel:(extraLbl?esc(extraLbl.value):""),extraurl:(extraUrl?esc(extraUrl.value):""),replyto:(replySel?replySel.value:"")};})();
+    (function(){var nu=function(o){var k=Object.keys(o||{}).sort(),r={};k.forEach(function(x){r[x]=o[x];});return JSON.stringify(r);};var __cc=collectCats();snapBase={date:(snap.date||""),access:(snap.access||"pub"),important:!!snap.important,comments:!!snap.comments,subj:(snap.subj||""),fname:(snap.fname||""),fpath:(snap.fpath||""),fallback:(snap.fallback||""),begleit:(begleitInp?esc(begleitInp.value):""),summary:(summaryInp?esc(summaryInp.value):""),urls:nu(snap.urls||{}),row1:(row1Inp?esc(row1Inp.value):""),rspis:(kauzaspisInp?esc(kauzaspisInp.value):""),row3:(row3Inp?esc(row3Inp.value):""),cardsubj:(cardSubjInp?esc(cardSubjInp.value):""),court:(courtNew?esc(courtNew.value):""),cat:__cc.jur.slice().sort().join(" "),area:__cc.area.slice().sort().join(" "),az:esc(azInp.value),ourref:esc(ourrefInp.value),pwhint:(pwhintInp?esc(pwhintInp.value):""),stav:(stavSel?stavSel.value:""),extralabel:(extraLbl?esc(extraLbl.value):""),extraurl:(extraUrl?esc(extraUrl.value):""),replyto:(replySel?replySel.value:"")};})();
     saveLastEdit(kauzaSel.value,konanieSel.value);
   }
 
@@ -1531,6 +1537,7 @@ function makeSlot(idx){
     if(dateInp){ dateInp.value=""; dateInp.disabled=false; }
     if(noDate) noDate.checked=false;
     if(fnameInp) fnameInp.value="";
+    if(fpathInp) fpathInp.value="";
     if(azInp) azInp.value="";
     if(ourrefInp) ourrefInp.value="";
     snapBase=null;
