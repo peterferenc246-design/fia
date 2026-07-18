@@ -3,22 +3,54 @@
   "_udrzba": "Po KAZDOM wp_section_replace: nastroj vypise 'old=X zn., new=Y zn.' -> posun = Y-X. Priraď posun ku VSETKYM offsetom vacsim nez miesto zasahu. Offsety pred zasahom sa nemenia. Aktualizuj aj page_chars. Ziadne dalsie citanie netreba.",
   "page_id": 303,
   "slug": "kauzy-koncept",
-  "page_chars": 736774,
-  "platne_k": "2026-07-18T11:29:07",
+  "page_chars": 730287,
+  "platne_k": "2026-07-18T12:16:00",
   "kotvy": [
-    { "offset": 0,      "co": "zaciatok stranky — #fia-langbar (jazykova lista)" },
-    { "offset": 1200,   "co": "#fia-reg — register dlazdic (CSS + .rbtn tiles)" },
-    { "offset": 28000,  "co": "karta Telekom — hlavicka .case-meta (Landgericht Landshut)" },
-    { "offset": 60000,  "co": "karta Telekom — sumarny modal (gtl-b it/fr)" },
-    { "offset": 150000, "co": "karta DAK — telo suhrnu (SGB V, VwVG)" },
-    { "offset": 300000, "co": "karta UDZS — telo sprievodneho textu" },
-    { "offset": 520000, "co": "karta case-m10815 — polozka 'Zaloba o neplatnost' (.open odkazy viewer)" },
-    { "offset": 561418, "co": "karta case-m10815 — ZACIATOK polozky 'Odpoved na zamietnutie pristupu k e-Curia' (<div class=\"item\" data-snap=)" },
-    { "offset": 577000, "co": "karta case-m10815 — polozka 'e-Curia — Antrag auf Kontoeroeffnung' (nasleduje hned za predoslou)" }
+    {
+      "offset": 0,
+      "co": "zaciatok stranky — #fia-langbar (jazykova lista)"
+    },
+    {
+      "offset": 1200,
+      "co": "#fia-reg — register dlazdic (CSS + .rbtn tiles)"
+    },
+    {
+      "offset": 28000,
+      "co": "karta Telekom — hlavicka .case-meta (Landgericht Landshut)"
+    },
+    {
+      "offset": 60000,
+      "co": "karta Telekom — sumarny modal (gtl-b it/fr)"
+    },
+    {
+      "offset": 150000,
+      "co": "karta DAK — telo suhrnu (SGB V, VwVG)"
+    },
+    {
+      "offset": 300000,
+      "co": "karta UDZS — telo sprievodneho textu"
+    },
+    {
+      "offset": 506330,
+      "co": "karta case-m10815 — col-h stlpca ODOSLANE (<span class=\"cnt\">3</span>) + zaciatok polozky 'Nichtigkeitsklage (Art. 263 AEUV)'"
+    },
+    {
+      "offset": 520000,
+      "co": "karta case-m10815 — polozka 'Zaloba o neplatnost' (.open odkazy viewer)"
+    },
+    {
+      "offset": 561418,
+      "co": "karta case-m10815 — ZACIATOK polozky 'Odpoved na zamietnutie pristupu k e-Curia' (<div class=\"item\" data-snap=)"
+    },
+    {
+      "offset": 577000,
+      "co": "karta case-m10815 — col-h stlpca PRIJATE (cnt 5), hned za koncom stlpca Odoslane"
+    }
   ],
   "poznamky": [
     "Poradie kariet v RAW HTML: Telekom (~28k) -> DAK (~150k) -> UDZS (~300k) -> M.10815 (~520k). Zobrazene poradie na webe riadi kauzy.js (pin + radenie), NIE poradie v HTML.",
     "18.07.2026: dva zapisy do polozky e-Curia (+4940 a +4036 zn.) posunuli vsetko za offsetom 561418 o +8976. Offsety pred nim su nedotknute.",
-    "Polozka e-Curia po zapise zabera cca 561418-577000 (19 viewer URL v data-snap aj v href)."
+    "Polozka e-Curia po zapise zabera cca 561418-577000 (19 viewer URL v data-snap aj v href).",
+    "18.07.2026 12:16: VYMAZANA polozka 'e-Curia — Antrag auf Kontoeroeffnung' (-6487 zn.), pocitadlo Odoslane 4->3 (bez posunu). Vsetko za offsetom 576993 posunute o -6487."
   ]
 }
