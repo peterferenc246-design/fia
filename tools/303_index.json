@@ -3,8 +3,8 @@
   "_udrzba": "Po KAZDOM wp_section_replace: nastroj vypise 'old=X zn., new=Y zn.' -> posun = Y-X. Priraď posun ku VSETKYM offsetom vacsim nez miesto zasahu. Offsety pred zasahom sa nemenia. Aktualizuj aj page_chars. Ziadne dalsie citanie netreba.",
   "page_id": 303,
   "slug": "kauzy-koncept",
-  "page_chars": 747763,
-  "platne_k": "2026-07-18T14:57:40",
+  "page_chars": 762151,
+  "platne_k": "2026-07-18T15:40:15",
   "kotvy": [
     {
       "offset": 0,
@@ -57,6 +57,10 @@
     {
       "offset": 597957,
       "co": "karta case-m10815 — 2. polozka PRIJATE 'Sprievodny list kancelarie (T-61/26 AJ)' (cmt-m10815-06, summod-m10815-06, VLAJKA-VIEWER)"
+    },
+    {
+      "offset": 621678,
+      "co": "karta case-m10815 — POSLEDNA polozka PRIJATE 'Uznesenie predsedu sudu' (cmt-m10815-09, summod-m10815-09, VLAJKA-VIEWER)"
     }
   ],
   "poznamky": [
@@ -68,6 +72,7 @@
     "18.07.2026 13:57: polozka 'Potvrdenie o doruceni zaloby' — VLAJKA-VIEWER (19 URL), fname/fpath/fallback/suhrn. Spolu +10384 zn.",
     "18.07.2026 14:44: polozka 'Sprievodny list kancelarie' — VLAJKA-VIEWER (19 URL), datum 12.05.2026, fname/fpath/fallback/suhrn. Spolu +10126 zn.",
     "18.07.2026 14:50: polozka 'Sprievodny list kancelarie' — opraveny suhrn na 'sprievodny list k uzneseniu' (+234 zn.).",
-    "18.07.2026 14:57: VYMAZANA polozka 'Europaische Kommission — Schreiben / Stellungnahme' (duplicita z testovania, -6546 zn.), pocitadlo Prijate 5->4 (bez posunu)."
+    "18.07.2026 14:57: VYMAZANA polozka 'Europaische Kommission — Schreiben / Stellungnahme' (duplicita z testovania, -6546 zn.), pocitadlo Prijate 5->4 (bez posunu).",
+    "18.07.2026 15:40: polozka 'Uznesenie predsedu sudu' — VLAJKA-VIEWER (19 URL, klon 8 jazykov/16 stran), datum 12.05.2026, fname/fpath/fallback/suhrn. Spolu +14388 zn."
   ]
 }
