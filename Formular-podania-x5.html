@@ -30,6 +30,10 @@
   .koncombo .konopt{padding:8px 11px;border-radius:7px;font-weight:700;color:#0B5BD3;cursor:pointer;font-size:13.5px;line-height:1.35}
   .koncombo .konopt:hover{background:#F2F6FC}
   .koncombo .konopt.sel{background:#E6F1FB}
+  .koncombo .konopt.grp{color:#1F3864;font-weight:800;font-size:12px;letter-spacing:.04em;background:#EAF2FB;border-top:2px solid #1F3864;border-radius:0;cursor:default;padding:6px 11px;margin:6px 0 3px}
+  .koncombo .konopt.grp:first-child{margin-top:0}
+  .koncombo .konopt.grp:hover{background:#EAF2FB}
+  .koncombo .konsep{border-top:1px dashed #c9d4e4;margin:6px 2px}
   select[data-replyto]{color:#E91E8C;font-weight:800}
   select[data-replyto] option{color:#E91E8C;font-weight:700}
   select[data-replyto] optgroup,select[data-doc] optgroup{color:#1F3864;font-weight:800;background:#EAF2FB;font-style:normal}
@@ -459,12 +463,21 @@ function mergeLiveInventory(items){
   var changed=false;
   var liveDocs={};   // konanie -> {predmet: doc} — presne to, čo je naozaj na karte
   var seq=0;         // poradie položiek ako idú na karte
+  /* Kanonizácia podľa caseId: VŠETKY položky jednej karty patria do JEDNÉHO konania,
+     aj keď majú v data-snap rôzne (staré/premenované) názvy kauzy. Bez toho by sa karta
+     rozpadla na dve konania a časť položiek by v rozbaľovačoch chýbala. */
+  var canon={};
+  items.forEach(function(s){
+    if(!s || !s.caseId || canon[s.caseId]) return;
+    var hit=null;
+    for(var nm in CASES){ if(CASES[nm] && CASES[nm].id===s.caseId){ hit=nm; break; } }
+    canon[s.caseId]=hit||s.kauza||s.caseId;
+  });
   items.forEach(function(snap){
     try{
       if(!snap || !snap.subj) return;
-      // 1) kanonický názov konania — ak caseId sedí na existujúce CASES, použi jeho kľúč (proti duplicitám)
-      var konanie=snap.kauza||"";
-      if(snap.caseId){ for(var nm in CASES){ if(CASES[nm] && CASES[nm].id===snap.caseId){ konanie=nm; break; } } }
+      // 1) kanonický názov konania — jedna karta = jedno konanie (proti duplicitám aj rozpadu)
+      var konanie=(snap.caseId&&canon[snap.caseId])||snap.kauza||"";
       if(!konanie) return;
       // 2) kauzaKey
       var kk=snap.kauzaKey || kauzaKeyForKonanie(konanie) || "";
@@ -1706,7 +1719,15 @@ function makeSlot(idx){
     if(open===undefined) open = docList.style.display!=="block";
     if(open){
       docList.innerHTML="";
+      var lastGrp=null;
       [].forEach.call(docSel.options,function(o){
+        // deliaca čiara: hlavička skupiny (↗ ODOSLANÉ / ↙ PRIJATÉ) — rovnaké skupiny ako v natívnom výbere
+        var gp=(o.parentElement&&o.parentElement.tagName==="OPTGROUP")?o.parentElement.label:null;
+        if(gp!==lastGrp){
+          if(gp){ var h=document.createElement("div"); h.className="konopt grp"; h.textContent=gp; docList.appendChild(h); }
+          else if(lastGrp){ var sp=document.createElement("div"); sp.className="konsep"; docList.appendChild(sp); }
+          lastGrp=gp;
+        }
         const d=document.createElement("div");
         d.className="konopt"+(o.value===docSel.value?" sel":"");
         d.textContent=o.textContent;
