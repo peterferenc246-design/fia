@@ -3,8 +3,8 @@
   "_udrzba": "Po KAZDOM wp_section_replace: nastroj vypise 'old=X zn., new=Y zn.' -> posun = Y-X. Priraď posun ku VSETKYM offsetom vacsim nez miesto zasahu. Offsety pred zasahom sa nemenia. Aktualizuj aj page_chars. Ziadne dalsie citanie netreba.",
   "page_id": 303,
   "slug": "kauzy-koncept",
-  "page_chars": 733565,
-  "platne_k": "2026-07-18T12:41:13",
+  "page_chars": 743949,
+  "platne_k": "2026-07-18T13:57:27",
   "kotvy": [
     {
       "offset": 0,
@@ -49,6 +49,10 @@
     {
       "offset": 580278,
       "co": "karta case-m10815 — col-h stlpca PRIJATE (cnt 5), hned za koncom stlpca Odoslane"
+    },
+    {
+      "offset": 580500,
+      "co": "karta case-m10815 — ZACIATOK 1. polozky PRIJATE 'Potvrdenie o doruceni zaloby' (cmt-m10815-05, summod-m10815-05, VLAJKA-VIEWER)"
     }
   ],
   "poznamky": [
@@ -56,6 +60,7 @@
     "18.07.2026: dva zapisy do polozky e-Curia (+4940 a +4036 zn.) posunuli vsetko za offsetom 561418 o +8976. Offsety pred nim su nedotknute.",
     "Polozka e-Curia po zapise zabera cca 561418-577000 (19 viewer URL v data-snap aj v href).",
     "18.07.2026 12:16: VYMAZANA polozka 'e-Curia — Antrag auf Kontoeroeffnung' (-6487 zn.), pocitadlo Odoslane 4->3 (bez posunu). Vsetko za offsetom 576993 posunute o -6487.",
-    "18.07.2026 12:41: polozka 'Ziadost o ustanovenie advokata' — opraveny fname (bol tam nazov ineho dokumentu), doplneny fpath, fallback a suhrn (tlacidlo + 9-jaz. modal summod-m10815-02). Spolu +3278 zn.; vsetko za offsetom 554930 posunute o +3278."
+    "18.07.2026 12:41: polozka 'Ziadost o ustanovenie advokata' — opraveny fname (bol tam nazov ineho dokumentu), doplneny fpath, fallback a suhrn (tlacidlo + 9-jaz. modal summod-m10815-02). Spolu +3278 zn.; vsetko za offsetom 554930 posunute o +3278.",
+    "18.07.2026 13:57: polozka 'Potvrdenie o doruceni zaloby' — VLAJKA-VIEWER (19 URL), fname/fpath/fallback/suhrn. Spolu +10384 zn."
   ]
 }
