@@ -3,8 +3,8 @@
   "_udrzba": "Po KAZDOM wp_section_replace: nastroj vypise 'old=X zn., new=Y zn.' -> posun = Y-X. Priraď posun ku VSETKYM offsetom vacsim nez miesto zasahu. Offsety pred zasahom sa nemenia. Aktualizuj aj page_chars. Ziadne dalsie citanie netreba.",
   "page_id": 303,
   "slug": "kauzy-koncept",
-  "page_chars": 762151,
-  "platne_k": "2026-07-18T15:40:15",
+  "page_chars": 773115,
+  "platne_k": "2026-07-18T16:59:36",
   "kotvy": [
     {
       "offset": 0,
@@ -31,35 +31,39 @@
       "co": "karta UDZS — telo sprievodneho textu"
     },
     {
-      "offset": 506330,
+      "offset": 506335,
       "co": "karta case-m10815 — col-h stlpca ODOSLANE (<span class=\"cnt\">3</span>) + zaciatok polozky 'Nichtigkeitsklage (Art. 263 AEUV)'"
     },
     {
-      "offset": 520000,
+      "offset": 520005,
       "co": "karta case-m10815 — polozka 'Zaloba o neplatnost' (.open odkazy viewer)"
     },
     {
-      "offset": 554670,
+      "offset": 554675,
       "co": "karta case-m10815 — ZACIATOK polozky 'Ziadost o ustanovenie advokata' (cmt-m10815-02, summod-m10815-02)"
     },
     {
-      "offset": 564696,
+      "offset": 564701,
       "co": "karta case-m10815 — ZACIATOK polozky 'Odpoved na zamietnutie pristupu k e-Curia' (<div class=\"item\" data-snap=)"
     },
     {
-      "offset": 580278,
+      "offset": 580283,
       "co": "karta case-m10815 — col-h stlpca PRIJATE (cnt 5), hned za koncom stlpca Odoslane"
     },
     {
-      "offset": 580500,
+      "offset": 580505,
       "co": "karta case-m10815 — ZACIATOK 1. polozky PRIJATE 'Potvrdenie o doruceni zaloby' (cmt-m10815-05, summod-m10815-05, VLAJKA-VIEWER)"
     },
     {
-      "offset": 597957,
+      "offset": 597962,
       "co": "karta case-m10815 — 2. polozka PRIJATE 'Sprievodny list kancelarie (T-61/26 AJ)' (cmt-m10815-06, summod-m10815-06, VLAJKA-VIEWER)"
     },
     {
-      "offset": 621678,
+      "offset": 614875,
+      "co": "karta case-m10815 — 3. polozka PRIJATE 'Oznamenie sudu o zastupovani advokatom' (cmt-m10815-08, summod-m10815-08, VLAJKA-VIEWER)"
+    },
+    {
+      "offset": 632642,
       "co": "karta case-m10815 — POSLEDNA polozka PRIJATE 'Uznesenie predsedu sudu' (cmt-m10815-09, summod-m10815-09, VLAJKA-VIEWER)"
     }
   ],
@@ -73,6 +77,7 @@
     "18.07.2026 14:44: polozka 'Sprievodny list kancelarie' — VLAJKA-VIEWER (19 URL), datum 12.05.2026, fname/fpath/fallback/suhrn. Spolu +10126 zn.",
     "18.07.2026 14:50: polozka 'Sprievodny list kancelarie' — opraveny suhrn na 'sprievodny list k uzneseniu' (+234 zn.).",
     "18.07.2026 14:57: VYMAZANA polozka 'Europaische Kommission — Schreiben / Stellungnahme' (duplicita z testovania, -6546 zn.), pocitadlo Prijate 5->4 (bez posunu).",
-    "18.07.2026 15:40: polozka 'Uznesenie predsedu sudu' — VLAJKA-VIEWER (19 URL, klon 8 jazykov/16 stran), datum 12.05.2026, fname/fpath/fallback/suhrn. Spolu +14388 zn."
+    "18.07.2026 15:40: polozka 'Uznesenie predsedu sudu' — VLAJKA-VIEWER (19 URL, klon 8 jazykov/16 stran), datum 12.05.2026, fname/fpath/fallback/suhrn. Spolu +14388 zn.",
+    "18.07.2026 16:59: polozka cmt-m10815-08 — VLAJKA-VIEWER (klon Henze 8 jaz./16 stran), datum 22.12.2025, novy predmet 'Oznamenie sudu o zastupovani advokatom', fname/fpath/fallback/suhrn, cats area kartell+gdpr. Karta case-m10815: data-area='kartell gdpr'."
   ]
 }
