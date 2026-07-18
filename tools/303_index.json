@@ -3,8 +3,8 @@
   "_udrzba": "Po KAZDOM wp_section_replace: nastroj vypise 'old=X zn., new=Y zn.' -> posun = Y-X. Priraď posun ku VSETKYM offsetom vacsim nez miesto zasahu. Offsety pred zasahom sa nemenia. Aktualizuj aj page_chars. Ziadne dalsie citanie netreba.",
   "page_id": 303,
   "slug": "kauzy-koncept",
-  "page_chars": 754075,
-  "platne_k": "2026-07-18T14:44:00",
+  "page_chars": 754309,
+  "platne_k": "2026-07-18T14:50:31",
   "kotvy": [
     {
       "offset": 0,
@@ -66,6 +66,7 @@
     "18.07.2026 12:16: VYMAZANA polozka 'e-Curia — Antrag auf Kontoeroeffnung' (-6487 zn.), pocitadlo Odoslane 4->3 (bez posunu). Vsetko za offsetom 576993 posunute o -6487.",
     "18.07.2026 12:41: polozka 'Ziadost o ustanovenie advokata' — opraveny fname (bol tam nazov ineho dokumentu), doplneny fpath, fallback a suhrn (tlacidlo + 9-jaz. modal summod-m10815-02). Spolu +3278 zn.; vsetko za offsetom 554930 posunute o +3278.",
     "18.07.2026 13:57: polozka 'Potvrdenie o doruceni zaloby' — VLAJKA-VIEWER (19 URL), fname/fpath/fallback/suhrn. Spolu +10384 zn.",
-    "18.07.2026 14:44: polozka 'Sprievodny list kancelarie' — VLAJKA-VIEWER (19 URL), datum 12.05.2026, fname/fpath/fallback/suhrn. Spolu +10126 zn."
+    "18.07.2026 14:44: polozka 'Sprievodny list kancelarie' — VLAJKA-VIEWER (19 URL), datum 12.05.2026, fname/fpath/fallback/suhrn. Spolu +10126 zn.",
+    "18.07.2026 14:50: polozka 'Sprievodny list kancelarie' — opraveny suhrn na 'sprievodny list k uzneseniu' (+234 zn.)."
   ]
 }
