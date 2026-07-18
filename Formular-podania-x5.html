@@ -32,6 +32,7 @@
   .koncombo .konopt.sel{background:#E6F1FB}
   select[data-replyto]{color:#E91E8C;font-weight:800}
   select[data-replyto] option{color:#E91E8C;font-weight:700}
+  select[data-replyto] optgroup,select[data-doc] optgroup{color:#1F3864;font-weight:800;background:#EAF2FB;font-style:normal}
   .cardedit{margin-top:12px;display:grid;grid-template-columns:minmax(150px,1fr) 2fr;gap:14px;align-items:start}
   @media(max-width:640px){.cardedit{grid-template-columns:1fr}}
   .cardprev{display:flex;flex-direction:column;align-items:flex-start;gap:3px;border:1px solid rgba(31,56,100,.12);border-left:4px solid #FFCB3E;border-radius:10px;padding:9px 12px;background:linear-gradient(135deg,#fff,#FFF8E6);box-shadow:0 0 0 2px rgba(255,203,62,.5);font:13px/1.4 "Segoe UI",Calibri,Arial,sans-serif;color:#34435A}
@@ -391,6 +392,30 @@ const KONANIA_I18N = {
 function konDisplay(n){ var m=KONANIA_I18N[n]; return (m&&m[curLang])||n; }
 const DOKUMENTY_I18N = {"Nichtigkeitsklage (Art. 263 AEUV) — M.10815 · QES": {"de": "Nichtigkeitsklage (Art. 263 AEUV) — M.10815 · QES", "en": "Action for annulment (Art. 263 TFEU) — M.10815 · QES", "sk": "Žaloba o neplatnosť (čl. 263 ZFEÚ) — M.10815 · QES", "hr": "Tužba za poništenje (čl. 263 UFEU) — M.10815 · QES", "pl": "Skarga o stwierdzenie nieważności (art. 263 TFUE) — M.10815 · QES", "es": "Recurso de anulación (art. 263 TFUE) — M.10815 · QES", "it": "Ricorso di annullamento (art. 263 TFUE) — M.10815 · QES", "fr": "Recours en annulation (art. 263 TFUE) — M.10815 · QES", "sv": "Talan om ogiltigförklaring (art. 263 FEUF) — M.10815 · QES"}, "Antrag auf Beiordnung eines Rechtsanwalts · QES": {"de": "Antrag auf Beiordnung eines Rechtsanwalts · QES", "en": "Application for the appointment of a lawyer · QES", "sk": "Žiadosť o ustanovenie advokáta · QES", "hr": "Zahtjev za dodjelu odvjetnika · QES", "pl": "Wniosek o wyznaczenie adwokata · QES", "es": "Solicitud de designación de abogado · QES", "it": "Domanda di nomina di un avvocato · QES", "fr": "Demande de désignation d'un avocat · QES", "sv": "Ansökan om förordnande av advokat · QES"}, "Antwort auf die Ablehnung des e‑Curia‑Zugangs · QES": {"de": "Antwort auf die Ablehnung des e‑Curia‑Zugangs · QES", "en": "Reply to the refusal of e‑Curia access · QES", "sk": "Odpoveď na zamietnutie prístupu k e‑Curia · QES", "hr": "Odgovor na odbijanje pristupa e‑Curiji · QES", "pl": "Odpowiedź na odmowę dostępu do e‑Curii · QES", "es": "Respuesta a la denegación del acceso a e‑Curia · QES", "it": "Risposta al rifiuto dell'accesso a e‑Curia · QES", "fr": "Réponse au refus d'accès à e‑Curia · QES", "sv": "Svar på nekad åtkomst till e‑Curia · QES"}, "e‑Curia — Antrag auf Kontoeröffnung": {"de": "e‑Curia — Antrag auf Kontoeröffnung", "en": "e‑Curia — application to open an account", "sk": "e‑Curia — žiadosť o zriadenie konta", "hr": "e‑Curia — zahtjev za otvaranje računa", "pl": "e‑Curia — wniosek o otwarcie konta", "es": "e‑Curia — solicitud de apertura de cuenta", "it": "e‑Curia — domanda di apertura del conto", "fr": "e‑Curia — demande d'ouverture de compte", "sv": "e‑Curia — ansökan om att öppna konto"}, "Eingangsbestätigung der Klage / Az.-Zuteilung (Kanzlei des Gerichts)": {"de": "Eingangsbestätigung der Klage / Az.-Zuteilung (Kanzlei des Gerichts)", "en": "Acknowledgment of receipt of the action / case-number assignment (Registry of the Court)", "sk": "Potvrdenie o doručení žaloby / pridelenie spis. zn. (kancelária súdu)", "hr": "Potvrda o primitku tužbe / dodjela broja predmeta (tajništvo Suda)", "pl": "Potwierdzenie wpływu skargi / nadanie sygnatury (sekretariat Sądu)", "es": "Acuse de recibo del recurso / asignación de número de asunto (Secretaría del Tribunal)", "it": "Conferma di ricezione del ricorso / assegnazione del numero di causa (cancelleria del Tribunale)", "fr": "Accusé de réception du recours / attribution du numéro d'affaire (greffe du Tribunal)", "sv": "Bekräftelse på mottagande av talan / tilldelning av målnummer (tribunalens kansli)"}, "Beschluss des Gerichtspräsidenten — Ablehnung der Prozesskostenhilfe": {"de": "Beschluss des Gerichtspräsidenten — Ablehnung der Prozesskostenhilfe", "en": "Order of the President of the Court — refusal of legal aid", "sk": "Uznesenie predsedu súdu — zamietnutie právnej pomoci (trov konania)", "hr": "Rješenje predsjednika Suda — odbijanje besplatne pravne pomoći", "pl": "Postanowienie prezesa Sądu — odmowa pomocy prawnej", "es": "Auto del Presidente del Tribunal — denegación de la asistencia jurídica gratuita", "it": "Ordinanza del presidente del Tribunale — rigetto del gratuito patrocinio", "fr": "Ordonnance du président du Tribunal — refus de l'aide juridictionnelle", "sv": "Beslut av tribunalens ordförande — avslag på rättshjälp"}, "Begleitschreiben der Kanzlei (T‑61/26 AJ)": {"de": "Begleitschreiben der Kanzlei (T‑61/26 AJ)", "en": "Cover letter from the Registry (T‑61/26 AJ)", "sk": "Sprievodný list kancelárie súdu (T‑61/26 AJ)", "hr": "Popratni dopis tajništva (T‑61/26 AJ)", "pl": "Pismo przewodnie sekretariatu (T‑61/26 AJ)", "es": "Escrito de acompañamiento de la Secretaría (T‑61/26 AJ)", "it": "Lettera di accompagnamento della cancelleria (T‑61/26 AJ)", "fr": "Lettre d'accompagnement du greffe (T‑61/26 AJ)", "sv": "Följebrev från tribunalens kansli (T‑61/26 AJ)"}, "Europäische Kommission — Schreiben / Stellungnahme": {"de": "Europäische Kommission — Schreiben / Stellungnahme", "en": "European Commission — letter / opinion", "sk": "Európska komisia — list / stanovisko", "hr": "Europska komisija — dopis / očitovanje", "pl": "Komisja Europejska — pismo / stanowisko", "es": "Comisión Europea — escrito / observaciones", "it": "Commissione europea — lettera / parere", "fr": "Commission européenne — lettre / prise de position", "sv": "Europeiska kommissionen — skrivelse / yttrande"}, "Eilantrag — Zustellungsbestätigung (Lesebestätigung)": {"de": "Eilantrag — Zustellungsbestätigung (Lesebestätigung)", "en": "Urgent application — confirmation of service (read receipt)", "sk": "Naliehavý návrh — potvrdenie o doručení (potvrdenie prečítania)", "hr": "Hitni zahtjev — potvrda o dostavi (potvrda čitanja)", "pl": "Wniosek w trybie pilnym — potwierdzenie doręczenia (potwierdzenie odczytu)", "es": "Solicitud urgente — confirmación de notificación (confirmación de lectura)", "it": "Istanza urgente — conferma di notifica (conferma di lettura)", "fr": "Demande en référé — confirmation de notification (accusé de lecture)", "sv": "Brådskande ansökan — delgivningsbekräftelse (läskvitto)"}, "Förmliche Beschwerde (Form C) — mutmaßliche Kartellpraktiken": {"de": "Förmliche Beschwerde (Form C) — mutmaßliche Kartellpraktiken", "en": "Formal complaint (Form C) — alleged cartel practices", "sk": "Formálna sťažnosť (Form C) — údajné kartelové praktiky", "hr": "Formalna pritužba (Form C) — navodne kartelne prakse", "pl": "Formalna skarga (Form C) — domniemane praktyki kartelowe", "es": "Denuncia formal (Form C) — presuntas prácticas de cártel", "it": "Denuncia formale (Form C) — presunte pratiche di cartello", "fr": "Plainte formelle (Form C) — pratiques d'entente présumées", "sv": "Formellt klagomål (Form C) — påstådda kartellförfaranden"}, "Strafrechtliche Mitteilung": {"de": "Strafrechtliche Mitteilung", "en": "Criminal notification", "sk": "Trestné oznámenie", "hr": "Kaznena prijava", "pl": "Zawiadomienie o przestępstwie", "es": "Denuncia penal", "it": "Denuncia penale", "fr": "Signalement pénal", "sv": "Brottsanmälan"}};
 function docDisplay(n){ var m=DOKUMENTY_I18N[n]; return (m&&m[curLang])||n; }
+/* ===== PORADIE + DELIACA ČIARA V ROZBAĽOVAČOCH =====
+   Dokumenty radíme presne v poradí, v akom sú položky na karte (_seq zo živého inventára #303),
+   a delíme ich na ↗ ODOSLANÉ a ↙ PRIJATÉ cez <optgroup> = viditeľná deliaca čiara s nadpisom.
+   Platí automaticky pre všetky konania — existujúce aj budúce. */
+function docOrderedKeys(def){
+  if(!def||!def.docs) return [];
+  return Object.keys(def.docs).map(function(k,i){
+    var d=def.docs[k]; return {k:k, o:((d&&typeof d._seq==="number")?d._seq:(1000000+i))};
+  }).sort(function(a,b){ return a.o-b.o; }).map(function(x){ return x.k; });
+}
+function docDirOf(def,k){ var d=(def&&def.docs)?def.docs[k]:null; return (d&&d._dir)||"sent"; }
+const GRP_LBL={sent:"↗ ODOSLANÉ ──────────────────", recv:"↙ PRIJATÉ ───────────────────"};
+function addDocGroup(sel,def,keys,want,opts){
+  opts=opts||{};
+  var list=keys.filter(function(k){ return docDirOf(def,k)===want && k!==opts.skip; });
+  if(!list.length) return;
+  var g=document.createElement("optgroup"); g.label=GRP_LBL[want];
+  list.forEach(function(nm){
+    var o=document.createElement("option"); o.value=nm;
+    o.textContent=(opts.arrows?(want==="sent"?"↗ ":"↙ "):"")+docDisplay(nm);
+    g.appendChild(o);
+  });
+  sel.appendChild(g);
+}
 const KAUZA_LBL_I18N = {
   "k-jv":{de:"🇩🇪🇪🇺 Telekom — Kartell / Joint Venture",en:"🇩🇪🇪🇺 Telekom — cartel / joint venture",sk:"🇩🇪🇪🇺 Telekom — kartel / Joint Venture",hr:"🇩🇪🇪🇺 Telekom — kartel / zajednički pothvat",pl:"🇩🇪🇪🇺 Telekom — kartel / wspólne przedsiębiorstwo",es:"🇩🇪🇪🇺 Telekom — cártel / empresa común",it:"🇩🇪🇪🇺 Telekom — cartello / impresa comune",fr:"🇩🇪🇪🇺 Telekom — entente / entreprise commune",sv:"🇩🇪🇪🇺 Telekom — kartell / joint venture"},
   "k-fon":{de:"🇩🇪 Telefónica — Betrug",en:"🇩🇪 Telefónica — fraud",sk:"🇩🇪 Telefónica — podvod",hr:"🇩🇪 Telefónica — prijevara",pl:"🇩🇪 Telefónica — oszustwo",es:"🇩🇪 Telefónica — fraude",it:"🇩🇪 Telefónica — frode",fr:"🇩🇪 Telefónica — fraude",sv:"🇩🇪 Telefónica — bedrägeri"},
@@ -432,6 +457,8 @@ function _snapToDoc(snap){
 function mergeLiveInventory(items){
   if(!items || !items.length) return false;
   var changed=false;
+  var liveDocs={};   // konanie -> {predmet: doc} — presne to, čo je naozaj na karte
+  var seq=0;         // poradie položiek ako idú na karte
   items.forEach(function(snap){
     try{
       if(!snap || !snap.subj) return;
@@ -464,15 +491,23 @@ function mergeLiveInventory(items){
       if(!CASES[konanie].docs) CASES[konanie].docs={};
       // 5) dokument = živý snap; NEDEGRADUJ existujúce per-jazyk odkazy, ak živý snap má len fallback
       var doc=_snapToDoc(snap);
+      doc._seq=seq++;                       // poradie presne ako na karte (DOM poradie položiek)
       var existing=CASES[konanie].docs[snap.subj];
       if(existing){
         var liveHasLang=(LANGS||[]).some(function(l){ return doc[l]; });
         if(!liveHasLang){ (LANGS||[]).forEach(function(l){ if(existing[l]) doc[l]=existing[l]; }); if(!doc._fallback && existing._fallback) doc._fallback=existing._fallback; }
       }
-      CASES[konanie].docs[snap.subj]=doc;
+      if(!liveDocs[konanie]) liveDocs[konanie]={};
+      liveDocs[konanie][snap.subj]=doc;
       changed=true;
     }catch(e){}
   });
+  /* ŽIVÝ REGISTER = ÚPLNÁ PRAVDA: konanie, ktoré prišlo v inventári, má PRÁVE tie dokumenty,
+     ktoré sú naozaj na karte — hardcoded zoznam sa pre toto konanie zahodí.
+     Bez tohto v rozbaľovačoch prežívali staré/premenované/zmazané názvy ako duchovia
+     a každý dokument sa zobrazoval dvakrát (nemecký hardcoded kľúč + živý slovenský predmet).
+     Hardcoded CASES ostáva fallbackom len pre konania, ktoré v inventári vôbec nie sú. */
+  Object.keys(liveDocs).forEach(function(kn){ if(CASES[kn]) CASES[kn].docs=liveDocs[kn]; });
   if(changed){ try{ CASE_NAMES.length=0; Object.keys(CASES).forEach(function(k){ CASE_NAMES.push(k); }); }catch(e){} }
   return changed;
 }
@@ -680,7 +715,7 @@ function makeSlot(idx){
           <label class="chk imp" style="margin-top:12px"><input type="checkbox" data-imp> ❗ Označiť ako dôležité (červený výkričník + ľavý okraj)</label>
       <label class="chk" style="margin-top:12px"><input type="checkbox" data-cmt> 💬 Povoliť komentáre k tomuto dokumentu (kcmt + cmt-wrap placeholder)</label>
       <div style="flex:0 0 auto;width:100%">
-        <div class="fld" style="margin-top:12px"><label>↩ Odpoveď na (vlákno — vyber dokument OPAČNÉHO smeru, na ktorý táto položka reaguje)</label><select data-replyto><option value="">— bez väzby —</option></select></div>
+        <div class="fld" style="margin-top:12px"><label>↩ Odpoveď na (vlákno — vyber dokument, na ktorý táto položka reaguje; zoznam je delený na ↗ ODOSLANÉ a ↙ PRIJATÉ, v poradí ako na karte)</label><select data-replyto><option value="">— bez väzby —</option></select></div>
         <div class="fld" style="margin-top:12px"><label>🛈 Názov súboru — vidíš LEN ty ako prihlásený admin, verejnosť nie (pomôcka pri kontrole, ktorý súbor je za predmetom)</label><input data-fname></div>
         <div class="fld" style="margin-top:12px"><label>📁 Cesta k súboru — vidíš LEN ty ako prihlásený admin (kam máš súbor uložený; vlož si sem cestu, nech ju máš pri položke po ruke)</label><input data-fpath></div>
         <div class="fld" style="margin-top:12px"><label>🔗 Extra odkaz položky — text (voliteľné)</label><input data-extralabel></div>
@@ -880,7 +915,9 @@ function makeSlot(idx){
     const prev=docSel.value;
     docSel.innerHTML="";
     if((action==="fix"||action==="del") && def && def.docs){
-      Object.keys(def.docs).forEach(name=>{ const o=document.createElement("option"); o.value=name; o.textContent=docDisplay(name); docSel.appendChild(o); });
+      const keys=docOrderedKeys(def);
+      addDocGroup(docSel,def,keys,"sent",{});
+      addDocGroup(docSel,def,keys,"recv",{});
     }
     const on=document.createElement("option"); on.value=NEWDOC; on.textContent="➕ Nový dokument"; docSel.appendChild(on);
     let keep=false;
@@ -914,10 +951,13 @@ function makeSlot(idx){
     const prev = keep!==undefined ? keep : replySel.value;
     replySel.innerHTML = '<option value="">— bez väzby —</option>';
     const def=CASES[konanieSel.value];
-    if(def&&def.docs){ Object.keys(def.docs).forEach(function(nm){
-      const dd=def.docs[nm]; const ddir=(dd&&dd._dir)||"sent";
-      if(ddir!==dir){ const o=document.createElement("option"); o.value=nm; o.textContent=(ddir==="sent"?"↗ ":"↙ ")+docDisplay(nm); replySel.appendChild(o); }
-    }); }
+    if(def&&def.docs){
+      const keys=docOrderedKeys(def);
+      // vlastnú položku (tú, ktorú práve opravujem) do zoznamu nedávam — nemôže byť odpoveďou na seba
+      const self=((action==="fix"||action==="del")&&docSel&&docSel.value&&docSel.value!==NEWDOC)?docSel.value:"";
+      addDocGroup(replySel,def,keys,"sent",{arrows:true,skip:self});
+      addDocGroup(replySel,def,keys,"recv",{arrows:true,skip:self});
+    }
     if(prev){ replySel.value=prev; if(replySel.value!==prev){ const o=document.createElement("option"); o.value=prev; o.textContent="• "+docDisplay(prev); replySel.appendChild(o); replySel.value=prev; } }
   }
   function setDir(d){ dir=d; root.querySelectorAll('[data-dir] button').forEach(x=>x.classList.toggle('on',x.dataset.d===d));
