@@ -83,6 +83,7 @@
   var ORIG = qs.get("orig") || "";   // voliteľné: URL podpísaného originálu (QES) pre tlačidlo download
   var LANGS = qs.get("langs") || "";
   var TARGET = Math.max(1, parseInt(qs.get("page") || "1", 10) || 1);
+  var QJUMP  = qs.get("qj") === "1";   // prišli sme cez tlačidlo ✍ QES -> zarovnaj na podpis
   var ACTIVE_DOC = qs.get("d") === "2" ? 2 : 1;                  // ktorý doc je otvorený
   var DOC = ACTIVE_DOC === 2 ? DOC2 : DOC1;
   var scale = window.innerWidth < 600 ? 1.1 : 1.5;
@@ -148,11 +149,12 @@
     qa.textContent = "\u270D QES";
     if (qDoc === ACTIVE_DOC) {
       qa.href = "#";
-      qa.onclick = function(ev){ ev.preventDefault(); jumpTo(qPage); };
+      qa.onclick = function(ev){ ev.preventDefault(); jumpTo(qPage, 0, true); };
     } else {
       var qu = new URL(location.href);
       qu.searchParams.set("d", String(qDoc));
       qu.searchParams.set("page", String(qPage));
+      qu.searchParams.set("qj", "1");
       qa.href = qu.toString();
     }
     bar.appendChild(qa);
@@ -252,10 +254,10 @@
     wraps.forEach(function(w){ io.observe(w); });
     window.addEventListener("scroll", throttle(updateCurrent,200));
     elStatus.textContent="";
-    jumpTo(TARGET);
+    jumpTo(TARGET, 0, QJUMP);
   }).catch(function(e){ fail(e && e.message ? e.message : String(e)); });
 
-  function jumpTo(n, tries){
+  function jumpTo(n, tries, bottom){
     if (!wraps.length) return;
     n = Math.min(Math.max(1,n), wraps.length);
     tries = tries || 0;
@@ -265,10 +267,24 @@
     var doScroll = function(){
       var hdr = document.querySelector("header");
       var off = (hdr ? hdr.offsetHeight : 0) + 4;
-      var y = wraps[n-1].getBoundingClientRect().top + window.pageYOffset - off;
+      var r = wraps[n-1].getBoundingClientRect();
+      var y;
+      if (bottom){
+        // podpisový blok je v dolnej časti strany -> zarovnaj SPODOK strany na spodok okna
+        y = r.top + window.pageYOffset + r.height - window.innerHeight + 10;
+        if (y < r.top + window.pageYOffset - off) y = r.top + window.pageYOffset - off;
+      } else {
+        y = r.top + window.pageYOffset - off;
+      }
       window.scrollTo(0, y < 0 ? 0 : y);
       updateCurrent();
-      if (tries < 10){
+      if (bottom){
+        // strana sa dorenderováva -> zopakuj, kým sa jej výška ustáli
+        if (tries < 6 && Math.abs(wraps[n-1].getBoundingClientRect().height - r.height) > 2)
+          setTimeout(function(){ jumpTo(n, tries+1, true); }, 200);
+        else if (tries < 3)
+          setTimeout(function(){ jumpTo(n, tries+1, true); }, 250);
+      } else if (tries < 10){
         var cur = parseInt(elCur.textContent, 10) || 1;
         if (cur !== n) setTimeout(function(){ jumpTo(n, tries+1); }, 130);
       }
