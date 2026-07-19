@@ -3,8 +3,8 @@
   "_udrzba": "Po KAZDOM wp_section_replace: nastroj vypise 'old=X zn., new=Y zn.' -> posun = Y-X. Priraď posun ku VSETKYM offsetom vacsim nez miesto zasahu. Offsety pred zasahom sa nemenia. Aktualizuj aj page_chars. Ziadne dalsie citanie netreba.",
   "page_id": 303,
   "slug": "kauzy-koncept",
-  "page_chars": 809199,
-  "platne_k": "2026-07-19T08:43:54",
+  "page_chars": 816555,
+  "platne_k": "2026-07-19T08:55:10",
   "kotvy": [
     {
       "offset": 0,
@@ -93,6 +93,7 @@
     "18.07.2026 16:59: polozka cmt-m10815-08 — VLAJKA-VIEWER (klon Henze 8 jaz./16 stran), datum 22.12.2025, novy predmet 'Oznamenie sudu o zastupovani advokatom', fname/fpath/fallback/suhrn, cats area kartell+gdpr. Karta case-m10815: data-area='kartell gdpr'.",
     "18.07.2026 17:03: polozka cmt-m10815-05 'Potvrdenie o doruceni zaloby' — doplneny datum 22.12.2025 (+18 zn.).",
     "19.07.2026 08:10: karta case-dgcomp, polozka cmt-dgcomp-02 — doplneny fpath, fallback a 9-jazycny suhrn (moj rozbor dokumentu + Petrov komentar). Spolu +18156 zn.",
-    "19.07.2026 08:43: polozka cmt-dgcomp-03 — doplneny 9-jazycny suhrn s hypertextom na M.10815 (body 138-142, str. 28-31). Pozn.: snap tejto polozky NEMA cmtid/begleit/court/stav — konci na '\"comments\":true,\"pwhint\":\"\"'. Spolu +17910 zn."
+    "19.07.2026 08:43: polozka cmt-dgcomp-03 — doplneny 9-jazycny suhrn s hypertextom na M.10815 (body 138-142, str. 28-31). Pozn.: snap tejto polozky NEMA cmtid/begleit/court/stav — konci na '\"comments\":true,\"pwhint\":\"\"'. Spolu +17910 zn.",
+    "19.07.2026 08:55: polozka cmt-dgcomp-03 — vsetky pravne predpisy v suhrne olinkovane (eur-lex CELEX 32001R1049, 12016E015, 12012P/TXT, 32016R0679, 32002L0058; dsgvo-gesetz.de art-4; competition-cases M.10815) vo vsetkych 9 jazykoch. Spolu +7356 zn."
   ]
 }
