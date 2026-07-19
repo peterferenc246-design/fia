@@ -72,8 +72,10 @@
        page  = úvodná strana v primárnom PDF
        langs = CODE:PAGE[:2|:o],...   tretí token "2" = jazyk žije v doc2;
                "o" = vlajka je externý odkaz na orig= (reálne odoslaný podpísaný originál, nový tab)
-       qes   = PAGE[:DOC]  strana s vizuálnym QES podpisom -> tlačidlo "✍ QES" za poslednou vlajkou;
-               DOC nepovinné (default 2, ak je doc2, inak 1)
+       qes   = PAGE[:DOC[:ALIGN]]  strana s vizuálnym QES podpisom -> tlačidlo "✍ QES"
+               za poslednou vlajkou. ZADÁVA SA VŽDY RUČNE (poloha podpisu aj podpisový
+               jazyk sa menia dokument od dokumentu). DOC default 2, ak je doc2.
+               ALIGN: b = spodok strany (default), t = vrch, 0..1 = pomer výšky strany
        orig  = URL podpísaného originálu (QES) — tlačidlo download + cieľ vlajok s tokenom ":o"; ak chýba, sťahuje sa doc
      Bez parametrov beží DEMO konfigurácia case-telekom (9 jazykov).
      ============================================================ */
@@ -83,7 +85,7 @@
   var ORIG = qs.get("orig") || "";   // voliteľné: URL podpísaného originálu (QES) pre tlačidlo download
   var LANGS = qs.get("langs") || "";
   var TARGET = Math.max(1, parseInt(qs.get("page") || "1", 10) || 1);
-  var QJUMP  = qs.get("qj") === "1";   // prišli sme cez tlačidlo ✍ QES -> zarovnaj na podpis
+  var QJUMP  = qs.get("qj") || 0;      // prišli sme cez tlačidlo ✍ QES -> zarovnanie na podpis
   var ACTIVE_DOC = qs.get("d") === "2" ? 2 : 1;                  // ktorý doc je otvorený
   var DOC = ACTIVE_DOC === 2 ? DOC2 : DOC1;
   var scale = window.innerWidth < 600 ? 1.1 : 1.5;
@@ -124,37 +126,29 @@
   // ---- tlačidlo skoku na vizuálny QES podpis (za poslednou vlajkou) ----
   var qesBtnEl=null;
   var QESP = qs.get("qes") || "";
-  var qPage = 0, qDoc = 0;
+  var qPage = 0, qDoc = 0, QALIGN = "b";
   if (QESP) {
     // (a) explicitne zadaná strana — má prednosť
+    // qes=PAGE[:DOC[:ALIGN]]   ALIGN: b=spodok strany (default), t=vrch, 0..1=pomer výšky
     var qp = QESP.split(":");
     qPage = Math.max(1, parseInt(qp[0], 10) || 1);
-    qDoc  = qp[1] === "1" ? 1 : (DOC2 ? 2 : 1);
-  } else if (DOC2) {
-    // (b) auto: vizuálny QES podpis je na POSLEDNEJ strane jazykového bloku
-    //     prvého jazyka, ktorý žije v podpísanom origináli (token :2)
-    for (var qi = 0; qi < langs.length; qi++) {
-      if (langs[qi].doc === 2) {
-        var qStart = langs[qi].page;
-        var qNext  = langs[qi+1] ? langs[qi+1].page : 0;
-        qPage = (qNext > qStart) ? (qNext - 1) : qStart;
-        qDoc  = 2;
-        break;
-      }
-    }
+    qDoc  = qp[1] === "1" ? 1 : (qp[1] === "2" ? 2 : (DOC2 ? 2 : 1));
+    QALIGN = (qp[2] === undefined || qp[2] === "") ? "b" : qp[2];
   }
+  // Auto-odvodenie NEEXISTUJE: poloha podpisu aj podpisový jazyk sa menia
+  // dokument od dokumentu -> bez parametra qes= sa tlačidlo NEVYKRESLÍ.
   if (qPage) {
     var qa = document.createElement("a");
     qa.className = "qesjump";
     qa.textContent = "\u270D QES";
     if (qDoc === ACTIVE_DOC) {
       qa.href = "#";
-      qa.onclick = function(ev){ ev.preventDefault(); jumpTo(qPage, 0, true); };
+      qa.onclick = function(ev){ ev.preventDefault(); jumpTo(qPage, 0, QALIGN); };
     } else {
       var qu = new URL(location.href);
       qu.searchParams.set("d", String(qDoc));
       qu.searchParams.set("page", String(qPage));
-      qu.searchParams.set("qj", "1");
+      qu.searchParams.set("qj", String(QALIGN));
       qa.href = qu.toString();
     }
     bar.appendChild(qa);
@@ -257,7 +251,7 @@
     jumpTo(TARGET, 0, QJUMP);
   }).catch(function(e){ fail(e && e.message ? e.message : String(e)); });
 
-  function jumpTo(n, tries, bottom){
+  function jumpTo(n, tries, align){
     if (!wraps.length) return;
     n = Math.min(Math.max(1,n), wraps.length);
     tries = tries || 0;
@@ -268,22 +262,31 @@
       var hdr = document.querySelector("header");
       var off = (hdr ? hdr.offsetHeight : 0) + 4;
       var r = wraps[n-1].getBoundingClientRect();
+      var top = r.top + window.pageYOffset;
       var y;
-      if (bottom){
-        // podpisový blok je v dolnej časti strany -> zarovnaj SPODOK strany na spodok okna
-        y = r.top + window.pageYOffset + r.height - window.innerHeight + 10;
-        if (y < r.top + window.pageYOffset - off) y = r.top + window.pageYOffset - off;
+      if (align){
+        var frac = parseFloat(align);
+        if (align === "b" || align === true){
+          // podpis v dolnej časti strany -> spodok strany na spodok okna
+          y = top + r.height - window.innerHeight + 10;
+        } else if (frac > 0 && frac < 1){
+          // podpis v danom pomere výšky strany -> vycentruj ho
+          y = top + r.height * frac - window.innerHeight / 2;
+        } else {
+          y = top - off;
+        }
+        if (y < top - off) y = top - off;
       } else {
-        y = r.top + window.pageYOffset - off;
+        y = top - off;
       }
       window.scrollTo(0, y < 0 ? 0 : y);
       updateCurrent();
-      if (bottom){
+      if (align){
         // strana sa dorenderováva -> zopakuj, kým sa jej výška ustáli
         if (tries < 6 && Math.abs(wraps[n-1].getBoundingClientRect().height - r.height) > 2)
-          setTimeout(function(){ jumpTo(n, tries+1, true); }, 200);
+          setTimeout(function(){ jumpTo(n, tries+1, align); }, 200);
         else if (tries < 3)
-          setTimeout(function(){ jumpTo(n, tries+1, true); }, 250);
+          setTimeout(function(){ jumpTo(n, tries+1, align); }, 250);
       } else if (tries < 10){
         var cur = parseInt(elCur.textContent, 10) || 1;
         if (cur !== n) setTimeout(function(){ jumpTo(n, tries+1); }, 130);
