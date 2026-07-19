@@ -217,7 +217,6 @@
         btn.classList.add('active');
         state.sort = attr(btn, 'sort') || 'date';
         applySort();
-    sortItems();
       });
     });
 
@@ -236,6 +235,7 @@
 
     applyFilter();
     applySort();
+    sortItems();
     relight();
     renderPinBadges();
   }
