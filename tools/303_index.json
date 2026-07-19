@@ -3,8 +3,8 @@
   "_udrzba": "Po KAZDOM wp_section_replace: nastroj vypise 'old=X zn., new=Y zn.' -> posun = Y-X. Priraď posun ku VSETKYM offsetom vacsim nez miesto zasahu. Offsety pred zasahom sa nemenia. Aktualizuj aj page_chars. Ziadne dalsie citanie netreba.",
   "page_id": 303,
   "slug": "kauzy-koncept",
-  "page_chars": 816555,
-  "platne_k": "2026-07-19T08:55:10",
+  "page_chars": 843354,
+  "platne_k": "2026-07-19T14:43:37",
   "kotvy": [
     {
       "offset": 0,
@@ -68,15 +68,23 @@
     },
     {
       "offset": 676800,
+      "co": "karta case-dgcomp — <details ...> data-area='kartell gdpr majetok' (~675640), .case-meta ~677500"
+    },
+    {
+      "offset": 676808,
       "co": "karta case-dgcomp — hlavicka (.case-meta ~677500, col-h ODOSLANE ~680300)"
     },
     {
-      "offset": 680350,
+      "offset": 680358,
       "co": "karta case-dgcomp — polozka 'Formalne odvolanie ... pristup k dokumentom JV' (cmt-dgcomp-02, summod-dgcomp-02)"
     },
     {
-      "offset": 708400,
+      "offset": 708408,
       "co": "karta case-dgcomp — polozka 'Prvotna ziadost o pristup k dokumentom' (cmt-dgcomp-03, summod-dgcomp-03)"
+    },
+    {
+      "offset": 744940,
+      "co": "karta case-dgcomp — col-h PRIJATE (cnt 1) + polozka 'EASE 2025/6534 list DG COMP' (cmt-dgcomp-04, summod-dgcomp-04, VLAJKA-VIEWER na dok. 11)"
     }
   ],
   "poznamky": [
@@ -94,6 +102,7 @@
     "18.07.2026 17:03: polozka cmt-m10815-05 'Potvrdenie o doruceni zaloby' — doplneny datum 22.12.2025 (+18 zn.).",
     "19.07.2026 08:10: karta case-dgcomp, polozka cmt-dgcomp-02 — doplneny fpath, fallback a 9-jazycny suhrn (moj rozbor dokumentu + Petrov komentar). Spolu +18156 zn.",
     "19.07.2026 08:43: polozka cmt-dgcomp-03 — doplneny 9-jazycny suhrn s hypertextom na M.10815 (body 138-142, str. 28-31). Pozn.: snap tejto polozky NEMA cmtid/begleit/court/stav — konci na '\"comments\":true,\"pwhint\":\"\"'. Spolu +17910 zn.",
-    "19.07.2026 08:55: polozka cmt-dgcomp-03 — vsetky pravne predpisy v suhrne olinkovane (eur-lex CELEX 32001R1049, 12016E015, 12012P/TXT, 32016R0679, 32002L0058; dsgvo-gesetz.de art-4; competition-cases M.10815) vo vsetkych 9 jazykoch. Spolu +7356 zn."
+    "19.07.2026 08:55: polozka cmt-dgcomp-03 — vsetky pravne predpisy v suhrne olinkovane (eur-lex CELEX 32001R1049, 12016E015, 12012P/TXT, 32016R0679, 32002L0058; dsgvo-gesetz.de art-4; competition-cases M.10815) vo vsetkych 9 jazykoch. Spolu +7356 zn.",
+    "19.07.2026 14:43: karta case-dgcomp — NOVA polozka v stlpci PRIJATE (list DG COMP EASE 2025/6534), 19 viewer URL na dok.11 (9 jaz. klon @96aa19e + EN original @98aa05b), 9-jaz. predmet a suhrn, dolezita, cnt 0->1, .empty odstraneny. Karta data-area -> 'kartell gdpr majetok'. Spolu +26799 zn."
   ]
 }
