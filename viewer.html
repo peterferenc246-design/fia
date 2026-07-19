@@ -123,10 +123,26 @@
   // ---- tlačidlo skoku na vizuálny QES podpis (za poslednou vlajkou) ----
   var qesBtnEl=null;
   var QESP = qs.get("qes") || "";
+  var qPage = 0, qDoc = 0;
   if (QESP) {
+    // (a) explicitne zadaná strana — má prednosť
     var qp = QESP.split(":");
-    var qPage = Math.max(1, parseInt(qp[0], 10) || 1);
-    var qDoc  = qp[1] === "1" ? 1 : (DOC2 ? 2 : 1);
+    qPage = Math.max(1, parseInt(qp[0], 10) || 1);
+    qDoc  = qp[1] === "1" ? 1 : (DOC2 ? 2 : 1);
+  } else if (DOC2) {
+    // (b) auto: vizuálny QES podpis je na POSLEDNEJ strane jazykového bloku
+    //     prvého jazyka, ktorý žije v podpísanom origináli (token :2)
+    for (var qi = 0; qi < langs.length; qi++) {
+      if (langs[qi].doc === 2) {
+        var qStart = langs[qi].page;
+        var qNext  = langs[qi+1] ? langs[qi+1].page : 0;
+        qPage = (qNext > qStart) ? (qNext - 1) : qStart;
+        qDoc  = 2;
+        break;
+      }
+    }
+  }
+  if (qPage) {
     var qa = document.createElement("a");
     qa.className = "qesjump";
     qa.textContent = "\u270D QES";
