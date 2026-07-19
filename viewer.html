@@ -28,6 +28,7 @@
   #langbar a{padding:4px 0;width:44px;text-align:center;border-radius:5px;color:#fff;
     font-weight:bold;font-size:13px;text-decoration:none;border:2px solid transparent;}
   #langbar a.active{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);cursor:default;}
+  #langbar a.qesjump{width:auto;padding:4px 11px;background:var(--gold);color:#000;font-weight:700;border-color:#8a6d00;}
   .f-DE{background:#1F3864}.f-HR{background:#C00000}.f-EN{background:#2E75B6}.f-FR{background:#7030A0}
   .f-PL{background:#C55A11}.f-IT{background:#00B050}.f-SK{background:#1F7A7A}.f-ES{background:#A0326E}.f-SV{background:#806000}.f-GA{background:#169B62}
   #status{color:#fff;font-size:13px;padding:6px 12px;}
@@ -71,6 +72,8 @@
        page  = úvodná strana v primárnom PDF
        langs = CODE:PAGE[:2|:o],...   tretí token "2" = jazyk žije v doc2;
                "o" = vlajka je externý odkaz na orig= (reálne odoslaný podpísaný originál, nový tab)
+       qes   = PAGE[:DOC]  strana s vizuálnym QES podpisom -> tlačidlo "✍ QES" za poslednou vlajkou;
+               DOC nepovinné (default 2, ak je doc2, inak 1)
        orig  = URL podpísaného originálu (QES) — tlačidlo download + cieľ vlajok s tokenom ":o"; ak chýba, sťahuje sa doc
      Bez parametrov beží DEMO konfigurácia case-telekom (9 jazykov).
      ============================================================ */
@@ -116,10 +119,34 @@
   var QES_LABELS={DE:"Signiertes Original (QES)",EN:"Signed original (QES)",SK:"Podpísaný originál (QES)",HR:"Potpisani izvornik (QES)",PL:"Podpisany oryginał (QES)",ES:"Original firmado (QES)",IT:"Originale firmato (QES)",FR:"Original signé (QES)",SV:"Signerat original (QES)"};
   var REL_LABELS_EINW={DE:"Einwendung gegen die Vollstreckung (ZOLL/DAK)",EN:"Objection to enforcement (Einwendung ZOLL/DAK)",SK:"Námietka proti exekúcii (Einwendung ZOLL/DAK)",HR:"Prigovor protiv ovrhe (Einwendung ZOLL/DAK)",PL:"Sprzeciw wobec egzekucji (Einwendung ZOLL/DAK)",ES:"Oposición a la ejecución (Einwendung ZOLL/DAK)",IT:"Opposizione all'esecuzione (Einwendung ZOLL/DAK)",FR:"Opposition à l'exécution (Einwendung ZOLL/DAK)",SV:"Bestridande av verkställighet (Einwendung ZOLL/DAK)"};
   var relButtonEl=null;
+
+  // ---- tlačidlo skoku na vizuálny QES podpis (za poslednou vlajkou) ----
+  var qesBtnEl=null;
+  var QESP = qs.get("qes") || "";
+  if (QESP) {
+    var qp = QESP.split(":");
+    var qPage = Math.max(1, parseInt(qp[0], 10) || 1);
+    var qDoc  = qp[1] === "1" ? 1 : (DOC2 ? 2 : 1);
+    var qa = document.createElement("a");
+    qa.className = "qesjump";
+    qa.textContent = "\u270D QES";
+    if (qDoc === ACTIVE_DOC) {
+      qa.href = "#";
+      qa.onclick = function(ev){ ev.preventDefault(); jumpTo(qPage); };
+    } else {
+      var qu = new URL(location.href);
+      qu.searchParams.set("d", String(qDoc));
+      qu.searchParams.set("page", String(qPage));
+      qa.href = qu.toString();
+    }
+    bar.appendChild(qa);
+    qesBtnEl = qa;
+  }
   function updateLabels(code){
     code=(code||"").toUpperCase();
     var dl=document.getElementById("dl");
     if(dl) dl.textContent="⬇ "+(QES_LABELS[code]||QES_LABELS.SK);
+    if(qesBtnEl) qesBtnEl.title=(QES_LABELS[code]||QES_LABELS.SK);
     if(relButtonEl){
       var isEinw=/ZOLL\/DAK/i.test(RELLABEL);
       relButtonEl.textContent=isEinw?("⚖ "+(REL_LABELS_EINW[code]||REL_LABELS_EINW.EN)):RELLABEL;
