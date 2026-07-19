@@ -140,6 +140,38 @@
       if (tcBox) { [].slice.call(tcBox.querySelectorAll('details.case')).sort(cmp).forEach(function (c) { tcBox.appendChild(c); }); }
     }
     // 📌 vizuálna visačka „Pripnuté" na pripnutých kartách — viditeľná aj pre verejnosť (9 jazykov ako zvyšok registra)
+
+    // ── Radenie POLOŽIEK v stĺpcoch (Odoslané/Prijaté) podľa dátumu — chronologicky, najstaršie hore.
+    //    Platí pre všetky karty konaní, súčasné aj budúce. Položka bez dátumu ide na koniec stĺpca.
+    function itemDateKey(it) {
+      function norm(t) {
+        var m = String(t || '').match(/(\d{1,2})\s*\.\s*(\d{1,2})\s*\.\s*(\d{4})/);
+        return m ? (m[3] + ('0' + m[2]).slice(-2) + ('0' + m[1]).slice(-2)) : '';
+      }
+      var d = it.querySelector('.top .date');
+      var k = d ? norm(d.textContent) : '';
+      if (k) return k;
+      try { return norm((JSON.parse(it.getAttribute('data-snap') || '{}') || {}).date); } catch (e) { return ''; }
+    }
+    function sortItems() {
+      [].slice.call(document.querySelectorAll('#fia-kauzy .col')).forEach(function (col) {
+        var items = [];
+        for (var n = col.firstElementChild; n; n = n.nextElementSibling) {
+          if (n.classList && n.classList.contains('item')) items.push(n);
+        }
+        if (items.length < 2) return;
+        items.map(function (el, i) { return { el: el, k: itemDateKey(el), i: i }; })
+          .sort(function (a, b) {
+            if (!a.k && !b.k) return a.i - b.i;
+            if (!a.k) return 1;
+            if (!b.k) return -1;
+            if (a.k === b.k) return a.i - b.i;
+            return a.k < b.k ? -1 : 1;
+          })
+          .forEach(function (o) { col.appendChild(o.el); });
+      });
+    }
+
     function renderPinBadges() {
       allCases.forEach(function (c) {
         var pin = parseInt(c.getAttribute('data-pin'), 10);
@@ -185,6 +217,7 @@
         btn.classList.add('active');
         state.sort = attr(btn, 'sort') || 'date';
         applySort();
+    sortItems();
       });
     });
 
