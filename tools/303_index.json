@@ -3,8 +3,8 @@
  "_udrzba": "Po KAZDOM wp_section_replace: nastroj vypise 'old=X zn., new=Y zn.' -> posun = Y-X. Priraď posun ku VSETKYM offsetom vacsim nez miesto zasahu. Offsety pred zasahom sa nemenia. Aktualizuj aj page_chars. Ziadne dalsie citanie netreba.",
  "page_id": 303,
  "slug": "kauzy-koncept",
- "page_chars": 877829,
- "platne_k": "2026-07-19T17:39:50",
+ "page_chars": 878225,
+ "platne_k": "2026-07-19T18:15:17",
  "kotvy": [
   {
    "offset": 0,
@@ -87,7 +87,7 @@
    "co": "karta case-dgcomp — polozka 'Odpoved na rozhodnutie EK o odmietnuti pristupu k dokumentom JV' (cmt-dgcomp-05, summod-dgcomp-05, VLAJKA-VIEWER doc1 klon @4bd5d66 + doc2 podpisany QES @7482dae, DE:1:2 d=2)"
   },
   {
-   "offset": 779923,
+   "offset": 780319,
    "co": "karta case-dgcomp — col-h PRIJATE (cnt 1) + polozka 'EASE 2025/6534 list DG COMP' (cmt-dgcomp-04, summod-dgcomp-04, VLAJKA-VIEWER na dok. 11) — prepocitane (+34475), over malym oknom"
   }
  ],
