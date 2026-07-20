@@ -89,8 +89,10 @@
                za poslednou vlajkou. ZADÁVA SA VŽDY RUČNE (poloha podpisu aj podpisový
                jazyk sa menia dokument od dokumentu). DOC default 2, ak je doc2.
                ALIGN: b = spodok strany (default), t = vrch, 0..1 = pomer výšky strany
-       sum   = URL .json súboru so súhrnom (9 jazykov) -> tlačidlo "Súhrn" otvorí text
-               v okne PRIAMO VO VIEWERI. Ak URL nekončí na .json, otvorí sa ako odkaz.
+       sum   = ID súhrnného modálu na karte registra, napr. summod-zaloba-03.
+               Tlačidlo "Súhrn" načíta text PRIAMO Z KARTY #303 (jediný zdroj)
+               a zobrazí ho v okne vo vieweri. Text sa mení s vlajkou.
+               Ak je zadaná plná URL (http…), otvorí sa ako odkaz v novom okne.
                -> tlačidlo "Súhrn" za poslednou vlajkou, text sa mení s vlajkou
        law   = CELEX~POPIS[~TOOLTIP]  alebo  URL~POPIS[~TOOLTIP]   (môže sa OPAKOVAŤ)
                -> tlačidlo s odkazom na právny predpis vedľa "✍ QES".
@@ -153,11 +155,11 @@
     var sa=document.createElement("a");
     sa.className="sumref";
     sa.textContent="\u{1F4C4} "+SUM_LABELS.SK;
-    if(/\.json(\?|$)/i.test(SUMU)){
+    if(/^https?:/i.test(SUMU)){
+      sa.target="_blank"; sa.rel="noopener"; sa.href=SUMU;
+    } else {
       sa.href="#";
       sa.onclick=function(ev){ ev.preventDefault(); openSum(); };
-    } else {
-      sa.target="_blank"; sa.rel="noopener"; sa.href=SUMU;
     }
     bar.appendChild(sa); sumBtnEl=sa;
   }
@@ -173,20 +175,36 @@
     document.body.appendChild(SUMBOX);
     return SUMBOX;
   }
+  // JEDINÝ ZDROJ textu = súhrnný modál na karte registra (#303).
+  // Viewer si ho odtiaľ načíta a len zobrazí; nikde sa nekopíruje.
+  var SUMSRC="https://public-api.wordpress.com/wp/v2/sites/foxprof.club/pages/303?_fields=content";
   function paintSum(){
     if(!SUMDATA||!SUMBOX) return;
-    var L=(CURLANG||"SK").toUpperCase();
-    var d=SUMDATA[L]||SUMDATA[L.toLowerCase()]||SUMDATA.SK||SUMDATA.sk;
+    var L=(CURLANG||"SK").toLowerCase();
+    var d=SUMDATA[L]||SUMDATA.sk||SUMDATA.de;
     if(!d) return;
-    SUMBOX.querySelector(".sbc").innerHTML="<h3>"+(d.title||"")+"</h3>"+(d.html||"");
+    SUMBOX.querySelector(".sbc").innerHTML=d;
   }
   function openSum(){
     var b=ensureBox(); b.classList.add("on");
     if(SUMDATA){ paintSum(); return; }
     b.querySelector(".sbc").innerHTML="<p>…</p>";
-    fetch(SUMU).then(function(r){ return r.json(); })
-      .then(function(j){ SUMDATA=j; paintSum(); })
-      .catch(function(){ b.querySelector(".sbc").innerHTML="<p>Súhrn sa nepodarilo načítať.</p>"; });
+    fetch(SUMSRC).then(function(r){ return r.json(); }).then(function(j){
+      var html=(j&&j.content&&j.content.rendered)||"";
+      var doc=new DOMParser().parseFromString(html,"text/html");
+      var mod=doc.getElementById(SUMU);
+      if(!mod) throw new Error("modal nenajdeny");
+      SUMDATA={};
+      [].slice.call(mod.querySelectorAll(".gtl-b")).forEach(function(el){
+        var code=null;
+        [].slice.call(el.classList).forEach(function(c){ if(c!=="gtl-b"&&c.length===2) code=c; });
+        if(code) SUMDATA[code]=el.innerHTML;
+      });
+      paintSum();
+    }).catch(function(){
+      b.querySelector(".sbc").innerHTML="<p>Súhrn sa nepodarilo načítať. "+
+        '<a href="https://foxprof.club/kauzy-koncept/#'+SUMU+'" target="_blank" rel="noopener">Otvoriť v registri</a></p>';
+    });
   }
 
   // ---- tlačidlo skoku na vizuálny QES podpis (za poslednou vlajkou) ----
