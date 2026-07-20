@@ -155,7 +155,9 @@
     showOnly([]);
 
     // DEEP-LINK: ak URL obsahuje #case-... , otvor prislusnu kauzu + kartu (zdielacie odkazy).
+    var hashBusy = false;
     function openFromHash() {
+      if (hashBusy) { return; }          // brani rekurzii cez hashchange
       var h = (location.hash || "").replace(/^#/, "");
       if (!h) { return; }
       var target = null;
@@ -190,10 +192,19 @@
       try { target.open = true; } catch (e) {}
       setTimeout(function () {
         if (hid !== h) {
-          // hash mieri na MODAL vnutri karty: nescrolluj na kartu (modal je overlay),
-          // len prinut prehliadac znovu vyhodnotit :target a drz stranku hore
-          try { location.hash = ""; location.hash = "#" + h; } catch (e) {}
-          try { window.scrollTo(0, 0); } catch (e) {}
+          // Hash mieri na MODAL vnutri karty. Ak sa uz zobrazuje (karta bola otvorena),
+          // NEROB NIC — prepis hashu by spustil hashchange a tym nekonecnu slucku.
+          var shown = false;
+          try {
+            var el2 = document.getElementById(h);
+            shown = !!el2 && window.getComputedStyle(el2).display !== "none";
+          } catch (e) {}
+          if (!shown) {
+            hashBusy = true;
+            try { location.hash = ""; location.hash = "#" + h; } catch (e) {}
+            try { window.scrollTo(0, 0); } catch (e) {}
+            setTimeout(function () { hashBusy = false; }, 150);
+          }
         } else {
           try { target.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {}
         }
