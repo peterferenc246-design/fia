@@ -160,12 +160,22 @@
       if (!h) { return; }
       var target = null;
       allCards().forEach(function (c) { if (c.id === h) { target = c; } });
+      if (!target) {
+        // hash mieri na prvok VNUTRI karty (napr. #summod-... , #cmt-... , #case-...-modal)
+        var el = null;
+        try { el = document.getElementById(h); } catch (e) {}
+        if (el) {
+          var own = el.closest ? el.closest("details.case") : null;
+          if (own) { target = own; }
+        }
+      }
       if (!target) { return; }
+      var hid = target.id;
       var owner = null;
       rbtns.forEach(function (b) {
         if (owner) { return; }
         var ids = b.hasAttribute("data-regall") ? allCards().map(function (c) { return c.id; }) : idsFor(b);
-        if (ids.indexOf(h) !== -1) { owner = b; }
+        if (ids.indexOf(hid) !== -1) { owner = b; }
       });
       rbtns.forEach(function (x) { x.classList.remove("active"); });
       if (owner) {
@@ -175,10 +185,16 @@
         else { showOnly(idsFor(owner)); }
       } else {
         activeBtn = null;
-        showOnly([h]);
+        showOnly([hid]);
       }
       try { target.open = true; } catch (e) {}
-      setTimeout(function () { try { target.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {} }, 80);
+      setTimeout(function () {
+        try { target.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {}
+        // ak hash mieril na modal vnutri karty, prinut prehliadac znovu vyhodnotit :target
+        if (hid !== h) {
+          try { location.hash = ""; location.hash = "#" + h; } catch (e) {}
+        }
+      }, 80);
     }
     openFromHash();
     window.addEventListener("hashchange", openFromHash);
