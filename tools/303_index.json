@@ -3,8 +3,8 @@
  "_udrzba": "Po KAZDOM wp_section_replace: nastroj vypise 'old=X zn., new=Y zn.' -> posun = Y-X. Priraď posun ku VSETKYM offsetom vacsim nez miesto zasahu. Offsety pred zasahom sa nemenia. Aktualizuj aj page_chars. Ziadne dalsie citanie netreba.",
  "page_id": 303,
  "slug": "kauzy-koncept",
- "page_chars": 878225,
- "platne_k": "2026-07-19T18:15:17",
+ "page_chars": 914759,
+ "platne_k": "2026-07-20T10:31:35",
  "kotvy": [
   {
    "offset": 0,
@@ -15,79 +15,87 @@
    "co": "#fia-reg — register dlazdic (CSS + .rbtn tiles)"
   },
   {
-   "offset": 28000,
+   "offset": 24700,
+   "co": "karta case-zaloba-proti-deutsche-telekom-ag-porusov — opening tag (data-az=23 O 2699/24, data-ourref=Case No.: TFIA-2026-JV, data-cat=de)"
+  },
+  {
+   "offset": 28036,
    "co": "karta Telekom — hlavicka .case-meta (Landgericht Landshut)"
   },
   {
-   "offset": 60000,
+   "offset": 60036,
    "co": "karta Telekom — sumarny modal (gtl-b it/fr)"
   },
   {
-   "offset": 150000,
+   "offset": 78000,
+   "co": "karta case-zaloba-proti-deutsche-telekom-ag-porusov (#fia-testcases, data-pin=2) — col PRIJATE (cnt 1) + polozka 'LG Landshut 23 O 2699/24' (cmt-zaloba-03, summod-zaloba-03, VLAJKA-VIEWER doc1 klon 8 jaz @d747d91 + doc2 sken originalu DE @800e78a, DE:1:2, bez qes=)"
+  },
+  {
+   "offset": 183402,
    "co": "karta DAK — telo suhrnu (SGB V, VwVG)"
   },
   {
-   "offset": 300000,
+   "offset": 333402,
    "co": "karta UDZS — telo sprievodneho textu"
   },
   {
-   "offset": 506335,
+   "offset": 539737,
    "co": "karta case-m10815 — col-h stlpca ODOSLANE (<span class=\"cnt\">3</span>) + zaciatok polozky 'Nichtigkeitsklage (Art. 263 AEUV)'"
   },
   {
-   "offset": 520005,
+   "offset": 553407,
    "co": "karta case-m10815 — polozka 'Zaloba o neplatnost' (.open odkazy viewer)"
   },
   {
-   "offset": 554675,
+   "offset": 588077,
    "co": "karta case-m10815 — ZACIATOK polozky 'Ziadost o ustanovenie advokata' (cmt-m10815-02, summod-m10815-02)"
   },
   {
-   "offset": 564701,
+   "offset": 598103,
    "co": "karta case-m10815 — ZACIATOK polozky 'Odpoved na zamietnutie pristupu k e-Curia' (<div class=\"item\" data-snap=)"
   },
   {
-   "offset": 580283,
+   "offset": 613685,
    "co": "karta case-m10815 — col-h stlpca PRIJATE (cnt 5), hned za koncom stlpca Odoslane"
   },
   {
-   "offset": 580523,
+   "offset": 613925,
    "co": "karta case-m10815 — ZACIATOK 1. polozky PRIJATE 'Potvrdenie o doruceni zaloby' (cmt-m10815-05, summod-m10815-05, VLAJKA-VIEWER)"
   },
   {
-   "offset": 597980,
+   "offset": 631382,
    "co": "karta case-m10815 — 2. polozka PRIJATE 'Sprievodny list kancelarie (T-61/26 AJ)' (cmt-m10815-06, summod-m10815-06, VLAJKA-VIEWER)"
   },
   {
-   "offset": 614893,
+   "offset": 648295,
    "co": "karta case-m10815 — 3. polozka PRIJATE 'Oznamenie sudu o zastupovani advokatom' (cmt-m10815-08, summod-m10815-08, VLAJKA-VIEWER)"
   },
   {
-   "offset": 632660,
+   "offset": 666062,
    "co": "karta case-m10815 — POSLEDNA polozka PRIJATE 'Uznesenie predsedu sudu' (cmt-m10815-09, summod-m10815-09, VLAJKA-VIEWER)"
   },
   {
-   "offset": 676800,
+   "offset": 710202,
    "co": "karta case-dgcomp — <details ...> data-area='kartell gdpr majetok' (~675640), .case-meta ~677500"
   },
   {
-   "offset": 676808,
+   "offset": 710210,
    "co": "karta case-dgcomp — hlavicka (.case-meta ~677500, col-h ODOSLANE ~680300)"
   },
   {
-   "offset": 680358,
+   "offset": 713760,
    "co": "karta case-dgcomp — polozka 'Formalne odvolanie ... pristup k dokumentom JV' (cmt-dgcomp-02, summod-dgcomp-02)"
   },
   {
-   "offset": 708408,
+   "offset": 741810,
    "co": "karta case-dgcomp — polozka 'Prvotna ziadost o pristup k dokumentom' (cmt-dgcomp-03, summod-dgcomp-03)"
   },
   {
-   "offset": 745448,
+   "offset": 778850,
    "co": "karta case-dgcomp — polozka 'Odpoved na rozhodnutie EK o odmietnuti pristupu k dokumentom JV' (cmt-dgcomp-05, summod-dgcomp-05, VLAJKA-VIEWER doc1 klon @4bd5d66 + doc2 podpisany QES @7482dae, DE:1:2 d=2)"
   },
   {
-   "offset": 780319,
+   "offset": 816853,
    "co": "karta case-dgcomp — col-h PRIJATE (cnt 1) + polozka 'EASE 2025/6534 list DG COMP' (cmt-dgcomp-04, summod-dgcomp-04, VLAJKA-VIEWER na dok. 11) — prepocitane (+34475), over malym oknom"
   }
  ],
