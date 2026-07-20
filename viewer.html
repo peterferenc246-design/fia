@@ -77,7 +77,7 @@
                za poslednou vlajkou. ZADÁVA SA VŽDY RUČNE (poloha podpisu aj podpisový
                jazyk sa menia dokument od dokumentu). DOC default 2, ak je doc2.
                ALIGN: b = spodok strany (default), t = vrch, 0..1 = pomer výšky strany
-       law   = CELEX~POPIS  alebo  URL~POPIS   (parameter sa môže OPAKOVAŤ)
+       law   = CELEX~POPIS[~TOOLTIP]  alebo  URL~POPIS[~TOOLTIP]   (môže sa OPAKOVAŤ)
                -> tlačidlo s odkazom na právny predpis vedľa "✍ QES".
                Pri CELEX~ sa EUR-Lex otvorí v jazyku AKTÍVNEJ vlajky.
                napr. law=CELEX:32001R1049~1049/2001
@@ -163,14 +163,16 @@
   var lawBtns = [];
   (qs.getAll ? qs.getAll("law") : []).forEach(function(spec){
     if (!spec) return;
-    var i = spec.lastIndexOf("~");
-    var target = i > 0 ? spec.slice(0, i) : spec;
-    var label  = i > 0 ? spec.slice(i + 1) : "\u2696";
+    var parts  = spec.split("~");
+    var target = parts[0];
+    var label  = parts.length > 1 && parts[1] ? parts[1] : "\u2696";
+    var title  = parts.length > 2 ? parts.slice(2).join("~") : "";
     var a = document.createElement("a");
     a.className = "lawref";
     a.target = "_blank";
     a.rel = "noopener";
     a.textContent = "\u2696 " + label;
+    if (title) a.title = title;
     if (/^CELEX:/i.test(target)) {
       a.dataset.celex = target;                 // jazyk sa doplní v updateLabels
       a.href = celexUrl(target, "SK");
