@@ -189,12 +189,15 @@
       }
       try { target.open = true; } catch (e) {}
       setTimeout(function () {
-        try { target.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {}
-        // ak hash mieril na modal vnutri karty, prinut prehliadac znovu vyhodnotit :target
         if (hid !== h) {
+          // hash mieri na MODAL vnutri karty: nescrolluj na kartu (modal je overlay),
+          // len prinut prehliadac znovu vyhodnotit :target a drz stranku hore
           try { location.hash = ""; location.hash = "#" + h; } catch (e) {}
+          try { window.scrollTo(0, 0); } catch (e) {}
+        } else {
+          try { target.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {}
         }
-      }, 80);
+      }, 60);
     }
     openFromHash();
     window.addEventListener("hashchange", openFromHash);
