@@ -29,6 +29,7 @@
     font-weight:bold;font-size:13px;text-decoration:none;border:2px solid transparent;}
   #langbar a.active{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);cursor:default;}
   #langbar a.qesjump{width:auto;padding:4px 11px;background:var(--gold);color:#000;font-weight:700;border-color:#8a6d00;}
+  #langbar a.lawref{width:auto;padding:4px 11px;background:#123a6b;color:#dbe7f7;font-weight:600;border-color:#3d6ea8;}
   .f-DE{background:#1F3864}.f-HR{background:#C00000}.f-EN{background:#2E75B6}.f-FR{background:#7030A0}
   .f-PL{background:#C55A11}.f-IT{background:#00B050}.f-SK{background:#1F7A7A}.f-ES{background:#A0326E}.f-SV{background:#806000}.f-GA{background:#169B62}
   #status{color:#fff;font-size:13px;padding:6px 12px;}
@@ -76,6 +77,10 @@
                za poslednou vlajkou. ZADÁVA SA VŽDY RUČNE (poloha podpisu aj podpisový
                jazyk sa menia dokument od dokumentu). DOC default 2, ak je doc2.
                ALIGN: b = spodok strany (default), t = vrch, 0..1 = pomer výšky strany
+       law   = CELEX~POPIS  alebo  URL~POPIS   (parameter sa môže OPAKOVAŤ)
+               -> tlačidlo s odkazom na právny predpis vedľa "✍ QES".
+               Pri CELEX~ sa EUR-Lex otvorí v jazyku AKTÍVNEJ vlajky.
+               napr. law=CELEX:32001R1049~1049/2001
        orig  = URL podpísaného originálu (QES) — tlačidlo download + cieľ vlajok s tokenom ":o"; ak chýba, sťahuje sa doc
      Bez parametrov beží DEMO konfigurácia case-telekom (9 jazykov).
      ============================================================ */
@@ -154,11 +159,39 @@
     bar.appendChild(qa);
     qesBtnEl = qa;
   }
+  // ---- tlačidlá odkazov na právne predpisy (za "✍ QES") ----
+  var lawBtns = [];
+  (qs.getAll ? qs.getAll("law") : []).forEach(function(spec){
+    if (!spec) return;
+    var i = spec.lastIndexOf("~");
+    var target = i > 0 ? spec.slice(0, i) : spec;
+    var label  = i > 0 ? spec.slice(i + 1) : "\u2696";
+    var a = document.createElement("a");
+    a.className = "lawref";
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.textContent = "\u2696 " + label;
+    if (/^CELEX:/i.test(target)) {
+      a.dataset.celex = target;                 // jazyk sa doplní v updateLabels
+      a.href = celexUrl(target, "SK");
+    } else {
+      a.href = target;
+    }
+    bar.appendChild(a);
+    lawBtns.push(a);
+  });
+  function celexUrl(celex, lang){
+    return "https://eur-lex.europa.eu/legal-content/" + lang + "/TXT/?uri=" + encodeURIComponent(celex);
+  }
+
   function updateLabels(code){
     code=(code||"").toUpperCase();
     var dl=document.getElementById("dl");
     if(dl) dl.textContent="⬇ "+(QES_LABELS[code]||QES_LABELS.SK);
     if(qesBtnEl) qesBtnEl.title=(QES_LABELS[code]||QES_LABELS.SK);
+    lawBtns.forEach(function(a){
+      if(a.dataset.celex) a.href = celexUrl(a.dataset.celex, (code||"SK").toUpperCase());
+    });
     if(relButtonEl){
       var isEinw=/ZOLL\/DAK/i.test(RELLABEL);
       relButtonEl.textContent=isEinw?("⚖ "+(REL_LABELS_EINW[code]||REL_LABELS_EINW.EN)):RELLABEL;
