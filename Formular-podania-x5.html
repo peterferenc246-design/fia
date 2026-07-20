@@ -1123,6 +1123,10 @@ function makeSlot(idx){
       if(fpathInp) fpathInp.value="";
       if(azInp) azInp.value="";
       if(ourrefInp) ourrefInp.value="";
+      // Súhrn aj väzby (modál súhrnu, komentáre, vlákno) patria NOVEJ položke,
+      // nie tej, na ktorú odpovedáme — inak by sa prebral cudzí text.
+      if(summaryInp) summaryInp.value="";
+      loadedSummod=""; loadedCmt=""; loadedThread="";
       setAction("new");
     }
     updateSummary();
