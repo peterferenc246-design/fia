@@ -253,6 +253,41 @@
       });
     }
 
+    // ── ČÍSLOVANIE POLOŽIEK NA ČASOVEJ OSI KARTY ──────────────────────────
+    // Krúžok .thr nesie PORADIE dokumentu na karte (1,2,3…) chronologicky
+    // naprieč OBOMA stĺpcami (Odoslané + Prijaté) — čitateľ tak vidí sled veci.
+    // Prepočítava sa automaticky, do markupu sa čísla NEPÍŠU.
+    function renderItemNumbers() {
+      var boxes = [document.getElementById('fia-kauzy'), document.getElementById('fia-testcases')];
+      boxes.forEach(function (box) {
+        if (!box) return;
+        [].slice.call(box.querySelectorAll('details.case')).forEach(function (c) {
+          var items = [].slice.call(c.querySelectorAll('.item'));
+          if (!items.length) return;
+          items.map(function (el, i) { return { el: el, k: itemDateKey(el), i: i }; })
+            .sort(function (a, b) {
+              if (!a.k && !b.k) return a.i - b.i;
+              if (!a.k) return 1;
+              if (!b.k) return -1;
+              if (a.k === b.k) return a.i - b.i;
+              return a.k < b.k ? -1 : 1;
+            })
+            .forEach(function (o, idx) {
+              var top = o.el.querySelector('.top');
+              if (!top) return;
+              var badge = top.querySelector('.thr');
+              if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'thr';
+                top.appendChild(badge);
+              }
+              badge.textContent = String(idx + 1);
+              badge.setAttribute('title', 'Poradie na časovej osi konania: ' + (idx + 1));
+            });
+        });
+      });
+    }
+
     function clearCats() {
       selected = {};
       chips.forEach(function (x) { x.classList.remove('active'); });
@@ -303,6 +338,7 @@
     relight();
     renderPinBadges();
     renderItemCourt();
+    renderItemNumbers();
     renderThreadNumbers();
   }
 
