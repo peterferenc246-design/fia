@@ -225,31 +225,43 @@
         });
     }
 
-    // ČÍSLOVANIE DOKUMENTOV NA ČASOVEJ OSI KARTY — krúžok .thr dostane poradie
-    // podľa dátumu naprieč OBOMA stĺpcami (odoslané + prijaté): 1, 2, 3 …
-    // Čitateľ tak vidí sled dokumentov v čase; klik na krúžok naďalej zvýrazní vlákno.
+    // ── ČÍSLOVANIE DOKUMENTOV VO VLÁKNE ───────────────────────────────────
+    // Krúžok .thr dostanú LEN položky, ktoré patria do vlákna (majú data-thread).
+    // Číslujú sa v rámci SVOJHO vlákna chronologicky: 1 = pôvodné podanie,
+    // 2 = prvá reakcia, 3 = ďalšia … Položka bez vlákna krúžok NEMÁ.
     function renderThreadNumbers() {
       allCases.forEach(function (c) {
-        var items = [].slice.call(c.querySelectorAll('.item'));
-        items.map(function (el, i) { return { el: el, k: itemDateKey(el), i: i }; })
-          .sort(function (a, b) {
-            if (a.k && b.k && a.k !== b.k) { return a.k < b.k ? -1 : 1; }
-            if (a.k && !b.k) { return -1; }
-            if (!a.k && b.k) { return 1; }
-            return a.i - b.i;
-          })
-          .forEach(function (o, idx) {
-            var top = o.el.querySelector('.top');
-            if (!top) return;
-            var badge = top.querySelector('.thr');
-            if (!badge) {
-              badge = document.createElement('span');
-              badge.className = 'thr';
-              top.appendChild(badge);
-            }
-            badge.textContent = String(idx + 1);
-            badge.setAttribute('title', String(idx + 1) + '.');
-          });
+        var groups = {};
+        [].slice.call(c.querySelectorAll('.item')).forEach(function (el, i) {
+          var t = (el.getAttribute('data-thread') || '').trim();
+          if (!t) {
+            var old = el.querySelector('.top .thr');
+            if (old && old.parentNode) { old.parentNode.removeChild(old); }
+            return;
+          }
+          (groups[t] = groups[t] || []).push({ el: el, k: itemDateKey(el), i: i });
+        });
+        Object.keys(groups).forEach(function (t) {
+          groups[t]
+            .sort(function (a, b) {
+              if (a.k && b.k && a.k !== b.k) { return a.k < b.k ? -1 : 1; }
+              if (a.k && !b.k) { return -1; }
+              if (!a.k && b.k) { return 1; }
+              return a.i - b.i;
+            })
+            .forEach(function (o, idx) {
+              var top = o.el.querySelector('.top');
+              if (!top) return;
+              var badge = top.querySelector('.thr');
+              if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'thr';
+                top.appendChild(badge);
+              }
+              badge.textContent = String(idx + 1);
+              badge.setAttribute('title', String(idx + 1) + '.');
+            });
+        });
       });
     }
 
