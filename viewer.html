@@ -183,7 +183,11 @@
     lawBtns.push(a);
   });
   function celexUrl(celex, lang){
-    return "https://eur-lex.europa.eu/legal-content/" + lang + "/TXT/?uri=" + encodeURIComponent(celex);
+    // priame HTML znenie predpisu v jazyku aktívnej vlajky.
+    // dvojbodku v CELEX NEencodovať (EUR-Lex ju očakáva doslovne),
+    // locale= drží jazyk aj keď EUR-Lex presmeruje.
+    return "https://eur-lex.europa.eu/legal-content/" + lang.toUpperCase() +
+           "/TXT/HTML/?uri=" + celex + "&locale=" + lang.toLowerCase();
   }
 
   function updateLabels(code){
