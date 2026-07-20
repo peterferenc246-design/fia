@@ -29,6 +29,7 @@
     font-weight:bold;font-size:13px;text-decoration:none;border:2px solid transparent;}
   #langbar a.active{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);cursor:default;}
   #langbar a.qesjump{width:auto;padding:4px 11px;background:var(--gold);color:#000;font-weight:700;border-color:#8a6d00;}
+  #langbar a.sumref{width:auto;padding:4px 11px;background:#0f6b57;color:#eafff8;font-weight:700;border-color:#17a184;}
   #langbar a.lawref{width:auto;padding:4px 11px;background:#123a6b;color:#dbe7f7;font-weight:600;border-color:#3d6ea8;}
   .f-DE{background:#1F3864}.f-HR{background:#C00000}.f-EN{background:#2E75B6}.f-FR{background:#7030A0}
   .f-PL{background:#C55A11}.f-IT{background:#00B050}.f-SK{background:#1F7A7A}.f-ES{background:#A0326E}.f-SV{background:#806000}.f-GA{background:#169B62}
@@ -77,6 +78,8 @@
                za poslednou vlajkou. ZADÁVA SA VŽDY RUČNE (poloha podpisu aj podpisový
                jazyk sa menia dokument od dokumentu). DOC default 2, ak je doc2.
                ALIGN: b = spodok strany (default), t = vrch, 0..1 = pomer výšky strany
+       sum   = URL súhrnu položky v registri (# zapíš ako %23)
+               -> tlačidlo "Súhrn" za poslednou vlajkou, text sa mení s vlajkou
        law   = CELEX~POPIS[~TOOLTIP]  alebo  URL~POPIS[~TOOLTIP]   (môže sa OPAKOVAŤ)
                -> tlačidlo s odkazom na právny predpis vedľa "✍ QES".
                Pri CELEX~ sa EUR-Lex otvorí v jazyku AKTÍVNEJ vlajky.
@@ -127,6 +130,18 @@
   var QES_LABELS={DE:"Signiertes Original (QES)",EN:"Signed original (QES)",SK:"Podpísaný originál (QES)",HR:"Potpisani izvornik (QES)",PL:"Podpisany oryginał (QES)",ES:"Original firmado (QES)",IT:"Originale firmato (QES)",FR:"Original signé (QES)",SV:"Signerat original (QES)"};
   var REL_LABELS_EINW={DE:"Einwendung gegen die Vollstreckung (ZOLL/DAK)",EN:"Objection to enforcement (Einwendung ZOLL/DAK)",SK:"Námietka proti exekúcii (Einwendung ZOLL/DAK)",HR:"Prigovor protiv ovrhe (Einwendung ZOLL/DAK)",PL:"Sprzeciw wobec egzekucji (Einwendung ZOLL/DAK)",ES:"Oposición a la ejecución (Einwendung ZOLL/DAK)",IT:"Opposizione all'esecuzione (Einwendung ZOLL/DAK)",FR:"Opposition à l'exécution (Einwendung ZOLL/DAK)",SV:"Bestridande av verkställighet (Einwendung ZOLL/DAK)"};
   var relButtonEl=null;
+
+  // ---- tlačidlo "Súhrn" — odkaz na súhrn položky v registri ----
+  var SUM_LABELS={DE:"Zusammenfassung",EN:"Summary",SK:"Súhrn",HR:"Sažetak",PL:"Streszczenie",
+                  ES:"Resumen",IT:"Riepilogo",FR:"Résumé",SV:"Sammanfattning"};
+  var sumBtnEl=null;
+  var SUMU=qs.get("sum")||"";
+  if(SUMU){
+    var sa=document.createElement("a");
+    sa.className="sumref"; sa.target="_blank"; sa.rel="noopener"; sa.href=SUMU;
+    sa.textContent="\u{1F4C4} "+SUM_LABELS.SK;
+    bar.appendChild(sa); sumBtnEl=sa;
+  }
 
   // ---- tlačidlo skoku na vizuálny QES podpis (za poslednou vlajkou) ----
   var qesBtnEl=null;
@@ -212,6 +227,11 @@
     var dl=document.getElementById("dl");
     if(dl) dl.textContent="⬇ "+(QES_LABELS[code]||QES_LABELS.SK);
     if(qesBtnEl) qesBtnEl.title=(QES_LABELS[code]||QES_LABELS.SK);
+    if(sumBtnEl){
+      var SL=(code||"SK").toUpperCase();
+      sumBtnEl.textContent="\u{1F4C4} "+(SUM_LABELS[SL]||SUM_LABELS.SK);
+      sumBtnEl.title=(SUM_LABELS[SL]||SUM_LABELS.SK);
+    }
     lawBtns.forEach(function(a){
       var L = (code||"SK").toUpperCase();
       if(a.dataset.celex){
