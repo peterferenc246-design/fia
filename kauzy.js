@@ -225,6 +225,34 @@
         });
     }
 
+    // ČÍSLOVANIE DOKUMENTOV NA ČASOVEJ OSI KARTY — krúžok .thr dostane poradie
+    // podľa dátumu naprieč OBOMA stĺpcami (odoslané + prijaté): 1, 2, 3 …
+    // Čitateľ tak vidí sled dokumentov v čase; klik na krúžok naďalej zvýrazní vlákno.
+    function renderThreadNumbers() {
+      allCases.forEach(function (c) {
+        var items = [].slice.call(c.querySelectorAll('.item'));
+        items.map(function (el, i) { return { el: el, k: itemDateKey(el), i: i }; })
+          .sort(function (a, b) {
+            if (a.k && b.k && a.k !== b.k) { return a.k < b.k ? -1 : 1; }
+            if (a.k && !b.k) { return -1; }
+            if (!a.k && b.k) { return 1; }
+            return a.i - b.i;
+          })
+          .forEach(function (o, idx) {
+            var top = o.el.querySelector('.top');
+            if (!top) return;
+            var badge = top.querySelector('.thr');
+            if (!badge) {
+              badge = document.createElement('span');
+              badge.className = 'thr';
+              top.appendChild(badge);
+            }
+            badge.textContent = String(idx + 1);
+            badge.setAttribute('title', String(idx + 1) + '.');
+          });
+      });
+    }
+
     function clearCats() {
       selected = {};
       chips.forEach(function (x) { x.classList.remove('active'); });
@@ -275,6 +303,7 @@
     relight();
     renderPinBadges();
     renderItemCourt();
+    renderThreadNumbers();
   }
 
   if (document.readyState === 'loading') {
