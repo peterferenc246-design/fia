@@ -159,6 +159,23 @@
     bar.appendChild(qa);
     qesBtnEl = qa;
   }
+  // ---- 9-jazyčné názvy predpisov pre tooltip (kľúč = CELEX) ----
+  // Pri novom predpise sem doplň všetkých 9 jazykov; bez záznamu sa použije
+  // text z 3. segmentu parametra law= (rovnaký vo všetkých jazykoch).
+  var LAW_TITLES = {
+    "CELEX:32001R1049": {
+      DE:"Verordnung (EG) Nr. 1049/2001 des Europäischen Parlaments und des Rates vom 30. Mai 2001 über den Zugang der Öffentlichkeit zu Dokumenten",
+      EN:"Regulation (EC) No 1049/2001 of the European Parliament and of the Council of 30 May 2001 regarding public access to documents",
+      SK:"Nariadenie Európskeho parlamentu a Rady (ES) č. 1049/2001 z 30. mája 2001 o prístupe verejnosti k dokumentom",
+      HR:"Uredba (EZ) br. 1049/2001 Europskog parlamenta i Vijeća od 30. svibnja 2001. o javnom pristupu dokumentima",
+      PL:"Rozporządzenie (WE) nr 1049/2001 Parlamentu Europejskiego i Rady z dnia 30 maja 2001 r. w sprawie publicznego dostępu do dokumentów",
+      ES:"Reglamento (CE) n.º 1049/2001 del Parlamento Europeo y del Consejo, de 30 de mayo de 2001, relativo al acceso del público a los documentos",
+      IT:"Regolamento (CE) n. 1049/2001 del Parlamento europeo e del Consiglio, del 30 maggio 2001, relativo all\u0027accesso del pubblico ai documenti",
+      FR:"Règlement (CE) n° 1049/2001 du Parlement européen et du Conseil du 30 mai 2001 relatif à l\u0027accès du public aux documents",
+      SV:"Europaparlamentets och rådets förordning (EG) nr 1049/2001 av den 30 maj 2001 om allmänhetens tillgång till handlingar"
+    }
+  };
+
   // ---- tlačidlá odkazov na právne predpisy (za "✍ QES") ----
   var lawBtns = [];
   (qs.getAll ? qs.getAll("law") : []).forEach(function(spec){
@@ -172,7 +189,7 @@
     a.target = "_blank";
     a.rel = "noopener";
     a.textContent = "\u2696 " + label;
-    if (title) a.title = title;
+    if (title) { a.title = title; a.dataset.fallbackTitle = title; }
     if (/^CELEX:/i.test(target)) {
       a.dataset.celex = target;                 // jazyk sa doplní v updateLabels
       a.href = celexUrl(target, "SK");
@@ -196,7 +213,13 @@
     if(dl) dl.textContent="⬇ "+(QES_LABELS[code]||QES_LABELS.SK);
     if(qesBtnEl) qesBtnEl.title=(QES_LABELS[code]||QES_LABELS.SK);
     lawBtns.forEach(function(a){
-      if(a.dataset.celex) a.href = celexUrl(a.dataset.celex, (code||"SK").toUpperCase());
+      var L = (code||"SK").toUpperCase();
+      if(a.dataset.celex){
+        a.href = celexUrl(a.dataset.celex, L);
+        var t = LAW_TITLES[a.dataset.celex];
+        if (t && t[L]) a.title = t[L];
+        else if (a.dataset.fallbackTitle) a.title = a.dataset.fallbackTitle;
+      }
     });
     if(relButtonEl){
       var isEinw=/ZOLL\/DAK/i.test(RELLABEL);
