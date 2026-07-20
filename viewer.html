@@ -30,6 +30,17 @@
   #langbar a.active{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);cursor:default;}
   #langbar a.qesjump{width:auto;padding:4px 11px;background:var(--gold);color:#000;font-weight:700;border-color:#8a6d00;}
   #langbar a.sumref{width:auto;padding:4px 11px;background:#0f6b57;color:#eafff8;font-weight:700;border-color:#17a184;}
+  #sumbox{position:fixed;inset:0;background:rgba(12,22,38,.72);display:none;z-index:9999;
+    align-items:flex-start;justify-content:center;padding:70px 16px 24px;overflow:auto;}
+  #sumbox.on{display:flex;}
+  #sumbox .sb{background:#fff;color:#16233a;max-width:760px;width:100%;border-radius:14px;
+    box-shadow:0 18px 60px rgba(0,0,0,.45);padding:26px 30px 30px;position:relative;}
+  #sumbox h3{margin:0 0 14px;font-size:19px;color:#1F3864;padding-right:34px;}
+  #sumbox p{margin:0 0 12px;line-height:1.62;font-size:15.5px;}
+  #sumbox a{color:#0b5ed7;}
+  #sumbox .sbx{position:absolute;top:10px;right:14px;font-size:26px;line-height:1;
+    text-decoration:none;color:#7b8798;cursor:pointer;}
+  #sumbox .sbx:hover{color:#16233a;}
   #langbar a.lawref{width:auto;padding:4px 11px;background:#123a6b;color:#dbe7f7;font-weight:600;border-color:#3d6ea8;}
   .f-DE{background:#1F3864}.f-HR{background:#C00000}.f-EN{background:#2E75B6}.f-FR{background:#7030A0}
   .f-PL{background:#C55A11}.f-IT{background:#00B050}.f-SK{background:#1F7A7A}.f-ES{background:#A0326E}.f-SV{background:#806000}.f-GA{background:#169B62}
@@ -78,7 +89,8 @@
                za poslednou vlajkou. ZADÁVA SA VŽDY RUČNE (poloha podpisu aj podpisový
                jazyk sa menia dokument od dokumentu). DOC default 2, ak je doc2.
                ALIGN: b = spodok strany (default), t = vrch, 0..1 = pomer výšky strany
-       sum   = URL súhrnu položky v registri (# zapíš ako %23)
+       sum   = URL .json súboru so súhrnom (9 jazykov) -> tlačidlo "Súhrn" otvorí text
+               v okne PRIAMO VO VIEWERI. Ak URL nekončí na .json, otvorí sa ako odkaz.
                -> tlačidlo "Súhrn" za poslednou vlajkou, text sa mení s vlajkou
        law   = CELEX~POPIS[~TOOLTIP]  alebo  URL~POPIS[~TOOLTIP]   (môže sa OPAKOVAŤ)
                -> tlačidlo s odkazom na právny predpis vedľa "✍ QES".
@@ -136,11 +148,45 @@
                   ES:"Resumen",IT:"Riepilogo",FR:"Résumé",SV:"Sammanfattning"};
   var sumBtnEl=null;
   var SUMU=qs.get("sum")||"";
+  var SUMDATA=null, SUMBOX=null;
   if(SUMU){
     var sa=document.createElement("a");
-    sa.className="sumref"; sa.target="_blank"; sa.rel="noopener"; sa.href=SUMU;
+    sa.className="sumref";
     sa.textContent="\u{1F4C4} "+SUM_LABELS.SK;
+    if(/\.json(\?|$)/i.test(SUMU)){
+      sa.href="#";
+      sa.onclick=function(ev){ ev.preventDefault(); openSum(); };
+    } else {
+      sa.target="_blank"; sa.rel="noopener"; sa.href=SUMU;
+    }
     bar.appendChild(sa); sumBtnEl=sa;
+  }
+
+  function ensureBox(){
+    if(SUMBOX) return SUMBOX;
+    SUMBOX=document.createElement("div"); SUMBOX.id="sumbox";
+    SUMBOX.innerHTML='<div class="sb"><a class="sbx" href="#">&times;</a><div class="sbc"></div></div>';
+    SUMBOX.addEventListener("click",function(ev){
+      if(ev.target===SUMBOX||ev.target.className==="sbx"){ ev.preventDefault(); SUMBOX.classList.remove("on"); }
+    });
+    document.addEventListener("keydown",function(ev){ if(ev.key==="Escape") SUMBOX.classList.remove("on"); });
+    document.body.appendChild(SUMBOX);
+    return SUMBOX;
+  }
+  function paintSum(){
+    if(!SUMDATA||!SUMBOX) return;
+    var L=(CURLANG||"SK").toUpperCase();
+    var d=SUMDATA[L]||SUMDATA[L.toLowerCase()]||SUMDATA.SK||SUMDATA.sk;
+    if(!d) return;
+    SUMBOX.querySelector(".sbc").innerHTML="<h3>"+(d.title||"")+"</h3>"+(d.html||"");
+  }
+  function openSum(){
+    var b=ensureBox(); b.classList.add("on");
+    if(SUMDATA){ paintSum(); return; }
+    b.querySelector(".sbc").innerHTML="<p>…</p>";
+    fetch(SUMU).then(function(r){ return r.json(); })
+      .then(function(j){ SUMDATA=j; paintSum(); })
+      .catch(function(){ b.querySelector(".sbc").innerHTML="<p>Súhrn sa nepodarilo načítať.</p>"; });
   }
 
   // ---- tlačidlo skoku na vizuálny QES podpis (za poslednou vlajkou) ----
@@ -222,7 +268,9 @@
            "/TXT/HTML/?uri=" + celex + "&locale=" + lang.toLowerCase();
   }
 
+  var CURLANG="SK";
   function updateLabels(code){
+    CURLANG=(code||"SK").toUpperCase();
     code=(code||"").toUpperCase();
     var dl=document.getElementById("dl");
     if(dl) dl.textContent="⬇ "+(QES_LABELS[code]||QES_LABELS.SK);
@@ -232,6 +280,7 @@
       sumBtnEl.textContent="\u{1F4C4} "+(SUM_LABELS[SL]||SUM_LABELS.SK);
       sumBtnEl.title=(SUM_LABELS[SL]||SUM_LABELS.SK);
     }
+    paintSum();
     lawBtns.forEach(function(a){
       var L = (code||"SK").toUpperCase();
       if(a.dataset.celex){
