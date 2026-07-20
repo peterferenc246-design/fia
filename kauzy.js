@@ -30,8 +30,6 @@
     // pôvodné testovacie karty (#fia-testcases) — pripnuté z nich vytiahneme medzi reálne, aby pin fungoval naprieč kontajnermi
     var TC_ORIG  = tcBox ? [].slice.call(tcBox.querySelectorAll('details.case')) : [];
     (function(){ var s=document.createElement('style'); s.textContent='details.case.hide{display:none!important}'
-      + '#fia-kauzy .item-court,#fia-testcases .item-court{margin:1px 0 7px;font-size:12.5px;line-height:1.45;color:#5a6b80}'
-      + '#fia-kauzy .item-court b,#fia-testcases .item-court b{color:#1F3864;font-weight:600}'
       +'.pinbadge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#FFCB3E,#F0B400);color:#3d2f00;border:1px solid #C9A100;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:800;line-height:1;margin-right:8px;white-space:nowrap;vertical-align:middle}'
       +'.pinbadge .pinnum{background:#1F3864;color:#fff;border-radius:999px;min-width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;font-size:10.5px;padding:0 4px;font-weight:800}';
       document.head.appendChild(s); })();
@@ -191,38 +189,6 @@
       });
     }
 
-    // ORGÁN NA POLOŽKE — zdroj je data-snap.court danej položky; ak chýba,
-    // prevezme sa data-court z karty. Text sa nikde nekopíruje, len vykresľuje.
-    function renderItemCourt() {
-      var LBL = { de:'Behörde', en:'Body', sk:'Orgán', hr:'Tijelo', pl:'Organ',
-                  es:'Órgano', it:'Organo', fr:'Autorité', sv:'Myndighet' };
-      var order = ['de','en','sk','hr','pl','es','it','fr','sv'];
-      [document.getElementById('fia-kauzy'), document.getElementById('fia-testcases')]
-        .forEach(function (box) {
-          if (!box) return;
-          [].slice.call(box.querySelectorAll('.item')).forEach(function (it) {
-            var subj = it.querySelector('.subj');
-            if (!subj) return;
-            var court = '';
-            try { court = (JSON.parse(it.getAttribute('data-snap') || '{}') || {}).court || ''; } catch (e) {}
-            if (!court) {
-              var card = it.closest ? it.closest('details.case') : null;
-              if (card) { court = card.getAttribute('data-court') || ''; }
-            }
-            var ex = it.querySelector('.item-court');
-            if (!court) { if (ex && ex.parentNode) { ex.parentNode.removeChild(ex); } return; }
-            var lab = '\u2696\uFE0F ';
-            order.forEach(function (k) { lab += '<span class="gtl ' + k + '"><b>' + LBL[k] + ':</b></span>'; });
-            if (ex) { ex.innerHTML = lab; ex.appendChild(document.createTextNode(' ' + court)); return; }
-            var d = document.createElement('div');
-            d.className = 'item-court';
-            d.innerHTML = lab;
-            d.appendChild(document.createTextNode(' ' + court));
-            subj.parentNode.insertBefore(d, subj.nextSibling);
-          });
-        });
-    }
-
     function clearCats() {
       selected = {};
       chips.forEach(function (x) { x.classList.remove('active'); });
@@ -272,7 +238,6 @@
     sortItems();
     relight();
     renderPinBadges();
-    renderItemCourt();
   }
 
   if (document.readyState === 'loading') {
