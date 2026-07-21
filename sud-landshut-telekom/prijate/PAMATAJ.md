@@ -31,6 +31,7 @@ Jadro: 17.12.2024 súd dal návod (poštou alebo elektronicky s QES) a 23.12.202
 | 06.11.2024 | LG Landshut | Uznesenie: návrh žaloby sa posiela potenciálnym žalovaným; lehota k PKH do 20.11. |
 | 06.11.2024 | LJK Bamberg | Faktúra 17 643 € (KV-GKG 1210, sadzba 3,0). Na 2. strane poučenie o Erinnerung — bez lehoty, bezplatná. |
 | 17.10.2024 | LG Landshut | Výzva doložiť vyhlásenie o osobných a majetkových pomeroch k žiadosti o právnu pomoc. |
+| 20.11.2024 | Latham & Watkins | Stanovisko k žiadosti o právnu pomoc (Lisa M. Hoops, za SCHUFA). **Podané cez EGVP z advokátskej schránky beA, kvalifikovane podpísané 16:15:03. Súd si o tom vyhotovil protokol a strojovo overil kanál, podpis, platnosť aj integritu.** |
 | 21.11.2024 | LG Landshut | **Uznesenie sudkyne Pfenninger: žiadosť o právnu pomoc ZAMIETNUTÁ** (§ 117 ods. 2, § 118 ods. 2 veta 4 ZPO — nepredložené vyhlásenie o pomeroch). Doručené 26.11. Protistranu zastupujú Latham & Watkins LLP, Frankfurt, zn. 035279-0014. |
 | 21.11.2024 | LG Landshut | **Poučenie o opravných prostriedkoch v tom istom uznesení: sťažnosť do 1 mesiaca na LG Landshut alebo OLG München, advokát NIE JE predpísaný. Elektronicky: kvalifikovaný podpis ALEBO podpis + zabezpečený prenosový systém. Obyčajný e-mail nestačí.** |
 | 27.11.2024 | LJK Bamberg | Oznámenie o trovách: ďalší priebeh konania závisí od zaplatenia 17 643 €. → klon P07 |
@@ -45,6 +46,26 @@ Jadro: 17.12.2024 súd dal návod (poštou alebo elektronicky s QES) a 23.12.202
 | 07.01.2025 | LG Landshut | Zmena spisovej značky 23 O 2699/24 → 91 O 2699/24. → klon P05 |
 | 20.01.2025 | odoslané | E-mail súdu, 7:19. |
 | 22.01.2025 | LG Landshut | Na SUDCOVSKÝ PRÍKAZ potvrdzuje prijatie e-mailu — bez slova o forme či kanáli. |
+
+---
+
+## 2b. Protokol o doručení protistrany — 20.11.2024
+
+Súd si pri podaní protistrany vyhotovil **Prüfvermerk** (protokol o overení) a strojovo v ňom preveril cestu, podpis, platnosť aj integritu:
+
+> **Protokol o overení z 20.11.2024, 16:21:57**
+> Nižšie uvedené dokumenty boli doručené elektronicky. Technické overenie elektronických dokumentov prinieslo tento výsledok:
+> **Táto správa bola odoslaná prostredníctvom EGVP.**
+> Čas doručenia: 20.11.2024, 16:21 · Odosielateľ: Lisa-Marie Hoops
+> Identifikátor odosielateľa: DE.BRAK.3317140e-c66e-4d3f-8ebf-9a9a1fa92c9e.d391 *(BRAK = Spolková advokátska komora, teda schránka beA)*
+> Značka odosielateľa: 035279-0014 WBO/LHO/slu (Ferenc) · Príjemca: Krajinský súd Landshut · Spisová značka: 23 O 2699/24
+> Stanovisko k žiadosti o právnu pomoc — **kvalifikovane podpísané: áno**, Lisa-Marie Hoops — profesijný atribút 20.11.2024, 16:15:03 — **výsledok overenia: platnosť ✓ integrita ✓**
+
+Na prvej strane ich podania stojí **„Per beA"**.
+
+**Prečo to má váhu.** Súd nástroj na strojové overenie podpisu má a používa ho. To isté overenie mohol spraviť pri podaní zo 07.12.2024 — kvalifikovaný podpis tam bol (Disig, 13:31). Namiesto toho 12.12.2024 napísal, že „nemožno overiť, či je dokument formálne platne podpísaný". Rozdiel teda nebol v tom, či sa podpis overiť dá, ale v tom, ktorou cestou zásielka prišla.
+
+**Nerovnosť východiskovej pozície.** Advokát má schránku beA zo zákona zriadenú automaticky; občan si eBO musí zakladať sám. Do textov to patrí ako fakt o rozdiele v prístupe, nie ako obvinenie.
 
 ---
 
