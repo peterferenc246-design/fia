@@ -66,7 +66,7 @@ Na prvej strane ich podania stojí **„Per beA"**.
 **Prečo to má váhu.** Súd nástroj na strojové overenie podpisu má a používa ho. To isté overenie mohol spraviť pri podaní zo 07.12.2024 — kvalifikovaný podpis tam bol (Disig, 13:31). Namiesto toho 12.12.2024 napísal, že „nemožno overiť, či je dokument formálne platne podpísaný". Rozdiel teda nebol v tom, či sa podpis overiť dá, ale v tom, ktorou cestou zásielka prišla.
 
 **Nerovnosť východiskovej pozície.** Advokát má schránku beA zo zákona zriadenú automaticky; občan si eBO musí zakladať sám. Do textov to patrí ako fakt o rozdiele v prístupe, nie ako obvinenie.
-
+Toto je treba opísať, aký je to dvojaký meter! QES sa predsa dá overiť. Ak sa overí, je platný! Súd nám vytvára sám bariéry aj tam kde nie sú!
 ---
 
 ## 3. Presnosť — čo NEtvrdiť
