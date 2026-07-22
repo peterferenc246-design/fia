@@ -235,7 +235,7 @@
       qu.searchParams.set("qj", String(QALIGN));
       qa.href = qu.toString();
     }
-    bar.appendChild(qa);
+    bar.insertBefore(qa, sumBtnEl);
     qesBtnEl = qa;
   }
   // ---- 9-jazyčné názvy predpisov pre tooltip (kľúč = CELEX) ----
