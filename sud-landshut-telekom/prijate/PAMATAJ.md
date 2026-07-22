@@ -130,3 +130,23 @@ Prijaté originály v `sud-landshut-telekom/prijate/` sú premenované na jednot
 
 Na OneDrive (`…\Došlá pošta\GH\`) treba premenovať ručne podľa stĺpca E — Microsoft 365 konektor vie súbory len čítať/vyhľadávať, nie premenovať.
 
+## 8. Stellungnahme Latham & Watkins (20.11.2024) — súbor 07_, obsah a zdroj
+
+**Čo to je:** Vyjadrenie advokátov Latham & Watkins LLP (Lisa M. Hoops, Dr. Wolf-Tassilo Böhm; zn. 035279-0014) v mene SCHUFA Holding AG („Beklagte zu 2") k Petrovmu návrhu na oslobodenie od trov (PKH) zo 17.10.2024. Podané cez beA/EGVP 20.11.2024 o 16:21, QES Lisa-Marie Hoops 16:15 (Prüfvermerk: platnosť aj integrita OK).
+
+**Argumenty Latham (len za Schufu; zvyšok popiera „mit Nichtwissen"):**
+- PKH je neprípustný — Peter nepreukázal osobné a majetkové pomery (§ 117 ods. 2, § 115 ZPO; dôkazné bremeno na navrhovateľovi), nepredložil dôkazy (§ 117 ods. 1 v. 2 ZPO).
+- Žaloba bez vyhliadok na úspech — neprípustná podľa § 253 ods. 2 ZPO (chýba dostatočne určitý návrh); nárok 500 000 € podľa čl. 82 GDPR nepodložený a nekonkretizovaný.
+- Spracúvanie Schufou vraj zákonné — čl. 6 ods. 1 písm. f) GDPR, čl. 22 GDPR sa „neuplatní"; Schufa ako spoločná inštitúcia úverovej ekonomiky, databáza 68+ mil. záznamov, § 18a ods. 3 KWG.
+
+**Pre stratégiu:** Latham hovorí výslovne LEN za Schufu, za Telekom sa nevyjadruje. Tvrdenie, že čl. 22 GDPR sa neuplatní a scoring je zákonný, ide priamo proti nosnému bodu kauzy (automatizované odmietanie služby na základe scoringu) — bod na priamu protiargumentáciu.
+
+**ZDROJ — POZOR:** súbor `07_20.11.2024_Stellungnahme_Latham_Watkins_PKH_DE_GH.pdf` NIE JE pravý beA originál. Je to Petrov Wordový výtvor (autor Peter Ferenc, PDFMaker, 03/2025) — str. 5–10 väčšieho zlúčeného súboru („moja reakcia na súde"), s OCR preklepmi („Poter", „Novemberr", „LATAHM") a zapečenými číslami strán 5–10. Pravý originál z beA — `241120_-_LW_Stellungnahme_PKH_Antrag_-_Ferenc.pdf` (menovaný v Prüfvermerku) — v repe CHÝBA. Pre klon (VLAJKA-VIEWER) by mal byť „záväzný originál" (doc2) ideálne tento pravý beA PDF; ak ho Peter dohľadá, nahrať do repa.
+
+---
+
+## 9. Viacjazyčný klon Stellungnahme (P10) — stav (22.07.2026)
+
+FR klon hotový: 6 strán, strana-na-stranu ako originál (letterhead → I.–IV. → podpis Hoops → adresár partnerov → Prüfvermerk), telo 12 pt. Jazyková **pill lišta ako v dokumentoch P09** (neaktívne #EEF2F7 s okrajom #C7D2E0 + navy text, aktívny jazyk #1F3864 + biely text, tlačidlo ~0,90×0,55 cm, celý pás ~10,5 cm vpravo hore) + kompaktný badge banner. V pätičke povinný disclaimer o neoficiálnom preklade (záväzný je DE originál).
+
+Prebieha: EN, SK, HR, PL, ES, IT, SV → zlúčenie do doc1 → **interné krížové odkazy** nad pill lištou (klik na jazyk = GoTo na 1. stranu daného jazyka v zlúčenom PDF). Bannery: jazykové badge z `gh.rar` (`deutsch_badge`…`svenska_badge`) — používať tie pre 1:1 zhodu.
