@@ -3,8 +3,8 @@
  "_udrzba": "Po KAZDOM wp_section_replace: nastroj vypise 'old=X zn., new=Y zn.' -> posun = Y-X. Priraď posun ku VSETKYM offsetom vacsim nez miesto zasahu. Offsety pred zasahom sa nemenia. Aktualizuj aj page_chars. Ziadne dalsie citanie netreba.",
  "page_id": 303,
  "slug": "kauzy-koncept",
- "page_chars": 1020669,
- "platne_k": "2026-07-22T17:56:38",
+ "page_chars": 1023481,
+ "platne_k": "2026-07-22T18:33:58",
  "kotvy": [
   {
    "offset": 0,
@@ -24,82 +24,82 @@
   },
   {
    "offset": 29849,
-   "co": "karta Telekom (#fia-testcases) — col GESENDET cnt=3, NOVA 1. polozka P03 'Erinnerung/Antrag auf Stundung' 14.11.2024 (cmt-zaloba-p03, summod-zaloba-p03, VLAJKA-VIEWER doc1 P03 klon @453a207 + doc2 03_with_QES @453a207, de:1:2 sk:2:2, orig z REPA, qes=1:2:b (str.1 DE doc2, spodok) + sum=summod-zaloba-p03)"
+   "co": "karta Telekom (#fia-testcases) — col GESENDET cnt=3, NOVA 1. polozka P03 'Erinnerung/Antrag auf Stundung' 14.11.2024 (cmt-zaloba-p03, summod-zaloba-p03, VLAJKA-VIEWER doc1 P03 klon @453a207 + doc2 03_with_QES @453a207, de:1:2 sk:2:2, orig z REPA, qes=1:2:b + sum=summod-zaloba-p03 + law=§66 GKG (3 tlacidla: QES, Suhrn, §66 GKG))"
   },
   {
-   "offset": 90064,
+   "offset": 92876,
    "co": "karta Telekom — sumarny modal (gtl-b it/fr)"
   },
   {
-   "offset": 108017,
+   "offset": 110829,
    "co": "karta case-zaloba-proti-deutsche-telekom-ag-porusov (#fia-testcases, data-pin=2) — col PRIJATE (cnt 1) + polozka 'LG Landshut 23 O 2699/24' (cmt-zaloba-03, summod-zaloba-03, VLAJKA-VIEWER doc1 klon 8 jaz @d747d91 + doc2 sken originalu DE @800e78a, DE:1:2, bez qes=)"
   },
   {
-   "offset": 217079,
+   "offset": 219891,
    "co": "karta DAK — telo suhrnu (SGB V, VwVG)"
   },
   {
-   "offset": 367079,
+   "offset": 369891,
    "co": "karta UDZS — telo sprievodneho textu"
   },
   {
-   "offset": 573414,
+   "offset": 576226,
    "co": "karta case-m10815 — col-h stlpca ODOSLANE (<span class=\"cnt\">3</span>) + zaciatok polozky 'Nichtigkeitsklage (Art. 263 AEUV)'"
   },
   {
-   "offset": 587084,
+   "offset": 589896,
    "co": "karta case-m10815 — polozka 'Zaloba o neplatnost' (.open odkazy viewer)"
   },
   {
-   "offset": 621754,
+   "offset": 624566,
    "co": "karta case-m10815 — ZACIATOK polozky 'Ziadost o ustanovenie advokata' (cmt-m10815-02, summod-m10815-02)"
   },
   {
-   "offset": 631780,
+   "offset": 634592,
    "co": "karta case-m10815 — ZACIATOK polozky 'Odpoved na zamietnutie pristupu k e-Curia' (<div class=\"item\" data-snap=)"
   },
   {
-   "offset": 647362,
+   "offset": 650174,
    "co": "karta case-m10815 — col-h stlpca PRIJATE (cnt 5), hned za koncom stlpca Odoslane"
   },
   {
-   "offset": 647602,
+   "offset": 650414,
    "co": "karta case-m10815 — ZACIATOK 1. polozky PRIJATE 'Potvrdenie o doruceni zaloby' (cmt-m10815-05, summod-m10815-05, VLAJKA-VIEWER)"
   },
   {
-   "offset": 665059,
+   "offset": 667871,
    "co": "karta case-m10815 — 2. polozka PRIJATE 'Sprievodny list kancelarie (T-61/26 AJ)' (cmt-m10815-06, summod-m10815-06, VLAJKA-VIEWER)"
   },
   {
-   "offset": 681972,
+   "offset": 684784,
    "co": "karta case-m10815 — 3. polozka PRIJATE 'Oznamenie sudu o zastupovani advokatom' (cmt-m10815-08, summod-m10815-08, VLAJKA-VIEWER)"
   },
   {
-   "offset": 699739,
+   "offset": 702551,
    "co": "karta case-m10815 — POSLEDNA polozka PRIJATE 'Uznesenie predsedu sudu' (cmt-m10815-09, summod-m10815-09, VLAJKA-VIEWER)"
   },
   {
-   "offset": 743879,
+   "offset": 746691,
    "co": "karta case-dgcomp — <details ...> data-area='kartell gdpr majetok' (~675640), .case-meta ~677500"
   },
   {
-   "offset": 743887,
+   "offset": 746699,
    "co": "karta case-dgcomp — hlavicka (.case-meta ~677500, col-h ODOSLANE ~680300)"
   },
   {
-   "offset": 747437,
+   "offset": 750249,
    "co": "karta case-dgcomp — polozka 'Formalne odvolanie ... pristup k dokumentom JV' (cmt-dgcomp-02, summod-dgcomp-02)"
   },
   {
-   "offset": 775487,
+   "offset": 778299,
    "co": "karta case-dgcomp — polozka 'Prvotna ziadost o pristup k dokumentom' (cmt-dgcomp-03, summod-dgcomp-03)"
   },
   {
-   "offset": 812527,
+   "offset": 815339,
    "co": "karta case-dgcomp — polozka 'Odpoved na rozhodnutie EK o odmietnuti pristupu k dokumentom JV' (cmt-dgcomp-05, summod-dgcomp-05, VLAJKA-VIEWER doc1 klon @4bd5d66 + doc2 podpisany QES @7482dae, DE:1:2 d=2)"
   },
   {
-   "offset": 850530,
+   "offset": 853342,
    "co": "karta case-dgcomp — col-h PRIJATE (cnt 1) + polozka 'EASE 2025/6534 list DG COMP' (cmt-dgcomp-04, summod-dgcomp-04, VLAJKA-VIEWER na dok. 11) — prepocitane (+34475), over malym oknom"
   }
  ],
@@ -125,6 +125,7 @@
   "22.07.2026 (2): opravene 'Antwort auf' referencie (.rt-subj) na 2 Empfangen polozkach karty Telekom (Verfuegung 06.11 ~offset 89000, Kostenrechnung 06.11) - referencovany predmet bol single-span bez .gtl (natvrdo SK), teraz 9-jaz. + zosuladeny s novym predmetom polozky 1. Kazda +1284 zn.",
   "POZOR: stlpec Empfangen karty Telekom je teraz cnt=3 (Verfuegung, Kostenrechnung, eV) - NIE cnt=1 'LG Landshut' ako popisuje stara kotva 78291/78963. Kotva 78291 je zastarala; realny Empfangen stlpec zacina ~po polozke 17.10 PKH. Pri praci s tymto stlpcom VZDY citaj a over.",
   "22.07.2026 (3): karta Telekom — PRIDANA 1. Gesendet polozka P03 (Erinnerung/Antrag auf Stundung 14.11.2024), cnt 2->3, 9-jaz. subj+suhrn, VLAJKA-VIEWER z REPA (doc1 P03 klon + doc2/orig 03_with_QES @453a207, OneDrive vynechany per Peter), unikatne ID cmt/summod-zaloba-p03 (03 obsadene prijatou polozkou). Vlozene cez marker. Spolu +28446 zn.; vsetky offsety >29845 posunute o +28446.",
-  "22.07.2026 (4): polozka P03 Telekom — DOPLNENE qes=1:2:b a sum=summod-zaloba-p03 do vsetkych 19 viewer URL (chybalo tlacidlo ✍ QES aj Suhrn). Cela polozka prestavena (item 28446->29054). Pozn.: pri prestavbe vznikol docasny duplikat chvosta (orphan 17578 zn.), hned odstraneny. Cisty vysledok: +608 zn. oproti 3261ea3b; offsety >58900 posunute o +608."
+  "22.07.2026 (4): polozka P03 Telekom — DOPLNENE qes=1:2:b a sum=summod-zaloba-p03 do vsetkych 19 viewer URL (chybalo tlacidlo ✍ QES aj Suhrn). Cela polozka prestavena (item 28446->29054). Pozn.: pri prestavbe vznikol docasny duplikat chvosta (orphan 17578 zn.), hned odstraneny. Cisty vysledok: +608 zn. oproti 3261ea3b; offsety >58900 posunute o +608.",
+  "22.07.2026 (5): polozka P03 Telekom — DOPLNENE law=§66 GKG (gesetze-im-internet /gkg_2004/__66.html) do vsetkych 19 URL (2-blokovy zasah: data-snap +1480, .open +1332). viewer.html upravene (commit 5ebca9a): QES sa appenduje PRED Suhrn (insertBefore) -> poradie tlacidiel QES, Suhrn, law. Spolu +2812 zn.; offsety >58900 posunute o +2812. P03 ma teraz 3 tlacidla."
  ]
 }
