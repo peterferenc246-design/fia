@@ -69,6 +69,23 @@ Na prvej strane ich podania stojí **„Per beA"**.
 Toto je treba opísať, aký je to dvojaký meter! QES sa predsa dá overiť. Ak sa overí, je platný! Súd nám vytvára sám bariéry aj tam kde nie sú!
 ---
 
+## 2c. Obsah stanoviska Latham & Watkins z 20.11.2024 — čo tvrdí SCHUFA
+
+Stanovisko (Stellungnahme, 4 strany + adresár kancelárie + Prüfvermerk) podala Lisa M. Hoops za SCHUFA Holding AG („žalovaná č. 2"). Reaguje na žiadosť o právnu pomoc zo 17.10.2024. Tvrdí, že návrh je **neprípustný aj nedôvodný**:
+
+- **Neprípustný:** navrhovateľ nevyložil osobné a majetkové pomery (§ 117 ods. 2 ZPO); dôkazné bremeno o núdzi nesie navrhovateľ (§ 115 ZPO); súdu nepredložil dôkazy (§ 117 ods. 1 veta 2 ZPO) — PDF dôkazy zo str. 2 návrhu žaloby vraj žalovaná č. 2 nemá.
+- **Bez šance na úspech:** žaloba je vraj neprípustná (§ 253 ods. 2 ZPO — chýba dostatočne určitý návrh); z návrhu nevyplýva skutočný predmet; navrhovateľ vraj žiada od žalovanej č. 2 náhradu **500 000 € podľa čl. 82 GDPR**, ale tvrdenia o porušení GDPR aj o škode sú vraj úplne nesubstancované.
+- **Spracúvanie údajov vraj zákonné:** SCHUFA sa opiera o **čl. 6 ods. 1 písm. f) GDPR**; **čl. 22 GDPR sa vraj neuplatní**; SCHUFA je spoločná inštitúcia úverového hospodárstva s databázou 68+ mil. záznamov; postup vraj zodpovedá § 18a ods. 3 KWG.
+
+**Na rebuttal (do ďalších podaní):**
+- Nálepka „nesubstancované" obchádza jadro — automatizované odmietnutie služby na základe BONITA scoringu (čl. 22 GDPR) a chýbajúci informovaný súhlas; doložiť konkrétnym spracúvaním a odmietnutiami.
+- Čl. 6 ods. 1 písm. f) vyžaduje test oprávneného záujmu verzus práva dotknutého — nie je vykonaný; § 18a KWG neruší povinnosti podľa GDPR.
+- SCHUFA sa vyjadruje len k sebe, zvyšok „popiera z nevedomosti" (mit Nichtwissen) — to nie je vecná obrana proti kartelovej a GDPR argumentácii.
+
+**Zdroj — pozor:** v repe je len Petrov Wordový súbor `07_20.11.2024_Stellungnahme_Latham_Watkins_PKH_DE_GH.pdf` (str. 5–10 zlúčeného, re-sadzba s OCR preklepmi Poter/Novemberr/LATAHM a zvyškovými číslami strán 5–10). **Pravý beA originál `241120_-_LW_Stellungnahme_PKH_Antrag_-_Ferenc.pdf` v repe CHÝBA** — pri klone aj pri doc2 s tým počítať. Klon P10 v príprave: 6-stranový, strana-na-stranu, 9 jazykov, pill hlavička.
+
+---
+
 ## 3. Presnosť — čo NEtvrdiť
 
 **Potvrdenie z 22.01.2025 dokladá DORUČENIE e-mailu, nie uznanie procesnej účinnosti podania.**
@@ -105,4 +122,11 @@ Dôvod je praktický: dokumenty hovoria samy za seba. Kto si prečíta, že sede
 
 *(sem dopisuj — Claude to prečíta pri ďalšej práci)*
 
+---
+
+## 7. Došlá pošta — pomenovanie súborov (od 22.07.2026)
+
+Prijaté originály v `sud-landshut-telekom/prijate/` sú premenované na jednotný tvar **`NN_DD.MM.RRRR_popis_DE_GH.pdf`** (číslované chronologicky, 01 = najstarší; popisy po nemecky, bez diakritiky). Kompletný zoznam s metadátami, starým↔novým názvom a mapovaním na klony P0X je v **`prijate/FIA_LG_Landshut_dokumenty_zoznam_prijate_GH.xlsx`**.
+
+Na OneDrive (`…\Došlá pošta\GH\`) treba premenovať ručne podľa stĺpca E — Microsoft 365 konektor vie súbory len čítať/vyhľadávať, nie premenovať.
 
