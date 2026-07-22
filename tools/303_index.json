@@ -3,8 +3,8 @@
  "_udrzba": "Po KAZDOM wp_section_replace: nastroj vypise 'old=X zn., new=Y zn.' -> posun = Y-X. Priraď posun ku VSETKYM offsetom vacsim nez miesto zasahu. Offsety pred zasahom sa nemenia. Aktualizuj aj page_chars. Ziadne dalsie citanie netreba.",
  "page_id": 303,
  "slug": "kauzy-koncept",
- "page_chars": 989047,
- "platne_k": "2026-07-22T15:03:59",
+ "page_chars": 991615,
+ "platne_k": "2026-07-22T15:14:20",
  "kotvy": [
   {
    "offset": 0,
@@ -117,6 +117,8 @@
   "19.07.2026 08:55: polozka cmt-dgcomp-03 — vsetky pravne predpisy v suhrne olinkovane (eur-lex CELEX 32001R1049, 12016E015, 12012P/TXT, 32016R0679, 32002L0058; dsgvo-gesetz.de art-4; competition-cases M.10815) vo vsetkych 9 jazykoch. Spolu +7356 zn.",
   "19.07.2026 14:43: karta case-dgcomp — NOVA polozka v stlpci PRIJATE (list DG COMP EASE 2025/6534), 19 viewer URL na dok.11 (9 jaz. klon @96aa19e + EN original @98aa05b), 9-jaz. predmet a suhrn, dolezita, cnt 0->1, .empty odstraneny. Karta data-area -> 'kartell gdpr majetok'. Spolu +26799 zn.",
   "22.07.2026: opravene 9-jaz. preklady .subj dvoch Gesendet poloziek karty Telekom (chybali - vsetkych 9 gtl bolo SK). 02.10 zaloba: novy predmet 'Klage ... DSGVO und Menschenrechte' (+624), jej data-snap subj (+59); 17.10 'Antrag auf Prozesskostenhilfe' (-11). Posun: kotva 60327->61010 (+683), vsetky >=78291 +672.",
-  "POZOR 22.07.2026: index mal page_chars 918710, ale realny raw obsah bol 988375 (rozdiel ~70k pribudol po 20.07 zrejme ZA kartou Telekom). Kotvy Telekom (24700-78963) su overene a presne; kotvy >=187353 (DAK/UDZS/m10815/dgcomp) mozu byt navyse posunute ~+70k z inej prace - VZDY over malym oknom ~600 zn. a pripadne doplni."
+  "POZOR 22.07.2026: index mal page_chars 918710, ale realny raw obsah bol 988375 (rozdiel ~70k pribudol po 20.07 zrejme ZA kartou Telekom). Kotvy Telekom (24700-78963) su overene a presne; kotvy >=187353 (DAK/UDZS/m10815/dgcomp) mozu byt navyse posunute ~+70k z inej prace - VZDY over malym oknom ~600 zn. a pripadne doplni.",
+  "22.07.2026 (2): opravene 'Antwort auf' referencie (.rt-subj) na 2 Empfangen polozkach karty Telekom (Verfuegung 06.11 ~offset 89000, Kostenrechnung 06.11) - referencovany predmet bol single-span bez .gtl (natvrdo SK), teraz 9-jaz. + zosuladeny s novym predmetom polozky 1. Kazda +1284 zn.",
+  "POZOR: stlpec Empfangen karty Telekom je teraz cnt=3 (Verfuegung, Kostenrechnung, eV) - NIE cnt=1 'LG Landshut' ako popisuje stara kotva 78291/78963. Kotva 78291 je zastarala; realny Empfangen stlpec zacina ~po polozke 17.10 PKH. Pri praci s tymto stlpcom VZDY citaj a over."
  ]
 }
