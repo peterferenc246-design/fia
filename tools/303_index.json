@@ -3,8 +3,8 @@
  "_udrzba": "Po KAZDOM wp_section_replace: nastroj vypise 'old=X zn., new=Y zn.' -> posun = Y-X. Priraď posun ku VSETKYM offsetom vacsim nez miesto zasahu. Offsety pred zasahom sa nemenia. Aktualizuj aj page_chars. Ziadne dalsie citanie netreba.",
  "page_id": 303,
  "slug": "kauzy-koncept",
- "page_chars": 918710,
- "platne_k": "2026-07-20T10:54:54",
+ "page_chars": 989047,
+ "platne_k": "2026-07-22T15:03:59",
  "kotvy": [
   {
    "offset": 0,
@@ -23,79 +23,79 @@
    "co": "karta case-zaloba-proti-deutsche-telekom-ag-porusov — .case-meta (Landgericht Landshut Abteilung fuer Zivilsachen, 9 jaz.)"
   },
   {
-   "offset": 60327,
+   "offset": 61010,
    "co": "karta Telekom — sumarny modal (gtl-b it/fr)"
   },
   {
-   "offset": 78291,
+   "offset": 78963,
    "co": "karta case-zaloba-proti-deutsche-telekom-ag-porusov (#fia-testcases, data-pin=2) — col PRIJATE (cnt 1) + polozka 'LG Landshut 23 O 2699/24' (cmt-zaloba-03, summod-zaloba-03, VLAJKA-VIEWER doc1 klon 8 jaz @d747d91 + doc2 sken originalu DE @800e78a, DE:1:2, bez qes=)"
   },
   {
-   "offset": 187353,
+   "offset": 188025,
    "co": "karta DAK — telo suhrnu (SGB V, VwVG)"
   },
   {
-   "offset": 337353,
+   "offset": 338025,
    "co": "karta UDZS — telo sprievodneho textu"
   },
   {
-   "offset": 543688,
+   "offset": 544360,
    "co": "karta case-m10815 — col-h stlpca ODOSLANE (<span class=\"cnt\">3</span>) + zaciatok polozky 'Nichtigkeitsklage (Art. 263 AEUV)'"
   },
   {
-   "offset": 557358,
+   "offset": 558030,
    "co": "karta case-m10815 — polozka 'Zaloba o neplatnost' (.open odkazy viewer)"
   },
   {
-   "offset": 592028,
+   "offset": 592700,
    "co": "karta case-m10815 — ZACIATOK polozky 'Ziadost o ustanovenie advokata' (cmt-m10815-02, summod-m10815-02)"
   },
   {
-   "offset": 602054,
+   "offset": 602726,
    "co": "karta case-m10815 — ZACIATOK polozky 'Odpoved na zamietnutie pristupu k e-Curia' (<div class=\"item\" data-snap=)"
   },
   {
-   "offset": 617636,
+   "offset": 618308,
    "co": "karta case-m10815 — col-h stlpca PRIJATE (cnt 5), hned za koncom stlpca Odoslane"
   },
   {
-   "offset": 617876,
+   "offset": 618548,
    "co": "karta case-m10815 — ZACIATOK 1. polozky PRIJATE 'Potvrdenie o doruceni zaloby' (cmt-m10815-05, summod-m10815-05, VLAJKA-VIEWER)"
   },
   {
-   "offset": 635333,
+   "offset": 636005,
    "co": "karta case-m10815 — 2. polozka PRIJATE 'Sprievodny list kancelarie (T-61/26 AJ)' (cmt-m10815-06, summod-m10815-06, VLAJKA-VIEWER)"
   },
   {
-   "offset": 652246,
+   "offset": 652918,
    "co": "karta case-m10815 — 3. polozka PRIJATE 'Oznamenie sudu o zastupovani advokatom' (cmt-m10815-08, summod-m10815-08, VLAJKA-VIEWER)"
   },
   {
-   "offset": 670013,
+   "offset": 670685,
    "co": "karta case-m10815 — POSLEDNA polozka PRIJATE 'Uznesenie predsedu sudu' (cmt-m10815-09, summod-m10815-09, VLAJKA-VIEWER)"
   },
   {
-   "offset": 714153,
+   "offset": 714825,
    "co": "karta case-dgcomp — <details ...> data-area='kartell gdpr majetok' (~675640), .case-meta ~677500"
   },
   {
-   "offset": 714161,
+   "offset": 714833,
    "co": "karta case-dgcomp — hlavicka (.case-meta ~677500, col-h ODOSLANE ~680300)"
   },
   {
-   "offset": 717711,
+   "offset": 718383,
    "co": "karta case-dgcomp — polozka 'Formalne odvolanie ... pristup k dokumentom JV' (cmt-dgcomp-02, summod-dgcomp-02)"
   },
   {
-   "offset": 745761,
+   "offset": 746433,
    "co": "karta case-dgcomp — polozka 'Prvotna ziadost o pristup k dokumentom' (cmt-dgcomp-03, summod-dgcomp-03)"
   },
   {
-   "offset": 782801,
+   "offset": 783473,
    "co": "karta case-dgcomp — polozka 'Odpoved na rozhodnutie EK o odmietnuti pristupu k dokumentom JV' (cmt-dgcomp-05, summod-dgcomp-05, VLAJKA-VIEWER doc1 klon @4bd5d66 + doc2 podpisany QES @7482dae, DE:1:2 d=2)"
   },
   {
-   "offset": 820804,
+   "offset": 821476,
    "co": "karta case-dgcomp — col-h PRIJATE (cnt 1) + polozka 'EASE 2025/6534 list DG COMP' (cmt-dgcomp-04, summod-dgcomp-04, VLAJKA-VIEWER na dok. 11) — prepocitane (+34475), over malym oknom"
   }
  ],
@@ -115,6 +115,8 @@
   "19.07.2026 08:10: karta case-dgcomp, polozka cmt-dgcomp-02 — doplneny fpath, fallback a 9-jazycny suhrn (moj rozbor dokumentu + Petrov komentar). Spolu +18156 zn.",
   "19.07.2026 08:43: polozka cmt-dgcomp-03 — doplneny 9-jazycny suhrn s hypertextom na M.10815 (body 138-142, str. 28-31). Pozn.: snap tejto polozky NEMA cmtid/begleit/court/stav — konci na '\"comments\":true,\"pwhint\":\"\"'. Spolu +17910 zn.",
   "19.07.2026 08:55: polozka cmt-dgcomp-03 — vsetky pravne predpisy v suhrne olinkovane (eur-lex CELEX 32001R1049, 12016E015, 12012P/TXT, 32016R0679, 32002L0058; dsgvo-gesetz.de art-4; competition-cases M.10815) vo vsetkych 9 jazykoch. Spolu +7356 zn.",
-  "19.07.2026 14:43: karta case-dgcomp — NOVA polozka v stlpci PRIJATE (list DG COMP EASE 2025/6534), 19 viewer URL na dok.11 (9 jaz. klon @96aa19e + EN original @98aa05b), 9-jaz. predmet a suhrn, dolezita, cnt 0->1, .empty odstraneny. Karta data-area -> 'kartell gdpr majetok'. Spolu +26799 zn."
+  "19.07.2026 14:43: karta case-dgcomp — NOVA polozka v stlpci PRIJATE (list DG COMP EASE 2025/6534), 19 viewer URL na dok.11 (9 jaz. klon @96aa19e + EN original @98aa05b), 9-jaz. predmet a suhrn, dolezita, cnt 0->1, .empty odstraneny. Karta data-area -> 'kartell gdpr majetok'. Spolu +26799 zn.",
+  "22.07.2026: opravene 9-jaz. preklady .subj dvoch Gesendet poloziek karty Telekom (chybali - vsetkych 9 gtl bolo SK). 02.10 zaloba: novy predmet 'Klage ... DSGVO und Menschenrechte' (+624), jej data-snap subj (+59); 17.10 'Antrag auf Prozesskostenhilfe' (-11). Posun: kotva 60327->61010 (+683), vsetky >=78291 +672.",
+  "POZOR 22.07.2026: index mal page_chars 918710, ale realny raw obsah bol 988375 (rozdiel ~70k pribudol po 20.07 zrejme ZA kartou Telekom). Kotvy Telekom (24700-78963) su overene a presne; kotvy >=187353 (DAK/UDZS/m10815/dgcomp) mozu byt navyse posunute ~+70k z inej prace - VZDY over malym oknom ~600 zn. a pripadne doplni."
  ]
 }
