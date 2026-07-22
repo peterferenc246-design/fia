@@ -82,7 +82,7 @@ Stanovisko (Stellungnahme, 4 strany + adresár kancelárie + Prüfvermerk) podal
 - Čl. 6 ods. 1 písm. f) vyžaduje test oprávneného záujmu verzus práva dotknutého — nie je vykonaný; § 18a KWG neruší povinnosti podľa GDPR.
 - SCHUFA sa vyjadruje len k sebe, zvyšok „popiera z nevedomosti" (mit Nichtwissen) — to nie je vecná obrana proti kartelovej a GDPR argumentácii.
 
-**Zdroj — pozor:** v repe je len Petrov Wordový súbor `07_20.11.2024_Stellungnahme_Latham_Watkins_PKH_DE_GH.pdf` (str. 5–10 zlúčeného, re-sadzba s OCR preklepmi Poter/Novemberr/LATAHM a zvyškovými číslami strán 5–10). **Pravý beA originál `241120_-_LW_Stellungnahme_PKH_Antrag_-_Ferenc.pdf` v repe CHÝBA** — pri klone aj pri doc2 s tým počítať. Klon P10 v príprave: 6-stranový, strana-na-stranu, 9 jazykov, pill hlavička.
+**Zdroj — pozor:** v repe je len Petrov Wordový súbor `05_20.11.2024_Stellungnahme_Latham_Watkins_PKH_DE_GH.pdf` (str. 5–10 zlúčeného, re-sadzba s OCR preklepmi Poter/Novemberr/LATAHM a zvyškovými číslami strán 5–10). **Pravý beA originál `241120_-_LW_Stellungnahme_PKH_Antrag_-_Ferenc.pdf` v repe CHÝBA** — pri klone aj pri doc2 s tým počítať. Klon P10 v príprave: 6-stranový, strana-na-stranu, 9 jazykov, pill hlavička.
 
 ---
 
@@ -130,7 +130,7 @@ Prijaté originály v `sud-landshut-telekom/prijate/` sú premenované na jednot
 
 Na OneDrive (`…\Došlá pošta\GH\`) treba premenovať ručne podľa stĺpca E — Microsoft 365 konektor vie súbory len čítať/vyhľadávať, nie premenovať.
 
-## 8. Stellungnahme Latham & Watkins (20.11.2024) — súbor 07_, obsah a zdroj
+## 8. Stellungnahme Latham & Watkins (20.11.2024) — súbor 05_, obsah a zdroj
 
 **Čo to je:** Vyjadrenie advokátov Latham & Watkins LLP (Lisa M. Hoops, Dr. Wolf-Tassilo Böhm; zn. 035279-0014) v mene SCHUFA Holding AG („Beklagte zu 2") k Petrovmu návrhu na oslobodenie od trov (PKH) zo 17.10.2024. Podané cez beA/EGVP 20.11.2024 o 16:21, QES Lisa-Marie Hoops 16:15 (Prüfvermerk: platnosť aj integrita OK).
 
@@ -141,7 +141,7 @@ Na OneDrive (`…\Došlá pošta\GH\`) treba premenovať ručne podľa stĺpca E
 
 **Pre stratégiu:** Latham hovorí výslovne LEN za Schufu, za Telekom sa nevyjadruje. Tvrdenie, že čl. 22 GDPR sa neuplatní a scoring je zákonný, ide priamo proti nosnému bodu kauzy (automatizované odmietanie služby na základe scoringu) — bod na priamu protiargumentáciu.
 
-**ZDROJ — POZOR:** súbor `07_20.11.2024_Stellungnahme_Latham_Watkins_PKH_DE_GH.pdf` NIE JE pravý beA originál. Je to Petrov Wordový výtvor (autor Peter Ferenc, PDFMaker, 03/2025) — str. 5–10 väčšieho zlúčeného súboru („moja reakcia na súde"), s OCR preklepmi („Poter", „Novemberr", „LATAHM") a zapečenými číslami strán 5–10. Pravý originál z beA — `241120_-_LW_Stellungnahme_PKH_Antrag_-_Ferenc.pdf` (menovaný v Prüfvermerku) — v repe CHÝBA. Pre klon (VLAJKA-VIEWER) by mal byť „záväzný originál" (doc2) ideálne tento pravý beA PDF; ak ho Peter dohľadá, nahrať do repa.
+**ZDROJ — POZOR:** súbor `05_20.11.2024_Stellungnahme_Latham_Watkins_PKH_DE_GH.pdf` NIE JE pravý beA originál. Je to Petrov Wordový výtvor (autor Peter Ferenc, PDFMaker, 03/2025) — str. 5–10 väčšieho zlúčeného súboru („moja reakcia na súde"), s OCR preklepmi („Poter", „Novemberr", „LATAHM") a zapečenými číslami strán 5–10. Pravý originál z beA — `241120_-_LW_Stellungnahme_PKH_Antrag_-_Ferenc.pdf` (menovaný v Prüfvermerku) — v repe CHÝBA. Pre klon (VLAJKA-VIEWER) by mal byť „záväzný originál" (doc2) ideálne tento pravý beA PDF; ak ho Peter dohľadá, nahrať do repa.
 
 ---
 
