@@ -57,6 +57,7 @@ button.lbf.active{border-color:var(--navy);box-shadow:0 0 0 3px rgba(31,56,100,.
 .case-footer{margin-top:40px;padding:14px 18px;background:var(--gray);border-top:3px solid var(--navy);font-size:12px;color:#555;text-align:center}
 .case-footer a{color:var(--navy)}
 @media(max-width:620px){.timeline::before{display:none}.msg,.msg.peter,.msg.commission{flex-direction:column}.msg.peter .bubble,.msg.commission .bubble{margin:0}.msg::after{display:none}}
+
 .src{font-size:11px;color:#7a8899;text-decoration:none;border-bottom:1px dotted #b9c4d1}
 .src:hover{color:var(--navy)}
 .att{margin-top:12px;padding-top:10px;border-top:1px dashed var(--border);font-size:12px;color:#555}
@@ -65,42 +66,63 @@ button.lbf.active{border-color:var(--navy);box-shadow:0 0 0 3px rgba(31,56,100,.
 .attf::before{content:'\1F4CE';position:absolute;left:0}
 .extf{display:block;padding-left:16px;position:relative;margin-bottom:3px}
 .extf::before{content:'\1F517';position:absolute;left:0}
-.extf.trunc{color:#8a8a8a}
-.extf.trunc em{font-size:11px}
+.extf.trunc{color:#8a8a8a}.extf.trunc em{font-size:11px}
+.omark{display:block;font-size:11px;letter-spacing:.03em;margin:0 0 10px;padding:4px 9px;border-radius:3px;
+ background:#eef2f7;color:#54637a;border-left:3px solid #b9c4d1}
+.omark b{color:var(--navy)}
 .note-verbatim{background:var(--yellow);border:1px solid #f0c040;border-radius:4px;padding:12px 16px;margin:0 0 26px;font-size:13px}
-.msg.peter .bubble,.msg.commission .bubble{max-width:none}
+.gtl-b{display:none}
+body[data-lang="en"] .gtl.en,body[data-lang="sk"] .gtl.sk{display:inline}
+body[data-lang="en"] .gtl-b.en,body[data-lang="sk"] .gtl-b.sk{display:block}
+
 </style>
 </head>
-<body>
+<body data-lang="en">
 
 <div id="langbar"><div class="lbinner">
-<a class="lbhome" href="https://foxprof.club/kauzy-koncept/">← Back to case</a>
-<a class="lbhome" href="dgcomp-correspondence.html">Summary version (9 languages) →</a>
+<a class="lbhome" href="https://foxprof.club/kauzy-koncept/"><span class="gtl en">← Back to case</span><span class="gtl sk">← Späť na kartu</span></a>
+<div class="lbflags">
+ <span class="lbl">Lang</span>
+ <button class="lbf active" data-lang="en" title="EN"><img src="https://flagcdn.com/gb.svg" alt="EN"></button>
+ <button class="lbf" data-lang="sk" title="SK"><img src="https://flagcdn.com/sk.svg" alt="SK"></button>
+</div>
+<a class="lbhome" href="dgcomp-correspondence.html"><span class="gtl en">Summary version →</span><span class="gtl sk">Skrátený prehľad →</span></a>
 </div></div>
 
 <div class="case-header">
-<h1>Request for access to documents — Case M.10815<br>Deutsche Telekom / Orange / Telefónica / Vodafone — Joint Venture</h1>
-<div class="meta">Applicant: Peter Ferenc · Institution: European Commission, DG Competition, Unit C.5 Mergers · Secretariat-General, Transparency Unit<br>
-Legal basis: Regulation (EC) No 1049/2001 · Article 15(3) TFEU · Article 42 of the Charter<br>
-Channel: AskTheEU.org — 10 December 2025 to 20 July 2026 · 17 messages</div>
+<h1><span class="gtl en">Request for access to documents — Case M.10815</span><span class="gtl sk">Žiadosť o prístup k dokumentom — vec M.10815</span><br>
+Deutsche Telekom / Orange / Telefónica / Vodafone — Joint Venture</h1>
+<div class="meta"><span class="gtl en">Applicant</span><span class="gtl sk">Žiadateľ</span>: Peter Ferenc ·
+<span class="gtl en">Institution</span><span class="gtl sk">Inštitúcia</span>: European Commission, DG Competition, Unit C.5 Mergers ·
+Secretariat-General, Transparency Unit<br>
+<span class="gtl en">Legal basis</span><span class="gtl sk">Právny základ</span>: <span class="gtl en">Regulation (EC) No 1049/2001 · Article 15(3) TFEU · Article 42 of the Charter</span><span class="gtl sk">nariadenie (ES) č. 1049/2001 · čl. 15 ods. 3 ZFEÚ · čl. 42 Charty</span><br>
+<span class="gtl en">Channel</span><span class="gtl sk">Kanál</span>: AskTheEU.org — 10.12.2025 → 20.07.2026 · 17 <span class="gtl en">messages</span><span class="gtl sk">správ</span></div>
 <div class="ref">EASE 2025/6534 · COMP/C5/LC/(2025)/6534 · TFIA-2026-JV-009</div>
 </div>
 
-<div class="note-verbatim"><strong>Full record.</strong> Every message is reproduced in its original wording;
-nothing has been shortened or paraphrased. Removed are only the platform elements of AskTheEU
-(sidebar, “Link to this / Report”, “show quoted sections”, reference lists and automatic footers).
-Messages sent in several languages are reproduced in English and marked accordingly.
-A condensed nine-language overview of the same file is available
-<a href="dgcomp-correspondence.html">here</a>.</div>
+<div class="note-verbatim">
+<span class="gtl-b en"><strong>Full record.</strong> Every message is reproduced in full; nothing has been shortened
+or paraphrased. Removed are only the platform elements of AskTheEU (sidebar, “Link to this / Report”,
+“show quoted sections”, reference lists and automatic footers).
+Under each flag every message carries a marker: the language in which the message was actually sent or received is
+labelled <b>ORIGINAL</b>; every other language is labelled <b>COPY OF THE ORIGINAL — translation</b> and serves
+for comprehension only. In case of any discrepancy, the original prevails.</span>
+<span class="gtl-b sk"><strong>Úplný záznam.</strong> Každá správa je uvedená v plnom znení; nič nie je skrátené
+ani preformulované. Odstránené sú výlučne prvky platformy AskTheEU (bočný panel, „Link to this / Report“,
+„show quoted sections“, zoznamy odkazov a automatické pätičky).
+Pod každou vlajkou má každá správa označenie: jazyk, v ktorom bola správa skutočne odoslaná alebo doručená,
+je označený ako <b>ORIGINÁL</b>; každý ďalší jazyk je označený ako <b>KÓPIA ORIGINÁLU — preklad</b> a slúži
+len na porozumenie. V prípade rozporu má prednosť originál.</span></div>
 
 <div class="timeline">
-<div class="phase-label"><span>Phase I — Initial request</span></div>
+<div class="phase-label"><span><span class="gtl en">Phase I — Initial request</span><span class="gtl sk">Fáza I — prvotná žiadosť</span></span></div>
 <div class="msg peter" id="msg-1">
 <div class="bubble">
- <div class="subject">Request for access to documents — Case M.10815</div>
+ <div class="subject"><span class="gtl en">Request for access to documents — Case M.10815</span><span class="gtl sk">Žiadosť o prístup k dokumentom — vec M.10815</span></div>
  <div class="sender"><span class="sender-name">Peter Ferenc</span>
-  <span class="sender-date">10.12.2025</span><span class="badge badge-d">Delivered</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#outgoing-32510" target="_blank" rel="noopener">source</a></div>
- <p>Dear Competition,</p>
+  <span class="sender-date">10.12.2025</span><span class="badge badge-d"><span class="gtl en">Delivered</span><span class="gtl sk">Doručené</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#outgoing-32510" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>KÓPIA ORIGINÁLU</b> — preklad</span></span>
+ <div class="gtl-b en"><p>Dear Competition,</p>
 <p>Under the right of access to documents in the EU treaties, as developed in <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation 1049/2001</a>, I am requesting documents which contain the following information:</p>
 <p>pursuant to <strong><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation (EC) No 1049/2001</a></strong>, <strong><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:12016E015" target="_blank" rel="noopener">Article 15 TFEU</a></strong> and <strong><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:12012P/TXT" target="_blank" rel="noopener">Article 42 of the Charter of Fundamental Rights of the European Union</a></strong>, I hereby request full access to all documents related to case <strong><a href="https://competition-cases.ec.europa.eu/cases/M.10815" target="_blank" rel="noopener">M.10815 – Deutsche Telekom / Orange / Telefónica / Vodafone – Joint Venture</a></strong>.</p>
 <p>In particular, I request access to:</p>
@@ -115,52 +137,83 @@ A condensed nine-language overview of the same file is available
 <li>All correspondence exchanged between DG COMP and the notifying parties concerning this joint venture</li>
 </ul>
 <p>Given that this joint venture fundamentally influences the competitive landscape of the EU telecommunications market and affects millions of EU citizens, I consider that the public interest in transparency clearly outweighs any potential claims of commercial confidentiality, in line with the principles established by the Court of Justice of the European Union.</p>
-<p>Yours faithfully,<br>Peter Ferenc<br>Rammelkam 2, 84036 Kumhausen, Germany</p>
+<p>Yours faithfully,<br>Peter Ferenc<br>Rammelkam 2, 84036 Kumhausen, Germany</p></div><div class="gtl-b sk"><p>Vážené Generálne riaditeľstvo pre hospodársku súťaž,</p>
+<p>na základe práva na prístup k dokumentom podľa zmlúv EÚ, rozvinutého <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadením 1049/2001</a>, žiadam o dokumenty, ktoré obsahujú tieto informácie:</p>
+<p>podľa <strong><a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia (ES) č. 1049/2001</a></strong>, <strong><a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12016E015" target="_blank" rel="noopener">článku 15 ZFEÚ</a></strong> a <strong><a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12012P/TXT" target="_blank" rel="noopener">článku 42 Charty základných práv Európskej únie</a></strong> týmto žiadam o úplný prístup ku všetkým dokumentom vo veci <strong><a href="https://competition-cases.ec.europa.eu/cases/M.10815" target="_blank" rel="noopener">M.10815 – Deutsche Telekom / Orange / Telefónica / Vodafone – Joint Venture</a></strong>.</p>
+<p>Konkrétne žiadam o prístup k:</p>
+<ul>
+<li>úplnej zmluve o spoločnom podniku (nezačiernenej),</li>
+<li>všetkým prílohám a dodatkom k zmluve o spoločnom podniku,</li>
+<li>akcionárskej zmluve,</li>
+<li>pravidlám riadenia a prevádzky spoločného podniku,</li>
+<li>úplnému a nezačiernenému zneniu rozhodnutia Komisie,</li>
+<li>oznámeniu Form CO predloženému stranami,</li>
+<li>všetkým trhovým analýzam a interným posúdeniam vypracovaným GR pre hospodársku súťaž,</li>
+<li>celej korešpondencii medzi GR pre hospodársku súťaž a oznamujúcimi stranami týkajúcej sa tohto spoločného podniku.</li>
+</ul>
+<p>Keďže tento spoločný podnik zásadne ovplyvňuje konkurenčné prostredie telekomunikačného trhu EÚ a dotýka sa miliónov občanov Únie, mám za to, že verejný záujem na transparentnosti zjavne prevažuje nad prípadnými tvrdeniami o obchodnom tajomstve, v súlade so zásadami ustálenými Súdnym dvorom Európskej únie.</p>
+<p>S úctou,<br>Peter Ferenc<br>Rammelkam 2, 84036 Kumhausen, Nemecko</p></div>
  
 </div></div>
 <div class="msg commission" id="msg-2">
 <div class="bubble">
- <div class="subject">Acknowledgement of receipt — case number 2025/6534</div>
+ <div class="subject"><span class="gtl en">Acknowledgement of receipt — case number 2025/6534</span><span class="gtl sk">Potvrdenie o prijatí — číslo veci 2025/6534</span></div>
  <div class="sender"><span class="sender-name">COMP-ACCESS-TO-DOCUMENTS@ec.europa.eu</span>
-  <span class="sender-date">10.12.2025</span><span class="badge badge-c">Registered</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-62493" target="_blank" rel="noopener">source</a></div>
- <p>Dear Sir or Madam,</p>
+  <span class="sender-date">10.12.2025</span><span class="badge badge-c"><span class="gtl en">Registered</span><span class="gtl sk">Zaevidované</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-62493" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>KÓPIA ORIGINÁLU</b> — preklad</span></span>
+ <div class="gtl-b en"><p>Dear Sir or Madam,</p>
 <p>We hereby acknowledge the receipt of your request for access to documents sent on 10/12/2025 and registered on 10/12/2025 under the case number <strong>2025/6534</strong>.</p>
 <p>We will handle your request within <strong>15 working days</strong> as of the date of registration. The time-limit expires on <strong>12/01/2026</strong>. We will let you know if we need to extend this time limit for additional 15 working days.</p>
 <p>To find more information on how we process your personal data, please see the privacy statement.</p>
-<p>Yours faithfully,<br>Directorate-General for Competition – Access to Documents<br>European Commission</p>
- <div class="att"><span class="attl">Links in the message</span><span class="extf trunc">privacy statement (DG COMP) <em>— link truncated in the AskTheEU export; open the original message via “source”</em></span></div>
+<p>Yours faithfully,<br>Directorate-General for Competition – Access to Documents<br>European Commission</p></div><div class="gtl-b sk"><p>Vážený pán, vážená pani,</p>
+<p>týmto potvrdzujeme prijatie Vašej žiadosti o prístup k dokumentom zaslanej 10. 12. 2025 a zaevidovanej 10. 12. 2025 pod číslom veci <strong>2025/6534</strong>.</p>
+<p>Vašu žiadosť vybavíme do <strong>15 pracovných dní</strong> odo dňa zaevidovania. Lehota uplynie <strong>12. 1. 2026</strong>. Ak by bolo potrebné predĺžiť ju o ďalších 15 pracovných dní, oznámime Vám to.</p>
+<p>Viac o tom, ako spracúvame Vaše osobné údaje, nájdete vo vyhlásení o ochrane osobných údajov.</p>
+<p>S úctou,<br>Generálne riaditeľstvo pre hospodársku súťaž – Prístup k dokumentom<br>Európska komisia</p></div>
+ <div class="att"><span class="attl"><span class="gtl en">Links in the message</span><span class="gtl sk">Odkazy v správe</span></span><span class="extf trunc">privacy statement (DG COMP) <span class="gtl en"><em>— link truncated in the AskTheEU export; open the original message via “source”</em></span><span class="gtl sk"><em>— odkaz je useknutý v exporte AskTheEU; originál otvor cez „source“</em></span></span></div>
 </div></div>
 <div class="msg peter" id="msg-3">
 <div class="bubble">
- <div class="subject">Reply — unredacted contract requested</div>
+ <div class="subject"><span class="gtl en">Reply — unredacted contract requested</span><span class="gtl sk">Odpoveď — žiadam nezačiernenú zmluvu</span></div>
  <div class="sender"><span class="sender-name">Peter Ferenc</span>
-  <span class="sender-date">11.12.2025</span><span class="badge badge-d">Delivered</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#outgoing-32516" target="_blank" rel="noopener">source</a></div>
- <p>Dear Competition,</p>
+  <span class="sender-date">11.12.2025</span><span class="badge badge-d"><span class="gtl en">Delivered</span><span class="gtl sk">Doručené</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#outgoing-32516" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>KÓPIA ORIGINÁLU</b> — preklad</span></span>
+ <div class="gtl-b en"><p>Dear Competition,</p>
 <p>Thank you, I will wait for your response! I want an unblackened transparent contract!</p>
-<p>Yours faithfully,<br>Peter Ferenc</p>
+<p>Yours faithfully,<br>Peter Ferenc</p></div><div class="gtl-b sk"><p>Vážené Generálne riaditeľstvo pre hospodársku súťaž,</p>
+<p>ďakujem, počkám na Vašu odpoveď! Žiadam nezačiernenú, transparentnú zmluvu!</p>
+<p>S úctou,<br>Peter Ferenc</p></div>
  
 </div></div>
-<div class="phase-label"><span>Phase II — Initial refusal</span></div>
+<div class="phase-label"><span><span class="gtl en">Phase II — Initial refusal</span><span class="gtl sk">Fáza II — prvotné zamietnutie</span></span></div>
 <div class="msg commission" id="msg-4">
 <div class="bubble">
- <div class="subject">Your application for access to documents — Ref EASE No 2025/6534</div>
+ <div class="subject"><span class="gtl en">Your application for access to documents — Ref EASE No 2025/6534</span><span class="gtl sk">Vaša žiadosť o prístup k dokumentom — ref. EASE č. 2025/6534</span></div>
  <div class="sender"><span class="sender-name">COMP-C5-MAIL@ec.europa.eu — Unit C.5 Mergers</span>
-  <span class="sender-date">07.01.2026</span><span class="badge badge-r">Refused</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-62781" target="_blank" rel="noopener">source</a></div>
- <p>Dear Peter Ferenc,</p>
+  <span class="sender-date">07.01.2026</span><span class="badge badge-r"><span class="gtl en">Refused</span><span class="gtl sk">Odmietnuté</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-62781" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>KÓPIA ORIGINÁLU</b> — preklad</span></span>
+ <div class="gtl-b en"><p>Dear Peter Ferenc,</p>
 <p><strong>Subject:</strong> Your application for access to documents – Ref EASE No 2025/6534</p>
 <p>We refer to your message dated 10/12/2025 in which you make a request for access to documents, registered on 10/12/2025 under the above-mentioned reference number.</p>
 <p>Please find attached a scan of the reply to your request for access to documents, <strong>signed by the Director General</strong>.</p>
 <p>You are kindly requested to reply to the present email acknowledging receipt thereof.</p>
 <p>Yours faithfully,</p>
-<p>European Commission<br>Directorate-General for Competition<br>Unit C.5 Mergers<br>Directorate C – Markets and cases: Information Technology, Communication and Media</p>
- <div class="att"><span class="attl">Attachments</span><span class="attf">image001.jpg</span><span class="attf">EASE 2025 6534 Your request of 10 December for access to document.pdf (247K)</span></div>
+<p>European Commission<br>Directorate-General for Competition<br>Unit C.5 Mergers<br>Directorate C – Markets and cases: Information Technology, Communication and Media</p></div><div class="gtl-b sk"><p>Vážený pán Ferenc,</p>
+<p><strong>Vec:</strong> Vaša žiadosť o prístup k dokumentom – ref. EASE č. 2025/6534</p>
+<p>Odvolávame sa na Vašu správu z 10. 12. 2025, ktorou žiadate o prístup k dokumentom, zaevidovanú 10. 12. 2025 pod vyššie uvedeným referenčným číslom.</p>
+<p>V prílohe nájdete sken odpovede na Vašu žiadosť o prístup k dokumentom, <strong>podpísanej generálnym riaditeľom</strong>.</p>
+<p>Žiadame Vás, aby ste na tento e-mail odpovedali a potvrdili jeho prijatie.</p>
+<p>S úctou,</p>
+<p>Európska komisia<br>Generálne riaditeľstvo pre hospodársku súťaž<br>Oddelenie C.5 Fúzie<br>Riaditeľstvo C – Trhy a prípady: informačné technológie, komunikácia a médiá</p></div>
+ <div class="att"><span class="attl"><span class="gtl en">Attachments</span><span class="gtl sk">Prílohy</span></span><span class="attf">image001.jpg</span><span class="attf">EASE 2025 6534 Your request of 10 December for access to document.pdf (247K)</span></div>
 </div></div>
 <div class="msg peter" id="msg-5">
 <div class="bubble">
- <div class="subject">Request for extension of the deadline to submit a confirmatory application — Ref. EASE 2025/6534</div>
+ <div class="subject"><span class="gtl en">Request for extension of the deadline to submit a confirmatory application — Ref. EASE 2025/6534</span><span class="gtl sk">Žiadosť o predĺženie lehoty na podanie potvrdzovacej žiadosti — ref. EASE 2025/6534</span></div>
  <div class="sender"><span class="sender-name">Peter Ferenc</span>
-  <span class="sender-date">19.01.2026</span><span class="badge badge-d">Delivered</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#outgoing-32691" target="_blank" rel="noopener">source</a></div>
- <p>Dear Sir or Madam,</p>
+  <span class="sender-date">19.01.2026</span><span class="badge badge-d"><span class="gtl en">Delivered</span><span class="gtl sk">Doručené</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#outgoing-32691" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>KÓPIA ORIGINÁLU</b> — preklad</span></span>
+ <div class="gtl-b en"><p>Dear Sir or Madam,</p>
 <p>I hereby formally request an extension of the deadline to submit a confirmatory application in relation to my request for access to documents registered under reference EASE 2025/6534.</p>
 <p><strong>Grounds for the request</strong></p>
 <p>Due to objective technical reasons, I currently do not have reliable access to all necessary technical means and authentication credentials required to prepare and submit a legally substantiated confirmatory application.</p>
@@ -183,31 +236,63 @@ A condensed nine-language overview of the same file is available
 <p>In light of the above, I request an extension of <strong>30 days</strong>, calculated from the date of expiry of the original deadline for submitting the confirmatory application.</p>
 <p>This request is submitted without any waiver of rights or admission of delay, and solely for the purpose of ensuring a proper, informed and legally effective exercise of my right to a remedy.</p>
 <p>I kindly request written confirmation as to whether this extension has been granted.</p>
-<p>Yours faithfully,<br>Peter Ferenc</p>
+<p>Yours faithfully,<br>Peter Ferenc</p></div><div class="gtl-b sk"><p>Vážený pán, vážená pani,</p>
+<p>týmto formálne žiadam o predĺženie lehoty na podanie potvrdzovacej žiadosti v súvislosti s mojou žiadosťou o prístup k dokumentom zaevidovanou pod referenciou EASE 2025/6534.</p>
+<p><strong>Dôvody žiadosti</strong></p>
+<p>Z objektívnych technických dôvodov momentálne nemám spoľahlivý prístup ku všetkým technickým prostriedkom a autentifikačným údajom potrebným na prípravu a podanie právne odôvodnenej potvrdzovacej žiadosti.</p>
+<p>Rozsah a zložitosť dôvodov zamietnutia si vyžadujú dôkladnú právnu a skutkovú analýzu, najmä pokiaľ ide o:</p>
+<ul>
+<li>uplatnenie výnimiek z práva na prístup k dokumentom,</li>
+<li>proporcionalitu vykonaných začiernení,</li>
+<li>a posúdenie súladu s právom Únie.</li>
+</ul>
+<p>Podanie potvrdzovacej žiadosti bez takejto analýzy by bolo čisto formálne a zmarilo by samotný účel opravného prostriedku, ktorý právo Únie poskytuje.</p>
+<p><strong>Právny základ</strong></p>
+<p>Táto žiadosť sa opiera okrem iného o:</p>
+<ul>
+<li><a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12012P/TXT" target="_blank" rel="noopener">článok 41 Charty základných práv Európskej únie</a> (právo na dobrú správu vecí verejných),</li>
+<li><a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12012P/TXT" target="_blank" rel="noopener">článok 47 Charty základných práv Európskej únie</a> (právo na účinný prostriedok nápravy),</li>
+<li>zásadu rovnosti zbraní a efektívneho výkonu procesných práv,</li>
+<li>a ustálenú judikatúru, podľa ktorej sa procesné lehoty nesmú uplatňovať spôsobom, ktorý by výkon práv priznaných právom Únie robil prakticky nemožným alebo neprimerane sťaženým.</li>
+</ul>
+<p><strong>Návrh</strong></p>
+<p>Vzhľadom na uvedené žiadam o predĺženie o <strong>30 dní</strong>, počítaných odo dňa uplynutia pôvodnej lehoty na podanie potvrdzovacej žiadosti.</p>
+<p>Táto žiadosť sa podáva bez akéhokoľvek vzdania sa práv či priznania omeškania, a výlučne na účel zabezpečenia riadneho, informovaného a právne účinného výkonu môjho práva na opravný prostriedok.</p>
+<p>Zdvorilo žiadam o písomné potvrdenie, či bolo predĺženie priznané.</p>
+<p>S úctou,<br>Peter Ferenc</p></div>
  
 </div></div>
 <div class="msg commission" id="msg-6">
 <div class="bubble">
- <div class="subject">Extension of the 15-working-day deadline is not possible</div>
+ <div class="subject"><span class="gtl en">Extension of the 15-working-day deadline is not possible</span><span class="gtl sk">Predĺženie 15-pracovno-dňovej lehoty nie je možné</span></div>
  <div class="sender"><span class="sender-name">COMP-C5-MAIL@ec.europa.eu — Unit C.5 Mergers</span>
-  <span class="sender-date">20.01.2026</span><span class="badge badge-r">Refused</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-62983" target="_blank" rel="noopener">source</a></div>
- <p>Dear Mr Ferenc,</p>
+  <span class="sender-date">20.01.2026</span><span class="badge badge-r"><span class="gtl en">Refused</span><span class="gtl sk">Odmietnuté</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-62983" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>KÓPIA ORIGINÁLU</b> — preklad</span></span>
+ <div class="gtl-b en"><p>Dear Mr Ferenc,</p>
 <p>Thank you for your email of 19 January 2026, in which you enquire whether it is possible to extend the legal deadline of 15 working days as stipulated in <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Article 7(2)</a> of <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation 1049/2001</a> for filing a confirmatory application in response to a partial or total refusal as reply to a request for access to documents.</p>
 <p>Please be informed that <strong>it is not possible to extend this deadline of 15 working days</strong> as the time limits set forth in <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation 1049/2001</a> are not at the disposal of the parties and are determinative for the procedure of access to documents held by the institutions.</p>
 <p>In this context, we would like to point out that <strong>the confirmatory stage serves as a full administrative review of the initial decision and must correct any omission from the initial decision even when not expressly contested in the confirmatory application by the applicant</strong>.</p>
 <p>Given that the deadline for filing a confirmatory application in response to the initial negative reply of 7 January 2026 by the Directorate-General for Competition to your request for access to documents of 10 December 2025, registered under the reference EASE 2025/6534 <strong>has not expired yet</strong>, we would like to inform you that we are consequently not treating your enquiry as such a confirmatory application within the meaning of <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation 1049/2001</a>.</p>
 <p>In this respect, we would once again like to draw your attention to section 5 of our initial negative reply of 7 January 2026, in which we explained the available means of redress, the applicable legal deadline and how and to which service of the European Commission to eventually submit such a confirmatory application, should you choose to do so.</p>
 <p>Kind regards,</p>
-<p>European Commission<br>Directorate-General for Competition<br>Unit C.5 Mergers<br>Directorate C – Markets and cases: Information Technology, Communication and Media</p>
+<p>European Commission<br>Directorate-General for Competition<br>Unit C.5 Mergers<br>Directorate C – Markets and cases: Information Technology, Communication and Media</p></div><div class="gtl-b sk"><p>Vážený pán Ferenc,</p>
+<p>ďakujeme za Váš e-mail z 19. januára 2026, v ktorom sa pýtate, či je možné predĺžiť zákonnú lehotu 15 pracovných dní stanovenú v <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">článku 7 ods. 2</a> <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia 1049/2001</a> na podanie potvrdzovacej žiadosti v reakcii na čiastočné alebo úplné zamietnutie žiadosti o prístup k dokumentom.</p>
+<p>Oznamujeme Vám, že <strong>túto lehotu 15 pracovných dní nie je možné predĺžiť</strong>, keďže lehoty stanovené v <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadení 1049/2001</a> nie sú k dispozícii stranám a sú určujúce pre konanie o prístupe k dokumentom v držbe inštitúcií.</p>
+<p>V tejto súvislosti poukazujeme na to, že <strong>potvrdzovacie štádium slúži ako úplné administratívne preskúmanie prvotného rozhodnutia a musí napraviť každé opomenutie prvotného rozhodnutia, aj keď ho žiadateľ v potvrdzovacej žiadosti výslovne nenamieta</strong>.</p>
+<p>Keďže lehota na podanie potvrdzovacej žiadosti v reakcii na prvotnú zápornú odpoveď Generálneho riaditeľstva pre hospodársku súťaž zo 7. januára 2026 na Vašu žiadosť o prístup k dokumentom z 10. decembra 2025, zaevidovanú pod referenciou EASE 2025/6534, <strong>ešte neuplynula</strong>, oznamujeme Vám, že Vašu otázku preto nepovažujeme za takúto potvrdzovaciu žiadosť v zmysle <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia 1049/2001</a>.</p>
+<p>V tejto súvislosti Vás opäť odkazujeme na oddiel 5 našej prvotnej zápornej odpovede zo 7. januára 2026, v ktorom sme vysvetlili dostupné opravné prostriedky, uplatniteľnú zákonnú lehotu a spôsob, akým a ktorému útvaru Európskej komisie takúto potvrdzovaciu žiadosť prípadne podať.</p>
+<p>S pozdravom,</p>
+<p>Európska komisia<br>Generálne riaditeľstvo pre hospodársku súťaž<br>Oddelenie C.5 Fúzie<br>Riaditeľstvo C – Trhy a prípady: informačné technológie, komunikácia a médiá</p></div>
  
 </div></div>
-<div class="phase-label"><span>Phase III — Confirmatory application</span></div>
+<div class="phase-label"><span><span class="gtl en">Phase III — Confirmatory application</span><span class="gtl sk">Fáza III — potvrdzovacia žiadosť</span></span></div>
 <div class="msg peter" id="msg-7">
 <div class="bubble">
- <div class="subject">Confirmatory application — Article 7(2) of Regulation (EC) No 1049/2001</div>
+ <div class="subject"><span class="gtl en">Confirmatory application — Article 7(2) of Regulation (EC) No 1049/2001</span><span class="gtl sk">Potvrdzovacia žiadosť — čl. 7 ods. 2 nariadenia (ES) č. 1049/2001</span></div>
  <div class="sender"><span class="sender-name">Peter Ferenc</span>
-  <span class="sender-date">30.01.2026</span><span class="badge badge-d">Delivered</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#outgoing-32775" target="_blank" rel="noopener">source</a></div>
- <p>Dear Sir or Madam,</p>
+  <span class="sender-date">30.01.2026</span><span class="badge badge-d"><span class="gtl en">Delivered</span><span class="gtl sk">Doručené</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#outgoing-32775" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>KÓPIA ORIGINÁLU</b> — preklad</span></span>
+ <div class="gtl-b en"><p>Dear Sir or Madam,</p>
 <p>This confirmatory application was already submitted on <strong>26 January 2026</strong> via the AskTheEU platform. Due to a technical error, it was sent through the wrong interface and did not reach the institution.</p>
 <p>The AskTheEU / Access Info Europe team has confirmed in writing that the message was submitted in time and can attest to this if necessary. Below is the link to the document confirming that my confirmatory application was submitted in due time via an alternative channel, due to a technical error on the platform.</p>
 <p>I hereby submit a confirmatory application pursuant to <strong><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Article 7(2)</a> of <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation (EC) No 1049/2001</a></strong>, requesting a full administrative review of the initial negative reply dated 7 January 2026 issued by the Directorate-General for Competition in response to my request for access to documents of 10 December 2025, registered under reference EASE 2025/6534.</p>
@@ -223,38 +308,64 @@ The refusal does not demonstrate that each document was examined individually, n
 To the extent that data protection considerations were invoked, I note that <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32018R1725" target="_blank" rel="noopener">Regulation (EU) 2018/1725</a> and <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679" target="_blank" rel="noopener">Regulation (EU) 2016/679 (GDPR)</a> do not justify a blanket refusal. Any personal data issues could and should be addressed through appropriate redaction rather than a denial of access.</p>
 <p>As recalled in your correspondence of 20 January 2026, the confirmatory stage constitutes a full administrative review of the initial decision. I therefore invite the Commission to reassess the request in its entirety and to remedy any omissions or errors contained in the initial reply, including those not expressly contested above.</p>
 <p>I respectfully request that the Commission grant access to the requested documents, in full or at least in part, in accordance with <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation 1049/2001</a>.</p>
-<p>Yours faithfully,<br>Peter Ferenc</p>
- <div class="att"><span class="attl">Links in the message</span><span class="extf trunc">Access Info Europe — confirmation of timely submission (OneDrive) <em>— link truncated in the AskTheEU export; open the original message via “source”</em></span></div>
+<p>Yours faithfully,<br>Peter Ferenc</p></div><div class="gtl-b sk"><p>Vážený pán, vážená pani,</p>
+<p>táto potvrdzovacia žiadosť už bola podaná <strong>26. januára 2026</strong> prostredníctvom platformy AskTheEU. V dôsledku technickej chyby bola odoslaná cez nesprávne rozhranie a k inštitúcii sa nedostala.</p>
+<p>Tím AskTheEU / Access Info Europe písomne potvrdil, že správa bola podaná včas, a v prípade potreby to môže dosvedčiť. Nižšie je odkaz na dokument potvrdzujúci, že moja potvrdzovacia žiadosť bola podaná včas alternatívnym kanálom z dôvodu technickej chyby platformy.</p>
+<p>Týmto podávam potvrdzovaciu žiadosť podľa <strong><a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">článku 7 ods. 2</a> <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia (ES) č. 1049/2001</a></strong> a žiadam o úplné administratívne preskúmanie prvotnej zápornej odpovede zo 7. januára 2026, ktorú vydalo Generálne riaditeľstvo pre hospodársku súťaž v reakcii na moju žiadosť o prístup k dokumentom z 10. decembra 2025, zaevidovanú pod referenciou EASE 2025/6534.</p>
+<p>S úctou trvám na tom, že prvotné rozhodnutie nezákonne obmedzuje moje právo na prístup k dokumentom a nespĺňa zásady transparentnosti, proporcionality a dobrej správy vecí verejných zakotvené v <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadení 1049/2001</a> a v <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12016E015" target="_blank" rel="noopener">článku 15 ZFEÚ</a>.</p>
+<p>Konkrétne:</p>
+<p><strong>1. Nesprávne alebo neprimerane široké uplatnenie výnimiek</strong><br>
+Prvotná odpoveď sa opiera o výnimky, pri ktorých nebolo preukázané, že sa na požadované dokumenty vzťahujú konkrétne a individuálne. Poskytnuté odôvodnenie zostáva abstraktné a nepreukazuje, ako by sprístupnenie osobitne a skutočne narušilo chránený záujem, ako to vyžaduje ustálená judikatúra Súdneho dvora.</p>
+<p><strong>2. Neposúdenie prevažujúceho verejného záujmu</strong><br>
+Požadované dokumenty sa týkajú vecí značného verejného záujmu vrátane fungovania presadzovania súťažného práva, dodržiavania práva Únie a ochrany základných práv. Prvotné rozhodnutie neobsahuje skutočné a odôvodnené posúdenie, či existuje prevažujúci verejný záujem na sprístupnení.</p>
+<p><strong>3. Nedostatočné odôvodnenie a absencia individuálneho preskúmania</strong><br>
+Zamietnutie nepreukazuje, že každý dokument bol preskúmaný individuálne, ani nevysvetľuje, prečo nebolo možné priznať čiastočný prístup podľa <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">článku 4 ods. 6</a> <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia 1049/2001</a>.</p>
+<p><strong>4. Význam ochrany údajov a súladu s GDPR</strong><br>
+Pokiaľ boli uplatnené úvahy o ochrane údajov, poukazujem na to, že <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32018R1725" target="_blank" rel="noopener">nariadenie (EÚ) 2018/1725</a> a <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32016R0679" target="_blank" rel="noopener">nariadenie (EÚ) 2016/679 (GDPR)</a> neodôvodňujú plošné zamietnutie. Akékoľvek otázky osobných údajov možno a treba riešiť primeraným začiernením, nie odopretím prístupu.</p>
+<p>Ako pripomínate vo svojej korešpondencii z 20. januára 2026, potvrdzovacie štádium predstavuje úplné administratívne preskúmanie prvotného rozhodnutia. Vyzývam preto Komisiu, aby žiadosť posúdila v celom rozsahu a napravila všetky opomenutia či pochybenia obsiahnuté v prvotnej odpovedi vrátane tých, ktoré som vyššie výslovne nenamietal.</p>
+<p>S úctou žiadam, aby Komisia priznala prístup k požadovaným dokumentom, v celom rozsahu alebo aspoň sčasti, v súlade s <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadením 1049/2001</a>.</p>
+<p>S úctou,<br>Peter Ferenc</p></div>
+ <div class="att"><span class="attl"><span class="gtl en">Links in the message</span><span class="gtl sk">Odkazy v správe</span></span><span class="extf trunc">Access Info Europe — confirmation of timely submission (OneDrive) <span class="gtl en"><em>— link truncated in the AskTheEU export; open the original message via “source”</em></span><span class="gtl sk"><em>— odkaz je useknutý v exporte AskTheEU; originál otvor cez „source“</em></span></span></div>
 </div></div>
 <div class="msg commission" id="msg-8">
 <div class="bubble">
- <div class="subject">Receipt acknowledged — forwarded to the Secretariat-General</div>
+ <div class="subject"><span class="gtl en">Receipt acknowledged — forwarded to the Secretariat-General</span><span class="gtl sk">Prijatie potvrdené — postúpené Generálnemu sekretariátu</span></div>
  <div class="sender"><span class="sender-name">COMP-C5-MAIL@ec.europa.eu — COMP C-5</span>
-  <span class="sender-date">03.02.2026</span><span class="badge badge-c">Forwarded</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-63178" target="_blank" rel="noopener">source</a></div>
- <p>Dear Mr Ferenc,</p>
+  <span class="sender-date">03.02.2026</span><span class="badge badge-c"><span class="gtl en">Forwarded</span><span class="gtl sk">Postúpené</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-63178" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>KÓPIA ORIGINÁLU</b> — preklad</span></span>
+ <div class="gtl-b en"><p>Dear Mr Ferenc,</p>
 <p>We hereby acknowledge receipt of your email of 30 January 2026, in which you submit a request for confirmatory decision.</p>
 <p>Please be informed that <strong>we have forwarded your email to the competent Secretariat-General of the European Commission</strong>.</p>
-<p>Kind regards<br>COMP C-5</p>
+<p>Kind regards<br>COMP C-5</p></div><div class="gtl-b sk"><p>Vážený pán Ferenc,</p>
+<p>týmto potvrdzujeme prijatie Vášho e-mailu z 30. januára 2026, ktorým podávate žiadosť o potvrdzovacie rozhodnutie.</p>
+<p>Oznamujeme Vám, že <strong>Váš e-mail sme postúpili príslušnému Generálnemu sekretariátu Európskej komisie</strong>.</p>
+<p>S pozdravom<br>COMP C-5</p></div>
  
 </div></div>
 <div class="msg commission" id="msg-9">
 <div class="bubble">
- <div class="subject">Internal review of access to documents request — Ares(2026)1214166</div>
+ <div class="subject"><span class="gtl en">Internal review of access to documents request — Ares(2026)1214166</span><span class="gtl sk">Interné preskúmanie žiadosti o prístup k dokumentom — Ares(2026)1214166</span></div>
  <div class="sender"><span class="sender-name">SG ACCES DOCUMENTS — Secretariat-General</span>
-  <span class="sender-date">03.02.2026</span><span class="badge badge-r">Rejected as out of time</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-63199" target="_blank" rel="noopener">source</a></div>
- <p>Dear Applicant,</p>
+  <span class="sender-date">03.02.2026</span><span class="badge badge-r"><span class="gtl en">Rejected as out of time</span><span class="gtl sk">Zamietnuté ako oneskorené</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-63199" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>KÓPIA ORIGINÁLU</b> — preklad</span></span>
+ <div class="gtl-b en"><p>Dear Applicant,</p>
 <p>I refer to your email of 30 January 2026, by which you lodge a confirmatory application in accordance with <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Article 7(2)</a> of <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation 1049/2001</a> regarding public access to European Parliament, Council and Commission documents (hereafter <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation 1049/2001</a>).</p>
 <p>I regret to inform you that <strong>your confirmatory application was lodged outside the applicable deadline</strong> defined in <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Article 7(2)</a> of <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation 1049/2001</a>. That Article provides that in the event of a total or partial refusal, the applicant may, within 15 working days of receiving the institution's reply, make a confirmatory application asking the institution to reconsider its position.</p>
 <p>Consequently, <strong>the Commission is not in a position to handle your application</strong>.</p>
-<p>Yours sincerely,<br>European Commission<br>Access to Documents Team</p>
+<p>Yours sincerely,<br>European Commission<br>Access to Documents Team</p></div><div class="gtl-b sk"><p>Vážený žiadateľ,</p>
+<p>odvolávam sa na Váš e-mail z 30. januára 2026, ktorým podávate potvrdzovaciu žiadosť v súlade s článkom 7 ods. 2 <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia 1049/2001</a> o prístupe verejnosti k dokumentom Európskeho parlamentu, Rady a Komisie (ďalej len „nariadenie 1049/2001").</p>
+<p>S poľutovaním Vám oznamujem, že <strong>Vaša potvrdzovacia žiadosť bola podaná po uplynutí uplatniteľnej lehoty</strong> vymedzenej v <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">článku 7 ods. 2</a> <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia 1049/2001</a>. Uvedený článok stanovuje, že v prípade úplného alebo čiastočného zamietnutia môže žiadateľ do 15 pracovných dní od doručenia odpovede inštitúcie podať potvrdzovaciu žiadosť, ktorou požiada inštitúciu o prehodnotenie jej stanoviska.</p>
+<p><strong>Komisia preto nie je v postavení Vašu žiadosť vybaviť.</strong></p>
+<p>S úctou,<br>Európska komisia<br>Tím pre prístup k dokumentom</p></div>
  
 </div></div>
 <div class="msg peter" id="msg-10">
 <div class="bubble">
- <div class="subject">Procedural clarification — confirmatory application submitted on 26 January 2026 (Case M.10815)</div>
+ <div class="subject"><span class="gtl en">Procedural clarification — confirmatory application submitted on 26 January 2026 (Case M.10815)</span><span class="gtl sk">Procesné objasnenie — potvrdzovacia žiadosť podaná 26. januára 2026 (vec M.10815)</span></div>
  <div class="sender"><span class="sender-name">Peter Ferenc</span>
-  <span class="sender-date">08.02.2026</span><span class="badge badge-d">Delivered</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#outgoing-32839" target="_blank" rel="noopener">source</a></div>
- <p>Dear Sir or Madam,</p>
+  <span class="sender-date">08.02.2026</span><span class="badge badge-d"><span class="gtl en">Delivered</span><span class="gtl sk">Doručené</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#outgoing-32839" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>KÓPIA ORIGINÁLU</b> — preklad</span></span>
+ <div class="gtl-b en"><p>Dear Sir or Madam,</p>
 <p>I must formally object to the position now being advanced in this matter and request that the factual and procedural record be accurately reflected.</p>
 <p><strong>1. Timely submission of the confirmatory application</strong><br>
 My confirmatory application under <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Article 7(2)</a> of <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation (EC) No 1049/2001</a> was <strong>fully drafted and submitted on 26 January 2026</strong>, i.e. <strong>on the very last day of the statutory deadline</strong>, via the AskTheEU platform. This fact is <strong>not disputed</strong> and has been <strong>expressly confirmed in writing by Access Info Europe</strong>, including by documentary evidence (timestamped receipt of my message on 26 January 2026).</p>
@@ -283,36 +394,73 @@ I therefore request that:</p>
 <p>This message is submitted <strong>for the avoidance of doubt and without prejudice</strong> to any further remedies available to me under EU law.</p>
 <p><strong>Additional procedural clarification</strong><br>
 For the avoidance of any doubt, I hereby confirm that the same confirmatory application was also transmitted directly to the European Commission on <strong>7 February 2026</strong> via official e-mail channels, as well as to the Cabinet of a Member of the Commission. Accordingly, the content of the confirmatory application was unequivocally made available to the Commission through multiple official channels, further demonstrating my good faith, procedural cooperation, and genuine intention to exercise my rights under <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation (EC) No 1049/2001</a> in a proper and diligent manner.</p>
-<p>Yours sincerely,<br>Peter Ferenc<br>Case No.: TFIA-2026-JV-002</p>
+<p>Yours sincerely,<br>Peter Ferenc<br>Case No.: TFIA-2026-JV-002</p></div><div class="gtl-b sk"><p>Vážený pán, vážená pani,</p>
+<p>musím formálne namietať proti stanovisku, ktoré sa v tejto veci teraz presadzuje, a žiadam, aby bol skutkový a procesný stav zaznamenaný správne.</p>
+<p><strong>1. Včasné podanie potvrdzovacej žiadosti</strong><br>
+Moja potvrdzovacia žiadosť podľa <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">článku 7 ods. 2</a> <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia (ES) č. 1049/2001</a> bola <strong>v plnom rozsahu vypracovaná a podaná 26. januára 2026</strong>, teda <strong>v posledný deň zákonnej lehoty</strong>, prostredníctvom platformy AskTheEU. Táto skutočnosť <strong>nie je sporná</strong> a bola <strong>výslovne písomne potvrdená organizáciou Access Info Europe</strong> vrátane listinného dôkazu (potvrdenie o prijatí mojej správy s časovou pečiatkou z 26. januára 2026).</p>
+<p><strong>2. Technické nepostúpenie nemožno pripísať žiadateľovi</strong><br>
+Akékoľvek zlyhanie pri postúpení potvrdzovacej žiadosti Komisii vyplynulo výlučne z technického a organizačného problému na strane sprostredkujúcej platformy. Podľa ustálenej judikatúry a všeobecných zásad práva Únie:</p>
+<ul>
+<li>žiadateľ <strong>nemôže byť sankcionovaný</strong> za technické zlyhania sprostredkujúcej platformy použitej v dobrej viere;</li>
+<li>procesné práva priznané <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadením 1049/2001</a> <strong>nemožno zmariť prehnaným formalizmom</strong>.</li>
+</ul>
+<p><strong>3. Legitímne očakávania a procesné prijatie</strong><br>
+Podstatné je, že potvrdzovacia žiadosť bola prijatá, interne spracovaná a postúpená príslušným útvarom Komisie. Tieto úkony predstavujú <strong>formálne procesné kroky</strong>, ktoré <strong>implicitne uznali procesnú platnosť</strong> potvrdzovacej žiadosti. Ak už k takémuto procesnému prijatiu došlo, je <strong>právne neprípustné</strong> spätne ho poprieť, pretože by to porušilo:</p>
+<ul>
+<li>zásadu dobrej správy vecí verejných (článok 41 Charty),</li>
+<li>ochranu legitímnych očakávaní,</li>
+<li>a efektivitu práva Únie.</li>
+</ul>
+<p><strong>4. Dôsledky</strong><br>
+Akýkoľvek pokus prekvalifikovať riadne podanú potvrdzovaciu žiadosť na „oneskorenú" by predstavoval svojvoľný administratívny postup, zjavne neprimeraný formalizmus a porušenie <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12012P/TXT" target="_blank" rel="noopener">článkov 41 a 47 Charty základných práv</a>. Takýto postup by bol <strong>samostatne preskúmateľný</strong> <a href="https://www.ombudsman.europa.eu/" target="_blank" rel="noopener">európskym ombudsmanom</a> a v prípade potreby súdmi Únie.</p>
+<p><strong>5. Návrh</strong><br>
+Žiadam preto, aby:</p>
+<ul>
+<li>bol záznam opravený tak, aby odrážal včasné podanie 26. januára 2026,</li>
+<li>bola potvrdzovacia žiadosť považovaná za platne podanú,</li>
+<li>a aby Komisia vykonala úplné administratívne preskúmanie požadované článkom 7 ods. 2 <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia 1049/2001</a>.</li>
+</ul>
+<p>Táto správa sa podáva <strong>pre vylúčenie pochybností a bez ujmy</strong> na akýchkoľvek ďalších opravných prostriedkoch, ktoré mi právo Únie poskytuje.</p>
+<p><strong>Doplňujúce procesné objasnenie</strong><br>
+Pre vylúčenie akýchkoľvek pochybností týmto potvrdzujem, že tá istá potvrdzovacia žiadosť bola <strong>7. februára 2026</strong> zaslaná aj priamo Európskej komisii oficiálnymi e-mailovými kanálmi, ako aj kabinetu člena Komisie. Obsah potvrdzovacej žiadosti bol teda Komisii jednoznačne sprístupnený viacerými oficiálnymi kanálmi, čo ďalej preukazuje moju dobrú vieru, procesnú súčinnosť a skutočný úmysel vykonávať svoje práva podľa <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia (ES) č. 1049/2001</a> riadne a s náležitou starostlivosťou.</p>
+<p>S úctou,<br>Peter Ferenc<br>Spis č.: TFIA-2026-JV-002</p></div>
  
 </div></div>
 <div class="msg commission" id="msg-11">
 <div class="bubble">
- <div class="subject">Automatic acknowledgement — Transparency Unit, Secretariat-General</div>
+ <div class="subject"><span class="gtl en">Automatic acknowledgement — Transparency Unit, Secretariat-General</span><span class="gtl sk">Automatické potvrdenie — útvar Transparentnosť, Generálny sekretariát</span></div>
  <div class="sender"><span class="sender-name">Sg-Acc-Doc@ec.europa.eu — Transparency Unit</span>
-  <span class="sender-date">08.02.2026</span><span class="badge badge-c">Received</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-63276" target="_blank" rel="noopener">source</a></div>
- <p>Your message has been received by the Transparency Unit of the Secretariat-General of the European Commission.</p>
+  <span class="sender-date">08.02.2026</span><span class="badge badge-c"><span class="gtl en">Received</span><span class="gtl sk">Prijaté</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-63276" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>KÓPIA ORIGINÁLU</b> — preklad</span></span>
+ <div class="gtl-b en"><p>Your message has been received by the Transparency Unit of the Secretariat-General of the European Commission.</p>
 <p>Requests for public access to documents are treated on the basis of <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation (EC) No 1049/2001</a> of 30 May 2001 regarding public access to European Parliament, Council and Commission documents.</p>
 <p>The Secretariat-General will reply to your request within <strong>15 working days</strong> upon registration of your request and will duly inform you of the registration of the request (or of any additional information to be provided in view of its registration and/or treatment).</p>
-<p><em>The same text followed in French and German.</em></p>
+<p><em>The same text followed in French and German.</em></p></div><div class="gtl-b sk"><p>Vaša správa bola doručená útvaru Transparentnosť Generálneho sekretariátu Európskej komisie.</p>
+<p>Žiadosti o prístup verejnosti k dokumentom sa vybavujú na základe <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia (ES) č. 1049/2001</a> z 30. mája 2001 o prístupe verejnosti k dokumentom Európskeho parlamentu, Rady a Komisie.</p>
+<p>Generálny sekretariát odpovie na Vašu žiadosť do <strong>15 pracovných dní</strong> od jej zaevidovania a náležite Vás o zaevidovaní žiadosti upovedomí (prípadne Vám oznámi, aké ďalšie informácie treba doplniť na účely zaevidovania a/alebo vybavenia).</p>
+<p><em>Rovnaký text nasledoval vo francúzštine a nemčine.</em></p></div>
  
 </div></div>
 <div class="msg commission" id="msg-12">
 <div class="bubble">
- <div class="subject">Third-party websites — use the official portal</div>
+ <div class="subject"><span class="gtl en">Third-party websites — use the official portal</span><span class="gtl sk">Stránky tretích strán — použite oficiálny portál</span></div>
  <div class="sender"><span class="sender-name">Sg-Acc-Doc@ec.europa.eu — Access to Documents Team</span>
-  <span class="sender-date">10.02.2026</span><span class="badge badge-r">Rejected</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-63299" target="_blank" rel="noopener">source</a></div>
- <p>Dear Applicant,</p>
+  <span class="sender-date">10.02.2026</span><span class="badge badge-r"><span class="gtl en">Rejected</span><span class="gtl sk">Odmietnuté</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-63299" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>KÓPIA ORIGINÁLU</b> — preklad</span></span>
+ <div class="gtl-b en"><p>Dear Applicant,</p>
 <p><strong>The European Commission cannot be held responsible for issues with third party websites.</strong> We invite you to use the <a href="https://ec.europa.eu/transparency/documents-register/" target="_blank" rel="noopener">official portal for requesting European Commission documents</a>.</p>
-<p>Kind regards,<br>European Commission<br>Access to Documents Team</p>
- <div class="att"><span class="attl">Links in the message</span><span class="extf"><a href="https://ec.europa.eu/transparency/documents-register/" target="_blank" rel="noopener">Official portal for requesting Commission documents</a></span></div>
+<p>Kind regards,<br>European Commission<br>Access to Documents Team</p></div><div class="gtl-b sk"><p>Vážený žiadateľ,</p>
+<p><strong>Európska komisia nemôže niesť zodpovednosť za problémy so stránkami tretích strán.</strong> Vyzývame Vás, aby ste použili <a href="https://ec.europa.eu/transparency/documents-register/" target="_blank" rel="noopener">oficiálny portál</a> na podávanie žiadostí o dokumenty Európskej komisie.</p>
+<p>S pozdravom,<br>Európska komisia<br>Tím pre prístup k dokumentom</p></div>
+ <div class="att"><span class="attl"><span class="gtl en">Links in the message</span><span class="gtl sk">Odkazy v správe</span></span><span class="extf"><a href="https://ec.europa.eu/transparency/documents-register/" target="_blank" rel="noopener">Official portal for requesting Commission documents</a></span></div>
 </div></div>
 <div class="msg peter" id="msg-13">
 <div class="bubble">
- <div class="subject">Applicant&#x27;s procedural position — acceptance and processing of the confirmatory application</div>
+ <div class="subject"><span class="gtl en">Applicant&#x27;s procedural position — acceptance and processing of the confirmatory application</span><span class="gtl sk">Procesné stanovisko žiadateľa — prijatie a spracovanie potvrdzovacej žiadosti</span></div>
  <div class="sender"><span class="sender-name">Peter Ferenc</span>
-  <span class="sender-date">10.02.2026</span><span class="badge badge-d">Delivered</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#outgoing-32851" target="_blank" rel="noopener">source</a></div>
- <p>Dear Sir or Madam,</p>
+  <span class="sender-date">10.02.2026</span><span class="badge badge-d"><span class="gtl en">Delivered</span><span class="gtl sk">Doručené</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#outgoing-32851" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>KÓPIA ORIGINÁLU</b> — preklad</span></span>
+ <div class="gtl-b en"><p>Dear Sir or Madam,</p>
 <p>I take note of your statement according to which the European Commission cannot be held responsible for the technical functioning of third-party websites such as the AskTheEU platform. <strong>I cannot agree with this assertion.</strong></p>
 <p>The AskTheEU platform has been long-standing accepted, used and effectively relied upon by the European Commission as a standard tool for exercising the public right of access to documents, through which the Commission:</p>
 <ul>
@@ -326,27 +474,46 @@ For the avoidance of any doubt, I hereby confirm that the same confirmatory appl
 <p>The question of the channel through which the submission was initially transmitted cannot retroactively affect its procedural admissibility, particularly where the Commission itself has confirmed receipt and the commencement of processing.</p>
 <p>Under these circumstances, it is legally impermissible to retrospectively contest the timeliness or admissibility of the confirmatory application, or to transfer the consequences of technical or contractual arrangements between the Commission and a third party onto the applicant.</p>
 <p>I therefore request that the Commission proceed with the full administrative review of the confirmatory application in accordance with <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Article 7(2)</a> of <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation (EC) No 1049/2001</a>.</p>
-<p>Yours faithfully,<br>Peter Ferenc</p>
+<p>Yours faithfully,<br>Peter Ferenc</p></div><div class="gtl-b sk"><p>Vážený pán, vážená pani,</p>
+<p>beriem na vedomie Vaše vyjadrenie, podľa ktorého Európska komisia nemôže niesť zodpovednosť za technické fungovanie stránok tretích strán, akou je platforma AskTheEU. <strong>S týmto tvrdením nemôžem súhlasiť.</strong></p>
+<p>Platforma AskTheEU je Európskou komisiou dlhodobo akceptovaná, používaná a fakticky využívaná ako štandardný nástroj na výkon verejného práva na prístup k dokumentom, prostredníctvom ktorého Komisia:</p>
+<ul>
+<li>pravidelne prijíma a vybavuje žiadosti o prístup k dokumentom,</li>
+<li>komunikuje so žiadateľmi, a</li>
+<li>systematicky spracúva podania podľa <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia (ES) č. 1049/2001</a>.</li>
+</ul>
+<p>Za týchto okolností nemožno AskTheEU považovať za náhodnú alebo neoprávnenú tretiu stranu, ktorej použitie by šlo na vlastné riziko žiadateľa.</p>
+<p>Nezávisle od uvedeného zdôrazňujem, že táto otázka nie je rozhodujúca pre posúdenie procesnej prípustnosti môjho podania. <strong>Rozhodujúcou skutočnosťou je, že Európska komisia moju potvrdzovaciu žiadosť prijala, potvrdila jej doručenie a začala jej spracovanie</strong>, ako to výslovne potvrdila správa útvaru Transparentnosť Generálneho sekretariátu.</p>
+<p>Od okamihu, keď Komisia podanie prijala, zaradila ho do rámca <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia (ES) č. 1049/2001</a> a informovala ma, že bude vybavené v zákonnej lehote od zaevidovania, <strong>vznikol medzi žiadateľom a inštitúciou formálny procesný vzťah</strong>, za ktorý nesie plnú zodpovednosť výlučne Európska komisia.</p>
+<p>Otázka kanála, ktorým bolo podanie pôvodne odoslané, nemôže spätne ovplyvniť jeho procesnú prípustnosť, najmä ak sama Komisia potvrdila doručenie a začatie spracovania.</p>
+<p>Za týchto okolností je právne neprípustné spätne spochybňovať včasnosť či prípustnosť potvrdzovacej žiadosti, ani prenášať dôsledky technických či zmluvných dojednaní medzi Komisiou a treťou stranou na žiadateľa.</p>
+<p>Žiadam preto, aby Komisia vykonala úplné administratívne preskúmanie potvrdzovacej žiadosti v súlade s článkom 7 ods. 2 <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia (ES) č. 1049/2001</a>.</p>
+<p>S úctou,<br>Peter Ferenc</p></div>
  
 </div></div>
 <div class="msg commission" id="msg-14">
 <div class="bubble">
- <div class="subject">Automatic acknowledgement — Transparency Unit, Secretariat-General</div>
+ <div class="subject"><span class="gtl en">Automatic acknowledgement — Transparency Unit, Secretariat-General</span><span class="gtl sk">Automatické potvrdenie — útvar Transparentnosť, Generálny sekretariát</span></div>
  <div class="sender"><span class="sender-name">Sg-Acc-Doc@ec.europa.eu — Transparency Unit</span>
-  <span class="sender-date">10.02.2026</span><span class="badge badge-c">Received</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-63303" target="_blank" rel="noopener">source</a></div>
- <p>Your message has been received by the Transparency Unit of the Secretariat-General of the European Commission.</p>
+  <span class="sender-date">10.02.2026</span><span class="badge badge-c"><span class="gtl en">Received</span><span class="gtl sk">Prijaté</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-63303" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>KÓPIA ORIGINÁLU</b> — preklad</span></span>
+ <div class="gtl-b en"><p>Your message has been received by the Transparency Unit of the Secretariat-General of the European Commission.</p>
 <p>Requests for public access to documents are treated on the basis of <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation (EC) No 1049/2001</a> of 30 May 2001 regarding public access to European Parliament, Council and Commission documents.</p>
 <p>The Secretariat-General will reply to your request within 15 working days upon registration of your request and will duly inform you of the registration of the request.</p>
-<p><em>The same text followed in French and German.</em></p>
+<p><em>The same text followed in French and German.</em></p></div><div class="gtl-b sk"><p>Vaša správa bola doručená útvaru Transparentnosť Generálneho sekretariátu Európskej komisie.</p>
+<p>Žiadosti o prístup verejnosti k dokumentom sa vybavujú na základe <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia (ES) č. 1049/2001</a> z 30. mája 2001 o prístupe verejnosti k dokumentom Európskeho parlamentu, Rady a Komisie.</p>
+<p>Generálny sekretariát odpovie na Vašu žiadosť do 15 pracovných dní od jej zaevidovania a náležite Vás o zaevidovaní upovedomí.</p>
+<p><em>Rovnaký text nasledoval vo francúzštine a nemčine.</em></p></div>
  
 </div></div>
-<div class="phase-label"><span>Phase IV — Escalation</span></div>
+<div class="phase-label"><span><span class="gtl en">Phase IV — Escalation</span><span class="gtl sk">Fáza IV — eskalácia</span></span></div>
 <div class="msg peter" id="msg-15">
 <div class="bubble">
- <div class="subject">Submission of criminal complaint — damage to the financial interests of the EU (Article 325 TFEU)</div>
+ <div class="subject"><span class="gtl en">Submission of criminal complaint — damage to the financial interests of the EU (Article 325 TFEU)</span><span class="gtl sk">Podanie trestného oznámenia — poškodzovanie finančných záujmov EÚ (čl. 325 ZFEÚ)</span></div>
  <div class="sender"><span class="sender-name">Peter Ferenc</span>
-  <span class="sender-date">12.02.2026</span><span class="badge badge-d">Delivered</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-63355" target="_blank" rel="noopener">source</a></div>
- <p>Dear Sir or Madam,</p>
+  <span class="sender-date">12.02.2026</span><span class="badge badge-d"><span class="gtl en">Delivered</span><span class="gtl sk">Doručené</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#incoming-63355" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>ORIGINÁL</b> — znenie tak, ako bolo odoslané/doručené</span></span>
+ <div class="gtl-b en"><p>Dear Sir or Madam,</p>
 <p>I hereby submit a criminal complaint by way of a link.</p>
 <p>The complaint concerns suspected criminal offences affecting the financial interests of the European Union, within the meaning of <strong><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:12016E325" target="_blank" rel="noopener">Article 325 TFEU</a></strong> and <strong><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32017L1371" target="_blank" rel="noopener">Directive (EU) 2017/1371 (PIF)</a></strong>.</p>
 <p>The criminal complaint was drawn up as a PDF document signed with a <strong>Qualified Electronic Signature (QES)</strong>, which, pursuant to Article 25(2) of <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32014R0910" target="_blank" rel="noopener">Regulation (EU) No 910/2014 (eIDAS)</a>, has the same legal effect as a handwritten signature.</p>
@@ -361,25 +528,44 @@ For the avoidance of any doubt, I hereby confirm that the same confirmatory appl
 <p>constitutes, in my view, an unlawful barrier to access to justice and a violation of <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:12012P/TXT" target="_blank" rel="noopener">Article 47 of the Charter of Fundamental Rights of the EU</a> and Article 13 of the European Convention on Human Rights.</p>
 <p>I therefore expect that the criminal complaint will be properly registered, examined and handled on the basis of its substance, in accordance with EU law, regardless of the technical means of its transmission.</p>
 <p>Yours faithfully,<br>Kumhausen, 09.02.2026<br>Peter Ferenc</p>
-<p><em>The identical text was transmitted in DE, FR, ES, PL, IT and SK in the same message.</em></p>
- <div class="ref-box">EN → DE → FR → ES → PL → IT → SK · Email Tracking No.: 2428.022</div><div class="att"><span class="attl">Attachments</span><span class="attf">image001.jpg (52K)</span><span class="attf">01_Criminal report on Landesjustizkasse Bamberg_EPPO_EN→DE→FR→ES→PL→IT→SK_signed QES.pdf</span></div><div class="att"><span class="attl">Links in the message</span><span class="extf trunc">01_Criminal report on Landesjustizkasse Bamberg — EPPO, 7 languages, signed QES (Adobe Acrobat) <em>— link truncated in the AskTheEU export; open the original message via “source”</em></span><span class="extf trunc">Facebook — StopTelekomKartell <em>— link truncated in the AskTheEU export; open the original message via “source”</em></span></div>
+<p><em>The identical text was transmitted in DE, FR, ES, PL, IT and SK in the same message.</em></p></div><div class="gtl-b sk"><p>Vážené dámy, vážení páni,</p>
+<p>trestné oznámenie Vám predkladám formou odkazu.</p>
+<p>Ide o trestné oznámenie týkajúce sa podozrenia zo spáchania trestných činov poškodzujúcich finančné záujmy Európskej únie v zmysle <strong><a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12016E325" target="_blank" rel="noopener">článku 325 ZFEÚ</a></strong> a <strong><a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32017L1371" target="_blank" rel="noopener">smernice (EÚ) 2017/1371 (PIF)</a></strong>.</p>
+<p>Uvedené trestné oznámenie bolo vyhotovené ako PDF dokument podpísaný <strong>kvalifikovaným elektronickým podpisom (QES)</strong>, ktorý má podľa článku 25 ods. 2 <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32014R0910" target="_blank" rel="noopener">nariadenia (EÚ) č. 910/2014 (eIDAS)</a> rovnaké právne účinky ako vlastnoručný podpis.</p>
+<p>Podanie je uskutočnené v slovenskom jazyku, ktorý je úradným jazykom Európskej únie. <strong>Slovenská jazyková verzia sa považuje za originálnu a právne záväznú verziu.</strong> Verzie EN → DE → FR → ES → PL → IT sú priložené výlučne ako verné zrkadlové preklady na uľahčenie spracovania.</p>
+<p>Výslovne upozorňujem, že <strong>žiadny právny predpis Európskej únie neustanovuje povinnosť podať trestné oznámenie prostredníctvom konkrétneho online formulára</strong>. Podľa článku 24 <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32017R1939" target="_blank" rel="noopener">nariadenia Rady (EÚ) 2017/1939</a> môže Európska prokuratúra prijímať informácie o trestných činoch poškodzujúcich finančné záujmy Únie z akéhokoľvek zdroja vrátane fyzických osôb.</p>
+<p>Akékoľvek technické alebo procesné obmedzenie, ktoré by:</p>
+<ul>
+<li>znemožnilo pripojenie úplného znenia podania,</li>
+<li>viedlo k jeho skracovaniu alebo strate skutkových tvrdení a dôkazov,</li>
+<li>alebo podmieňovalo jeho prijatie dodatočným „posudzovaním potreby",</li>
+</ul>
+<p>považujem za nezákonnú bariéru prístupu k spravodlivosti a za porušenie <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12012P/TXT" target="_blank" rel="noopener">článku 47 Charty základných práv EÚ</a> a článku 13 Európskeho dohovoru o ľudských právach.</p>
+<p>Z tohto dôvodu očakávam, že predmetné trestné oznámenie bude riadne zaevidované, preskúmané a vybavené podľa jeho obsahu, v súlade s právom Európskej únie, bez ohľadu na technický spôsob jeho doručenia.</p>
+<p>S úctou,<br>Kumhausen, 09.02.2026<br>Peter Ferenc</p>
+<p><em>Zhodný text bol v tej istej správe odoslaný aj v EN, DE, FR, ES, PL a IT.</em></p></div>
+ <div class="ref-box">EN → DE → FR → ES → PL → IT → SK · Email Tracking No.: 2428.022</div><div class="att"><span class="attl"><span class="gtl en">Attachments</span><span class="gtl sk">Prílohy</span></span><span class="attf">image001.jpg (52K)</span><span class="attf">01_Criminal report on Landesjustizkasse Bamberg_EPPO_EN→DE→FR→ES→PL→IT→SK_signed QES.pdf</span></div><div class="att"><span class="attl"><span class="gtl en">Links in the message</span><span class="gtl sk">Odkazy v správe</span></span><span class="extf trunc">01_Criminal report on Landesjustizkasse Bamberg — EPPO, 7 languages, signed QES (Adobe Acrobat) <span class="gtl en"><em>— link truncated in the AskTheEU export; open the original message via “source”</em></span><span class="gtl sk"><em>— odkaz je useknutý v exporte AskTheEU; originál otvor cez „source“</em></span></span><span class="extf trunc">Facebook — StopTelekomKartell <span class="gtl en"><em>— link truncated in the AskTheEU export; open the original message via “source”</em></span><span class="gtl sk"><em>— odkaz je useknutý v exporte AskTheEU; originál otvor cez „source“</em></span></span></div>
 </div></div>
 <div class="msg peter" id="msg-16">
 <div class="bubble">
- <div class="subject">Supplementary document</div>
+ <div class="subject"><span class="gtl en">Supplementary document</span><span class="gtl sk">Doplňujúci dokument</span></div>
  <div class="sender"><span class="sender-name">Peter Ferenc</span>
-  <span class="sender-date">16.02.2026</span><span class="badge badge-d">Delivered</span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#outgoing-32892" target="_blank" rel="noopener">source</a></div>
- <p>Dear AskTheEU,</p>
+  <span class="sender-date">16.02.2026</span><span class="badge badge-d"><span class="gtl en">Delivered</span><span class="gtl sk">Doručené</span></span><a class="src" href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30#outgoing-32892" target="_blank" rel="noopener">source</a></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>KÓPIA ORIGINÁLU</b> — preklad</span></span>
+ <div class="gtl-b en"><p>Dear AskTheEU,</p>
 <p>[link to the signed document]</p>
-<p>Yours sincerely,<br>Peter Ferenc</p>
- <div class="att"><span class="attl">Links in the message</span><span class="extf trunc">Signed document (Adobe Acrobat) <em>— link truncated in the AskTheEU export; open the original message via “source”</em></span></div>
+<p>Yours sincerely,<br>Peter Ferenc</p></div><div class="gtl-b sk"><p>Vážený AskTheEU,</p>
+<p>[odkaz na podpísaný dokument]</p>
+<p>S úctou,<br>Peter Ferenc</p></div>
+ <div class="att"><span class="attl"><span class="gtl en">Links in the message</span><span class="gtl sk">Odkazy v správe</span></span><span class="extf trunc">Signed document (Adobe Acrobat) <span class="gtl en"><em>— link truncated in the AskTheEU export; open the original message via “source”</em></span><span class="gtl sk"><em>— odkaz je useknutý v exporte AskTheEU; originál otvor cez „source“</em></span></span></div>
 </div></div>
 <div class="msg peter" id="msg-17">
 <div class="bubble">
- <div class="subject">Reply to the decision refusing access to documents — COMP/M.10815</div>
+ <div class="subject"><span class="gtl en">Reply to the decision refusing access to documents — COMP/M.10815</span><span class="gtl sk">Odpoveď na rozhodnutie o odmietnutí prístupu k dokumentom — COMP/M.10815</span></div>
  <div class="sender"><span class="sender-name">Peter Ferenc</span>
-  <span class="sender-date">20.07.2026</span><span class="badge badge-d">Delivered</span></div>
- <p>Dear Director-General, dear Mr Whelan,</p>
+  <span class="sender-date">20.07.2026</span><span class="badge badge-d"><span class="gtl en">Delivered</span><span class="gtl sk">Doručené</span></span></div>
+ <span class="omark"><span class="gtl en"><b>ORIGINAL</b> — wording as sent/received</span><span class="gtl sk"><b>ORIGINÁL</b> — znenie tak, ako bolo odoslané/doručené</span></span>
+ <div class="gtl-b en"><p>Dear Director-General, dear Mr Whelan,</p>
 <p>please find enclosed my reply to your decision of 7 January 2026 refusing me access to the documents in the case file in Case COMP/M.10815. The document bears a <strong>qualified electronic signature (QES)</strong> pursuant to Art. 25(2) of the <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32014R0910" target="_blank" rel="noopener">eIDAS Regulation (No 910/2014)</a> and is legally equivalent to a handwritten signature.</p>
 <p>Access to documents of the institutions is not a matter for the Commission's discretion. Under <strong><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:12016E015" target="_blank" rel="noopener">Art. 15(3) TFEU</a></strong>, <strong><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:12012P/TXT" target="_blank" rel="noopener">Art. 42 of the Charter</a></strong> and <strong>Art. 2(1) of <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation (EC) No 1049/2001</a></strong>, every citizen of the Union has a right of access to documents of the institutions without having to state an interest or a reason. Refusal is the exception; it must, according to the settled case-law of the Court of Justice, be interpreted strictly, and <strong>the burden of proof lies with the institution, not with the applicant</strong>.</p>
 <p>In my reply I set out five reasons why the decision cannot stand:</p>
@@ -395,16 +581,42 @@ For the avoidance of any doubt, I hereby confirm that the same confirmatory appl
 </ul>
 <p>This reservation takes legal effect upon receipt of this letter.</p>
 <p>Respectfully,<br>Peter Ferenc</p>
-<p><em>The identical text was transmitted in German and Slovak in the same message.</em></p>
- <div class="ref-box">File Ref.: EASE 2025/6534 · COMP/C5/LC/(2025)/6534 · TFIA-2026-JV-009 · Email Tracking No.: 2428.050 · DE, EN, SK</div><div class="att"><span class="attl">Attachments</span><span class="attf">image001.jpg (52K)</span><span class="attf">03.12 The answer DG COMP EASE 2025 6534 ALL 9 Languages signed with QES.pdf (576K)</span></div><div class="att"><span class="attl">Links in the message</span><span class="extf"><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation (EC) No 1049/2001 — full text</a></span></div>
+<p><em>The identical text was transmitted in German and Slovak in the same message.</em></p></div><div class="gtl-b sk"><p>Vážená pani generálna riaditeľka, vážený pán Whelan,</p>
+<p>v prílohe Vám zasielam svoju odpoveď na Vaše rozhodnutie zo 7. januára 2026, ktorým ste mi odmietli prístup k dokumentom spisu vo veci COMP/M.10815. Dokument je opatrený <strong>kvalifikovaným elektronickým podpisom (QES)</strong> podľa čl. 25 ods. 2 <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32014R0910" target="_blank" rel="noopener">nariadenia eIDAS (č. 910/2014)</a> a má rovnakú právnu váhu ako vlastnoručný podpis.</p>
+<p>Prístup k dokumentom inštitúcií nie je vecou uváženia Komisie. Podľa <strong><a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12016E015" target="_blank" rel="noopener">čl. 15 ods. 3 ZFEÚ</a></strong>, <strong><a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12012P/TXT" target="_blank" rel="noopener">čl. 42 Charty základných práv EÚ</a></strong> a <strong>čl. 2 ods. 1 <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">nariadenia (ES) č. 1049/2001</a></strong> má každý občan Únie právo na prístup k dokumentom orgánov bez toho, aby musel preukazovať záujem alebo dôvod. Odmietnutie je výnimkou; podľa ustálenej judikatúry Súdneho dvora sa vykladá reštriktívne a <strong>dôkazné bremeno nesie inštitúcia, nie žiadateľ</strong>.</p>
+<p>Vo svojej odpovedi uvádzam päť dôvodov, pre ktoré rozhodnutie neobstojí:</p>
+<p><strong>1.</strong> Lehotu ste počítali od dátumu odpovede, hoci <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">čl. 7 ods. 2</a> nariadenia ju viaže na doručenie. Navyše: 20. januára 2026 ste mi písomne oznámili, že lehota ešte neuplynula; 30. januára útvar COMP C-5 potvrdil prijatie a postúpil podanie Generálnemu sekretariátu; 3. februára bolo zamietnuté ako oneskorené. <strong>Tieto tri úkony si navzájom odporujú.</strong></p>
+<p><strong>2.</strong> Všeobecnú domnienku o nezverejnení sami označujete za vyvrátiteľnú, no zároveň mi vyčítate, že som opak nepreukázal — pritom mi odmietate sprístupniť čo i len inventár spisu. <strong>Domnienka, ktorú nemožno vyvrátiť, nie je vyvrátiteľnou domnienkou</strong> (Odile Jacob, <a href="https://curia.europa.eu/juris/liste.jsf?num=C-404/10" target="_blank" rel="noopener">C-404/10 P</a>; Agrofert, <a href="https://curia.europa.eu/juris/liste.jsf?num=C-477/10" target="_blank" rel="noopener">C-477/10 P</a>).</p>
+<p><strong>3.</strong> Domnienka nepokrýva ani interné trhové analýzy GR pre hospodársku súťaž, ani nezačiernené znenie samotného rozhodnutia — ide o akty inštitúcie, nie o podania strán. Individuálne preskúmanie týchto kategórií Vaše rozhodnutie neobsahuje.</p>
+<p><strong>4.</strong> Čiastočný prístup podľa <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">čl. 4 ods. 6</a> ste neposúdili; odkazujete ma na dokumenty, ktoré sú verejné aj bez Vášho rozhodnutia.</p>
+<p><strong>5.</strong> Prevažujúci verejný záujem ste odmietli ako úvahy všeobecnej povahy, hoci som odkázal na <strong>body 138 až 142 Vášho vlastného <a href="https://competition-cases.ec.europa.eu/cases/M.10815" target="_blank" rel="noopener">rozhodnutia M.10815</a></strong>, v ktorých Komisia sama uvádza, že súlad strán s GDPR neposudzovala.</p>
+<p>Žiadam Vás, aby ste žiadosť vybavili vecne, poskytli mi inventár spisu a každý požadovaný dokument preskúmali konkrétne a individuálne. Ak Komisia na túto odpoveď vecne nezareaguje, vyhradzujem si:</p>
+<ul>
+<li>sťažnosť <strong><a href="https://www.ombudsman.europa.eu/" target="_blank" rel="noopener">európskemu ombudsmanovi</a></strong> pre nesprávny úradný postup;</li>
+<li>podanie <strong>žaloby podľa <a href="https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12016E263" target="_blank" rel="noopener">čl. 263 ZFEÚ</a></strong>.</li>
+</ul>
+<p>Táto výhrada má právny účinok od doručenia tohto listu.</p>
+<p>S úctou,<br>Peter Ferenc</p>
+<p><em>Zhodný text bol v tej istej správe odoslaný aj v nemčine a angličtine.</em></p></div>
+ <div class="ref-box">File Ref.: EASE 2025/6534 · COMP/C5/LC/(2025)/6534 · TFIA-2026-JV-009 · Email Tracking No.: 2428.050 · DE, EN, SK</div><div class="att"><span class="attl"><span class="gtl en">Attachments</span><span class="gtl sk">Prílohy</span></span><span class="attf">image001.jpg (52K)</span><span class="attf">03.12 The answer DG COMP EASE 2025 6534 ALL 9 Languages signed with QES.pdf (576K)</span></div><div class="att"><span class="attl"><span class="gtl en">Links in the message</span><span class="gtl sk">Odkazy v správe</span></span><span class="extf"><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001R1049" target="_blank" rel="noopener">Regulation (EC) No 1049/2001 — full text</a></span></div>
 </div></div>
 </div>
 
 <div class="case-footer">
 FIA FOX — Fair Internet Alliance · <a href="https://foxprof.club/">foxprof.club</a><br>
-Source of the record: <a href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30" target="_blank" rel="noopener">asktheeu.org</a> ·
-Case file M.10815 · EASE 2025/6534
+<span class="gtl en">Source of the record</span><span class="gtl sk">Zdroj záznamu</span>: <a href="https://www.asktheeu.org/en/request/request_for_access_to_documents_30" target="_blank" rel="noopener">asktheeu.org</a> ·
+M.10815 · EASE 2025/6534
 </div>
 
+<script>
+document.querySelectorAll('button.lbf').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.body.dataset.lang=b.dataset.lang;
+    document.documentElement.lang=b.dataset.lang;
+    document.querySelectorAll('button.lbf').forEach(function(x){x.classList.remove('active');});
+    b.classList.add('active');
+  });
+});
+</script>
 </body>
 </html>
