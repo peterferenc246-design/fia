@@ -21,7 +21,8 @@ nie poradie, v akom dokumenty pribudali do repa.
 | 4 | 20.01.2026 | prijate | DG COMP: predlzenie nie je mozne — lehota 15 pracovnych dni podla cl. 7 ods. 2 nar. 1049/2001 nie je k dispozicii stranam | ZAMIETNUTE | — |
 | 5 | 30.01.2026 | odoslane | **FAZA III — POTVRDZOVACIA ZIADOST (Zweitantrag) podla cl. 7 ods. 2 nar. 1049/2001.** Uplne administrativne preskumanie zamietnutia zo 07.01.2026, styri namietky (o. i. blanketne zamietnutie bez individualneho posudenia, ochrana udajov neodovodnuje plosne odopretie) | Dorucene | `odoslane/02_Confirmatory_Appeal_JV_Documents_signed_with_QES.pdf` |
 | 6 | 03.02.2026 | prijate | DG COMP potvrdzuje prijatie Zweitantragu a postupuje ho Generalnemu sekretariatu EK | Postupene | — |
-| 7 | 08.02.2026 | odoslane | Procesne objasnenie: Zweitantrag bol podany 26.01.2026 cez platformu AskTheEU, teda v posledny den zakonnej lehoty (Access Info Europe potvrdilo vcasnost) | Dorucene | `odoslane/12_Odpoved_DG-COMP_EASE-2025-6534_signed_with_QES.pdf` (+ `_KLON_ALL`) — OVERIT priradenie |
+| 7 | 08.02.2026 | odoslane | Procesne objasnenie: Zweitantrag bol podany 26.01.2026 cez platformu AskTheEU, teda v posledny den zakonnej lehoty (Access Info Europe potvrdilo vcasnost) | Dorucene | — (subor zatial nie je v repe) |
+| 9 | **19.07.2026** | odoslane | **ODPOVED NA ROZHODNUTIE O ODMIETNUTI PRISTUPU K DOKUMENTOM** podla nar. 1049/2001 a cl. 15 ZFEU. Reakcia na rozhodnutie zo 07.01.2026; napada vseobecnu domnienku o nepristupnosti spisu. Adresat: EK DG COMP, Linsey McCallum p.o. Anthony Whelan, sg-acc-doc@ec.europa.eu. Vasa znacka EASE 2025/6534 · COMP/C5/LC/(2025)/6534. **Nasa znacka TFIA-2026-JV-009.** 52 stran, 9 jazykov, QES na strane 6 (ALIGN 0.74) | Dorucene | `odoslane/12_Odpoved_DG-COMP_EASE-2025-6534_signed_with_QES.pdf` (doc2) + `_KLON_ALL.pdf` (doc1) |
 | 8 | 12.02.2026 | odoslane | **FAZA IV — Trestne oznamenie podla cl. 325 ZFEU** + smernica (EU) 2017/1371; QES podla cl. 25 ods. 2 nar. (EU) 910/2014 (eIDAS); SK original + preklady EN/DE/FR/ES/PL/IT; cl. 24 nar. (EU) 2017/1939 (EPPO prijima informacie z akehokolvek zdroja). Tracking No.: 2428.022 | Dorucene | — |
 
 **Verejna HTML stranka s celou korespondenciou (9 jazykov, vsetkych 8 krokov):**
@@ -73,3 +74,19 @@ Vo vieweri: `doc` = klon, `doc2` = podpisany original, `orig` = link na stiahnut
 
 ## 7. Poznamky Petra
 _(sem pis — Claude to precita pri dalsej praci)_
+
+### CHYBA V DOKUMENTE 12 (zistena 23.07.2026) — NEOPAKOVAT
+
+V podtitulku pod hlavnym nadpisom ostali **nenahradene sablonove zastupne znacky**: `{{R1049:...}}` a `{{TFEU15:...}}`.
+Je to **18 vyskytov = 2 na kazdy z 9 jazykov**, a su v OBOCH suboroch — v podpisanom origináli aj v klone.
+Podpisany original sa uz odoslal Komisii a nesmie sa menit (PAdES/QES), takze tam sa s tym nic nerobi.
+
+**Co s tym:**
+1. KLON (`_KLON_ALL.pdf`) sa da a ma pregenerovat bez placeholderov — to je citacia kopia na verejnom registri,
+   nema tam svietit rozbita sablona. Po pregenerovani prehodit `doc=` na nove SHA.
+2. Opravit generator, ktory placeholdery nenahradil — inak sa to zopakuje pri kazdom dalsom podani.
+   Vzor mal ocividne nahradit `{{KOD:text}}` za hypertextovy odkaz na eur-lex a nechal to tak.
+3. Pri kazdom dalsom podani pred podpisom skontrolovat: `grep -c '{{' ` nad extrahovanym textom PDF musi vratit 0.
+
+Poznamka k Acrobatu: hlaska „The identity of a signer could not be verified" nie je chyba podpisu — Adobe len nema
+CA Disig v svojom zozname doveryhodnych CA. Podpis je platny podla EU Trusted List.
