@@ -51,14 +51,24 @@ _(doplnit)_
 ## 6. Otvorene ulohy
 - [ ] _(doplnit)_
 
-## 5b. Verejna HTML stranka korespondencie
+### JEDEN ZDROJ — HTML stranka korespondencie
 
-`dgcomp-correspondence.html` (9 jazykov, sticky jazykova lista, EASE 2025/6534) — presunute 23.07.2026 z `docs/` do korena tejto karty
-podla pravidla „jeden priecinok na kazdu kartu". Verejna adresa cez GitHub Pages:
-https://peterferenc246-design.github.io/fia/dg-comp-kartel-pristup-k-dokumentom/dgcomp-correspondence.html
+`dgcomp-correspondence-full.html` — UPLNE doslovne znenie vsetkych 17 sprav z AskTheEU, viacjazycne cez prepinac vlajkami.
+Text existuje LEN TU; ziadne jazykove kopie ako samostatne subory nevznikaju.
+https://peterferenc246-design.github.io/fia/dg-comp-kartel-pristup-k-dokumentom/dgcomp-correspondence-full.html
 
-POZOR: HTML stranky NIE SU SHA-pinnute ako PDF — presun HTML meni verejnu URL. Ak sa raz napoji na kartu #303,
-dalsi presun uz nerobit bez sucasnej opravy odkazu na karte.
+UKOTVENIE: zdroj je ukotveny na polozke „Erstantrag auf Dokumentenzugang" (`summod-dgcomp-03`) cez parameter
+`corr=` v URL viewera. Vsade inde su LEN ODKAZY, nikdy nie text: tlacidlo v hlavicke karty DG COMP na #303
+a tlacidlo 📑 vo vieweri (viewer.html, parameter `corr=`, popis v 9 jazykoch).
+
+OZNACENIE: pri kazdej sprave sa pod kazdou vlajkou zobrazuje, ci ide o ORIGINAL (jazyk, v ktorom sprava
+skutocne odisla/prisla) alebo o KOPIU ORIGINALU — preklad. V pripade rozporu ma prednost original.
+
+ZRUSENE 23.07.2026: skratena stranka `dgcomp-correspondence.html` (9-jazycny prehlad 8 krokov) — bola to
+druha kopia toho isteho konania. Peter rozhodol o jej odstraneni. NEOBNOVOVAT.
+
+POZOR: HTML stranky NIE SU SHA-pinnute ako PDF — presun HTML meni verejnu URL.
+
 
 ## 6b. Povodny README priecinka
 
@@ -91,13 +101,21 @@ Podpisany original sa uz odoslal Komisii a nesmie sa menit (PAdES/QES), takze ta
 Poznamka k Acrobatu: hlaska „The identity of a signer could not be verified" nie je chyba podpisu — Adobe len nema
 CA Disig v svojom zozname doveryhodnych CA. Podpis je platny podla EU Trusted List.
 
-### Dve HTML stranky tejto kauzy (obe v koreni priecinku karty)
+### JEDEN ZDROJ — HTML stranka korespondencie
 
-1. `dgcomp-correspondence.html` — SKRATENY 9-jazycny prehlad (8 krokov, prepinanie vlajkami).
-   https://peterferenc246-design.github.io/fia/dg-comp-kartel-pristup-k-dokumentom/dgcomp-correspondence.html
-2. `dgcomp-correspondence-full.html` — UPLNE ZNENIE vsetkych 17 sprav z AskTheEU, doslovne, bez skracovania,
-   odstraneny len balast platformy (sidebar, „Link to this / Report", „show quoted sections", zoznamy odkazov).
-   Jazyk povodny (EN; viacjazycne spravy oznacene poznamkou) — doslovny zaznam sa neprekladá.
-   https://peterferenc246-design.github.io/fia/dg-comp-kartel-pristup-k-dokumentom/dgcomp-correspondence-full.html
-   Obe stranky su navzajom prelinkovane. Rovnaky CSS a vzhlad (FIA navy/red, timeline s bublinami).
+`dgcomp-correspondence-full.html` — UPLNE doslovne znenie vsetkych 17 sprav z AskTheEU, viacjazycne cez prepinac vlajkami.
+Text existuje LEN TU; ziadne jazykove kopie ako samostatne subory nevznikaju.
+https://peterferenc246-design.github.io/fia/dg-comp-kartel-pristup-k-dokumentom/dgcomp-correspondence-full.html
+
+UKOTVENIE: zdroj je ukotveny na polozke „Erstantrag auf Dokumentenzugang" (`summod-dgcomp-03`) cez parameter
+`corr=` v URL viewera. Vsade inde su LEN ODKAZY, nikdy nie text: tlacidlo v hlavicke karty DG COMP na #303
+a tlacidlo 📑 vo vieweri (viewer.html, parameter `corr=`, popis v 9 jazykoch).
+
+OZNACENIE: pri kazdej sprave sa pod kazdou vlajkou zobrazuje, ci ide o ORIGINAL (jazyk, v ktorom sprava
+skutocne odisla/prisla) alebo o KOPIU ORIGINALU — preklad. V pripade rozporu ma prednost original.
+
+ZRUSENE 23.07.2026: skratena stranka `dgcomp-correspondence.html` (9-jazycny prehlad 8 krokov) — bola to
+druha kopia toho isteho konania. Peter rozhodol o jej odstraneni. NEOBNOVOVAT.
+
+POZOR: HTML stranky NIE SU SHA-pinnute ako PDF — presun HTML meni verejnu URL.
 
