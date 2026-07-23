@@ -4,7 +4,7 @@
  "page_id": 303,
  "slug": "kauzy-koncept",
  "page_chars": 1023481,
- "platne_k": "2026-07-23T08:55:43",
+ "platne_k": "2026-07-23T09:20:56",
  "kotvy": [
   {
    "offset": 0,
@@ -129,6 +129,7 @@
   "22.07.2026 (5): polozka P03 Telekom — DOPLNENE law=§66 GKG (gesetze-im-internet /gkg_2004/__66.html) do vsetkych 19 URL (2-blokovy zasah: data-snap +1480, .open +1332). viewer.html upravene (commit 5ebca9a): QES sa appenduje PRED Suhrn (insertBefore) -> poradie tlacidiel QES, Suhrn, law. Spolu +2812 zn.; offsety >58900 posunute o +2812. P03 ma teraz 3 tlacidla.",
   "23.07.2026: x5 formular — pridane 3 zaskrtavatka tlacidiel viewera (QES/Suhrn/Predpis, DEFAULT zaskrtnute) + volitelne pole 'Predpis URL~popis' + MK-generator vypisuje plne instrukcie pre Clauda (qes/sum/law do vsetkych 19 URL). Commit dbc12366; iframe SHA na #303 prehodeny aabc8c44 -> dbc12366. Skill fia-mk ma 3-tlacidlovy STANDARD (commit ff87ebb5).",
   "23.07.2026 DG COMP: novy priecinok dg-comp-kartel-pristup-k-dokumentom/{odoslane,prijate} (commit 59d3bdd7, kopie blobov z docs/). doc12 EASE-2025-6534 → doplnene sum=summod-dgcomp-05 do 18 URL. doc02 Confirmatory Appeal → doplnene orig(novy priecinok)+qes=3:1:b+sum=summod-dgcomp-02+law=CELEX:32001R1049 do 18 URL (doc = podpisany original, preto DOC=1). QES strany zistene z /Sig widgetu: 01→str.2, 02→str.3, 12→str.6.",
-  "23.07.2026 DG COMP doc01 (Prvotna ziadost o pristup, summod-dgcomp-03): 9 viditelnych .open odkazov prekablovanych — doc=klon (raw.github d29b8fb), NOVE doc2+orig=jsDelivr @59d3bdd7 novy priecinok, qes=2:2:b (podpis str.2), sum=summod-dgcomp-03, law=CELEX:32001R1049. POZOR: tato polozka NEMA v data-snape 'urls' ani 'fallback' (starsi format snapu) — URL su LEN vo viditelnych odkazoch. POZOR 2: ten isty dokument (01_Request...clone.pdf) je zapojeny AJ NA DRUHEJ KARTE (druha kopia s OneDrive orig=IQCAH6Ic...?e=5aw6r1) — este NEUPRAVENA, treba jej vlastne summod ID."
+  "23.07.2026 DG COMP doc01 (Prvotna ziadost o pristup, summod-dgcomp-03): 9 viditelnych .open odkazov prekablovanych — doc=klon (raw.github d29b8fb), NOVE doc2+orig=jsDelivr @59d3bdd7 novy priecinok, qes=2:2:b (podpis str.2), sum=summod-dgcomp-03, law=CELEX:32001R1049. POZOR: tato polozka NEMA v data-snape 'urls' ani 'fallback' (starsi format snapu) — URL su LEN vo viditelnych odkazoch. POZOR 2: ten isty dokument (01_Request...clone.pdf) je zapojeny AJ NA DRUHEJ KARTE (druha kopia s OneDrive orig=IQCAH6Ic...?e=5aw6r1) — este NEUPRAVENA, treba jej vlastne summod ID.",
+  "23.07.2026 DG COMP KARTA KOMPLET: doc12 (sum), doc02 (orig repo+qes 3:1:b+sum+law), doc01 (doc2+orig repo+qes 2:2:b+sum+law, len 9 .open — snap nema urls), prijate 11_EASE summod-dgcomp-04 (sum + orig prehodeny z OneDrive na repo /prijate/11_EASE_..._EN_ORIGINAL.pdf; QES ani law tam NEPATRI — cudzi dokument). Opravene znenie zaveru suhrnu dgcomp-02 v SK (Su tu snahy), FR (de faire obstruction), IT (di fare ostruzionismo), SV (att obstruera); DE/EN/HR/PL/ES boli v poriadku. ZOSTAVA: druha kopia doc01 na inej karte (stale OneDrive orig, potrebuje vlastne summod ID) + karta M.10815 + ostatne karty."
  ]
 }
