@@ -66,7 +66,7 @@ Druhá vrstva: **nepreskúmateľnosť aktu** — Joint Venture Agreement nie je 
 |---|---|---|---|---|---|
 | Žaloba o neplatnosť | `cmt-pilot-m10815` / `summod-m10815` | ✅ `qes=15:2:0.58` | ✅ | ✅ `CELEX:12016E263` | `orig=` ešte OneDrive |
 | Žiadosť o ustanovenie advokáta | `cmt-m10815-02` / `summod-m10815-02` | — | ✅ (na karte) | — | nie je vo vieweri, len OneDrive odkaz |
-| Odpoveď e‑Curia | `cmt-m10815-03` / — | ✅ `qes=4:2:0.94` | ❌ **modal neexistuje** | ❌ **predpis neurčený** | |
+| Odpoveď e‑Curia | `cmt-m10815-03` / `summod-m10815-03` | ✅ `qes=4:2:0.94` | ✅ | ✅ `CELEX:32015Q0423(01)` | modal doplnený 23.07.2026 |
 | Potvrdenie o doručení žaloby | `cmt-m10815-05` / `summod-m10815-05` | — | ⬜ chýba `sum=` | — | prijaté → bez QES/predpisu |
 | Sprievodný list kancelárie | `cmt-m10815-06` / `summod-m10815-06` | — | ⬜ chýba `sum=` | — | prijaté |
 | Oznámenie o zastupovaní advokátom | `cmt-m10815-08` / `summod-m10815-08` | — | ⬜ chýba `sum=` | — | prijaté |
@@ -87,7 +87,10 @@ Druhá vrstva: **nepreskúmateľnosť aktu** — Joint Venture Agreement nie je 
 ## 8. Otvorené úlohy
 
 - [ ] Prehodiť `orig=` vlajkovej položky (Žaloba) z OneDrive na repo: `m10815-nichtigkeitsklage/odoslane/01_Klage_Nichtigkeit_M10815_DE_SK_with_QES.pdf` (19 URL).
-- [ ] Odpoveď e‑Curia: **určiť predpis** (kandidáti: čl. 19 Štatútu — povinné zastúpenie; rozhodnutie Všeobecného súdu o e‑Curia 2024/2096; Rokovací poriadok VS) a **napísať 9‑jazyčný súhrn** (modal `summod-m10815-03` zatiaľ neexistuje).
+- [x] ~~Odpoveď e‑Curia: predpis + súhrn~~ — HOTOVÉ 23.07.2026. Predpis = Rokovací poriadok VS, `CELEX:32015Q0423(01)`
+      (Peter zvolil možnosť c; dokument sám sa opiera o čl. 147 ods. 6 a čl. 146–150 toho istého poriadku). Štítok tlačidla `L 105/2015`,
+      9‑jazyčný tooltip doplnený do `LAW_TITLES` vo `viewer.html`. Súhrn odsúhlasený Petrom vrátane čl. 47 Charty a zmienky o insolventnosti.
+- [ ] Do `data-snap` položky e‑Curia doplniť `"summodId":"summod-m10815-03"` a text súhrnu — inak by pri budúcej editácii cez formulár x5 vypadlo tlačidlo Súhrn.
 - [ ] Doplniť `sum=` do 4 prijatých položiek.
 - [ ] Zvážiť, či `02_Antrag auf Beauftragung eines Rechtsanwalts` dať do repa a spraviť z neho normálnu viewer položku (dnes len OneDrive; podľa Petrovho súhrnu ide o nepodstatný dokument).
 - [ ] Po presune dokumentov prepnúť `doc`/`doc2` z `docs/` na `m10815-nichtigkeitsklage/` pri najbližšom zásahu do každej položky (staré SHA-pinnuté odkazy fungujú ďalej, nehorí).
