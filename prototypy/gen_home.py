@@ -99,11 +99,14 @@ SITE_S = S("Bürgerinitiative für faires Internet und fairen Wettbewerb in der 
  "Initiative citoyenne pour un internet équitable et une concurrence loyale dans l'UE",
  "Medborgarinitiativ för rättvist internet och sund konkurrens i EU")
 NAV = [("♥", S("Spenden","Donate","Prispieť","Doniraj","Wesprzyj","Donar","Dona","Faire un don","Ge en gåva"), "DAR"),
-       ("⚖", S("Fallregister","Case register","Register káuz","Registar predmeta","Rejestr spraw","Registro de casos","Registro dei casi","Registre des affaires","Ärenderegister"), "#kauzy"),
+       ("⚖", S("Fallregister","Case register","Register káuz","Registar predmeta","Rejestr spraw","Registro de casos","Registro dei casi","Registre des affaires","Ärenderegister"), "register.html"),
        ("◆", S("Soziale Medien","Social media","Sociálne siete","Društvene mreže","Media społecznościowe","Redes sociales","Social media","Réseaux sociaux","Sociala medier"), "teilen/"),
        ("▣", S("Galerie","Gallery","Galéria","Galerija","Galeria","Galería","Galleria","Galerie","Galleri"), "galerie/"),
-       ("▤", S("Presse","Press","Tlač","Tisak","Prasa","Prensa","Stampa","Presse","Press"), ""),
+       ("▤", S("Presse","Press","Tlač","Tisak","Prasa","Prensa","Stampa","Presse","Press"), "PREP"),
+       ("≡", S("Mehr","More","Viac","Više","Więcej","Más","Altro","Plus","Mer"), ""),
       ]
+REG_B = S("⚖ Zum Fallregister →","⚖ To the case register →","⚖ Do registra káuz →","⚖ U registar predmeta →",
+ "⚖ Do rejestru spraw →","⚖ Al registro de casos →","⚖ Al registro dei casi →","⚖ Vers le registre →","⚖ Till ärenderegistret →")
 MASCOT = "https://foxprof.club/wp-content/uploads/2026/06/fia-fox-mascot-v6.png"
 
 # ═══════════════ DÁTA: KAUZY → KONANIA ═══════════════
@@ -293,11 +296,16 @@ show = "".join(f'body[data-l="{L}"] .gtl.{L}{{display:inline}}body[data-l="{L}"]
 total = sum(z["n"] for z in KAUZY)
 
 
-nav_html = "".join(
- f'<a class="nv" data-k="{k}" href="#"><i>{ic}</i>{g(lb)}</a>' if k=="DAR"
- else (f'<a class="nv" href="{k}">' + f'<i>{ic}</i>{g(lb)}</a>' if k.startswith("#")
-       else f'<a class="nv" href="{WP}{k}" target="_blank" rel="noopener"><i>{ic}</i>{g(lb)}</a>')
- for ic,lb,k in NAV)
+def nav_item(ic, lb, k):
+    if k == "DAR":
+        return f'<a class="nv gold" data-k="DAR" href="#"><i>{ic}</i>{g(lb)}</a>'
+    if k == "PREP":
+        return f'<span class="nv prep" title="in Vorbereitung"><i>{ic}</i>{g(lb)}</span>'
+    if k.endswith(".html"):
+        return f'<a class="nv" href="{k}"><i>{ic}</i>{g(lb)}</a>'
+    return f'<a class="nv" href="{WP}{k}" target="_blank" rel="noopener"><i>{ic}</i>{g(lb)}</a>'
+
+nav_html = "".join(nav_item(ic, lb, k) for ic, lb, k in NAV)
 
 HTML = f"""<!DOCTYPE html>
 <html lang="sk"><head><meta charset="utf-8">
@@ -330,7 +338,6 @@ body::before{{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
 .nv{{display:flex;align-items:center;gap:8px;background:var(--navy);color:#fff;text-decoration:none;
  font-size:13px;font-weight:600;padding:9px 16px 9px 12px;border-radius:0 7px 7px 0;box-shadow:0 2px 6px rgba(0,0,0,.18);
  white-space:nowrap;max-width:210px}}
-.nv:first-child{{background:linear-gradient(#ffd34d,#f5b722);color:#3a2c00}}
 .nv:hover{{filter:brightness(1.12)}}
 .nv i{{font-style:normal;font-size:13px}}
 .wrap{{max-width:960px;margin:0 auto;padding:0 18px 60px}}
@@ -373,6 +380,16 @@ p.secs{{text-align:center;color:#4a6076;font-size:13.5px;margin:0 0 18px}}
 .go{{font-size:12.5px;text-decoration:none;background:var(--navy);color:#fff;border-radius:4px;padding:5px 13px;white-space:nowrap}}
 .go:hover{{background:#16294a}}
 .soon{{font-size:12px;color:#9aa7b5;white-space:nowrap}}
+.regcta{{background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(31,56,100,.10);
+ border-left:5px solid var(--navy);padding:20px 26px;margin-bottom:22px;
+ display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}}
+.regcta .rt{{font-size:19px;color:var(--navy);font-weight:700}}
+.regcta .rn{{font-size:13.5px;color:#5a6a7d;margin-top:3px}}
+.regcta .rn b{{color:var(--navy);font-size:18px}}
+.rbtn{{background:var(--navy);color:#fff;text-decoration:none;border-radius:6px;padding:11px 24px;font-weight:700;font-size:15px}}
+.rbtn:hover{{background:#16294a}}
+.nv.gold{{background:linear-gradient(#ffd34d,#f5b722);color:#3a2c00}}
+.nv.prep{{opacity:.55;cursor:default}}
 .foot{{margin-top:26px;padding:14px 0;border-top:1px solid var(--bd);font-size:12.5px;color:#4a6076;
  display:flex;gap:18px;flex-wrap:wrap;justify-content:center}}
 .foot a{{color:#3a5570}}
@@ -429,10 +446,11 @@ p.secs{{text-align:center;color:#4a6076;font-size:13.5px;margin:0 0 18px}}
  <p class="n">{g(MIS_3)}</p>
 </div>
 
-<h2 class="sec" id="kauzy">{g(UI["kauzy"])}</h2>
-<p class="secs">{len(KAUZY)} · {total} {g(UI["konania"])}</p>
-
-{"".join(kauza_html(z) for z in KAUZY)}
+<div class="regcta" id="kauzy">
+ <div class="rl"><div class="rt">{g(UI["kauzy"])} &amp; {g(UI["konania"])}</div>
+  <div class="rn"><b>8</b> {g(UI["kauzy"])} &nbsp;·&nbsp; <b>14</b> {g(UI["konania"])}</div></div>
+ <a class="rbtn" href="register.html">{g(REG_B)}</a>
+</div>
 
 <div class="foot">
  <a href="{WP}impressum/" target="_blank" rel="noopener">{g(UI["imp"])}</a>
