@@ -90,6 +90,8 @@
                jazyk sa menia dokument od dokumentu). DOC default 2, ak je doc2.
                ALIGN: b = spodok strany (default), t = vrch, 0..1 = pomer výšky strany
        sum   = ID súhrnného modálu na karte registra, napr. summod-zaloba-03.
+       corr  = plná URL HTML stránky s úplným priebehom konania (celá komunikácia).
+               Tlačidlo 📑 sa zobrazí v páse a otvorí ju v novom okne; popis je v 9 jazykoch.
                Tlačidlo "Súhrn" načíta text PRIAMO Z KARTY #303 (jediný zdroj)
                a zobrazí ho v okne vo vieweri. Text sa mení s vlajkou.
                Ak je zadaná plná URL (http…), otvorí sa ako odkaz v novom okne.
@@ -162,6 +164,20 @@
       sa.onclick=function(ev){ ev.preventDefault(); openSum(); };
     }
     bar.appendChild(sa); sumBtnEl=sa;
+  }
+
+  // ---- tlačidlo "Celá komunikácia" — odkaz na HTML stránku s úplným priebehom konania ----
+  var CORR_LABELS={DE:"Vollständiger Schriftverkehr",EN:"Full correspondence",SK:"Celá komunikácia",
+                   HR:"Cjelovita korespondencija",PL:"Pełna korespondencja",ES:"Correspondencia completa",
+                   IT:"Corrispondenza completa",FR:"Correspondance complète",SV:"Fullständig korrespondens"};
+  var corrBtnEl=null;
+  var CORRU=qs.get("corr")||"";
+  if(CORRU){
+    var ca=document.createElement("a");
+    ca.className="sumref";
+    ca.textContent="\u{1F4D1} "+CORR_LABELS.SK;
+    ca.target="_blank"; ca.rel="noopener"; ca.href=CORRU;
+    bar.appendChild(ca); corrBtnEl=ca;
   }
 
   function ensureBox(){
@@ -308,6 +324,11 @@
       var SL=(code||"SK").toUpperCase();
       sumBtnEl.textContent="\u{1F4C4} "+(SUM_LABELS[SL]||SUM_LABELS.SK);
       sumBtnEl.title=(SUM_LABELS[SL]||SUM_LABELS.SK);
+    }
+    if(corrBtnEl){
+      var CL=(code||"SK").toUpperCase();
+      corrBtnEl.textContent="\u{1F4D1} "+(CORR_LABELS[CL]||CORR_LABELS.SK);
+      corrBtnEl.title=(CORR_LABELS[CL]||CORR_LABELS.SK);
     }
     paintSum();
     lawBtns.forEach(function(a){
