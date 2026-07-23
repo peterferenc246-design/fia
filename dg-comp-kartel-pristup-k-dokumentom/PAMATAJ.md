@@ -90,3 +90,14 @@ Podpisany original sa uz odoslal Komisii a nesmie sa menit (PAdES/QES), takze ta
 
 Poznamka k Acrobatu: hlaska „The identity of a signer could not be verified" nie je chyba podpisu — Adobe len nema
 CA Disig v svojom zozname doveryhodnych CA. Podpis je platny podla EU Trusted List.
+
+### Dve HTML stranky tejto kauzy (obe v koreni priecinku karty)
+
+1. `dgcomp-correspondence.html` — SKRATENY 9-jazycny prehlad (8 krokov, prepinanie vlajkami).
+   https://peterferenc246-design.github.io/fia/dg-comp-kartel-pristup-k-dokumentom/dgcomp-correspondence.html
+2. `dgcomp-correspondence-full.html` — UPLNE ZNENIE vsetkych 17 sprav z AskTheEU, doslovne, bez skracovania,
+   odstraneny len balast platformy (sidebar, „Link to this / Report", „show quoted sections", zoznamy odkazov).
+   Jazyk povodny (EN; viacjazycne spravy oznacene poznamkou) — doslovny zaznam sa neprekladá.
+   https://peterferenc246-design.github.io/fia/dg-comp-kartel-pristup-k-dokumentom/dgcomp-correspondence-full.html
+   Obe stranky su navzajom prelinkovane. Rovnaky CSS a vzhlad (FIA navy/red, timeline s bublinami).
+
