@@ -92,6 +92,37 @@
    "ourref": "",
    "area": [],
    "pin": "",
+   "datum_txt": "",
+   "nazov": {},
+   "organ": {},
+   "stav": {}
+  },
+  {
+   "id": "case-test-ins",
+   "jur": [],
+   "date": "",
+   "az": "",
+   "ourref": "",
+   "area": [],
+   "pin": "",
+   "datum_txt": "",
+   "nazov": {},
+   "organ": {},
+   "stav": {}
+  },
+  {
+   "id": "case-trestne-oznamenie-na-gpsr-proti-prokurat",
+   "jur": [
+    "sk"
+   ],
+   "date": "2025-10-19",
+   "az": "",
+   "ourref": "Spis. z.: PR-2026-VšZ",
+   "area": [
+    "strafrecht",
+    "majetok"
+   ],
+   "pin": "",
    "datum_txt": "19.10.2025",
    "nazov": {
     "de": "Strafanzeige bei der GStA SR gegen Staatsanwälte",
@@ -252,6 +283,25 @@
    "ourref": "",
    "area": [],
    "pin": "",
+   "datum_txt": "",
+   "nazov": {},
+   "organ": {},
+   "stav": {}
+  },
+  {
+   "id": "case-mstest",
+   "jur": [
+    "eu",
+    "de"
+   ],
+   "date": "2026-05-17",
+   "az": "PIF-EU-2026-MBS-002",
+   "ourref": "PR-2026-MBS-002",
+   "area": [
+    "gdpr",
+    "strafrecht"
+   ],
+   "pin": "",
    "datum_txt": "17.05.2026",
    "nazov": {
     "de": "Microsoft — institutionelle DSGVO-Verletzung und grenzüberschreitender Mehrwertsteuerbetrug",
@@ -302,6 +352,24 @@
    "az": "",
    "ourref": "",
    "area": [],
+   "pin": "",
+   "datum_txt": "",
+   "nazov": {},
+   "organ": {},
+   "stav": {}
+  },
+  {
+   "id": "case-m10815",
+   "jur": [
+    "eu"
+   ],
+   "date": "2026-04-14",
+   "az": "T‑61/26",
+   "ourref": "",
+   "area": [
+    "kartell",
+    "gdpr"
+   ],
    "pin": "",
    "datum_txt": "14.04.2026",
    "nazov": {
@@ -433,6 +501,7 @@
    "mode": "item",
    "subj_snap": "Odvolanie voči faktúre Landesjustizkasse Bamberg zo dňa 06.11.2024, Referenčné číslo: 23 O 2699/24",
    "summary_snap": "Odvolanie (Erinnerung) voči faktúre Landesjustizkasse Bamberg zo 06.11.2024 na 17 643 €. Poplatok vzišiel z hodnoty sporu 1 000 000 €, ktorú súd predbežne určil 07.10.2024. Peter namieta, že úhradu súdnych nákladov nemožno žiadať pred rozhodnutím o jeho žiadosti o právnu pomoc (odloženom na 20.11.2024), a s poukazom na svoju insolventnosť žiada odklad splatnosti faktúry (Stundung) až do právoplatného rozhodnutia o právnej pomoci. Súd pritom v ten istý deň (06.11.2024) sám píše o „návrhu žaloby\" a „potenciálnych žalovaných\" a beží konanie o právnej pomoci, ktoré je bez poplatku.",
+   "karta": "case-zaloba-proti-deutsche-telekom-ag-porusov",
    "subj": {
     "de": "Erinnerung gegen die Kostenrechnung der Landesjustizkasse Bamberg vom 06.11.2024, Aktenzeichen: 23 O 2699/24",
     "en": "Objection to the cost invoice of the Landesjustizkasse Bamberg dated 06.11.2024, Case reference: 23 O 2699/24",
@@ -479,6 +548,7 @@
    "mode": "item",
    "subj_snap": "Žiadosť o bezplatnú právnu pomoc",
    "summary_snap": "",
+   "karta": "case-zaloba-proti-deutsche-telekom-ag-porusov",
    "subj": {
     "de": "Antrag auf Prozesskostenhilfe",
     "en": "Application for legal aid",
@@ -529,6 +599,7 @@
    "mode": "item",
    "subj_snap": "Uznesenie — návrh žaloby potenciálnym žalovaným, predĺženie lehoty k PKH",
    "summary_snap": "V ten istý deň, keď mi pokladnica poslala faktúru na 17 643 €, mi súd doručil aj toto uznesenie. Stojí v ňom, že sa obom potenciálnym žalovaným zasiela návrh žaloby z 2. októbra 2024 a že sa predlžuje lehota, v ktorej sa protistrana môže vyjadriť k mojej žiadosti o bezplatnú právnu pomoc — do 20. novembra 2024.\n\nSúd tu teda vlastnými slovami hovorí o NÁVRHU žaloby a o POTENCIÁLNYCH žalovaných. Konanie bolo v štádiu rozhodovania o bezplatnej právnej pomoci, ktoré je podľa nemeckého práva bez súdneho poplatku. Poplatok podľa položky KV-GKG 1210 — ten, ktorý mi v ten istý deň vyúčtovali vo výške 17 643 € — vzniká až podaním žaloby.\n\nDva dokumenty z toho istého dňa teda hovoria každý niečo iné: jeden, že žaloba je zatiaľ len návrh a protistrana sa ešte len má vyjadriť, druhý, že mám zaplatiť poplatok za sporové konanie.\n\nProti vyčísleniu trov možno podať opravný prostriedok Erinnerung — konanie o ňom je bezplatné a nie je viazané žiadnou lehotou.",
+   "karta": "case-zaloba-proti-deutsche-telekom-ag-porusov",
    "subj": {
     "de": "Verfügung — Klageentwurf an die potentiellen Beklagten, Fristverlängerung zum PKH-Antrag",
     "en": "Order — draft claim sent to the potential defendants, extension of the legal-aid deadline",
@@ -579,6 +650,7 @@
    "mode": "item",
    "subj_snap": "KOSTENRECHNUNG · KASSENZEICHEN 629243561605",
    "summary_snap": "Mesiac po podaní žaloby, 6. novembra 2024, mi Landesjustizkasse Bamberg — centrálna pokladnica bavorskej justície — vystavila faktúru na 17 643 € ako súdny poplatok. Hodnota sporu je 1 000 000 €, sadzba 3,0 podľa položky KV-GKG 1210, splatnosť dva týždne.\n\nRozhodujúce je, čo tomu predchádzalo. Žalobu som podal elektronicky, opatrenú pokročilým elektronickým podpisom. Landgericht Landshut ju v tejto podobe prijal, spis pod značkou 23 O 2699/24 založil a poplatok dal vyčísliť — forma podania mu neprekážala ani pri jednom z týchto krokov a nikto odo mňa nič nedožadoval. Práve na základe takto podanej žaloby vznikol nárok na 17 643 €.\n\nPoučenie o forme je pritom priamo na tejto faktúre: pokladnica na druhej strane uvádza, že obyčajný e-mail nespĺňa zákonné požiadavky. Vedela to teda už v novembri — faktúru napriek tomu vystavila a súd v konaní pokračoval.\n\nZvrat prišiel 12. decembra 2024, keď som žiadal predbežné opatrenie — súdny príkaz voči Schufa Holding AG, aby predložila môj informovaný súhlas so spracúvaním údajov. Ten istý súd, ktorý žalobu prijal bez výhrad, zrazu oznámil, že takto to nejde, a požadoval kvalifikovaný elektronický podpis.\n\nKvalifikovaný podpis som si zaobstaral. Vzápätí pribudla ďalšia požiadavka — zabezpečený prenosový kanál. Podmienky teda neprišli naraz, ale postupne: zakaždým, keď som predchádzajúcu splnil, objavila sa nová.\n\nV tom je jadro veci. Obe podmienky stoja v tom istom ustanovení zákona a súd ich mohol uviesť v jedinom liste spolu s tým, ktorou cestou podanie doručiť. Namiesto toho ich dávkoval — a každé kolo stálo týždne pri návrhu, ktorý mal odvrátiť hroziacu škodu. Kým išlo o zaplatenie poplatku, elektronické podanie postačovalo bez výhrad. Prekážkou sa stalo až vtedy, keď mal súd konať proti žalovanému.\n\nProti vyčísleniu trov možno podať opravný prostriedok Erinnerung — konanie o ňom je bezplatné a nie je viazané žiadnou lehotou. Adresuje sa súdu, nie pokladnici, a možno ho podať bez advokáta.",
+   "karta": "case-zaloba-proti-deutsche-telekom-ag-porusov",
    "subj": {
     "de": "KOSTENRECHNUNG · KASSENZEICHEN 629243561605",
     "en": "STATEMENT OF COSTS · ACCOUNT REF. 629243561605",
@@ -629,6 +701,7 @@
    "mode": "item",
    "subj_snap": "Deutsche Telekom AG u.a. wg. Verletzung der DSGVO und der Menschenrechte",
    "summary_snap": "Súd tu urobil to, čo sa v tejto kauze opakuje: postavil mi do cesty prekážku, ktorú zákon nepozná.\n\nSťažnosť aj návrh na predbežné opatrenie som podal e-mailom s kvalifikovaným elektronickým podpisom podľa nariadenia eIDAS. Žalobu súd v tejto podobe prijal. Pri návrhu na predbežné opatrenie z 11. decembra 2024 však ten istý súd oznámil, že e-mailom to nejde, a poslal ma na poštu alebo na podpis podľa § 130d ZPO.\n\nSúd sa oprel o § 130d ZPO. To ustanovenie sa na mňa nevzťahuje: ukladá povinnosť podávať elektronicky advokátom, úradom a právnickým osobám verejného práva, nie občanovi, ktorý sa zastupuje sám. Zároveň mi neuviedol, ktorou elektronickou cestou podanie doručiť môžem — v liste o tom nie je ani zmienka. Dostal som teda odkaz na paragraf, ktorý sa ma netýka, a lehotu sedem dní vrátane víkendu na to, aby som si sám domyslel, čo sa odo mňa žiada.\n\nDôsledok nie je papierový. Predbežné opatrenie odvracia hroziacu škodu, tam rozhoduje každý deň. Ide o obštrukciu a sťažený prístup k súdu, ktorý sa dotýka práva na účinný prostriedok nápravy podľa [článku 47 Charty základných práv EÚ](https://eur-lex.europa.eu/legal-content/SK/TXT/HTML/?uri=CELEX:12012P/TXT) a čl. 6 Európskeho dohovoru. Justícia je pritom platená z daní a jej digitalizácia spolufinancovaná z fondov Únie, ktorých čerpanie je podľa [nariadenia (EÚ) 2020/2092](https://eur-lex.europa.eu/legal-content/SK/TXT/HTML/?uri=CELEX:32020R2092) viazané na dodržiavanie zásad právneho štátu vrátane účinnej súdnej ochrany.",
+   "karta": "case-zaloba-proti-deutsche-telekom-ag-porusov",
    "subj": {
     "de": "Deutsche Telekom AG u.a. wg. Verletzung der DSGVO und der Menschenrechte",
     "en": "Deutsche Telekom AG and others — infringement of the GDPR and of human rights",
@@ -678,6 +751,7 @@
    "mode": "item",
    "subj_snap": "Trestné oznámenie proti DAK — zasahovanie do majetkových práv",
    "summary_snap": "",
+   "karta": "case-konanie-proti-zasahovaniu-do-mojich-maje",
    "subj": {
     "de": "Strafanzeige gegen die DAK — Eingriff in Vermögensrechte",
     "en": "Criminal complaint against DAK — interference with property rights",
@@ -726,6 +800,7 @@
    "mode": "item",
    "subj_snap": "Formálny list pre O2 Telefónica Germany",
    "summary_snap": "",
+   "karta": "case-podvodne-spravanie-o2-telefonica-deutsch",
    "subj": {
     "de": "Formelles Schreiben an O2 Telefónica Germany",
     "en": "Formal letter to O2 Telefónica Germany",
@@ -774,6 +849,7 @@
    "mode": "item",
    "subj_snap": "ŽALOBA O NÁHRADU ŠKODY vo veci: Zasahovania do majetkových práv",
    "summary_snap": "",
+   "karta": "case-zaloba-o-nahradu-skody",
    "subj": {
     "de": "Schadenersatzklage in Sachen: Eingriff in Vermögensrechte",
     "en": "Action for damages concerning: interference with property rights",
@@ -822,6 +898,7 @@
    "mode": "item",
    "subj_snap": "Údajne som nezrušil živnosť v obci Kumhausen po výmaze z Handwerksrolle (05.12.2023)",
    "summary_snap": "",
+   "karta": "case-nezakonne-ulozena-pokuta-okresnym-uradom",
    "subj": {
     "de": "Angeblich habe ich das Gewerbe in der Gemeinde Kumhausen nach der Löschung aus der Handwerksrolle (05.12.2023) nicht abgemeldet",
     "en": "Allegedly I failed to deregister the trade in the municipality of Kumhausen after removal from the register of craft trades (05.12.2023)",
@@ -870,6 +947,7 @@
    "mode": "item",
    "subj_snap": "Naliehavá sťažnosť (sofortige Beschwerde)",
    "summary_snap": "",
+   "karta": "case-landgericht-landshut-erzwingungshaft",
    "subj": {
     "de": "Sofortige Beschwerde",
     "en": "Immediate appeal (sofortige Beschwerde)",
@@ -920,6 +998,7 @@
    "mode": "item",
    "subj_snap": "Commerzbank zaslala prístupové údaje k základnému účtu (Basiskonto) po eskalácii a dohľade BaFin",
    "summary_snap": "",
+   "karta": "case-v-sirsom-zmysle-kauzy-kartelove-prepojen",
    "subj": {
     "de": "Commerzbank hat die Zugangsdaten zum Basiskonto nach Eskalation und BaFin-Aufsicht übermittelt",
     "en": "Commerzbank sent the access data for the basic account (Basiskonto) after escalation and BaFin supervision",
@@ -966,6 +1045,7 @@
    "mode": "item",
    "subj_snap": "Podnet na výkon dohľadu a na zrušenie Výkazu nedoplatkov č. 2427017713",
    "summary_snap": "",
+   "karta": "case-udzs-namietka",
    "subj": {
     "de": "Antrag auf Aufsichtsmaßnahme und Aufhebung des Rückstandsbescheids Nr. 2427017713",
     "en": "Request for supervisory action and annulment of the Statement of Arrears No. 2427017713",
@@ -1012,6 +1092,7 @@
    "mode": "item",
    "subj_snap": "Námietka proti oznámeniu o neopodstatnenosti podnetu a žiadosť o opätovné posúdenie ÚDZS predsedovi Marekovi Hroššovi",
    "summary_snap": "",
+   "karta": "case-udzs-namietka",
    "subj": {
     "de": "Widerspruch gegen die Mitteilung über die Unbegründetheit der Eingabe und Antrag auf erneute Prüfung an den ÚDZS-Präsidenten Marek Hroššo",
     "en": "Objection to the notice of the petition's unfoundedness and request for reconsideration to the ÚDZS President Marek Hroššo",
@@ -1058,6 +1139,7 @@
    "mode": "item",
    "subj_snap": "Oznámenie ÚDZS o neopodstatnenosti podnetu (vybavil a podpísal JUDr. Marek Hroššo)",
    "summary_snap": "",
+   "karta": "case-udzs-namietka",
    "subj": {
     "de": "Mitteilung des ÚDZS über die Unbegründetheit der Eingabe (bearbeitet und unterzeichnet von JUDr. Marek Hroššo)",
     "en": "ÚDZS notice on the petition's unfoundedness (handled and signed by JUDr. Marek Hroššo)",
@@ -1108,6 +1190,7 @@
    "mode": "item",
    "subj_snap": "Trestné oznámenie na EPPO — Microsoft (čl. 24 nar. 2017/1939)",
    "summary_snap": "",
+   "karta": "case-mstest",
    "subj": {
     "de": "Strafanzeige bei der EUStA — Microsoft (Art. 24 VO 2017/1939)",
     "en": "Criminal complaint to the EPPO — Microsoft (Art. 24 Reg. 2017/1939)",
@@ -1157,6 +1240,7 @@
    "mode": "item",
    "subj_snap": "SŤAŽNOSŤ DOZORNÉMU ORGÁNU PODĽA ČL. 77 GDPR VOČI MICROSOFT IRELAND",
    "summary_snap": "",
+   "karta": "case-staznost-dozornemu-organu",
    "subj": {
     "de": "BESCHWERDE BEI DER AUFSICHTSBEHÖRDE NACH ART. 77 DSGVO GEGEN MICROSOFT IRELAND",
     "en": "COMPLAINT TO THE SUPERVISORY AUTHORITY UNDER ART. 77 GDPR AGAINST MICROSOFT IRELAND",
@@ -1207,6 +1291,7 @@
    "mode": "item",
    "subj_snap": "Odpoveď DPC na sťažnosť — zn. DPC0526916540",
    "summary_snap": "",
+   "karta": "case-staznost-dozornemu-organu",
    "subj": {
     "de": "Antwort der DPC auf die Beschwerde — Az. DPC0526916540",
     "en": "DPC reply to the complaint — ref. DPC0526916540",
@@ -1255,6 +1340,7 @@
    "mode": "item",
    "subj_snap": "Nichtigkeitsklage (Art. 263 AEUV) — M.10815 · QES",
    "summary_snap": "Žaloba o neplatnosť podaná podľa [čl. 263 ZFEÚ](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12016E263) na Všeobecný súd Európskej únie (vec T‑61/26) proti rozhodnutiu Európskej komisie vo veci [M.10815](https://competition-cases.ec.europa.eu/cases/M.10815), ktorým Komisia povolila vznik spoločného podniku štyroch dominantných operátorov — Deutsche Telekom, Orange, Telefónica a Vodafone — podľa [nariadenia (ES) č. 139/2004](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32004R0139). Žalobca ako občan EÚ tvrdí, že Komisia koncentráciu schválila bez riadneho a úplného preskúmania podľa [čl. 6 a 8 tohto nariadenia](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32004R0139): nepreskúmala systematické porušovanie GDPR účastníkmi (automatizovaný credit scoring podľa [čl. 22 GDPR](https://dsgvo-gesetz.de/art-22-dsgvo/) a odmietanie služieb bez informovaného súhlasu), historické zneužívanie dominantného postavenia (margin squeeze vo veci [AT.39523](https://competition-cases.ec.europa.eu/cases/AT.39523) — Slovak Telekom/Deutsche Telekom), bariéry vstupu na trh ani riziko kartelizácie štyroch dominantov. Tým sa v telekomunikačnom sektore upevnila oligopolná štruktúra, ktorá udržiava jedny z najvyšších cien internetu a mobilných dát v Európe a poškodzuje finančné záujmy Únie podľa [čl. 325 ZFEÚ](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12016E325). Žalobca žiada, aby súd rozhodnutie M.10815 zrušil, uložil Komisii vykonať nové preskúmanie koncentrácie so zohľadnením všetkých opomenutých skutočností a priznal náhradu trov konania.\n\nŽe dôsledné vymáhanie práva EÚ je možné, ukazuje samotná minulosť účastníkov — Deutsche Telekom už bola za zneužitie dominantného postavenia (margin squeeze) sankcionovaná vo veci [AT.39523](https://competition-cases.ec.europa.eu/cases/AT.39523). Pri koncentrácii M.10815 však Komisia tie isté praktiky prehliadla a povolila spojenie štyroch dominantov, hoci [nariadenie 139/2004](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32004R0139) zakazuje schváliť koncentráciu, pri ktorej hrozí kartelizácia alebo zhoršenie postavenia spotrebiteľov. Dôsledky znáša spotrebiteľská verejnosť aj rozpočet Únie: mobilné dáta v Nemecku sú násobne drahšie než v štátoch so skutočnou konkurenciou a EÚ zároveň z verejných zdrojov financuje digitálnu a telekomunikačnú infraštruktúru (napr. IRIS², EIB/InvestEU) subjektom, ktoré porušujú práva občanov — čím vzniká dvojnásobné poškodenie finančných záujmov EÚ.",
+   "karta": "case-m10815",
    "subj": {
     "de": "Nichtigkeitsklage (Art. 263 AEUV) — M.10815 · QES",
     "en": "Action for annulment (Art. 263 TFEU) — M.10815 · QES",
@@ -1303,6 +1389,7 @@
    "mode": "item",
    "subj_snap": "Antrag auf Beiordnung eines Rechtsanwalts · QES",
    "summary_snap": "Túto žiadosť neprekladáme do jazykov, lebo sa tu jedná o nepodstatný dokument. Prikladáme ho kvôli tomu, aby spotrebitelia boli o tom informovaní čo všetko to obnáša.",
+   "karta": "case-m10815",
    "subj": {
     "de": "Antrag auf Beiordnung eines Rechtsanwalts · QES",
     "en": "Application for the appointment of a lawyer · QES",
@@ -1351,6 +1438,7 @@
    "mode": "item",
    "subj_snap": "Antwort auf die Ablehnung des e‑Curia‑Zugangs · QES",
    "summary_snap": "",
+   "karta": "case-m10815",
    "subj": {
     "de": "Antwort auf die Ablehnung des e‑Curia‑Zugangs · QES",
     "en": "Reply to the refusal of e‑Curia access · QES",
@@ -1399,6 +1487,7 @@
    "mode": "item",
    "subj_snap": "Eingangsbestätigung der Klage / Az.-Zuteilung (Kanzlei des Gerichts)",
    "summary_snap": "Tento dokument je potvrdenie odoslania žaloby na zrušenie Joint Venture.",
+   "karta": "case-m10815",
    "subj": {
     "de": "Eingangsbestätigung der Klage / Az.-Zuteilung (Kanzlei des Gerichts)",
     "en": "Acknowledgment of receipt of the action / case-number allocation (Court Registry)",
@@ -1447,6 +1536,7 @@
    "mode": "item",
    "subj_snap": "Begleitschreiben der Kanzlei (T‑61/26 AJ)",
    "summary_snap": "Toto je sprievodný list k uzneseniu žiadosti o právnu pomoc.",
+   "karta": "case-m10815",
    "subj": {
     "de": "Begleitschreiben der Kanzlei (T‑61/26 AJ)",
     "en": "Covering letter from the Registry (T‑61/26 AJ)",
@@ -1496,6 +1586,7 @@
    "mode": "item",
    "subj_snap": "Mitteilung des Gerichts über die Vertretung durch einen Anwalt vor dem Gericht der EU",
    "summary_snap": "Súd mi oznamuje, že musím byť zastúpený pred všeobecným súdom EU advokátom a že mám použiť na to formulár.",
+   "karta": "case-m10815",
    "subj": {
     "de": "Mitteilung des Gerichts über die Vertretung durch einen Anwalt vor dem Gericht der EU",
     "en": "Court notice on representation by a lawyer before the General Court of the EU",
@@ -1544,6 +1635,7 @@
    "mode": "item",
    "subj_snap": "Beschluss des Gerichtspräsidenten — Ablehnung der Prozesskostenhilfe",
    "summary_snap": "8. S ohľadom na všetky predchádzajúce úvahy sa táto žiadosť musí zamietnuť v súlade s článkom 146 ods. 2 Rokovacieho poriadku, bez toho, aby bolo potrebné skúmať, či žiadateľ preukázal, že z dôvodu svojej finančnej situácie bol celkom alebo čiastočne neschopný znášať náklady konania.\n\nZ praxe usudzujem, že EU si urobila zo súdov nedobytné pevnosti ako aj zo Všeobecného súdu Európskej Únie.",
+   "karta": "case-m10815",
    "subj": {
     "de": "Beschluss des Gerichtspräsidenten — Ablehnung der Prozesskostenhilfe",
     "en": "Order of the President of the Court — refusal of legal aid",
@@ -1593,6 +1685,7 @@
    "mode": "item",
    "subj_snap": "Formálne odvolanie proti pôvodnému rozhodnutiu o odmietnutí prístupu k dokumentom JV",
    "summary_snap": "Potvrdzujúca žiadosť podľa čl. 7 ods. 2 nariadenia (ES) č. 1049/2001, ktorou napádam odmietnutie prístupu k dokumentom spoločného podniku schváleného rozhodnutím M.10815. Podanie preukazuje, že lehota 15 pracovných dní od zamietavej odpovede DG COMP zo 7. januára 2026 uplynula 26. januára 2026 a že potvrdzujúca žiadosť bola v ten deň úplne vypracovaná a podaná cez platformu AskTheEU, vrátane jednoznačného prejavu vôle a úplnej právnej argumentácie. Technická chyba rozhrania, pre ktorú platforma správu okamžite nepreposlala inštitúcii, nemôže ísť na ťarchu žiadateľa — prijatie v lehote písomne potvrdila organizácia Access Info Europe a je pripravená ho dosvedčiť. Odmietnuť preukázateľne včasné podanie len pre technické nepreposlanie by bolo neprimeraným formalizmom v rozpore s ustálenou judikatúrou Súdneho dvora a s článkami 41 a 47 Charty základných práv EÚ. Komisia navyše prijatie žiadosti sama potvrdila a vec postúpila príslušnému útvaru; tento vlastný procesný úkon nemožno spätne poprieť bez toho, aby šlo o rozporné a svojvoľné konanie, ktoré samo osebe zakladá dôvod na zásah európskeho ombudsmana a na súdny prieskum.\n\nEurópska komisia porušila nariadenie: článku 7 ods. 2 nariadenia (ES) č. 1049/2001. Odvolanie som podal v lehote a komisia ho neuznala! Prečo asi sa vieme ľahko domyslieť. Sú tu snahy robiť obštrukcie a brániť spravodlivému procesu proti kartelu Telekomu Deutschland AG.",
+   "karta": "case-dgcomp",
    "subj": {
     "de": "Förmlicher Widerspruch gegen die ursprüngliche Entscheidung über die Verweigerung des Zugangs zu den JV-Dokumenten",
     "en": "Formal appeal against the initial decision refusing access to the JV documents",
@@ -1642,6 +1735,7 @@
    "mode": "item",
    "subj_snap": "Prvotná žiadosť o prístup k dokumentom (nar. 1049/2001) — vec M.10815",
    "summary_snap": "Žiadosť o úplné sprístupnenie dokumentov vo veci M.10815 podľa [nariadenia (ES) č. 1049/2001](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049), [čl. 15 ZFEÚ](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12016E015) a [čl. 42 Charty základných práv EÚ](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12012P/TXT). Žiadam osem okruhov podkladov, najmä nezačiernenú zmluvu o spoločnom podniku, kompletnú akcionársku dohodu, governance model a interné pravidlá, nezačiernené znenie rozhodnutia Komisie, formulár CO, trhové analýzy a internú korešpondenciu DG COMP s notifikujúcimi podnikmi.\n\nPrevažujúci verejný záujem podľa [čl. 4 ods. 2 a 3 nariadenia](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049) opieram o samotné rozhodnutie Komisie, na ktoré sa výslovne odvolávam — [M.10815](https://competition-cases.ec.europa.eu/cases/M.10815). V bodoch 138 až 142 na stranách 28 – 31 Komisia konštatuje, že na činnosť spoločného podniku sa vzťahuje [GDPR](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32016R0679) aj [smernica 2002/58/ES](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32002L0058) o súkromí a elektronických komunikáciách, teda požiadavky zákonného základu, obmedzenia účelu, transparentnosti a kvalifikovaného súhlasu podľa [čl. 4 bodu 11 GDPR](https://dsgvo-gesetz.de/art-4-dsgvo/). V bode 142 však Komisia výslovne uvádza, že tieto pravidlá rozoberá len na účely posúdenia koncentrácie a že jej analýza nemá vplyv na posúdenie súladu strán s nimi.\n\nV tom je jadro veci: Komisia pravidlá pomenovala, ale ich dodržiavanie nepreskúmala — a podklady, z ktorých by to bolo možné overiť, sú začiernené alebo utajené. Bez nich nemôže verejnosť ani súd posúdiť, čo si štyria dominantní operátori dohodli v oblastiach koordinácie cien, zdieľania údajov a prístupu k infraštruktúre.",
+   "karta": "case-dgcomp",
    "subj": {
     "de": "Erstantrag auf Dokumentenzugang (VO 1049/2001) — Fall M.10815",
     "en": "Initial request for access to documents (Reg. 1049/2001) — Case M.10815",
@@ -1692,6 +1786,7 @@
    "mode": "item",
    "subj_snap": "Antwort auf den Beschluss der EK über die Verweigerung ⏩ des Zugangs zu den JV-Dokumenten",
    "summary_snap": "Moja odpoveď na rozhodnutie DG COMP zo 7. januára 2026. Namietam, že všeobecná domnienka o nezverejnení je síce vyvrátiteľná, ale bez inventára spisu ju vyvrátiť nemožno — Komisia mi nesprístupnila ani zoznam dokumentov. Ďalej, že domnienka nekryje interné trhové analýzy GR COMP ani samotné rozhodnutie Komisie, a že čiastočný prístup podľa čl. 4 ods. 6 nebol reálne posúdený.\n\nVerejný záujem uvádzam konkrétne: v bodoch 138 – 142 rozhodnutia [M.10815](https://competition-cases.ec.europa.eu/cases/M.10815) Komisia sama konštatuje, že na spoločný podnik dopadá GDPR aj smernica o súkromí a elektronických komunikáciách, no v bode 142 výslovne uvádza, že súlad strán s nimi neposudzovala. K tomu pripájam prebiehajúce konanie T‑61/26, moju sťažnosť na kartelové praktiky podľa [čl. 101](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12016E101) a [102 ZFEÚ](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12016E102) a ochranu finančných záujmov Únie podľa [čl. 325 ZFEÚ](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12016E325).\n\nPetit má sedem bodov vrátane žiadosti o inventár spisu. Na konci je výhrada sťažnosti európskemu ombudsmanovi a žaloby podľa [čl. 263 ZFEÚ](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:12016E263).",
+   "karta": "case-dgcomp",
    "subj": {
     "de": "Antwort auf den Beschluss der EK über die Verweigerung ⏩ des Zugangs zu den JV-Dokumenten",
     "en": "Reply to the EC decision refusing ⏩ access to the JV documents",
@@ -1742,6 +1837,7 @@
    "mode": "item",
    "subj_snap": "Antwort der EK auf meinen Antrag vom 10.12.2025 auf Dokumentenzugang nach (EG) Nr. 1049/2001 betreffend die Sache COMP/M.10815 – DEUTSCHE TELEKOM / ORANGE / TELEFONICA / VODAFONE / JV",
    "summary_snap": "Rozhodnutie Generálneho riaditeľstva pre hospodársku súťaž zo 7. januára 2026, ktorým Komisia odmietla môj prístup k dokumentom vo veci [M.10815](https://competition-cases.ec.europa.eu/cases/M.10815). Odmietnutie stojí na všeobecnej domnienke o nezverejnení podľa [čl. 4 ods. 2 prvej a tretej zarážky nariadenia (ES) č. 1049/2001](https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32001R1049) a na judikatúre Odile Jacob, TGI, Bavarian Lager, API, Agrofert a Deutsche Telekom.\n\nMôj argument o prevažujúcom verejnom záujme Komisia odmietla ako „úvahy čisto všeobecnej povahy“. Čiastočný prístup podľa čl. 4 ods. 6 obmedzila na oddiel 1.2 formulára CO, ktorý je verejný aj bez jej rozhodnutia. Individuálne preskúmanie jednotlivých dokumentov ani inventár spisu list neobsahuje — bez neho pritom nemožno domnienku vyvrátiť, hoci Komisia sama pripúšťa, že vyvrátiteľná je.\n\nList poučuje o práve podať opakovanú žiadosť do 15 pracovných dní od doručenia.",
+   "karta": "case-dgcomp",
    "subj": {
     "de": "Antwort der EK auf meinen Antrag vom 10.12.2025 auf Dokumentenzugang nach (EG) Nr. 1049/2001 betreffend die Sache COMP/M.10815 – DEUTSCHE TELEKOM / ORANGE / TELEFONICA / VODAFONE / JV",
     "en": "EC reply to my request of 10.12.2025 for access to documents under (EC) No 1049/2001 relating to Case COMP/M.10815 – DEUTSCHE TELEKOM / ORANGE / TELEFONICA / VODAFONE / JV",
@@ -1790,6 +1886,7 @@
    "mode": "item",
    "subj_snap": "Strafrechtliche Mitteilung",
    "summary_snap": "",
+   "karta": "case-telekom",
    "subj": {
     "de": "Strafrechtliche Mitteilung",
     "en": "Criminal complaint",
@@ -2012,7 +2109,13 @@
     "de",
     "eu"
    ],
-   "karty": []
+   "karty": [
+    "case-dgcomp",
+    "case-m10815",
+    "case-telekom",
+    "case-v-sirsom-zmysle-kauzy-kartelove-prepojen",
+    "case-zaloba-proti-deutsche-telekom-ag-porusov"
+   ]
   },
   {
    "kod": "k-dak",
@@ -2021,7 +2124,9 @@
    "jur": [
     "de"
    ],
-   "karty": []
+   "karty": [
+    "case-konanie-proti-zasahovaniu-do-mojich-maje"
+   ]
   },
   {
    "kod": "k-fon",
@@ -2030,7 +2135,9 @@
    "jur": [
     "de"
    ],
-   "karty": []
+   "karty": [
+    "case-podvodne-spravanie-o2-telefonica-deutsch"
+   ]
   },
   {
    "kod": "k-vszp",
@@ -2039,7 +2146,9 @@
    "jur": [
     "sk"
    ],
-   "karty": []
+   "karty": [
+    "case-zaloba-o-nahradu-skody"
+   ]
   },
   {
    "kod": "k-lra",
@@ -2048,7 +2157,10 @@
    "jur": [
     "de"
    ],
-   "karty": []
+   "karty": [
+    "case-landgericht-landshut-erzwingungshaft",
+    "case-nezakonne-ulozena-pokuta-okresnym-uradom"
+   ]
   },
   {
    "kod": "k-exs",
@@ -2057,7 +2169,9 @@
    "jur": [
     "sk"
    ],
-   "karty": []
+   "karty": [
+    "case-udzs-namietka"
+   ]
   },
   {
    "kod": "k-ms",
@@ -2067,7 +2181,10 @@
     "de",
     "eu"
    ],
-   "karty": []
+   "karty": [
+    "case-mstest",
+    "case-staznost-dozornemu-organu"
+   ]
   }
  ]
 }

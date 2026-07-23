@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="sk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>ŽALOBA O NÁHRADU ŠKODY · PROTOTYP</title>
+<style>
+:root{--navy:#1F3864;--red:#C00000;--soft:#D6E6F2;--bd:#c9d8e8}
+*{box-sizing:border-box}
+body{margin:0;color:#22303f;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+ background:linear-gradient(#8ec5ea 0%,#b9dcf3 34%,#dcecf8 64%,#f3e9d6 100%);background-attachment:fixed;min-height:100vh}
+.top{text-align:center;padding:20px 16px 4px}
+.top h1{margin:0;font-size:22px;color:var(--navy);font-weight:800}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px 50px}
+.navbar{background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(31,56,100,.10);padding:9px 14px;
+ display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.hm{border:1px solid var(--bd);border-radius:6px;padding:5px 14px;text-decoration:none;color:var(--navy);font-size:13px}
+.hm:hover{background:#f2f7fc}
+.lang{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.lang .lb{font-size:10px;color:#8a97a6;letter-spacing:.12em;margin-right:3px}
+.f{background:none;border:1px solid rgba(31,56,100,.3);border-radius:3px;padding:0;cursor:pointer;width:30px;height:20px;opacity:.5;overflow:hidden}
+.f img{width:30px;height:20px;object-fit:cover;display:block}
+.f.on{opacity:1;border-color:var(--navy);box-shadow:0 0 0 2px rgba(31,56,100,.25)}
+.panel{background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(31,56,100,.10);padding:20px 22px;margin-bottom:14px}
+.panel>h2{margin:0 0 14px;font-size:22px;color:var(--navy)}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.tab{border:1px solid var(--bd);background:#fbfcfd;border-radius:6px;padding:5px 14px;font-size:13px;cursor:pointer;color:#3d4d5e;display:flex;align-items:center;gap:6px}
+.tab.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.tab img{width:18px;height:12px;object-fit:cover;border-radius:2px}
+.allrow{border:1px solid var(--bd);border-left:4px solid var(--navy);border-radius:6px;padding:11px 15px;margin-bottom:12px;cursor:pointer;background:#fbfcfd}
+.allrow.on{background:#eef4fb}
+.allrow .t{font-size:14px;color:var(--navy);font-weight:600}
+.allrow .b{display:inline-block;margin-top:5px;font-size:11px;background:#fff3d6;color:#8a5a00;border:1px solid #f0c040;border-radius:999px;padding:1px 10px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
+@media(max-width:880px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}}
+.tile{text-align:left;background:#fbfcfd;border:1px solid var(--bd);border-left:4px solid var(--navy);border-radius:6px;padding:11px 13px;cursor:pointer;font:inherit;color:inherit}
+.tile:hover{background:#f2f7fc}
+.tile.on{background:#eef4fb;box-shadow:0 0 0 2px rgba(31,56,100,.28)}
+.tf{display:flex;gap:4px;align-items:center;margin-bottom:5px;min-height:13px}
+.jf{width:17px;height:12px;object-fit:cover;border-radius:2px;font-size:12px;line-height:1}
+.tn{font-size:13px;font-weight:700;color:var(--navy);line-height:1.3}
+.tk{font-size:10.5px;color:#8a97a6;letter-spacing:.04em;margin-top:3px}
+.tc{display:inline-block;margin-top:7px;font-size:11px;color:#54637a;background:#eef2f7;border-radius:999px;padding:1px 9px}
+.sortbar{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:center;margin:14px 0}
+.sortbar .lb{font-size:10.5px;color:#5a6a7d;letter-spacing:.12em}
+.sb{border:1px solid var(--bd);background:#fff;border-radius:6px;padding:4px 13px;font-size:12.5px;cursor:pointer;color:#3d4d5e}
+.sb.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.kon{background:#fff;border-radius:7px;box-shadow:0 1px 6px rgba(31,56,100,.09);padding:12px 16px;margin-bottom:9px;
+ display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.knaz{font-size:14.5px;color:var(--navy);font-weight:600}
+.korg{font-size:12.5px;color:#7a8899;margin-top:2px}
+.kside{display:flex;align-items:center;gap:10px}
+.st{font-size:11px;border-radius:999px;padding:2px 10px;white-space:nowrap}
+.st-laeuft,.st-eingereicht{background:#fff3d6;color:#8a5a00;border:1px solid #f0c040}
+.st-abgelehnt{background:#fde8e8;color:#8a1c1c;border:1px solid #e8b4b4}
+.go{font-size:12.5px;text-decoration:none;background:var(--navy);color:#fff;border-radius:4px;padding:5px 13px;white-space:nowrap}
+.go:hover{background:#16294a}
+.chead{background:#fff;border-radius:8px;border-top:4px solid var(--navy);box-shadow:0 2px 10px rgba(31,56,100,.10);padding:20px 24px;margin-bottom:16px}
+.chead h2{margin:0 0 6px;font-size:21px;color:var(--navy);line-height:1.3}
+.chead .org{font-size:13px;color:#5a6a7d}
+.chead .meta{font-size:12.5px;color:#5a6a7d;border-top:1px solid var(--bd);margin-top:10px;padding-top:9px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:900px){.cols{grid-template-columns:1fr}}
+.col h3{margin:0 0 9px;font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:#7a8899}
+.item{background:#fff;border-radius:7px;box-shadow:0 1px 6px rgba(31,56,100,.09);padding:12px 15px;margin-bottom:9px}
+.itop{display:flex;justify-content:space-between;gap:10px;margin-bottom:4px}
+.idate{font-size:12px;color:#7a8899;font-weight:700}
+.isubj{font-size:14px;color:var(--navy);font-weight:600;line-height:1.35;margin-bottom:8px}
+.ibtn{display:flex;gap:6px;flex-wrap:wrap}
+.b{font-size:11.5px;text-decoration:none;border:1px solid var(--bd);border-radius:3px;padding:3px 9px;color:#3d4d5e;background:#fbfcfd;cursor:pointer}
+.b:hover{border-color:var(--navy);color:var(--navy)}
+.sumbox{margin-top:9px;border-top:1px dashed var(--bd);padding-top:9px;font-size:13px;line-height:1.6;color:#3d4d5e;display:none}
+.sumbox.on{display:block}
+.sumbox p{margin:0 0 8px}
+.proto{background:#fff6d6;border:1px solid #f0c040;border-left:5px solid var(--red);padding:10px 14px;margin:10px 0 14px;border-radius:4px;font-size:12.5px}
+.gtl,.gtl-b{display:none}
+body[data-l="de"] .gtl.de{display:inline}body[data-l="de"] .gtl-b.de{display:block}body[data-l="en"] .gtl.en{display:inline}body[data-l="en"] .gtl-b.en{display:block}body[data-l="sk"] .gtl.sk{display:inline}body[data-l="sk"] .gtl-b.sk{display:block}body[data-l="hr"] .gtl.hr{display:inline}body[data-l="hr"] .gtl-b.hr{display:block}body[data-l="pl"] .gtl.pl{display:inline}body[data-l="pl"] .gtl-b.pl{display:block}body[data-l="es"] .gtl.es{display:inline}body[data-l="es"] .gtl-b.es{display:block}body[data-l="it"] .gtl.it{display:inline}body[data-l="it"] .gtl-b.it{display:block}body[data-l="fr"] .gtl.fr{display:inline}body[data-l="fr"] .gtl-b.fr{display:block}body[data-l="sv"] .gtl.sv{display:inline}body[data-l="sv"] .gtl-b.sv{display:block}</style></head><body data-l="sk">
+<div class="top"><h1>FIA FOX — Fair Internet Initiative</h1></div>
+<div class="wrap">
+<div class="navbar"><a class="hm" href="register.html"><span class="gtl de">← Zum Register</span><span class="gtl en">← To the register</span><span class="gtl sk">← Späť na register</span><span class="gtl hr">← Na registar</span><span class="gtl pl">← Do rejestru</span><span class="gtl es">← Al registro</span><span class="gtl it">← Al registro</span><span class="gtl fr">← Au registre</span><span class="gtl sv">← Till registret</span></a>
+ <div class="lang"><span class="lb">LANG</span><button class="f" data-l="de"><img src="https://flagcdn.com/de.svg" alt="DE"></button><button class="f" data-l="en"><img src="https://flagcdn.com/gb.svg" alt="EN"></button><button class="f on" data-l="sk"><img src="https://flagcdn.com/sk.svg" alt="SK"></button><button class="f" data-l="hr"><img src="https://flagcdn.com/hr.svg" alt="HR"></button><button class="f" data-l="pl"><img src="https://flagcdn.com/pl.svg" alt="PL"></button><button class="f" data-l="es"><img src="https://flagcdn.com/es.svg" alt="ES"></button><button class="f" data-l="it"><img src="https://flagcdn.com/it.svg" alt="IT"></button><button class="f" data-l="fr"><img src="https://flagcdn.com/fr.svg" alt="FR"></button><button class="f" data-l="sv"><img src="https://flagcdn.com/se.svg" alt="SV"></button></div></div>
+<div class="proto"><b>PROTOTYP</b> — <span class="gtl de">aus den Daten erzeugt</span><span class="gtl en">generated from data</span><span class="gtl sk">vygenerované z dát</span><span class="gtl hr">generirano iz podataka</span><span class="gtl pl">wygenerowane z danych</span><span class="gtl es">generado a partir de datos</span><span class="gtl it">generato dai dati</span><span class="gtl fr">généré à partir des données</span><span class="gtl sv">genererat från data</span>.</div>
+<div class="chead"><h2><span class="gtl de">Schadenersatzklage</span><span class="gtl en">Action for damages</span><span class="gtl sk">ŽALOBA O NÁHRADU ŠKODY</span><span class="gtl hr">Tužba za naknadu štete</span><span class="gtl pl">Pozew o odszkodowanie</span><span class="gtl es">Demanda de indemnización de daños</span><span class="gtl it">Azione di risarcimento danni</span><span class="gtl fr">Action en réparation du préjudice</span><span class="gtl sv">Skadeståndstalan</span></h2>
+ <div class="org"></div>
+ <div class="meta"><b>—</b> &nbsp;·&nbsp; PR-2026-VšZ
+  &nbsp;·&nbsp; 10.07.2025 &nbsp;·&nbsp; 1 <span class="gtl de">Dokumente</span><span class="gtl en">documents</span><span class="gtl sk">dokumentov</span><span class="gtl hr">dokumenata</span><span class="gtl pl">dokumentów</span><span class="gtl es">documentos</span><span class="gtl it">documenti</span><span class="gtl fr">documents</span><span class="gtl sv">handlingar</span></div></div>
+<div class="cols">
+ <div class="col"><h3>▲ <span class="gtl de">Gesendet</span><span class="gtl en">Sent</span><span class="gtl sk">Odoslané</span><span class="gtl hr">Poslano</span><span class="gtl pl">Wysłane</span><span class="gtl es">Enviados</span><span class="gtl it">Inviati</span><span class="gtl fr">Envoyés</span><span class="gtl sv">Skickat</span> (1)</h3><div class="item"><div class="itop"><span class="idate">10.07.2025</span><span class="st st-laeuft"><span class="gtl de">Läuft</span><span class="gtl en">Pending</span><span class="gtl sk">Prebieha</span><span class="gtl hr">U tijeku</span><span class="gtl pl">W toku</span><span class="gtl es">En curso</span><span class="gtl it">In corso</span><span class="gtl fr">En cours</span><span class="gtl sv">Pågår</span></span></div><div class="isubj"><span class="gtl de">Schadenersatzklage in Sachen: Eingriff in Vermögensrechte</span><span class="gtl en">Action for damages concerning: interference with property rights</span><span class="gtl sk">ŽALOBA O NÁHRADU ŠKODY vo veci: Zasahovania do majetkových práv</span><span class="gtl hr">Tužba za naknadu štete u predmetu: Zadiranje u imovinska prava</span><span class="gtl pl">Pozew o odszkodowanie w sprawie: Naruszenie praw majątkowych</span><span class="gtl es">Demanda de indemnización de daños en el asunto: Injerencia en los derechos patrimoniales</span><span class="gtl it">Azione di risarcimento danni in materia di: Lesione dei diritti patrimoniali</span><span class="gtl fr">Action en réparation du préjudice concernant : Atteinte aux droits patrimoniaux</span><span class="gtl sv">Skadeståndstalan angående: Ingrepp i förmögenhetsrättigheter</span></div><div class="ibtn"><span class="gtl de"><a class="b" href="https://docs.google.com/viewer?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fpeterferenc246-design%2Ffia%4052db039b4d775da13222814870d54649340faf32%2Fdocs%2F15_Zaloba_VsZP_156EX-171-25_DE.pdf&amp;embedded=true" target="_blank" rel="noopener">📄 Dokument</a></span><span class="gtl en"><a class="b" href="https://docs.google.com/viewer?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fpeterferenc246-design%2Ffia%4052db039b4d775da13222814870d54649340faf32%2Fdocs%2F15_Zaloba_VsZP_156EX-171-25_EN.pdf&amp;embedded=true" target="_blank" rel="noopener">📄 Document</a></span><span class="gtl sk"><a class="b" href="https://docs.google.com/viewer?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fpeterferenc246-design%2Ffia%4052db039b4d775da13222814870d54649340faf32%2Fdocs%2F15_Zaloba_VsZP_156EX-171-25_SK_QES.pdf&amp;embedded=true" target="_blank" rel="noopener">📄 Dokument</a></span><span class="gtl hr"><a class="b" href="https://docs.google.com/viewer?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fpeterferenc246-design%2Ffia%4052db039b4d775da13222814870d54649340faf32%2Fdocs%2F15_Zaloba_VsZP_156EX-171-25_HR.pdf&amp;embedded=true" target="_blank" rel="noopener">📄 Dokument</a></span><span class="gtl pl"><a class="b" href="https://docs.google.com/viewer?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fpeterferenc246-design%2Ffia%4052db039b4d775da13222814870d54649340faf32%2Fdocs%2F15_Zaloba_VsZP_156EX-171-25_PL.pdf&amp;embedded=true" target="_blank" rel="noopener">📄 Dokument</a></span><span class="gtl es"><a class="b" href="https://docs.google.com/viewer?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fpeterferenc246-design%2Ffia%4052db039b4d775da13222814870d54649340faf32%2Fdocs%2F15_Zaloba_VsZP_156EX-171-25_EN.pdf&amp;embedded=true" target="_blank" rel="noopener">📄 Documento</a></span><span class="gtl it"><a class="b" href="https://docs.google.com/viewer?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fpeterferenc246-design%2Ffia%4052db039b4d775da13222814870d54649340faf32%2Fdocs%2F15_Zaloba_VsZP_156EX-171-25_IT.pdf&amp;embedded=true" target="_blank" rel="noopener">📄 Documento</a></span><span class="gtl fr"><a class="b" href="https://docs.google.com/viewer?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fpeterferenc246-design%2Ffia%4052db039b4d775da13222814870d54649340faf32%2Fdocs%2F15_Zaloba_VsZP_156EX-171-25_FR.pdf&amp;embedded=true" target="_blank" rel="noopener">📄 Document</a></span><span class="gtl sv"><a class="b" href="https://docs.google.com/viewer?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fpeterferenc246-design%2Ffia%4052db039b4d775da13222814870d54649340faf32%2Fdocs%2F15_Zaloba_VsZP_156EX-171-25_EN.pdf&amp;embedded=true" target="_blank" rel="noopener">📄 Handling</a></span></div></div></div>
+ <div class="col"><h3>▼ <span class="gtl de">Eingegangen</span><span class="gtl en">Received</span><span class="gtl sk">Prijaté</span><span class="gtl hr">Primljeno</span><span class="gtl pl">Otrzymane</span><span class="gtl es">Recibidos</span><span class="gtl it">Ricevuti</span><span class="gtl fr">Reçus</span><span class="gtl sv">Mottaget</span> (0)</h3></div>
+</div></div>
+<script>
+document.querySelectorAll('.f').forEach(function(b){b.addEventListener('click',function(){
+ document.body.dataset.l=b.dataset.l;document.documentElement.lang=b.dataset.l;
+ document.querySelectorAll('.f').forEach(function(x){x.classList.remove('on');});b.classList.add('on');});});
+</script></body></html>

@@ -18,7 +18,7 @@ def gtl(seg):
 
 # ─────────── KARTY ───────────
 karty = []
-for m in re.finditer(r'<details class="case"([^>]*)>(.*?)<div class="case-body">', h, re.S):
+for m in re.finditer(r'<details class="case"([^>]*)>(.*?)</summary>', h, re.S):
     at, head = m.group(1), m.group(2)
     def a(n):
         r = re.search(n + r'="([^"]*)"', at)
@@ -36,10 +36,21 @@ for m in re.finditer(r'<details class="case"([^>]*)>(.*?)<div class="case-body">
         stav=gtl(pill.group(1)) if pill else {},
     ))
 
+# hranice kariet — na priradenie poloziek
+HRAN = [(m.start(), re.search(r'id="([^"]*)"', m.group(1)).group(1))
+        for m in re.finditer(r'<details class="case"([^>]*)>', h)]
+def karta_pre(pos):
+    cur = ""
+    for st, cid in HRAN:
+        if st <= pos: cur = cid
+        else: break
+    return cur
+
 # ─────────── POLOZKY ───────────
+pozicie = [m.start() for m in re.finditer(r'<div class="item[^"]*"[^>]{0,60}?data-snap=', h)]
 bloky = re.split(r'(?=<div class="item[^"]*"[^>]{0,60}?data-snap=)', h)
 polozky = []
-for b in bloky[1:]:
+for idx, b in enumerate(bloky[1:]):
     ms = re.match(r"<div class=\"item[^\"]*\"[^>]{0,60}?data-snap='(.*?)'>", b, re.S)
     if not ms:
         continue
@@ -62,6 +73,7 @@ for b in bloky[1:]:
         fname=snap.get("fname", ""), fpath=snap.get("fpath", ""),
         cats=snap.get("cats", {}), mode=snap.get("mode", ""),
         subj_snap=snap.get("subj", ""), summary_snap=snap.get("summary", ""),
+        karta=karta_pre(pozicie[idx]) if idx < len(pozicie) else "",
         subj=gtl(subj.group(1)) if subj else {},
         urls=snap.get("urls", {}) or links,
     ))
@@ -86,6 +98,9 @@ for p in polozky:
     ju = (p.get("cats") or {}).get("jur", "")
     for j in (ju.split() if isinstance(ju, str) else (ju or [])):
         z["jur"].add(j)
+for p in polozky:
+    if p.get("karta"):
+        kauzy.setdefault(p["kauza"] or "?", dict(kod=p["kauza"], nazov="", n=0, jur=set(), karty=set()))["karty"].add(p["karta"])
 for z in kauzy.values():
     z["jur"] = sorted(z["jur"]); z["karty"] = sorted(z["karty"])
 
@@ -102,6 +117,10 @@ for z in sorted(kauzy.values(), key=lambda x: -x["n"]):
     print(f"   {z['kod']:<10} {z['n']:>2} poloziek  {z['jur']}  {z['nazov'][:52]}")
 n9 = sum(1 for p in polozky if len(p['subj']) == 9)
 u9 = sum(1 for p in polozky if len(p.get('urls') or {}) == 9)
+from collections import Counter as _C
+print("\n=== POLOZKY PODLA KARIET ===")
+for cid,n in _C(p["karta"] for p in polozky).most_common():
+    print(f"   {cid[:46]:<46} {n:>2}")
 print(f"\nkontrola: {n9}/{len(polozky)} poloziek ma predmet v 9 jazykoch, "
       f"{u9}/{len(polozky)} ma odkazy v 9 jazykoch")
 print("subor fia_data.json:", __import__('os').path.getsize('fia_data.json'), "B")
