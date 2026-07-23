@@ -24,6 +24,88 @@ UVOD = {"de":"willkommen/","en":"welcome/","sk":"164-2/","hr":"dobrodosli/","pl"
 
 def S(de,en,sk,hr,pl,es,it,fr,sv): return dict(zip(LANGS,[de,en,sk,hr,pl,es,it,fr,sv]))
 
+
+HERO = S("Bürgerinitiative für ein faires Internet ohne rechtswidrige Kartell- und Monopolstrukturen und für fairen Wettbewerb in der Europäischen Union — ohne Eingriff in die Vermögensrechte der Bürgerinnen und Bürger.",
+ "A citizens' initiative for a fair internet without unlawful cartel and monopoly structures and for fair competition in the European Union — without interference with the property rights of its citizens.",
+ "Občianska iniciatíva za férový internet bez nezákonných kartelových a monopolných štruktúr a za spravodlivú hospodársku súťaž v Európskej únii — bez zásahov do majetkových práv občanov.",
+ "Građanska inicijativa za pošten internet bez nezakonitih kartelnih i monopolnih struktura i za pošteno tržišno natjecanje u Europskoj uniji — bez zadiranja u imovinska prava građana.",
+ "Inicjatywa obywatelska na rzecz uczciwego internetu bez bezprawnych struktur kartelowych i monopolowych oraz uczciwej konkurencji w Unii Europejskiej — bez ingerencji w prawa majątkowe obywateli.",
+ "Iniciativa ciudadana por un internet justo sin estructuras ilícitas de cártel y monopolio y por una competencia leal en la Unión Europea — sin injerencia en los derechos patrimoniales de los ciudadanos.",
+ "Iniziativa dei cittadini per un internet equo senza strutture illecite di cartello e monopolio e per una concorrenza leale nell'Unione europea — senza interferenze nei diritti patrimoniali dei cittadini.",
+ "Initiative citoyenne pour un internet équitable sans structures illicites d'entente et de monopole et pour une concurrence loyale dans l'Union européenne — sans atteinte aux droits patrimoniaux des citoyens.",
+ "Medborgarinitiativ för ett rättvist internet utan olagliga kartell- och monopolstrukturer och för sund konkurrens i Europeiska unionen — utan ingrepp i medborgarnas egendomsrätt.")
+
+DAR_H = S("💝 Unterstützen Sie unsere Mission","💝 Support our mission","💝 Podporte našu misiu","💝 Podržite našu misiju",
+ "💝 Wesprzyj naszą misję","💝 Apoye nuestra misión","💝 Sostieni la nostra missione","💝 Soutenez notre mission","💝 Stöd vårt uppdrag")
+DAR_1 = S("FIA FOX arbeitet unabhängig und ohne externe Finanzierung durch Unternehmen oder Institutionen.",
+ "FIA FOX works independently and without external funding from companies or institutions.",
+ "FIA FOX pracuje nezávisle a bez externého financovania od firiem či inštitúcií.",
+ "FIA FOX djeluje neovisno i bez vanjskog financiranja od tvrtki ili institucija.",
+ "FIA FOX działa niezależnie i bez zewnętrznego finansowania od firm czy instytucji.",
+ "FIA FOX trabaja de forma independiente y sin financiación externa de empresas o instituciones.",
+ "FIA FOX opera in modo indipendente e senza finanziamenti esterni da imprese o istituzioni.",
+ "FIA FOX agit de manière indépendante et sans financement externe d'entreprises ou d'institutions.",
+ "FIA FOX arbetar oberoende och utan extern finansiering från företag eller institutioner.")
+DAR_2 = S("Ihre Beiträge dienen der Überführung der Initiative in einen eingetragenen Verein im Sinne des Gesetzes sowie der Deckung der laufenden Kosten und der Koordination der Initiative.",
+ "Your contributions serve to convert the initiative into a registered association within the meaning of the law and to cover its running costs and coordination.",
+ "Vaše príspevky slúžia na prevedenie iniciatívy na registrované združenie v zmysle zákona a na pokrytie bežných nákladov a koordinácie iniciatívy.",
+ "Vaši prilozi služe pretvaranju inicijative u registrirano udruženje u smislu zakona te pokrivanju tekućih troškova i koordinacije.",
+ "Państwa wpłaty służą przekształceniu inicjatywy w zarejestrowane stowarzyszenie w rozumieniu prawa oraz pokryciu bieżących kosztów i koordynacji.",
+ "Sus contribuciones sirven para convertir la iniciativa en una asociación registrada conforme a la ley y para cubrir los gastos corrientes y la coordinación.",
+ "I vostri contributi servono a trasformare l'iniziativa in un'associazione registrata ai sensi di legge e a coprire i costi correnti e il coordinamento.",
+ "Vos contributions servent à transformer l'initiative en association déclarée au sens de la loi et à couvrir les frais courants et la coordination.",
+ "Era bidrag används för att ombilda initiativet till en registrerad förening enligt lag och för att täcka löpande kostnader och samordning.")
+DAR_B = S("💝 Jetzt spenden →","💝 Donate now →","💝 Prispieť teraz →","💝 Doniraj sada →","💝 Wesprzyj teraz →",
+ "💝 Donar ahora →","💝 Dona ora →","💝 Faire un don →","💝 Ge en gåva →")
+
+MIS_H = S("Unsere Mission","Our mission","Naša misia","Naša misija","Nasza misja","Nuestra misión","La nostra missione","Notre mission","Vårt uppdrag")
+MIS_1 = S("Bürgerinitiative für faires Internet und fairen Wettbewerb in der Europäischen Union.",
+ "A citizens' initiative for a fair internet and fair competition in the European Union.",
+ "Občianska iniciatíva za férový internet a spravodlivú hospodársku súťaž v Európskej únii.",
+ "Građanska inicijativa za pošten internet i pošteno tržišno natjecanje u Europskoj uniji.",
+ "Inicjatywa obywatelska na rzecz uczciwego internetu i uczciwej konkurencji w Unii Europejskiej.",
+ "Iniciativa ciudadana por un internet justo y una competencia leal en la Unión Europea.",
+ "Iniziativa dei cittadini per un internet equo e una concorrenza leale nell'Unione europea.",
+ "Initiative citoyenne pour un internet équitable et une concurrence loyale dans l'Union européenne.",
+ "Medborgarinitiativ för ett rättvist internet och sund konkurrens i Europeiska unionen.")
+MIS_2 = S("Wir wenden uns gegen wettbewerbswidrige Kartell- und Monopolpraktiken marktbeherrschender Konzerne, die nach Auffassung der Initiative zu deren ungerechtfertigter Bereicherung, zu überhöhten Preisen, zur Einschränkung des fairen Wettbewerbs und zu Eingriffen in die Vermögensrechte der Bürgerinnen und Bürger der Europäischen Union führen.",
+ "We oppose the anti-competitive cartel and monopoly practices of dominant corporations which, in the initiative's view, lead to their unjustified enrichment, to excessive prices, to the restriction of fair competition and to interference with the property rights of the citizens of the European Union.",
+ "Staviame sa proti protisúťažným kartelovým a monopolným praktikám dominantných koncernov, ktoré podľa iniciatívy vedú k ich neoprávnenému obohateniu, k neprimeraným cenám, k obmedzeniu spravodlivej súťaže a k zásahom do majetkových práv občanov Európskej únie.",
+ "Suprotstavljamo se protutržišnim kartelnim i monopolnim praksama vladajućih korporacija koje, prema inicijativi, vode njihovu neopravdanom bogaćenju, previsokim cijenama, ograničenju poštenog tržišnog natjecanja i zadiranju u imovinska prava građana Europske unije.",
+ "Sprzeciwiamy się antykonkurencyjnym praktykom kartelowym i monopolowym dominujących koncernów, które zdaniem inicjatywy prowadzą do ich nieuzasadnionego wzbogacenia, do zawyżonych cen, do ograniczenia uczciwej konkurencji i do ingerencji w prawa majątkowe obywateli Unii Europejskiej.",
+ "Nos oponemos a las prácticas anticompetitivas de cártel y monopolio de las grandes empresas dominantes que, a juicio de la iniciativa, conducen a su enriquecimiento injustificado, a precios excesivos, a la restricción de la competencia leal y a injerencias en los derechos patrimoniales de los ciudadanos de la Unión Europea.",
+ "Ci opponiamo alle pratiche anticoncorrenziali di cartello e monopolio dei gruppi dominanti che, secondo l'iniziativa, portano al loro ingiustificato arricchimento, a prezzi eccessivi, alla restrizione della concorrenza leale e a interferenze nei diritti patrimoniali dei cittadini dell'Unione europea.",
+ "Nous nous opposons aux pratiques anticoncurrentielles d'entente et de monopole des groupes dominants qui, selon l'initiative, conduisent à leur enrichissement injustifié, à des prix excessifs, à la restriction d'une concurrence loyale et à des atteintes aux droits patrimoniaux des citoyens de l'Union européenne.",
+ "Vi motsätter oss konkurrensbegränsande kartell- och monopolmetoder hos dominerande koncerner som enligt initiativet leder till deras oberättigade berikning, till överpriser, till inskränkt sund konkurrens och till ingrepp i EU-medborgarnas egendomsrätt.")
+MIS_3 = S("FIA FOX ist die zivilgesellschaftliche Antwort: Dokumentation, Rechtsaktivismus und öffentliche Kontrolle.",
+ "FIA FOX is the civil-society answer: documentation, legal activism and public scrutiny.",
+ "FIA FOX je odpoveď občianskej spoločnosti: dokumentácia, právny aktivizmus a verejná kontrola.",
+ "FIA FOX je odgovor civilnog društva: dokumentacija, pravni aktivizam i javni nadzor.",
+ "FIA FOX to odpowiedź społeczeństwa obywatelskiego: dokumentacja, aktywizm prawny i kontrola publiczna.",
+ "FIA FOX es la respuesta de la sociedad civil: documentación, activismo jurídico y control público.",
+ "FIA FOX è la risposta della società civile: documentazione, attivismo giuridico e controllo pubblico.",
+ "FIA FOX est la réponse de la société civile : documentation, activisme juridique et contrôle public.",
+ "FIA FOX är civilsamhällets svar: dokumentation, rättsaktivism och offentlig granskning.")
+SITE_T = S("FIA FOX — Fair Internet Initiative","FIA FOX — Fair Internet Initiative","FIA FOX — Fair Internet Initiative",
+ "FIA FOX — Fair Internet Initiative","FIA FOX — Fair Internet Initiative","FIA FOX — Fair Internet Initiative",
+ "FIA FOX — Fair Internet Initiative","FIA FOX — Fair Internet Initiative","FIA FOX — Fair Internet Initiative")
+SITE_S = S("Bürgerinitiative für faires Internet und fairen Wettbewerb in der EU",
+ "Citizens' initiative for a fair internet and fair competition in the EU",
+ "Občianska iniciatíva za férový internet a spravodlivú súťaž v EÚ",
+ "Građanska inicijativa za pošten internet i pošteno natjecanje u EU",
+ "Inicjatywa obywatelska na rzecz uczciwego internetu i konkurencji w UE",
+ "Iniciativa ciudadana por un internet justo y competencia leal en la UE",
+ "Iniziativa dei cittadini per un internet equo e concorrenza leale nell'UE",
+ "Initiative citoyenne pour un internet équitable et une concurrence loyale dans l'UE",
+ "Medborgarinitiativ för rättvist internet och sund konkurrens i EU")
+NAV = [("♥", S("Spenden","Donate","Prispieť","Doniraj","Wesprzyj","Donar","Dona","Faire un don","Ge en gåva"), "DAR"),
+       ("⚖", S("Fallregister","Case register","Register káuz","Registar predmeta","Rejestr spraw","Registro de casos","Registro dei casi","Registre des affaires","Ärenderegister"), "#kauzy"),
+       ("◆", S("Soziale Medien","Social media","Sociálne siete","Društvene mreže","Media społecznościowe","Redes sociales","Social media","Réseaux sociaux","Sociala medier"), "teilen/"),
+       ("▣", S("Galerie","Gallery","Galéria","Galerija","Galeria","Galería","Galleria","Galerie","Galleri"), "galerie/"),
+       ("▤", S("Presse","Press","Tlač","Tisak","Prasa","Prensa","Stampa","Presse","Press"), ""),
+      ]
+MASCOT = "https://foxprof.club/wp-content/uploads/2026/06/fia-fox-mascot-v6.png"
+
 # ═══════════════ DÁTA: KAUZY → KONANIA ═══════════════
 # hotovo=URL karty (prototyp), inak None = pripravuje sa
 
@@ -210,105 +292,170 @@ flags = "".join(f'<button class="f{" on" if L=="sk" else ""}" data-l="{L}">'
 show = "".join(f'body[data-l="{L}"] .gtl.{L}{{display:inline}}body[data-l="{L}"] .gtl-b.{L}{{display:block}}' for L in LANGS)
 total = sum(z["n"] for z in KAUZY)
 
+
+nav_html = "".join(
+ f'<a class="nv" data-k="{k}" href="#"><i>{ic}</i>{g(lb)}</a>' if k=="DAR"
+ else (f'<a class="nv" href="{k}">' + f'<i>{ic}</i>{g(lb)}</a>' if k.startswith("#")
+       else f'<a class="nv" href="{WP}{k}" target="_blank" rel="noopener"><i>{ic}</i>{g(lb)}</a>')
+ for ic,lb,k in NAV)
+
 HTML = f"""<!DOCTYPE html>
 <html lang="sk"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>PROTOTYP — FIA FOX</title>
+<title>FIA FOX — Fair Internet Initiative · PROTOTYP</title>
 <style>
-:root{{--navy:#1F3864;--red:#C00000;--bg:#f4f6f9;--bd:#dfe5ec;--ink:#22303f}}
+:root{{--navy:#1F3864;--hero:#2E5BA6;--red:#C00000;--gold:#FFD966;--soft:#D6E6F2;--bd:#c9d8e8}}
 *{{box-sizing:border-box}}
-body{{margin:0;background:var(--bg);color:var(--ink);
- font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}}
-a{{color:inherit}}
-#bar{{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff}}
-#bar .in{{max-width:1100px;margin:0 auto;padding:9px 18px;display:flex;align-items:center;gap:13px;flex-wrap:wrap}}
-#bar .nm{{font-weight:700;letter-spacing:.02em}}
-#bar a{{color:#fff;text-decoration:none;font-size:13px;border-bottom:1px solid rgba(255,255,255,.45)}}
-#bar a:hover{{border-bottom-color:#fff}}
-#bar .dar{{background:#ffd34d;color:#3a2c00;border:0;border-radius:3px;padding:3px 12px;font-weight:700}}
-.f{{background:none;border:0;padding:0;cursor:pointer;width:25px;height:17px;opacity:.5;border-radius:2px;overflow:hidden}}
-.f img{{width:25px;height:17px;object-fit:cover;display:block}}
-.f.on{{opacity:1;outline:2px solid #ffd34d}}
-.wrap{{max-width:1100px;margin:0 auto;padding:0 18px 60px}}
-.proto{{background:#fff4cc;border:1px solid #f0c040;border-left:5px solid var(--red);
- padding:12px 16px;margin:18px 0;border-radius:4px;font-size:13.5px}}
-.hero{{background:var(--navy);color:#fff;border-radius:6px;padding:34px 34px 30px;margin-bottom:22px}}
-.hero h1{{margin:0 0 8px;font-size:34px;letter-spacing:-.02em}}
-.hero .tag{{font-size:15px;opacity:.9}}
-.hero .nums{{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.25);font-size:13px;opacity:.9}}
-.hero .nums b{{font-size:20px;color:#ffd34d;margin-right:5px}}
-.kauza{{background:#fff;border:1px solid var(--bd);border-radius:6px;padding:20px 24px;margin-bottom:16px}}
+body{{margin:0;color:#22303f;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+ background:linear-gradient(#8ec5ea 0%,#b9dcf3 38%,#dcecf8 68%,#eef6fc 100%);background-attachment:fixed;min-height:100vh}}
+body::before{{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+ background:radial-gradient(circle at 82% 12%,#ffe680 0 42px,rgba(255,230,128,.35) 43px 78px,transparent 79px),
+ radial-gradient(circle at 12% 16%,#fff 0 46px,transparent 47px),
+ radial-gradient(circle at 20% 19%,#fff 0 34px,transparent 35px),
+ radial-gradient(circle at 6% 20%,#fff 0 28px,transparent 29px),
+ radial-gradient(circle at 62% 9%,#fff 0 30px,transparent 31px),
+ radial-gradient(circle at 69% 11%,#fff 0 22px,transparent 23px),
+ radial-gradient(circle at 40% 26%,#fff 0 24px,transparent 25px);opacity:.85}}
+.pg{{position:relative;z-index:1}}
+.top{{text-align:center;padding:22px 16px 6px}}
+.top h1{{margin:0;font-size:23px;color:var(--navy);font-weight:800}}
+.top .sub{{font-size:13.5px;color:#4a6076;margin-top:4px}}
+.flags{{display:flex;justify-content:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}}
+.f{{background:none;border:1px solid rgba(31,56,100,.35);border-radius:3px;padding:0;cursor:pointer;
+ width:32px;height:21px;opacity:.55;overflow:hidden}}
+.f img{{width:32px;height:21px;object-fit:cover;display:block}}
+.f.on{{opacity:1;border-color:var(--navy);box-shadow:0 0 0 2px rgba(31,56,100,.25)}}
+.side{{position:fixed;left:0;top:150px;z-index:5;display:flex;flex-direction:column;gap:8px}}
+.nv{{display:flex;align-items:center;gap:8px;background:var(--navy);color:#fff;text-decoration:none;
+ font-size:13px;font-weight:600;padding:9px 16px 9px 12px;border-radius:0 7px 7px 0;box-shadow:0 2px 6px rgba(0,0,0,.18);
+ white-space:nowrap;max-width:210px}}
+.nv:first-child{{background:linear-gradient(#ffd34d,#f5b722);color:#3a2c00}}
+.nv:hover{{filter:brightness(1.12)}}
+.nv i{{font-style:normal;font-size:13px}}
+.wrap{{max-width:960px;margin:0 auto;padding:0 18px 60px}}
+.proto{{background:#fff6d6;border:1px solid #f0c040;border-left:5px solid var(--red);
+ padding:11px 15px;margin:10px 0 18px;border-radius:4px;font-size:13px}}
+.hero{{background:var(--hero);color:#fff;padding:34px 36px;display:flex;align-items:center;gap:26px;flex-wrap:wrap}}
+.hero .l{{flex:1 1 300px}}
+.hero .r{{flex:0 1 290px;text-align:center}}
+.hero .r img{{max-width:100%;height:auto;display:block;margin:0 auto}}
+.hero h2{{margin:0;font-size:54px;font-weight:900;letter-spacing:.04em;line-height:1.05}}
+.hero .fi{{color:var(--gold);font-size:23px;font-weight:600;font-style:italic;margin:8px 0 14px}}
+.hero p{{margin:0;font-size:15.5px}}
+.card{{background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(31,56,100,.10);overflow:hidden;margin-bottom:22px}}
+.dar{{background:var(--soft);border:2px solid var(--navy);border-radius:8px;padding:26px 28px;text-align:center;margin-bottom:22px}}
+.dar h3{{margin:0 0 12px;color:var(--navy);font-size:24px}}
+.dar p{{margin:0 0 10px;font-size:15px}}
+.dbtn{{display:inline-block;margin-top:8px;background:var(--red);color:#fff;text-decoration:none;
+ border-radius:6px;padding:13px 38px;font-size:18px;font-weight:700}}
+.dbtn:hover{{background:#a00000}}
+.mis{{background:rgba(255,255,255,.82);border-radius:8px;padding:24px 28px;text-align:center;margin-bottom:26px}}
+.mis h3{{margin:0 0 12px;font-size:24px;color:var(--navy)}}
+.mis p{{margin:0 0 10px;line-height:1.7}}
+.mis .b{{font-weight:700}}
+.mis .n{{color:var(--navy);font-weight:700}}
+h2.sec{{text-align:center;color:var(--navy);font-size:26px;margin:0 0 4px}}
+p.secs{{text-align:center;color:#4a6076;font-size:13.5px;margin:0 0 18px}}
+.kauza{{background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(31,56,100,.10);padding:20px 24px;margin-bottom:14px}}
 .khead{{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}}
-.kauza h2{{margin:0;font-size:19px;color:var(--navy);letter-spacing:-.01em}}
+.kauza h3{{margin:0;font-size:19px;color:var(--navy)}}
 .cnt{{font-size:11.5px;color:#7a8899;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}}
-.kpop{{margin:6px 0 16px;font-size:13.5px;color:#5a6a7d}}
+.kpop{{margin:6px 0 14px;font-size:13.5px;color:#5a6a7d}}
 .kon{{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
- border-top:1px solid var(--bd);padding:11px 0}}
+ border-top:1px solid #e6edf5;padding:11px 0}}
 .knaz{{font-size:14.5px;color:var(--navy);font-weight:600}}
 .korg{{font-size:12.5px;color:#7a8899;margin-top:2px}}
 .kside{{display:flex;align-items:center;gap:10px}}
 .st{{font-size:11px;border-radius:999px;padding:2px 10px;white-space:nowrap}}
 .st-laeuft{{background:#fff3d6;color:#8a5a00;border:1px solid #f0c040}}
 .st-abgelehnt{{background:#fde8e8;color:#8a1c1c;border:1px solid #e8b4b4}}
-.go{{font-size:12.5px;text-decoration:none;background:var(--navy);color:#fff;border-radius:3px;padding:4px 12px;white-space:nowrap}}
+.go{{font-size:12.5px;text-decoration:none;background:var(--navy);color:#fff;border-radius:4px;padding:5px 13px;white-space:nowrap}}
 .go:hover{{background:#16294a}}
 .soon{{font-size:12px;color:#9aa7b5;white-space:nowrap}}
-.foot{{margin-top:26px;padding-top:14px;border-top:1px solid var(--bd);font-size:12.5px;color:#7a8899;
- display:flex;gap:16px;flex-wrap:wrap}}
-.foot a{{color:#5a6a7d}}
+.foot{{margin-top:26px;padding:14px 0;border-top:1px solid var(--bd);font-size:12.5px;color:#4a6076;
+ display:flex;gap:18px;flex-wrap:wrap;justify-content:center}}
+.foot a{{color:#3a5570}}
+@media(max-width:900px){{.side{{position:static;flex-direction:row;flex-wrap:wrap;justify-content:center;padding:8px}}
+ .nv{{border-radius:6px}} .hero h2{{font-size:40px}}}}
 .gtl,.gtl-b{{display:none}}
 {show}
 </style></head>
 <body data-l="sk">
 
-<div id="bar"><div class="in">
- <span class="nm">FIA FOX · PROTOTYP</span>
- {flags}
- <a class="dar" id="dar" href="{WP}{DAR['sk']}" target="_blank" rel="noopener">♥ {g(UI["dar"])}</a>
- <a id="uvod" href="{WP}{UVOD['sk']}" target="_blank" rel="noopener">{g(UI["uvod"])}</a>
-</div></div>
+<div class="side">{nav_html}</div>
+
+<div class="pg">
+<div class="top">
+ <h1>{g(SITE_T)}</h1>
+ <div class="sub">{g(SITE_S)}</div>
+ <div class="flags">{flags}</div>
+</div>
 
 <div class="wrap">
 
 <div class="proto"><b>PROTOTYP — mimo WordPressu.</b>
-<span class="gtl-b sk">Ukážka, ako by vyzeral register generovaný z dát: Home → kauzy → konania. Ostrý web foxprof.club a stránka #303 bežia nezmenené a táto stránka do nich nijako nezasahuje. Darovací portál ostáva na WordPresse — tlačidlo Podporiť vedie na existujúcu kampaňovú stránku v jazyku vlajky.</span>
-<span class="gtl-b de">Muster: Startseite → Fälle → Verfahren. Die Live-Website bleibt unverändert; der Spendenbereich bleibt auf WordPress.</span>
-<span class="gtl-b en">Demonstration: home → cases → proceedings. The live site remains untouched; donations stay on WordPress.</span>
-<span class="gtl-b hr">Ogledni primjer: početna → predmeti → postupci. Aktivna stranica ostaje netaknuta.</span>
-<span class="gtl-b pl">Przykład: strona główna → sprawy → postępowania. Witryna produkcyjna pozostaje nietknięta.</span>
-<span class="gtl-b es">Demostración: inicio → casos → procedimientos. El sitio en producción no se altera.</span>
-<span class="gtl-b it">Dimostrazione: home → casi → procedimenti. Il sito in produzione resta intatto.</span>
-<span class="gtl-b fr">Démonstration : accueil → affaires → procédures. Le site en production reste intact.</span>
-<span class="gtl-b sv">Demonstration: start → ärenden → förfaranden. Den aktiva webbplatsen lämnas orörd.</span>
+<span class="gtl sk"> Tvoja Home prepísaná do HTML a generovaná z dát. Ostrý web foxprof.club beží nezmenený; dary, Impressum aj Galéria ostávajú na WordPresse.</span>
+<span class="gtl de"> Ihre Startseite als HTML, aus Daten erzeugt. Die Live-Website bleibt unverändert.</span>
+<span class="gtl en"> Your home page rebuilt in HTML, generated from data. The live site remains untouched.</span>
+<span class="gtl hr"> Vaša početna stranica u HTML-u, generirana iz podataka.</span>
+<span class="gtl pl"> Twoja strona główna w HTML, generowana z danych.</span>
+<span class="gtl es"> Su página de inicio en HTML, generada a partir de datos.</span>
+<span class="gtl it"> La vostra home page in HTML, generata dai dati.</span>
+<span class="gtl fr"> Votre page d'accueil en HTML, générée à partir de données.</span>
+<span class="gtl sv"> Din startsida i HTML, genererad från data.</span>
 </div>
 
-<div class="hero">
- <h1>FIA FOX</h1>
- <div class="tag">{g(UI["tag"])}</div>
- <div class="nums"><b>{len(KAUZY)}</b> {g(UI["kauzy"])} &nbsp;&nbsp; <b>{total}</b> {g(UI["konania"])}</div>
+<div class="card"><div class="hero">
+ <div class="l">
+  <h2>FIA&nbsp;FOX</h2>
+  <div class="fi">Fair Internet Initiative</div>
+  <p>{g(HERO)}</p>
+ </div>
+ <div class="r"><img src="{MASCOT}" alt="FIA FOX"></div>
+</div></div>
+
+<div class="dar">
+ <h3>{g(DAR_H)}</h3>
+ <p>{g(DAR_1)}</p>
+ <p>{g(DAR_2)}</p>
+ <a class="dbtn" id="dar" href="{WP}{DAR['sk']}" target="_blank" rel="noopener">{g(DAR_B)}</a>
 </div>
+
+<div class="mis">
+ <h3>{g(MIS_H)}</h3>
+ <p class="b">{g(MIS_1)}</p>
+ <p>{g(MIS_2)}</p>
+ <p class="n">{g(MIS_3)}</p>
+</div>
+
+<h2 class="sec" id="kauzy">{g(UI["kauzy"])}</h2>
+<p class="secs">{len(KAUZY)} · {total} {g(UI["konania"])}</p>
 
 {"".join(kauza_html(z) for z in KAUZY)}
 
 <div class="foot">
- <a id="f-imp" href="{WP}impressum/" target="_blank" rel="noopener">{g(UI["imp"])}</a>
- <a id="f-gdpr" href="{WP}datenschutz/" target="_blank" rel="noopener">{g(UI["gdpr"])}</a>
- <span>FIA FOX — prototyp · dáta a šablóna oddelené</span>
+ <a href="{WP}impressum/" target="_blank" rel="noopener">{g(UI["imp"])}</a>
+ <a href="{WP}datenschutz/" target="_blank" rel="noopener">{g(UI["gdpr"])}</a>
+ <a id="uvod" href="{WP}{UVOD['sk']}" target="_blank" rel="noopener">{g(UI["uvod"])}</a>
+ <span>prototyp · dáta a šablóna oddelené</span>
 </div>
-</div>
+</div></div>
 
 <script>
 var DAR = {DAR!r}, UVOD = {UVOD!r}, WP = "{WP}";
+function setL(L){{
+  document.body.dataset.l=L; document.documentElement.lang=L;
+  document.querySelectorAll('.f').forEach(function(x){{x.classList.remove('on');}});
+  var b=document.querySelector('.f[data-l="'+L+'"]'); if(b) b.classList.add('on');
+  document.getElementById('dar').href  = WP + DAR[L];
+  document.getElementById('uvod').href = WP + UVOD[L];
+  document.querySelectorAll('.nv[data-k="DAR"]').forEach(function(a){{ a.href = WP + DAR[L]; }});
+}}
 document.querySelectorAll('.f').forEach(function(b){{
-  b.addEventListener('click',function(){{
-    var L=b.dataset.l; document.body.dataset.l=L; document.documentElement.lang=L;
-    document.querySelectorAll('.f').forEach(function(x){{x.classList.remove('on');}});
-    b.classList.add('on');
-    document.getElementById('dar').href  = WP + DAR[L];
-    document.getElementById('uvod').href = WP + UVOD[L];
-  }});
+  b.addEventListener('click',function(){{ setL(b.dataset.l); }});
 }});
+setL('sk');
 </script>
 </body></html>"""
 
