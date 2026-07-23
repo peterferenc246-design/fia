@@ -4,7 +4,7 @@
  "page_id": 303,
  "slug": "kauzy-koncept",
  "page_chars": 1023481,
- "platne_k": "2026-07-23T07:49:11",
+ "platne_k": "2026-07-23T08:40:16",
  "kotvy": [
   {
    "offset": 0,
@@ -127,6 +127,7 @@
   "22.07.2026 (3): karta Telekom — PRIDANA 1. Gesendet polozka P03 (Erinnerung/Antrag auf Stundung 14.11.2024), cnt 2->3, 9-jaz. subj+suhrn, VLAJKA-VIEWER z REPA (doc1 P03 klon + doc2/orig 03_with_QES @453a207, OneDrive vynechany per Peter), unikatne ID cmt/summod-zaloba-p03 (03 obsadene prijatou polozkou). Vlozene cez marker. Spolu +28446 zn.; vsetky offsety >29845 posunute o +28446.",
   "22.07.2026 (4): polozka P03 Telekom — DOPLNENE qes=1:2:b a sum=summod-zaloba-p03 do vsetkych 19 viewer URL (chybalo tlacidlo ✍ QES aj Suhrn). Cela polozka prestavena (item 28446->29054). Pozn.: pri prestavbe vznikol docasny duplikat chvosta (orphan 17578 zn.), hned odstraneny. Cisty vysledok: +608 zn. oproti 3261ea3b; offsety >58900 posunute o +608.",
   "22.07.2026 (5): polozka P03 Telekom — DOPLNENE law=§66 GKG (gesetze-im-internet /gkg_2004/__66.html) do vsetkych 19 URL (2-blokovy zasah: data-snap +1480, .open +1332). viewer.html upravene (commit 5ebca9a): QES sa appenduje PRED Suhrn (insertBefore) -> poradie tlacidiel QES, Suhrn, law. Spolu +2812 zn.; offsety >58900 posunute o +2812. P03 ma teraz 3 tlacidla.",
-  "23.07.2026: x5 formular — pridane 3 zaskrtavatka tlacidiel viewera (QES/Suhrn/Predpis, DEFAULT zaskrtnute) + volitelne pole 'Predpis URL~popis' + MK-generator vypisuje plne instrukcie pre Clauda (qes/sum/law do vsetkych 19 URL). Commit dbc12366; iframe SHA na #303 prehodeny aabc8c44 -> dbc12366. Skill fia-mk ma 3-tlacidlovy STANDARD (commit ff87ebb5)."
+  "23.07.2026: x5 formular — pridane 3 zaskrtavatka tlacidiel viewera (QES/Suhrn/Predpis, DEFAULT zaskrtnute) + volitelne pole 'Predpis URL~popis' + MK-generator vypisuje plne instrukcie pre Clauda (qes/sum/law do vsetkych 19 URL). Commit dbc12366; iframe SHA na #303 prehodeny aabc8c44 -> dbc12366. Skill fia-mk ma 3-tlacidlovy STANDARD (commit ff87ebb5).",
+  "23.07.2026 DG COMP: novy priecinok dg-comp-kartel-pristup-k-dokumentom/{odoslane,prijate} (commit 59d3bdd7, kopie blobov z docs/). doc12 EASE-2025-6534 → doplnene sum=summod-dgcomp-05 do 18 URL. doc02 Confirmatory Appeal → doplnene orig(novy priecinok)+qes=3:1:b+sum=summod-dgcomp-02+law=CELEX:32001R1049 do 18 URL (doc = podpisany original, preto DOC=1). QES strany zistene z /Sig widgetu: 01→str.2, 02→str.3, 12→str.6."
  ]
 }
