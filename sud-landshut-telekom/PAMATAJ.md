@@ -118,6 +118,15 @@ Dôvod je praktický: dokumenty hovoria samy za seba. Kto si prečíta, že sede
 
 ---
 
+## 10. Konvencie priecinka (zlucene z README.txt)
+
+Nazvy suborov drz v ASCII bez medzier a diakritiky — inak sa rozbiju odkazy cez jsDelivr.
+`odoslane/` = moje podania, `prijate/` = dosla posta. Podpisane originaly sa NIKDY needituju
+ani nerozdeluju (PAdES/QES); klony su editovatelne. Vo vieweri `doc` = klon, `doc2` = podpisany
+original, `orig` = stiahnutie originalu z REPA (jsDelivr @SHA), nie z OneDrive.
+Tri tlacidla viewera: `qes=STRANA:DOC:ALIGN` (strana z `/Sig` widgetu, ALIGN = 1 - ymid/H),
+`sum=summod-...` (jediny zdroj je modal na #303), `law=CELEX:...~popis`.
+
 ## 6. Poznámky Petra
 
 *(sem dopisuj — Claude to prečíta pri ďalšej práci)*
