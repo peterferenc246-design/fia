@@ -380,7 +380,7 @@ p.secs{{text-align:center;color:#4a6076;font-size:13.5px;margin:0 0 18px}}
 .go{{font-size:12.5px;text-decoration:none;background:var(--navy);color:#fff;border-radius:4px;padding:5px 13px;white-space:nowrap}}
 .go:hover{{background:#16294a}}
 .soon{{font-size:12px;color:#9aa7b5;white-space:nowrap}}
-.regcta{{background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(31,56,100,.10);
+.regcta{{background:linear-gradient(135deg,#fff 0%,#eef4fb 100%);border-radius:8px;box-shadow:0 2px 10px rgba(31,56,100,.10);
  border-left:5px solid var(--navy);padding:20px 26px;margin-bottom:22px;
  display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}}
 .regcta .rt{{font-size:19px;color:var(--navy);font-weight:700}}
@@ -432,6 +432,12 @@ p.secs{{text-align:center;color:#4a6076;font-size:13.5px;margin:0 0 18px}}
  <div class="r"><img src="{MASCOT}" alt="FIA FOX"></div>
 </div></div>
 
+<div class="regcta">
+ <div class="rl"><div class="rt">{g(UI["kauzy"])} &amp; {g(UI["konania"])}</div>
+  <div class="rn"><b>8</b> {g(UI["kauzy"])} &nbsp;·&nbsp; <b>14</b> {g(UI["konania"])}</div></div>
+ <a class="rbtn" href="register.html">{g(REG_B)}</a>
+</div>
+
 <div class="dar">
  <h3>{g(DAR_H)}</h3>
  <p>{g(DAR_1)}</p>
@@ -444,12 +450,6 @@ p.secs{{text-align:center;color:#4a6076;font-size:13.5px;margin:0 0 18px}}
  <p class="b">{g(MIS_1)}</p>
  <p>{g(MIS_2)}</p>
  <p class="n">{g(MIS_3)}</p>
-</div>
-
-<div class="regcta" id="kauzy">
- <div class="rl"><div class="rt">{g(UI["kauzy"])} &amp; {g(UI["konania"])}</div>
-  <div class="rn"><b>8</b> {g(UI["kauzy"])} &nbsp;·&nbsp; <b>14</b> {g(UI["konania"])}</div></div>
- <a class="rbtn" href="register.html">{g(REG_B)}</a>
 </div>
 
 <div class="foot">
