@@ -32,6 +32,15 @@ _(doplnit)_
 ## 6. Otvorene ulohy
 - [ ] _(doplnit)_
 
+## 5b. Verejna HTML stranka korespondencie
+
+`dgcomp-correspondence.html` (9 jazykov, sticky jazykova lista, EASE 2025/6534) — presunute 23.07.2026 z `docs/` do korena tejto karty
+podla pravidla „jeden priecinok na kazdu kartu". Verejna adresa cez GitHub Pages:
+https://peterferenc246-design.github.io/fia/dg-comp-kartel-pristup-k-dokumentom/dgcomp-correspondence.html
+
+POZOR: HTML stranky NIE SU SHA-pinnute ako PDF — presun HTML meni verejnu URL. Ak sa raz napoji na kartu #303,
+dalsi presun uz nerobit bez sucasnej opravy odkazu na karte.
+
 ## 6b. Povodny README priecinka
 
 # DG COMP — kartelove praktiky + pristup k dokumentom (M.10815)
