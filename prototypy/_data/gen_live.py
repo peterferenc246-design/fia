@@ -127,7 +127,7 @@ document.querySelectorAll('.f').forEach(function(b){b.addEventListener('click',f
 
 def page(title, body, script=""):
     return f"""<!DOCTYPE html>
-<html lang="sk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="sk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
 <title>{html.escape(title)} — FIA FOX</title>
 <meta name="description" content="Verejný register právnych konaní iniciatívy FIA FOX — dokumenty, podania a odpovede inštitúcií v deviatich jazykoch.">
 <style>{CSS}{SHOW}</style></head><body data-l="sk">

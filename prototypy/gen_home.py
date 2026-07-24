@@ -368,6 +368,7 @@ socials = "".join(f'<a class="soc" href="{u}" target="_blank" rel="noopener" tit
 HTML = f"""<!DOCTYPE html>
 <html lang="sk"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
 <title>FIA FOX — Verejný register podvodov | Fair Internet Initiative</title>
 <meta name="description" content="Verejný register právnych konaní iniciatívy FIA FOX: 7 káuz, 13 konaní, 29 dokumentov s podpismi a odpoveďami inštitúcií. Občianska iniciatíva za férový internet bez kartelov v EÚ.">
 <link rel="canonical" href="https://register.foxprof.club/">
