@@ -128,7 +128,8 @@ document.querySelectorAll('.f').forEach(function(b){b.addEventListener('click',f
 def page(title, body, script=""):
     return f"""<!DOCTYPE html>
 <html lang="sk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow"><title>{html.escape(title)} · PROTOTYP</title>
+<title>{html.escape(title)} — FIA FOX</title>
+<meta name="description" content="Verejný register právnych konaní iniciatívy FIA FOX — dokumenty, podania a odpovede inštitúcií v deviatich jazykoch.">
 <style>{CSS}{SHOW}</style></head><body data-l="sk">
 <div class="top"><h1>FIA FOX — Fair Internet Initiative</h1></div>
 <div class="wrap">{body}</div>
@@ -180,7 +181,6 @@ for cid, ps in sorted(pol_karty.items(), key=lambda x: -len(x[1])):
 reg_body = f"""
 <div class="navbar"><a class="hm" href="index.html">{g(UI["home"])}</a>
  <div class="lang"><span class="lb">LANG</span>{FLAGS}</div></div>
-<div class="proto"><b>PROTOTYP</b> — {g(UI["gen"])}: {len(KARTY)} kariet, {len(POLOZKY)} dokumentov, {len(SUHRNY)} súhrnov. Ostrý register #303 beží nezmenený.</div>
 <div class="panel"><h2>{g(UI["reg"])}</h2>
  <div class="tabs"><button class="tab on" data-j="all">{g(UI["all"])}</button>
   <button class="tab" data-j="de"><img src="https://flagcdn.com/de.svg" alt="DE">{g(UI["jde"])}</button>
@@ -242,7 +242,6 @@ for cid, ps in pol_karty.items():
     body = f"""
 <div class="navbar"><a class="hm" href="register.html">{g(UI["back"])}</a>
  <div class="lang"><span class="lb">LANG</span>{FLAGS}</div></div>
-<div class="proto"><b>PROTOTYP</b> — {g(UI["gen"])}.</div>
 <div class="chead"><h2>{g(k.get("nazov")) or html.escape(cid)}</h2>
  <div class="org">{g(k.get("organ"))}</div>
  <div class="meta"><b>{html.escape(k.get("az","") or "—")}</b> &nbsp;·&nbsp; {html.escape(k.get("ourref","") or "")}

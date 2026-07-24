@@ -368,8 +368,13 @@ socials = "".join(f'<a class="soc" href="{u}" target="_blank" rel="noopener" tit
 HTML = f"""<!DOCTYPE html>
 <html lang="sk"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<title>FIA FOX — Fair Internet Initiative · PROTOTYP</title>
+<title>FIA FOX — Verejný register podvodov | Fair Internet Initiative</title>
+<meta name="description" content="Verejný register právnych konaní iniciatívy FIA FOX: 7 káuz, 13 konaní, 29 dokumentov s podpismi a odpoveďami inštitúcií. Občianska iniciatíva za férový internet bez kartelov v EÚ.">
+<link rel="canonical" href="https://register.foxprof.club/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://register.foxprof.club/">
+<meta property="og:title" content="FIA FOX — Verejný register podvodov">
+<meta property="og:description" content="7 káuz, 13 konaní, 29 dokumentov. Občianska iniciatíva za férový internet bez kartelov v Európskej únii.">
 <style>
 :root{{--navy:#1F3864;--hero:#2E5BA6;--red:#C00000;--gold:#FFD966;--soft:#D6E6F2;--bd:#c9d8e8}}
 *{{box-sizing:border-box}}
@@ -496,17 +501,6 @@ form.cf button{{margin-top:14px;background:#8a6d3b;color:#fff;border:0;border-ra
 
 <div class="wrap">
 
-<div class="proto"><b>PROTOTYP — mimo WordPressu.</b>
-<span class="gtl sk"> Tvoja Home prepísaná do HTML a generovaná z dát. Ostrý web foxprof.club beží nezmenený; dary, Impressum aj Galéria ostávajú na WordPresse.</span>
-<span class="gtl de"> Ihre Startseite als HTML, aus Daten erzeugt. Die Live-Website bleibt unverändert.</span>
-<span class="gtl en"> Your home page rebuilt in HTML, generated from data. The live site remains untouched.</span>
-<span class="gtl hr"> Vaša početna stranica u HTML-u, generirana iz podataka.</span>
-<span class="gtl pl"> Twoja strona główna w HTML, generowana z danych.</span>
-<span class="gtl es"> Su página de inicio en HTML, generada a partir de datos.</span>
-<span class="gtl it"> La vostra home page in HTML, generata dai dati.</span>
-<span class="gtl fr"> Votre page d'accueil en HTML, générée à partir de données.</span>
-<span class="gtl sv"> Din startsida i HTML, genererad från data.</span>
-</div>
 
 {banners}
 
