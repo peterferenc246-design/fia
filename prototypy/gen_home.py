@@ -105,6 +105,59 @@ NAV = [("♥", S("Spenden","Donate","Prispieť","Doniraj","Wesprzyj","Donar","Do
        ("▤", S("Presse","Press","Tlač","Tisak","Prasa","Prensa","Stampa","Presse","Press"), "PREP"),
        ("≡", S("Mehr","More","Viac","Više","Więcej","Más","Altro","Plus","Mer"), ""),
       ]
+
+SHA_BAN = "3d3ef3c0f812c7eab2996baee85469adf6224bde"
+BAN = "https://raw.githubusercontent.com/peterferenc246-design/fia/" + SHA_BAN + "/banners/register_{L}.png"
+FOTO = WP + "wp-content/uploads/2026/06/DSC_0680-na-kontakt-outlook-Peter-Ferenc-150DPI-2021_08_06-11_06_25-UTC.jpg"
+
+SH_H = S("Diese Seite teilen","Share this page","Zdieľať túto stránku","Podijeli ovu stranicu","Udostępnij tę stronę",
+ "Compartir esta página","Condividi questa pagina","Partager cette page","Dela denna sida")
+SH = [
+ (S("Auf Facebook teilen","Share on Facebook","Zdieľať na Facebooku","Podijeli na Facebooku","Udostępnij na Facebooku","Compartir en Facebook","Condividi su Facebook","Partager sur Facebook","Dela på Facebook"),
+  "https://www.facebook.com/sharer/sharer.php?u=https://foxprof.club/"),
+ (S("Auf X teilen","Share on X","Zdieľať na X","Podijeli na X-u","Udostępnij na X","Compartir en X","Condividi su X","Partager sur X","Dela på X"),
+  "https://twitter.com/intent/tweet?url=https://foxprof.club/&text=FIA%20FOX"),
+ (S("Auf LinkedIn teilen","Share on LinkedIn","Zdieľať na LinkedIn","Podijeli na LinkedInu","Udostępnij na LinkedIn","Compartir en LinkedIn","Condividi su LinkedIn","Partager sur LinkedIn","Dela på LinkedIn"),
+  "https://www.linkedin.com/sharing/share-offsite/?url=https://foxprof.club/"),
+ (S("Per Telegram teilen","Share via Telegram","Zdieľať cez Telegram","Podijeli putem Telegrama","Udostępnij przez Telegram","Compartir por Telegram","Condividi via Telegram","Partager via Telegram","Dela via Telegram"),
+  "https://t.me/share/url?url=https://foxprof.club/&text=FIA%20FOX"),
+ (S("Per E-Mail teilen","Share by e-mail","Zdieľať e-mailom","Podijeli e-poštom","Udostępnij e-mailem","Compartir por correo","Condividi via e-mail","Partager par e-mail","Dela via e-post"),
+  "mailto:?subject=FIA%20FOX&body=https://foxprof.club/"),
+ (S("Per WhatsApp teilen","Share via WhatsApp","Zdieľať cez WhatsApp","Podijeli putem WhatsAppa","Udostępnij przez WhatsApp","Compartir por WhatsApp","Condividi via WhatsApp","Partager via WhatsApp","Dela via WhatsApp"),
+  "https://wa.me/?text=FIA%20FOX%20https%3A%2F%2Ffoxprof.club%2F"),
+ (S("Auf Reddit teilen","Share on Reddit","Zdieľať na Reddite","Podijeli na Redditu","Udostępnij na Reddicie","Compartir en Reddit","Condividi su Reddit","Partager sur Reddit","Dela på Reddit"),
+  "https://www.reddit.com/submit?url=https://foxprof.club/&title=FIA%20FOX"),
+ (S("Auf Bluesky teilen","Share on Bluesky","Zdieľať na Bluesky","Podijeli na Blueskyju","Udostępnij na Bluesky","Compartir en Bluesky","Condividi su Bluesky","Partager sur Bluesky","Dela på Bluesky"),
+  "https://bsky.app/intent/compose?text=FIA%20FOX%20https%3A%2F%2Ffoxprof.club%2F"),
+ (S("Auf XING teilen","Share on XING","Zdieľať na XING","Podijeli na XING-u","Udostępnij na XING","Compartir en XING","Condividi su XING","Partager sur XING","Dela på XING"),
+  "https://www.xing.com/spi/shares/new?url=https://foxprof.club/"),
+]
+SH_COPY = S("Link kopieren","Copy link","Kopírovať odkaz","Kopiraj poveznicu","Kopiuj link","Copiar enlace","Copia link","Copier le lien","Kopiera länk")
+K_H = S("Kontakt","Contact","Kontakt","Kontakt","Kontakt","Contacto","Contatto","Contact","Kontakt")
+K_ROLE = S("Initiator & Koordinator","Initiator & coordinator","Iniciátor a koordinátor","Inicijator i koordinator",
+ "Inicjator i koordynator","Iniciador y coordinador","Iniziatore e coordinatore","Initiateur et coordinateur","Initiativtagare och samordnare")
+K_ADR = S("Anschrift","Address","Adresa","Adresa","Adres","Dirección","Indirizzo","Adresse","Adress")
+K_TEL = S("Telefon","Phone","Telefón","Telefon","Telefon","Teléfono","Telefono","Téléphone","Telefon")
+F_NAME = S("Name","Name","Meno","Ime","Imię","Nombre","Nome","Nom","Namn")
+F_MSG = S("Nachricht","Message","Správa","Poruka","Wiadomość","Mensaje","Messaggio","Message","Meddelande")
+F_SEND = S("Absenden","Send","Odoslať","Pošalji","Wyślij","Enviar","Invia","Envoyer","Skicka")
+SOC_H = S("Folgen Sie uns","Follow us","Sledujte nás","Pratite nas","Obserwuj nas","Síganos","Seguici","Suivez-nous","Följ oss")
+FOOT_D = S("Datenschutzerklärung","Privacy policy","Ochrana osobných údajov","Zaštita podataka","Ochrona danych",
+ "Protección de datos","Informativa privacy","Politique de confidentialité","Integritetspolicy")
+FOOT_N = S("Inhalte gemäß journalistischem Privileg, Art. 85 DSGVO i. V. m. § 23 BDSG.",
+ "Content under the journalistic privilege, Art. 85 GDPR in conjunction with § 23 BDSG.",
+ "Obsah na základe novinárskej výsady, čl. 85 GDPR v spojení s § 23 BDSG.",
+ "Sadržaj na temelju novinarske povlastice, čl. 85. GDPR-a u vezi s § 23. BDSG-a.",
+ "Treści na podstawie przywileju dziennikarskiego, art. 85 RODO w zw. z § 23 BDSG.",
+ "Contenidos al amparo del privilegio periodístico, art. 85 RGPD en relación con el § 23 BDSG.",
+ "Contenuti in forza del privilegio giornalistico, art. 85 GDPR in combinato disposto con il § 23 BDSG.",
+ "Contenus au titre du privilège journalistique, art. 85 RGPD combiné au § 23 BDSG.",
+ "Innehåll enligt det journalistiska privilegiet, art. 85 GDPR jämförd med § 23 BDSG.")
+SOC = [("Facebook","https://www.facebook.com/StopTelekomKartellEuropa","f"),
+       ("X","https://x.com/FOXtiptop","X"),
+       ("Instagram","https://www.instagram.com/fiasfoxspravodlivost/","IG"),
+       ("LinkedIn","https://www.linkedin.com/in/foxpro-peter-ferenc-025913196/","in")]
+
 REG_B = S("⚖ Zum Fallregister →","⚖ To the case register →","⚖ Do registra káuz →","⚖ U registar predmeta →",
  "⚖ Do rejestru spraw →","⚖ Al registro de casos →","⚖ Al registro dei casi →","⚖ Vers le registre →","⚖ Till ärenderegistret →")
 MASCOT = "https://foxprof.club/wp-content/uploads/2026/06/fia-fox-mascot-v6.png"
@@ -306,6 +359,11 @@ def nav_item(ic, lb, k):
     return f'<a class="nv" href="{WP}{k}" target="_blank" rel="noopener"><i>{ic}</i>{g(lb)}</a>'
 
 nav_html = "".join(nav_item(ic, lb, k) for ic, lb, k in NAV)
+banners = "".join(f'<a class="banl gtl-b {L}" href="register.html"><img class="ban" src="{BAN.format(L=L)}" alt="Verejny register"></a>' for L in LANGS)
+share = "".join(f'<a class="shb" href="{u}" target="_blank" rel="noopener">{g(lb)}</a>' for lb, u in SH)
+share += ('<a class="shb cp" href="' + WP + '" onclick="navigator.clipboard.writeText(\'' + WP + '\');'
+          'this.classList.add(\'ok\');return false">' + g(SH_COPY) + '</a>')
+socials = "".join(f'<a class="soc" href="{u}" target="_blank" rel="noopener" title="{n}">{i}</a>' for n, u, i in SOC)
 
 HTML = f"""<!DOCTYPE html>
 <html lang="sk"><head><meta charset="utf-8">
@@ -380,6 +438,33 @@ p.secs{{text-align:center;color:#4a6076;font-size:13.5px;margin:0 0 18px}}
 .go{{font-size:12.5px;text-decoration:none;background:var(--navy);color:#fff;border-radius:4px;padding:5px 13px;white-space:nowrap}}
 .go:hover{{background:#16294a}}
 .soon{{font-size:12px;color:#9aa7b5;white-space:nowrap}}
+.banl{{display:none}} body[data-l="de"] .banl.de,body[data-l="en"] .banl.en,body[data-l="sk"] .banl.sk,
+body[data-l="hr"] .banl.hr,body[data-l="pl"] .banl.pl,body[data-l="es"] .banl.es,
+body[data-l="it"] .banl.it,body[data-l="fr"] .banl.fr,body[data-l="sv"] .banl.sv{{display:block}}
+.ban{{width:100%;height:auto;display:block}}
+hr.sep{{border:0;border-top:1px solid rgba(31,56,100,.25);margin:26px 0}}
+h3.c,h4.c{{text-align:center;color:var(--navy)}}
+.shr{{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}}
+.shb{{background:var(--navy);color:#fff;text-decoration:none;border-radius:6px;padding:8px 16px;font-size:13.5px}}
+.shb:hover{{background:#16294a}} .shb.cp{{background:#0B7A3B}} .shb.cp.ok{{background:#0a5c2e}}
+.kon{{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:1em}}
+.kon .kl{{flex:1 1 55%}} .kon .kr{{flex:0 1 38%;text-align:right}}
+.kon .nm{{color:var(--navy);font-size:1.4em;font-weight:700;margin:0}}
+.kon .rl{{color:#7A7A7A;font-style:italic;margin:.2em 0 0}}
+.kon img{{max-width:100%;height:auto;border:1px solid var(--navy);border-radius:8px}}
+table.kt{{width:100%;border-collapse:collapse;border:1px solid var(--navy);color:var(--navy);margin-top:1em;font-size:14px}}
+table.kt td{{border:1px solid var(--navy);padding:10px 12px;vertical-align:top;width:50%}}
+table.kt a{{color:var(--navy)}}
+form.cf label{{display:block;font-size:14px;margin:14px 0 4px}}
+form.cf .req{{color:var(--red)}}
+form.cf input,form.cf textarea{{width:100%;border:1px solid var(--bd);border-radius:4px;padding:9px 11px;font:inherit;font-size:14px;background:#fff}}
+form.cf textarea{{min-height:150px;resize:vertical}}
+form.cf button{{margin-top:14px;background:#8a6d3b;color:#fff;border:0;border-radius:4px;padding:9px 22px;font:inherit;cursor:pointer}}
+.socs{{display:flex;justify-content:center;gap:14px;margin-top:.6em}}
+.soc{{width:42px;height:42px;border-radius:50%;background:var(--navy);color:#fff;text-decoration:none;
+ display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px}}
+.fl{{text-align:center;font-weight:600;margin-top:1.2em}} .fl a{{color:#8a6d3b}}
+.fn{{text-align:center;color:#7A7A7A;font-size:.85em;font-style:italic;margin-top:.5em}}
 .regcta{{background:linear-gradient(135deg,#fff 0%,#eef4fb 100%);border-radius:8px;box-shadow:0 2px 10px rgba(31,56,100,.10);
  border-left:5px solid var(--navy);padding:20px 26px;margin-bottom:22px;
  display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}}
@@ -423,6 +508,8 @@ p.secs{{text-align:center;color:#4a6076;font-size:13.5px;margin:0 0 18px}}
 <span class="gtl sv"> Din startsida i HTML, genererad från data.</span>
 </div>
 
+{banners}
+
 <div class="card"><div class="hero">
  <div class="l">
   <h2>FIA&nbsp;FOX</h2>
@@ -431,12 +518,6 @@ p.secs{{text-align:center;color:#4a6076;font-size:13.5px;margin:0 0 18px}}
  </div>
  <div class="r"><img src="{MASCOT}" alt="FIA FOX"></div>
 </div></div>
-
-<div class="regcta">
- <div class="rl"><div class="rt">{g(UI["kauzy"])} &amp; {g(UI["konania"])}</div>
-  <div class="rn"><b>8</b> {g(UI["kauzy"])} &nbsp;·&nbsp; <b>14</b> {g(UI["konania"])}</div></div>
- <a class="rbtn" href="register.html">{g(REG_B)}</a>
-</div>
 
 <div class="dar">
  <h3>{g(DAR_H)}</h3>
@@ -451,6 +532,36 @@ p.secs{{text-align:center;color:#4a6076;font-size:13.5px;margin:0 0 18px}}
  <p>{g(MIS_2)}</p>
  <p class="n">{g(MIS_3)}</p>
 </div>
+
+<hr class="sep">
+<h3 class="c">{g(SH_H)}</h3>
+<div class="shr">{share}</div>
+
+<hr class="sep">
+<h3 class="c">{g(K_H)}</h3>
+<div class="kon">
+ <div class="kl"><p class="nm">Peter Ferenc</p><p class="rl">{g(K_ROLE)}</p></div>
+ <div class="kr"><img src="{FOTO}" alt="Peter Ferenc"></div></div>
+<table class="kt"><tbody><tr>
+ <td>&#128205; <b>{g(K_ADR)}:</b><br>Rammelkam 2<br>84036 Kumhausen<br>Deutschland</td>
+ <td>&#128231; <b>E-Mail:</b> <a href="mailto:info@foxprof.club">info@foxprof.club</a><br>
+  &#127760; <b>Web:</b> <a href="{WP}">foxprof.club</a><br>
+  &#128222; <b>{g(K_TEL)}:</b> <a href="tel:+4915731733332">+49 157 317 33332</a><br>
+  &#128224; <b>Fax:</b> +1 231 538 6409</td></tr></tbody></table>
+
+<form class="cf" id="cf">
+ <label>{g(F_NAME)} <span class="req">*</span></label><input id="cf-n" required>
+ <label>E-Mail <span class="req">*</span></label><input id="cf-e" type="email" required>
+ <label>{g(F_MSG)} <span class="req">*</span></label><textarea id="cf-m" required></textarea>
+ <button type="submit">{g(F_SEND)}</button></form>
+
+<h4 class="c" style="margin-top:1.5em">{g(SOC_H)}</h4>
+<div class="socs">{socials}</div>
+
+<hr class="sep">
+<p class="fl"><a href="{WP}impressum/" target="_blank" rel="noopener">Impressum</a> &nbsp;&#183;&nbsp;
+ <a href="{WP}datenschutz/" target="_blank" rel="noopener">{g(FOOT_D)}</a></p>
+<p class="fn">{g(FOOT_N)}</p>
 
 <div class="foot">
  <a href="{WP}impressum/" target="_blank" rel="noopener">{g(UI["imp"])}</a>
@@ -472,6 +583,12 @@ function setL(L){{
 }}
 document.querySelectorAll('.f').forEach(function(b){{
   b.addEventListener('click',function(){{ setL(b.dataset.l); }});
+}});
+document.getElementById('cf').addEventListener('submit',function(e){{
+ e.preventDefault();
+ var b=encodeURIComponent(document.getElementById('cf-n').value+' <'+document.getElementById('cf-e').value+'>'
+   +String.fromCharCode(10,10)+document.getElementById('cf-m').value);
+ window.location.href='mailto:info@foxprof.club?subject=FIA%20FOX&body='+b;
 }});
 setL('sk');
 </script>
